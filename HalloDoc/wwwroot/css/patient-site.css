@@ -1,0 +1,59 @@
+.main {
+    overflow: hidden;
+}
+
+#submit-request-btn {
+    max-width: 500px;
+    max-height: 50px;
+    height: 30vh;
+    background-color: #01bce9;
+    color: white;
+    font-size: larger;
+    margin: auto;
+}
+.form-div{
+    margin-top: 25%;
+}
+.patient-site-form-div {
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+}   
+
+#register-patient-btn {
+    max-width: 500px;
+    max-height: 50px;
+    height: 30vh;
+    background-color: #260486;
+    color: white;
+    font-size: larger;
+    margin: auto;
+    margin-bottom: 10vh;
+}
+
+/* media query */
+@media screen and (max-width:767px) {
+
+    .form-floating {
+        width: 70vw;
+    }
+    
+    #patient-site-form-div {
+        position: fixed;
+        top: 35%;
+        width: 100%;
+    }
+     
+    #submit-request-btn {
+        font-size: medium;
+    }
+
+    #register-patient-btn {
+        font-size: medium;
+    }
+
+    .footer span {
+        font-size: smaller;
+    }
+}
+

@@ -1,0 +1,130 @@
+/* _content/HalloDoc/Views/Shared/_Layout.cshtml.rz.scp.css */
+    .row[b-285lmhujee] {
+        --bs-gutter-x: 0rem;
+    }
+
+    #main-container[b-285lmhujee] {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    #light-dark-btn[b-285lmhujee] {
+        filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
+    }
+
+    footer[b-285lmhujee] {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    #login-page-logo[b-285lmhujee] {
+        height: 15vh;
+        width: 15vw;
+    }
+
+    #login-btn[b-285lmhujee] {
+        max-width: 500px;
+        max-height: 50px;
+        height: 30vh;
+        background-color: #01bce9;
+        color: white;
+        font-size: larger;
+    }
+
+    #login-form[b-285lmhujee] {
+        text-align: center;
+        /* width: 30vw; */
+    }
+
+    #login-form input[b-285lmhujee] {
+        /* width: 50vw; */
+        /* max-width: 20vw; */
+        border: none;
+    }
+
+    #login-form div[b-285lmhujee] {
+        margin: auto;
+        max-width: 500px;
+    }
+
+    #login-form a[b-285lmhujee] {
+        text-decoration: none;
+        color: #01bce9;
+    }
+
+    #back-btn img[b-285lmhujee] {
+        filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
+    }
+
+    #login-form input[b-285lmhujee] {
+        color: #01bce9;
+    }
+
+    #login-form input:focus + label[b-285lmhujee] {
+        color: #01bce9;
+        font-size: small;
+    }
+
+    .input-div[b-285lmhujee]{
+        transition: box-shadow 0.3s;
+    }
+
+    .input-div:focus-within[b-285lmhujee]{
+        box-shadow: 0 0 10px #01bce9;
+    }
+    .input-div[b-285lmhujee] {
+        background-color: white;
+    }
+
+    #floatingInput:focus[b-285lmhujee]{
+        box-shadow: none;
+    }
+    #floatingPassword[b-285lmhujee]{
+        box-shadow: none;
+    }
+
+    
+    /* dark mode */
+    
+    .dark-mode[b-285lmhujee]{
+        background-color: black;
+        color: #00adef
+    }
+
+
+    /* media query */
+
+    @media screen and (max-width: 767px) {
+        body[b-285lmhujee] {
+            height: 100vh;
+        }
+
+        .bg-img[b-285lmhujee] {
+            background: url(/images/11116016_415.jpg) no-repeat center center fixed;
+            height: 100vh;
+            width: 100vw;
+            background-size: cover;
+            filter: opacity(20%);
+        }
+
+        #login-form input[b-285lmhujee] {
+            /* filter: opacity(20%);   */
+            background: rgba(255, 255, 255, 0);
+        }
+
+        #back-btn[b-285lmhujee] {
+            color: #01bce9;
+        }
+
+        #login-form div[b-285lmhujee] {
+            backdrop-filter: blur(10px);
+        }
+
+        #form-div[b-285lmhujee] {
+            position: fixed;
+            top: 25%;
+            width: 100%;
+        }
+
+    }

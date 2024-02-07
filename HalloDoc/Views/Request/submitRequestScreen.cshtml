@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Submit Request";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/submit-request-screen.css">
+}
+
+<div>
+    <div class="d-flex align-items-center justify-content-center">
+        <h1 class="mx-auto">I am a...</h1>
+        <div class=".back-btn">
+            <a asp-action="Index" asp-controller="Home" class="m-2 text-decoration-none submit-request-back"
+                id="back-btn">
+                <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+                <span>Back</span>
+            </a>
+        </div>
+    </div>
+    <form>
+        <ul class="list-group mt-lg-3 mt-xl-5">
+            <li class="list-group-item">
+                <button asp-controller="Request" asp-action="createPatientRequest"
+                    style="color: #4367d3; background-color: #e8eaf1;">
+                    PATIENT
+                </button>
+            </li>
+            <li class="list-group-item">
+                <button asp-controller="Request" asp-action="createFamilyfriendRequest"
+                    style="color: #00adef; background-color: #e5f3f8;">
+                    FAMILY/FRIEND
+                </button>
+            </li>
+            <li class="list-group-item">
+                <button asp-controller="Request" asp-action="createConciergeRequest"
+                    style="background-color: #e8f0e8; color: #228b22;">
+                    CONCIERGE
+                </button>
+            </li>
+            <li class="list-group-item">
+                <button asp-controller="Request" asp-action="createBusinessRequest"
+                    style="background-color: #d90f8114; color: #d90f81;">
+                    BUSINESS PARTNERS
+                </button>
+            </li>
+        </ul>
+    </form>
+</div>
+
+@section Scripts {
+        <script src="~/js/site.js" asp-append-version="true"></script>
+}
