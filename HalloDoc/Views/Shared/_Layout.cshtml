@@ -12,12 +12,24 @@
 
 <body>
     <div class="main w-100 h-100">
-        <header id="header" class="shadow-lg mb-5">
+        <header id="header" class="shadow-lg">
             <img src="~/images/Fig1. Platform login page.jpg" class="h-100" alt="">
-            <button id="light-dark-btn" type="button" class="btn border border-black m-3 m-lg-4 float-end"
+
+            <div class="float-end d-flex">
+            @if(ViewBag.Data != null){
+            <h4 class="m-auto">Welcome <b>@ViewBag.data</b></h4>
+                    <a id="logout-btn" 
+                    asp-controller="Home" asp-action="logout"
+                    class="btn m-3 m-lg-4 float-end" 
+                    style="color: #01bce9; border: 1px solid #01bce9;">
+                        Log out
+                    </a> 
+            }
+            <a id="light-dark-btn" class="btn border border-black m-3 m-lg-4"
                 >
                 <img src="~/images/dark_mode_black_24dp.svg" alt="">
-            </button>
+            </a>
+            </div>
         </header>
 
         @RenderBody()

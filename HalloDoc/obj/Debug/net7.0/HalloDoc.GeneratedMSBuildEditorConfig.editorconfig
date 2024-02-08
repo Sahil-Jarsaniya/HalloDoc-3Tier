@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = G:\HalloDoc\HalloDoc
 build_property._RazorSourceGeneratorDebug = 
 
+[G:/HalloDoc/HalloDoc/Views/Home/dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxkYXNoYm9hcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/HalloDoc/HalloDoc/Views/Home/forget_password_page.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxmb3JnZXRfcGFzc3dvcmRfcGFnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http.Extensions
-
+@model AspNetUser
 @{
     ViewData["Title"] = "Login Page";
     Layout = "_login";
@@ -31,21 +31,28 @@
                     <span>Back</span>
                 </a>
             </div>
-
-            <form id="login-form" class="form-floating m-auto" asp-action="Index" asp-controller="Home">
+            
+            <form id="login-form" class="form-floating m-auto" asp-action="login" asp-controller="Home">
                 <h1 class=" mb-5">Login To Your Account</h1>
+                    @if (ViewBag.message != null)
+                    {
+                        <p class="float-left" style="color: red;">@ViewBag.message</p>
+                    }
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="input-div form-floating mb-3 d-flex border rounded">
-                    <input type="text" class="form-control" id="floatingInput" placeholder="username">
-                    <label for="floatingInput">Username</label>
+                    <input asp-for="UserName" type="text" class="form-control" id="floatingInput" placeholder="username">
+                    <label asp-for="UserName" for="floatingInput">Username</label>
                     <img src="~/images/user_circle.svg" class="pe-3" alt="">
                 </div>
+                    <span asp-validation-for="UserName" class="text-danger fs-6"></span>
                 <div class="input-div form-floating mb-3 d-flex border rounded">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Password</label>
+                    <input asp-for="PasswordHash" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label asp-for="PasswordHash" for="floatingPassword">Password</label>
                     <img id="passImg" src="~/images/password_visibility_on.svg" onclick="showHidePassword()" class="pe-3" alt="">
                 </div>
+                    <span asp-validation-for="PasswordHash" class="text-danger"></span>
                 <div class="form-floating mb-3">
-                    <button id="login-btn" class="btn-primary border rounded border-2 w-100">Log in</button>
+                    <button id="login-btn" type="submit" class="btn-primary border rounded border-2 w-100">Log in</button>
                 </div>
                 <div class="form-floating mb-3">
                     <a asp-controller="Home" asp-action="forget_password_page" >Forget Password?</a>
@@ -63,4 +70,7 @@
 
 @section Scripts {
     <script src="~/js/site.js" asp-append-version="true"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
