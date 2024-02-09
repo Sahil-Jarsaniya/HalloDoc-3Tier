@@ -1,3 +1,4 @@
+@model PatientViewModel
 @{
     ViewData["Title"] = "Patient Request";
 }
@@ -50,23 +51,23 @@
         </div>
 
 <div class="container-fluid d-flex justify-content-center">
-    <form id="patient-request-form" action="" class="form-floating patient-request-form p-2">
+    <form method="post" asp-controller="Request" asp-action="createPatientRequest" id="patient-request-form" class="form-floating patient-request-form p-2">
         <h4 class="mt-4 mb-4 ms-2">Patient Information</h4>
         <div class="form-floating m-1 form-div">
-            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+            <textarea asp-for="Notes" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                 style="height: 100px"></textarea>
             <label for="">Enter Brief Details Of Symptoms</label>
         </div>
         <div class="row g-2 m-1">
             <div class="col-md">
                 <div class="form-floating">
-                    <input type="text" class="form-control" placeholder="">
+                    <input asp-for="Firstname" type="text" class="form-control" placeholder="">
                     <label for="">First Name</label>
                 </div>
             </div>
             <div class="col-md">
                 <div class="form-floating">
-                    <input type="email" class="form-control" placeholder="">
+                    <input asp-for="Lastname" type="text" class="form-control" placeholder="">
                     <label for="floatingSelectGrid">Last Name</label>
                 </div>
             </div>
@@ -75,7 +76,7 @@
         <div class="row g-2 m-1 ">
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="date" class="form-control" placeholder="">
+                    <input asp-for="Strmonth" type="date" class="form-control" placeholder="">
                     <label for="">Date Of Birth</label>
                 </div>
             </div>
@@ -85,13 +86,13 @@
         <div class="row g-2 m-1">
             <div class="col-md">
                 <div class="form-floating">
-                    <input type="email" class="form-control" placeholder="name@example.com">
+                    <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
                     <label for="">Email</label>
                 </div>
             </div>
             <div class="col-md">
                 <div class="form-floating phone-div w-100 h-100 ">
-                    <input type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                    <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
                     <label for=""></label>
                 </div>
             </div>
@@ -101,31 +102,31 @@
         <div class="row g-2 m-1">
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" class="form-control" placeholder="">
+                    <input asp-for="Street" type="text" class="form-control" placeholder="">
                     <label for="">Street</label>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" class="form-control" placeholder="">
+                    <input asp-for="City" type="text" class="form-control" placeholder="">
                     <label for="">City</label>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" class="form-control" placeholder="">
+                    <input asp-for="State" type="text" class="form-control" placeholder="">
                     <label for="">State</label>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" class="form-control" placeholder="">
+                    <input asp-for="Zipcode" type="text" class="form-control" placeholder="">
                     <label for="">Zip Code</label>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" class="form-control" placeholder="">
+                    <input  type="text" class="form-control" placeholder="">
                     <label for="">Room #/ Suite(Optional)</label>
                 </div>
             </div>
@@ -149,4 +150,7 @@
 @section Scripts {
         <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/pop up.js" asp-append-version="true"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -14,7 +14,6 @@ public class HomeController : Controller
     {
         _logger = logger;
         _db = db;
-
     }
 
     public IActionResult Index()
