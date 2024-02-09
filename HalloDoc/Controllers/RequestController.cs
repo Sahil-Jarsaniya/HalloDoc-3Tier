@@ -99,6 +99,61 @@ public class RequestController : Controller
     {
         return View();
     }
+    [HttpPost]
+    public IActionResult createFamilyfriendRequest(FamilyViewModel obj)
+    {
+        if (ModelState.IsValid)
+        {
+            //inserting into user table
+            User user = new User();
+            user.Firstname = obj.Firstname;
+            user.Lastname = obj.Lastname;
+            user.Email = obj.Email;
+            user.Mobile = obj.Phonenumber;
+            user.Street = obj.Street;
+            user.City = obj.City;
+            user.State = obj.State;
+            user.Zipcode = obj.Zipcode;
+            user.Createddate = DateTime.Now;
+            user.Createdby = "admin";
+            _db.Users.Add(user);
+            _db.SaveChanges();
+
+            //Inserting into request table
+            Request request = new Request();
+            request.Requesttypeid = 1;
+            request.Userid = user.Userid;
+            request.Firstname = obj.FamilyFirstname;
+            request.Lastname = obj.FamilyLastname;
+            request.Email = obj.FamilyEmail;
+            request.Status = 3;
+            request.Createddate = DateTime.Now;
+            request.Isurgentemailsent = false;
+            _db.Requests.Add(request);
+            _db.SaveChanges();
+
+            //Insertung into RequestClient
+            Requestclient requestclient = new Requestclient();
+
+            requestclient.Requestid = request.Requestid;
+            requestclient.Firstname = obj.Firstname;
+            requestclient.Lastname = obj.Lastname;
+            requestclient.Email = obj.Email;
+            requestclient.Phonenumber = obj.Phonenumber;
+            requestclient.Strmonth = obj.Strmonth;
+            requestclient.Street = obj.Street;
+            requestclient.City = obj.City;
+            requestclient.State = obj.State;
+            requestclient.Zipcode = obj.Zipcode;
+            requestclient.Notes = obj.Notes;
+
+            return RedirectToAction("submitRequestScreen");
+        }
+        else
+        {
+            return View();
+        }
+    }
     public IActionResult createConciergeRequest()
     {
         return View();
