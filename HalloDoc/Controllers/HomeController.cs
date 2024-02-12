@@ -3,6 +3,8 @@ using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace HalloDoc.Controllers;
+
+using HalloDoc.DataAccess.ViewModel;
 using Microsoft.AspNetCore.Http;
 
 public class HomeController : Controller
@@ -15,6 +17,7 @@ public class HomeController : Controller
         _logger = logger;
         _db = db;
     }
+
 
     public IActionResult Index()
     {
@@ -42,7 +45,9 @@ public class HomeController : Controller
         else
         {
             HttpContext.Session.SetString("token", user.UserName);
-            return RedirectToAction("dashboard", "Home");
+            String AspId = myUser.Id;
+
+            return RedirectToAction("dashboard", "Home", new { AspId = AspId});
         }
     }
     public IActionResult logout()
@@ -54,7 +59,7 @@ public class HomeController : Controller
         }
         return View();
     }
-    public IActionResult dashboard()
+    public IActionResult dashboard(String AspId)
     {
         if (HttpContext.Session.GetString("token") != null)
         {
@@ -64,8 +69,25 @@ public class HomeController : Controller
         {
             return RedirectToAction("login");
         }
+        //var request = _db.Requests.ToList();
+        //   var requestData = _db.Requestwisefiles.ToList();  //.Where(x => x.Requestid == request.Requestid);
 
-        return View();
+        var patientAspId = _db.Users.Where(x => x.Aspnetuserid == AspId).FirstOrDefault();
+        var userId = patientAspId.Userid;
+
+        var requestData = from t1 in _db.Requests
+                          join t2 in _db.Requestwisefiles
+                          on t1.Requestid equals t2.Requestid into files
+                          from t2 in files.DefaultIfEmpty()
+                          where t1.Userid == userId
+                          select new PatientDashboardViewModel
+                          {
+                              Createddate = t1.Createddate,
+                              Status = t1.Status,
+                              Filename = t2 != null ? t2.Filename : null
+                          };
+
+        return View(requestData);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

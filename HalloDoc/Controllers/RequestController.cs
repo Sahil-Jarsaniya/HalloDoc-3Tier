@@ -13,6 +13,7 @@ public class RequestController : Controller
     {
         _db = db;
     }
+
     public IActionResult submitRequestScreen()
     {
         return View();
@@ -29,22 +30,17 @@ public class RequestController : Controller
             Guid guid = Guid.NewGuid();
 
             //Inserting into AspNetUser
-
-            //    AspNetUser aspNetUser = new AspNetUser();
-            //if (!aspNetUser.Email.Contains(obj.Email.ToString()))
-            //{
-            //    aspNetUser.Id = guid.ToString();
-            //    aspNetUser.UserName = obj.Firstname;
-            //    aspNetUser.Email = obj.Email;
-            //    aspNetUser.PhoneNumber = obj.Phonenumber;
-            //    aspNetUser.CreatedDate = DateTime.Now;
-            //    _db.AspNetUsers.Add(aspNetUser);
-            //    _db.SaveChanges();
-
-            //}
+            AspNetUser aspNetUser = new AspNetUser();
+                aspNetUser.Id = guid.ToString();
+                aspNetUser.UserName = obj.Firstname;
+                aspNetUser.Email = obj.Email;
+                aspNetUser.PhoneNumber = obj.Phonenumber;
+                aspNetUser.CreatedDate = DateTime.UtcNow;
+                _db.AspNetUsers.Add(aspNetUser);
+                _db.SaveChanges();
 
             //Inserting into User table
-            User user = new User();    
+            User user = new User();
             user.Firstname = obj.Firstname;
             user.Lastname = obj.Lastname;
             user.Email = obj.Email;
@@ -85,8 +81,42 @@ public class RequestController : Controller
             requestclient.Zipcode = obj.Zipcode;
             requestclient.Notes = obj.Notes;
 
+
             _db.Requestclients.Add(requestclient);
             _db.SaveChanges();
+            //Inserting into requestStatusLog
+
+            Requeststatuslog requeststatuslog = new Requeststatuslog();
+            requeststatuslog.Requestid = request.Requestid;
+            requeststatuslog.Status = 4;
+            requeststatuslog.Createddate = DateTime.Now;
+            _db.Requeststatuslogs.Add(requeststatuslog);
+            _db.SaveChanges();
+
+
+            //uploading files
+            if(obj.formFile != null && obj.formFile.Length > 0)
+            {
+                //get file name
+                var fileName = Path.GetFileName(obj.formFile.FileName);
+
+                //define path
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
+
+                // Copy the file to the desired location
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    obj.formFile.CopyTo(stream);
+                }
+                Requestwisefile requestwisefile = new Requestwisefile();
+                requestwisefile.Filename = fileName;
+                requestwisefile.Requestid = request.Requestid; 
+                requestwisefile.Createddate = DateTime.Now;
+
+                _db.Requestwisefiles.Add(requestwisefile);
+                _db.SaveChanges();
+            }
+
             return RedirectToAction("submitRequestScreen");
         }
         else
@@ -146,6 +176,13 @@ public class RequestController : Controller
             requestclient.State = obj.State;
             requestclient.Zipcode = obj.Zipcode;
             requestclient.Notes = obj.Notes;
+
+            //Inserting into requestStatusLog
+
+            Requeststatuslog requeststatuslog = new Requeststatuslog();
+            requeststatuslog.Requestid = request.Requestid;
+            requeststatuslog.Status = 4;
+            requeststatuslog.Createddate = DateTime.Now;
 
             return RedirectToAction("submitRequestScreen");
         }
@@ -219,7 +256,14 @@ public class RequestController : Controller
          requestclient.Zipcode = obj.Zipcode;
          requestclient.Notes = obj.Notes;
 
-        return RedirectToAction("submitRequestScreen");
+            //Inserting into requestStatusLog
+
+            Requeststatuslog requeststatuslog = new Requeststatuslog();
+            requeststatuslog.Requestid = request.Requestid;
+            requeststatuslog.Status = 4;
+            requeststatuslog.Createddate = DateTime.Now;
+
+            return RedirectToAction("submitRequestScreen");
         }
         else
         {
@@ -237,11 +281,10 @@ public class RequestController : Controller
         {
             Business business = new Business();
             
-
+            business.Name = obj.bussinessFirstname + " " + obj.bussinessLastname;
+            business.Createdby = DateTime.Now.ToString();
 
             User user = new User();
-
-            user.Userid = 2;
             user.Firstname = obj.Firstname;
             user.Lastname = obj.Lastname;
             user.Email = obj.Email;
@@ -271,9 +314,17 @@ public class RequestController : Controller
 
             requestbusiness.Businessid = business.Id;
             requestbusiness.Requestid = request.Requestid;
+            _db.Requestbusinesses.Add(requestbusiness);
+            _db.SaveChanges();
 
+            Requeststatuslog requeststatuslog = new Requeststatuslog();
+            requeststatuslog.Requestid = request.Requestid;
+            requeststatuslog.Status = 4;
+            requeststatuslog.Createddate = DateTime.Now;
+            _db.Requeststatuslogs.Add(requeststatuslog);
+            _db.SaveChanges();  
 
-            return RedirectToAction("submitScreenRequest");
+            return RedirectToAction("submitRequestScreen");
         }
         else
         {

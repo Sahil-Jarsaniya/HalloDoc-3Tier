@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "cqvdL+70aBKEG5dVMcDgWP1bYeid5iHn4YW6E9bluUFNMWBYJvFQ0kFDfXSkRrAUEJz8SxTVX3Uimpx3FZ4LBA==",
+  "dgSpecHash": "0xZ4CWhprCfgCFJHLh7y9qHkgCFsM2t36cXXYP2nvzCVG451ZzNUnLWSoJQ1XXr4kGjWN3S5wq/cn631EBPExg==",
   "success": true,
   "projectFilePath": "G:\\HalloDoc\\HalloDoc\\HalloDoc.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,7 @@
     "C:\\Users\\pca17\\.nuget\\packages\\humanizer.core.zh-cn\\2.14.1\\humanizer.core.zh-cn.2.14.1.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
+    "C:\\Users\\pca17\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.11\\microsoft.aspnetcore.razor.language.6.0.11.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.build\\17.3.2\\microsoft.build.17.3.2.nupkg.sha512",

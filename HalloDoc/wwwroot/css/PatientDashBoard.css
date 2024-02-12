@@ -1,0 +1,13 @@
+﻿#header{
+    box-shadow: none;
+}
+#tabs ul li a{
+    color: black;
+}
+
+#tabs ul li a.active {
+    color: #01bce9;
+    border-bottom: 1px solid #01bce9;
+    background: none;   
+    font-weight: 500;
+}

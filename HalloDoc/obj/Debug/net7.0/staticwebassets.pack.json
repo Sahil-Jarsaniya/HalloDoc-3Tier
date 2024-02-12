@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\HalloDoc.bundle.scp.css"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\PatientDashBoard.css",
+      "PackagePath": "staticwebassets\\css\\PatientDashBoard.css"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\create-patient-request.css",
       "PackagePath": "staticwebassets\\css\\create-patient-request.css"
     },
@@ -319,6 +323,18 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig27. Roles.jpg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Fig27. Roles.jpg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig35. Provider on call (MDs On Call).jpg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Fig35. Provider on call (MDs On Call).jpg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig5. Admin dashboard in pending state.jpg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Fig5. Admin dashboard in pending state.jpg"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.HalloDoc.Microsoft.AspNetCore.StaticWebAssets.props",

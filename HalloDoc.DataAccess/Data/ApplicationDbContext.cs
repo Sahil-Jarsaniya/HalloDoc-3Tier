@@ -992,9 +992,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("requestnotes");
 
-            entity.Property(e => e.Requestnotesid)
-                .ValueGeneratedNever()
-                .HasColumnName("requestnotesid");
+            entity.Property(e => e.Requestnotesid).HasColumnName("requestnotesid");
             entity.Property(e => e.Administrativenotes)
                 .HasMaxLength(500)
                 .HasColumnName("administrativenotes");
@@ -1131,9 +1129,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("Role");
 
-            entity.Property(e => e.Roleid)
-                .ValueGeneratedNever()
-                .HasColumnName("roleid");
+            entity.Property(e => e.Roleid).HasColumnName("roleid");
             entity.Property(e => e.Accounttype).HasColumnName("accounttype");
             entity.Property(e => e.Createdby)
                 .HasMaxLength(128)
@@ -1181,9 +1177,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("shift");
 
-            entity.Property(e => e.Shiftid)
-                .ValueGeneratedNever()
-                .HasColumnName("shiftid");
+            entity.Property(e => e.Shiftid).HasColumnName("shiftid");
             entity.Property(e => e.Createdby)
                 .HasMaxLength(128)
                 .HasColumnName("createdby");
@@ -1219,9 +1213,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("shiftdetail");
 
-            entity.Property(e => e.Shiftdetailid)
-                .ValueGeneratedNever()
-                .HasColumnName("shiftdetailid");
+            entity.Property(e => e.Shiftdetailid).HasColumnName("shiftdetailid");
             entity.Property(e => e.Endtime).HasColumnName("endtime");
             entity.Property(e => e.Eventid)
                 .HasMaxLength(100)
@@ -1265,9 +1257,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("shiftdetailregion");
 
-            entity.Property(e => e.Shiftdetailregionid)
-                .ValueGeneratedNever()
-                .HasColumnName("shiftdetailregionid");
+            entity.Property(e => e.Shiftdetailregionid).HasColumnName("shiftdetailregionid");
             entity.Property(e => e.Isdeleted).HasColumnName("isdeleted");
             entity.Property(e => e.Regionid).HasColumnName("regionid");
             entity.Property(e => e.Shiftdetailid).HasColumnName("shiftdetailid");

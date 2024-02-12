@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HalloDoc.DataAccess.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace HalloDoc.DataAccess.ViewModel
 {
@@ -57,5 +52,7 @@ namespace HalloDoc.DataAccess.ViewModel
         [Column("zipcode")]
         [StringLength(10)]
         public string? Zipcode { get; set; }
+
+        public IFormFile formFile { get; set; }
     }
 }

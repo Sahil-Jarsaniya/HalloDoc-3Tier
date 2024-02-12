@@ -26,4 +26,8 @@
     <ProjectReference Include="..\HalloDoc.DataAccess\HalloDoc.DataAccess.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploadedFiles\" />
+  </ItemGroup>
+
 </Project>

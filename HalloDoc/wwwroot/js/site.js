@@ -25,13 +25,22 @@ actualBtn.addEventListener('change', function () {
 
 function showHidePassword() {
     var floatingPassword = document.getElementById('floatingPassword');
-    var passImg = document.getElementById('passImg');
+    var floatingPassword2 = document.getElementById('floatingPassword2');
+    var passImg = document.getElementsByClassName('passImg');
+    var passImg = document.getElementsByClassName('passImg2');
+    var passImg = document.getElementsByClassName('passImg3');
     if (floatingPassword.type === 'password') {
         floatingPassword.type = 'text';
+        floatingPassword2.type = 'text';
         passImg.src = "/images/password_visibility_off.svg";
+        passImg2.src = "/images/password_visibility_off.svg";
+        passImg3.src = "/images/password_visibility_off.svg";
     } else {
         floatingPassword.type = 'password';
+        floatingPassword2.type = 'password';
         passImg.src = "/images/password_visibility_on.svg";
+        passImg2.src = "/images/password_visibility_on.svg";
+        passImg3.src = "/images/password_visibility_on.svg";
     }
 }
 
