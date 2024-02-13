@@ -47,7 +47,7 @@ public class HomeController : Controller
             HttpContext.Session.SetString("token", user.UserName);
             String AspId = myUser.Id;
 
-            return RedirectToAction("dashboard", "Home", new { AspId = AspId});
+            return RedirectToAction("Dashboard", "Patient", new { AspId = AspId});
         }
     }
     public IActionResult logout()
@@ -58,36 +58,6 @@ public class HomeController : Controller
             return RedirectToAction("login");
         }
         return View();
-    }
-    public IActionResult dashboard(String AspId)
-    {
-        if (HttpContext.Session.GetString("token") != null)
-        {
-            ViewBag.Data = HttpContext.Session.GetString("token").ToString();
-        }
-        else
-        {
-            return RedirectToAction("login");
-        }
-        //var request = _db.Requests.ToList();
-        //   var requestData = _db.Requestwisefiles.ToList();  //.Where(x => x.Requestid == request.Requestid);
-
-        var patientAspId = _db.Users.Where(x => x.Aspnetuserid == AspId).FirstOrDefault();
-        var userId = patientAspId.Userid;
-
-        var requestData = from t1 in _db.Requests
-                          join t2 in _db.Requestwisefiles
-                          on t1.Requestid equals t2.Requestid into files
-                          from t2 in files.DefaultIfEmpty()
-                          where t1.Userid == userId
-                          select new PatientDashboardViewModel
-                          {
-                              Createddate = t1.Createddate,
-                              Status = t1.Status,
-                              Filename = t2 != null ? t2.Filename : null
-                          };
-
-        return View(requestData);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

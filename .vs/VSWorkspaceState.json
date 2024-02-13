@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\HalloDoc",
+    "\\HalloDoc\\Controllers"
   ],
+  "SelectedNode": "\\HalloDoc.sln",
   "PreviewInSolutionExplorer": false
 }

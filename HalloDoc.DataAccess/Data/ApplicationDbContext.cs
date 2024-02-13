@@ -60,6 +60,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Request> Requests { get; set; }
 
+    public virtual DbSet<RequestStatus> RequestStatuses { get; set; }
+
     public virtual DbSet<Requestbusiness> Requestbusinesses { get; set; }
 
     public virtual DbSet<Requestclient> Requestclients { get; set; }
@@ -830,6 +832,18 @@ public partial class ApplicationDbContext : DbContext
                 .HasConstraintName("request_userid_fkey");
         });
 
+        modelBuilder.Entity<RequestStatus>(entity =>
+        {
+            entity.HasKey(e => e.StatusId).HasName("requestStatus_pkey");
+
+            entity.ToTable("requestStatus");
+
+            entity.Property(e => e.StatusId).HasColumnName("statusId");
+            entity.Property(e => e.Status)
+                .HasColumnType("character varying")
+                .HasColumnName("status");
+        });
+
         modelBuilder.Entity<Requestbusiness>(entity =>
         {
             entity.HasKey(e => e.Requestbusinessid).HasName("requestbusiness_pkey");
@@ -1312,6 +1326,8 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("User");
 
+            entity.HasIndex(e => e.Aspnetuserid, "fki_User_AspNetUsers");
+
             entity.Property(e => e.Userid).HasColumnName("userid");
             entity.Property(e => e.Aspnetuserid)
                 .HasMaxLength(128)
@@ -1368,7 +1384,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.Aspnetuser).WithMany(p => p.Users)
                 .HasForeignKey(d => d.Aspnetuserid)
-                .HasConstraintName("User_aspnetuserid_fkey");
+                .HasConstraintName("User_AspNetUsers");
 
             entity.HasOne(d => d.Region).WithMany(p => p.Users)
                 .HasForeignKey(d => d.Regionid)

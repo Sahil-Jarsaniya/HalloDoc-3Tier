@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "Submit Request";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/submit-request-screen.css">
+    <link rel="stylesheet" href="~/css/PatientDashBoard.css">
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between mt-5">
+    <h3>
+        Documents
+    </h3>
+    <a asp-action="Dashboard" asp-controller="Patient" class="text-decoration-none" id="back-btn">
+        <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="" alt="">
+        <span>Back</span>
+    </a>
+    </div>
+    <div class="p-3 shadow">
+        <span>Patient Name</span>
+         <h4>@ViewBag.Data</h4>
+         <p>Check here  for any files that you or doctors of your subsequents requestors have attached for you to review.</p>
+
+        <form  class="form-floating patient-request-form p-2">
+            <div class="input-group m-1 mb-3">
+                <input  type="file" id="actualFileBtn" class="form-control" id="inputGroupFile02" hidden>
+                <span  id="fileChoosen" class="form-control">Select File</span>
+                <label class="input-group-text" id="uploadFileLabel" for="actualFileBtn">
+                    <img src="~/images/cloud_upload.svg" alt="">
+                    Upload
+                </label>
+            </div>
+         </form>
+
+         <div class="d-flex justify-content-between mt-5">
+             <h5>Documents</h5>
+            <a class="btn float-end"
+               style="color: #01bce9; border: 1px solid #01bce9;">
+                <span class="d-none d-md-block">Download</span>
+                <img src="~/images/plus-lg.svg" id="addImg" class="d-md-none">
+            </a>
+         </div>
+
+         <table class="table">
+             <thead>
+                 <tr>
+                     <th>
+                     <input type="checkbox"/>
+                     </th>
+                     <th></th>
+                     <th>Uploader</th>
+                     <th>Upload Date</th>
+                     <th>Actions</th>
+                 </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" />
+                    </td>
+                     <td>1</td>
+                     <td>2</td>
+                     <td>3</td>
+                     <td>4</td>
+                 </tr>
+
+             </thead>
+         </table>
+    </div>
+</div>

@@ -34,7 +34,7 @@
 <div class="row g-2 m-1">
     <div class="col-md-6">
         <div class="form-floating">
-            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+            <input id="checkEmail" asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
             <label for="">Email</label>
         </div>
     </div>
@@ -44,22 +44,22 @@
             <label for=""></label>
         </div>
     </div>
-    @*            @if ()*@
-    @*
+
+
+</div>
+<div class="row g-2 m-1" id="hiddendiv" style="display: none">
+
     <div class="col-md-6 input-div form-floating mb-3 d-flex border rounded">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+        <input type="password" class="form-control border-0" id="floatingPassword" placeholder="Password">
         <label for="floatingPassword">Confirm Password</label>
         <img id="passImg2" src="~/images/password_visibility_on.svg" onclick="showHidePassword()" class="pe-3" alt="">
     </div>
 
     <div class="col-md-6 input-div form-floating mb-3 d-flex border rounded">
-        <input type="password" class="form-control" id="floatingPassword2" placeholder="Password">
+        <input type="password" class="form-control border-0" id="floatingPassword2" placeholder="Password">
         <label for="floatingPassword">Confirm Password</label>
         <img id="passImg3" src="~/images/password_visibility_on.svg" onclick="showHidePassword()" class="pe-3" alt="">
     </div>
-    }*@
-
-
 </div>
 
 <h4 class="mt-4 mb-4 ms-2">Patient Location</h4>

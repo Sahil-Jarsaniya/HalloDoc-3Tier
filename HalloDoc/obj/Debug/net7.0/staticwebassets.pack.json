@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\HalloDoc.bundle.scp.css"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\HeaderFooter.css",
+      "PackagePath": "staticwebassets\\css\\HeaderFooter.css"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\PatientDashBoard.css",
       "PackagePath": "staticwebassets\\css\\PatientDashBoard.css"
     },
@@ -53,6 +57,18 @@
       "PackagePath": "staticwebassets\\images\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\box-arrow-right.svg",
+      "PackagePath": "staticwebassets\\images\\box-arrow-right.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\check-circle.svg",
+      "PackagePath": "staticwebassets\\images\\check-circle.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\clock.svg",
+      "PackagePath": "staticwebassets\\images\\clock.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\cloud_upload.svg",
       "PackagePath": "staticwebassets\\images\\cloud_upload.svg"
     },
@@ -69,12 +85,24 @@
       "PackagePath": "staticwebassets\\images\\exclamation2.jpg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\list.svg",
+      "PackagePath": "staticwebassets\\images\\list.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\password_visibility_off.svg",
       "PackagePath": "staticwebassets\\images\\password_visibility_off.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\password_visibility_on.svg",
       "PackagePath": "staticwebassets\\images\\password_visibility_on.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\person-circle.svg",
+      "PackagePath": "staticwebassets\\images\\person-circle.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\plus-lg.svg",
+      "PackagePath": "staticwebassets\\images\\plus-lg.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\user_circle.svg",
@@ -325,6 +353,10 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\7774236_3736765.jpg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\7774236_3736765.jpg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig27. Roles.jpg",
       "PackagePath": "staticwebassets\\uploadedFiles\\Fig27. Roles.jpg"
     },
@@ -333,8 +365,28 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\Fig35. Provider on call (MDs On Call).jpg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig41.Add business page.png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Fig41.Add business page.png"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig5. Admin dashboard in pending state.jpg",
       "PackagePath": "staticwebassets\\uploadedFiles\\Fig5. Admin dashboard in pending state.jpg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig6. Admin dashboard in Active state.jpg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Fig6. Admin dashboard in Active state.jpg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig7. Admin dashboard in Conclude state.jpg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Fig7. Admin dashboard in Conclude state.jpg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\check-circle (1).svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\check-circle (1).svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\person-circle (1).svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\person-circle (1).svg"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.HalloDoc.Microsoft.AspNetCore.StaticWebAssets.props",

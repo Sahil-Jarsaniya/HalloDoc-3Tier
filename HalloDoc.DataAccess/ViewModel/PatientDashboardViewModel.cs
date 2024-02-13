@@ -11,7 +11,7 @@ namespace HalloDoc.DataAccess.ViewModel
     {
         public DateTime Createddate { get; set; }
 
-        public short Status { get; set; }
+        public String? Status { get; set; }
 
         public string Filename { get; set; } = null!;
 

@@ -11,6 +11,10 @@
     <!-- js ans css for phone input -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
 }
 <!-- alert box -->
 <div class="modal fade" tabindex="-1" id="myModal">
@@ -74,6 +78,27 @@
 @section Scripts {
         <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/pop up.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#checkEmail').on('blur', function () {
+                var email = $(this).val();
+                $.ajax({
+                    url: '/Patient/PatientCheckEmail',
+                    type: 'POST',
+                    data: { email: email },
+                    success: function (data) {
+                        if (!data.exists) {
+                            $('#hiddendiv').show();
+                        }
+                        else {
+                            $('#hiddendiv').hide();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

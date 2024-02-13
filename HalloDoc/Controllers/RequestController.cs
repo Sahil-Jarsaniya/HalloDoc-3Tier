@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.Data;
+using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace HalloDoc.Controllers;
 
@@ -14,6 +16,12 @@ public class RequestController : Controller
         _db = db;
     }
 
+    [HttpPost]
+    public JsonResult PatientCheckEmail(string email)
+    {
+        bool emailExists = _db.Users.Any(u => u.Email == email);
+        return Json(new { exists = emailExists });
+    }
     public IActionResult submitRequestScreen()
     {
         return View();
@@ -27,69 +35,89 @@ public class RequestController : Controller
     {
         if (ModelState.IsValid)
         {
+
+            var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
 
             //Inserting into AspNetUser
             AspNetUser aspNetUser = new AspNetUser();
+          
+            if (existUser ==null)
+            {
+
                 aspNetUser.Id = guid.ToString();
                 aspNetUser.UserName = obj.Firstname;
                 aspNetUser.Email = obj.Email;
                 aspNetUser.PhoneNumber = obj.Phonenumber;
                 aspNetUser.CreatedDate = DateTime.UtcNow;
-                _db.AspNetUsers.Add(aspNetUser);
+            _db.AspNetUsers.Add(aspNetUser);
                 _db.SaveChanges();
-
+            }
             //Inserting into User table
-            User user = new User();
-            user.Firstname = obj.Firstname;
-            user.Lastname = obj.Lastname;
-            user.Email = obj.Email;
-            user.Mobile = obj.Phonenumber;
-            user.Street = obj.Street;
-            user.City = obj.City;
-            user.State = obj.State;
-            user.Zipcode = obj.Zipcode;
-            user.Createddate = DateTime.Now;
-            user.Createdby = "admin";
+            User user = new User
+            {
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Mobile = obj.Phonenumber,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Createddate = DateTime.Now,
+                Createdby = "admin"
+            };
+            if(existUser == null)
+            {
+                user.Aspnetuserid = aspNetUser.Id;
+            }
+            else
+            {
+                user.Aspnetuserid = existUser.Id;
+            }
+
             _db.Users.Add(user);
             _db.SaveChanges();
 
             //Inserting into Request
-            Request request = new Request();
-            request.Requesttypeid = 1;
-            request.Userid = user.Userid;
-            request.Firstname = obj.Firstname;
-            request.Lastname = obj.Lastname;
-            request.Email = obj.Email;
-            request.Status = 1;
-            request.Createddate = DateTime.Now;
-            request.Isurgentemailsent = false;
+            Request request = new Request
+            {
+                Requesttypeid = 1,
+                Userid = user.Userid,
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Status = 1,
+                Createddate = DateTime.Now,
+                Isurgentemailsent = false
+            };
             _db.Requests.Add(request);
             _db.SaveChanges();
             //Insertung into RequestClient
-            Requestclient requestclient = new Requestclient();
-
-            requestclient.Requestid = request.Requestid;
-            requestclient.Firstname = obj.Firstname;
-            requestclient.Lastname = obj.Lastname;
-            requestclient.Email = obj.Email;
-            requestclient.Phonenumber = obj.Phonenumber;
-            requestclient.Strmonth = obj.Strmonth;
-            requestclient.Street = obj.Street;
-            requestclient.City = obj.City;
-            requestclient.State = obj.State;
-            requestclient.Zipcode = obj.Zipcode;
-            requestclient.Notes = obj.Notes;
-
-
+            Requestclient requestclient = new Requestclient
+            {
+                Requestid = request.Requestid,
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Phonenumber = obj.Phonenumber,
+                Strmonth = obj.Strmonth,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Notes = obj.Notes
+            };
             _db.Requestclients.Add(requestclient);
             _db.SaveChanges();
             //Inserting into requestStatusLog
 
-            Requeststatuslog requeststatuslog = new Requeststatuslog();
-            requeststatuslog.Requestid = request.Requestid;
-            requeststatuslog.Status = 4;
-            requeststatuslog.Createddate = DateTime.Now;
+            Requeststatuslog requeststatuslog = new Requeststatuslog
+            {
+                Requestid = request.Requestid,
+                Status = 4,
+                Createddate = DateTime.Now
+            };
             _db.Requeststatuslogs.Add(requeststatuslog);
             _db.SaveChanges();
 
@@ -104,14 +132,16 @@ public class RequestController : Controller
                 var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
 
                 // Copy the file to the desired location
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var stream = new FileStream(filePath, FileMode.Create))  
                 {
                     obj.formFile.CopyTo(stream);
                 }
-                Requestwisefile requestwisefile = new Requestwisefile();
-                requestwisefile.Filename = fileName;
-                requestwisefile.Requestid = request.Requestid; 
-                requestwisefile.Createddate = DateTime.Now;
+                Requestwisefile requestwisefile = new Requestwisefile
+                {
+                    Filename = fileName,
+                    Requestid = request.Requestid,
+                    Createddate = DateTime.Now
+                };
 
                 _db.Requestwisefiles.Add(requestwisefile);
                 _db.SaveChanges();
@@ -134,55 +164,114 @@ public class RequestController : Controller
     {
         if (ModelState.IsValid)
         {
-            //inserting into user table
-            User user = new User();
-            user.Firstname = obj.Firstname;
-            user.Lastname = obj.Lastname;
-            user.Email = obj.Email;
-            user.Mobile = obj.Phonenumber;
-            user.Street = obj.Street;
-            user.City = obj.City;
-            user.State = obj.State;
-            user.Zipcode = obj.Zipcode;
-            user.Createddate = DateTime.Now;
-            user.Createdby = "admin";
+            var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
+            Guid guid = Guid.NewGuid();
+
+            //Inserting into AspNetUser
+            AspNetUser aspNetUser = new AspNetUser();
+
+            if (existUser == null)
+            {
+
+                aspNetUser.Id = guid.ToString();
+                aspNetUser.UserName = obj.Firstname;
+                aspNetUser.Email = obj.Email;
+                aspNetUser.PhoneNumber = obj.Phonenumber;
+                aspNetUser.CreatedDate = DateTime.UtcNow;
+                _db.AspNetUsers.Add(aspNetUser);
+                _db.SaveChanges();
+            }
+            //Inserting into User table
+            User user = new User
+            {
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Mobile = obj.Phonenumber,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Createddate = DateTime.Now,
+                Createdby = "admin"
+            };
+            if (existUser == null)
+            {
+                user.Aspnetuserid = aspNetUser.Id;
+            }
+            else
+            {
+                user.Aspnetuserid = existUser.Id;
+            }
+
             _db.Users.Add(user);
             _db.SaveChanges();
 
             //Inserting into request table
-            Request request = new Request();
-            request.Requesttypeid = 1;
-            request.Userid = user.Userid;
-            request.Firstname = obj.FamilyFirstname;
-            request.Lastname = obj.FamilyLastname;
-            request.Email = obj.FamilyEmail;
-            request.Status = 3;
-            request.Createddate = DateTime.Now;
-            request.Isurgentemailsent = false;
+            Request request = new Request
+            {
+                Requesttypeid = 1,
+                Userid = user.Userid,
+                Firstname = obj.FamilyFirstname,
+                Lastname = obj.FamilyLastname,
+                Email = obj.FamilyEmail,
+                Status = 3,
+                Createddate = DateTime.Now,
+                Isurgentemailsent = false
+            };
             _db.Requests.Add(request);
             _db.SaveChanges();
 
             //Insertung into RequestClient
-            Requestclient requestclient = new Requestclient();
-
-            requestclient.Requestid = request.Requestid;
-            requestclient.Firstname = obj.Firstname;
-            requestclient.Lastname = obj.Lastname;
-            requestclient.Email = obj.Email;
-            requestclient.Phonenumber = obj.Phonenumber;
-            requestclient.Strmonth = obj.Strmonth;
-            requestclient.Street = obj.Street;
-            requestclient.City = obj.City;
-            requestclient.State = obj.State;
-            requestclient.Zipcode = obj.Zipcode;
-            requestclient.Notes = obj.Notes;
+            Requestclient requestclient = new Requestclient
+            {
+                Requestid = request.Requestid,
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Phonenumber = obj.Phonenumber,
+                Strmonth = obj.Strmonth,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Notes = obj.Notes
+            };
 
             //Inserting into requestStatusLog
 
-            Requeststatuslog requeststatuslog = new Requeststatuslog();
-            requeststatuslog.Requestid = request.Requestid;
-            requeststatuslog.Status = 4;
-            requeststatuslog.Createddate = DateTime.Now;
+            Requeststatuslog requeststatuslog = new Requeststatuslog
+            {
+                Requestid = request.Requestid,
+                Status = 4,
+                Createddate = DateTime.Now
+            };
+
+
+            //uploading files
+            if (obj.formFile != null && obj.formFile.Length > 0)
+            {
+                //get file name
+                var fileName = Path.GetFileName(obj.formFile.FileName);
+
+                //define path
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
+
+                // Copy the file to the desired location
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    obj.formFile.CopyTo(stream);
+                }
+                Requestwisefile requestwisefile = new Requestwisefile
+                {
+                    Filename = fileName,
+                    Requestid = request.Requestid,
+                    Createddate = DateTime.Now
+                };
+
+                _db.Requestwisefiles.Add(requestwisefile);
+                _db.SaveChanges();
+            }
 
             return RedirectToAction("submitRequestScreen");
         }
@@ -200,68 +289,107 @@ public class RequestController : Controller
     {
         if (ModelState.IsValid)
         {
-        //inserting into concierge table
-        Concierge concierge = new Concierge();
-            concierge.Conciergename = obj.ConciergeFirstname+ " " + obj.ConciergeLastname;
-            concierge.Street = obj.Street;
-            concierge.City = obj.City;
-            concierge.State = obj.State;
-            concierge.Zipcode = obj.Zipcode;
-            concierge.Createddate = DateTime.Now;
-            concierge.Regionid = 1; // region table refernce
+
+            var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
+            Guid guid = Guid.NewGuid();
+
+            //Inserting into AspNetUser
+            AspNetUser aspNetUser = new AspNetUser();
+
+            if (existUser == null)
+            {
+
+                aspNetUser.Id = guid.ToString();
+                aspNetUser.UserName = obj.Firstname;
+                aspNetUser.Email = obj.Email;
+                aspNetUser.PhoneNumber = obj.Phonenumber;
+                aspNetUser.CreatedDate = DateTime.UtcNow;
+                _db.AspNetUsers.Add(aspNetUser);
+                _db.SaveChanges();
+            }
+            
+
+            //inserting into concierge table
+            Concierge concierge = new Concierge
+            {
+                Conciergename = obj.ConciergeFirstname + " " + obj.ConciergeLastname,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Createddate = DateTime.Now,
+                Regionid = 1 // region table refernce
+            };
 
             _db.Concierges.Add(concierge);
             _db.SaveChanges();
 
-        //inserting into user table
-        User user = new User();
-        user.Firstname = obj.Firstname;
-        user.Lastname = obj.Lastname;
-        user.Email = obj.Email;
-        user.Mobile = obj.Phonenumber;
-        user.Street = obj.Street;
-        user.City = obj.City;
-        user.State = obj.State;
-        user.Zipcode = obj.Zipcode;
-        user.Createddate = DateTime.Now;
-        user.Createdby = "admin";
-        _db.Users.Add(user);
+            //Inserting into User table
+            User user = new User
+            {
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Mobile = obj.Phonenumber,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Createddate = DateTime.Now,
+                Createdby = "admin"
+            };
+            if (existUser == null)
+            {
+                user.Aspnetuserid = aspNetUser.Id;
+            }
+            else
+            {
+                user.Aspnetuserid = existUser.Id;
+            }
+
+            _db.Users.Add(user);
+            _db.SaveChanges();
+
+
+            //Inserting into request table
+            Request request = new Request
+            {
+                Requesttypeid = 1,
+                Userid = user.Userid,
+                Firstname = obj.ConciergeFirstname,
+                Lastname = obj.ConciergeLastname,
+                Email = obj.ConciergeEmail,
+                Status = 3,
+                Createddate = DateTime.Now,
+                Isurgentemailsent = false
+            };
+            _db.Requests.Add(request);
         _db.SaveChanges();
 
-        //Inserting into request table
-        Request request = new Request();
-        request.Requesttypeid = 1;
-        request.Userid = user.Userid;
-        request.Firstname = obj.ConciergeFirstname;
-        request.Lastname = obj.ConciergeLastname;
-        request.Email = obj.ConciergeEmail;
-        request.Status = 3;
-        request.Createddate = DateTime.Now;
-        request.Isurgentemailsent = false;
-        _db.Requests.Add(request);
-        _db.SaveChanges();
-
-        //Insertung into RequestClient
-        Requestclient requestclient = new Requestclient();
-
-         requestclient.Requestid = request.Requestid;
-         requestclient.Firstname = obj.Firstname;
-         requestclient.Lastname = obj.Lastname;
-         requestclient.Email = obj.Email;
-         requestclient.Phonenumber = obj.Phonenumber;
-         requestclient.Strmonth = obj.Strmonth;
-         requestclient.Street = obj.Street;
-         requestclient.City = obj.City;
-         requestclient.State = obj.State;
-         requestclient.Zipcode = obj.Zipcode;
-         requestclient.Notes = obj.Notes;
+            //Insertung into RequestClient
+            Requestclient requestclient = new Requestclient
+            {
+                Requestid = request.Requestid,
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Phonenumber = obj.Phonenumber,
+                Strmonth = obj.Strmonth,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Notes = obj.Notes
+            };
 
             //Inserting into requestStatusLog
 
-            Requeststatuslog requeststatuslog = new Requeststatuslog();
-            requeststatuslog.Requestid = request.Requestid;
-            requeststatuslog.Status = 4;
-            requeststatuslog.Createddate = DateTime.Now;
+            Requeststatuslog requeststatuslog = new Requeststatuslog
+            {
+                Requestid = request.Requestid,
+                Status = 4,
+                Createddate = DateTime.Now
+            };
 
             return RedirectToAction("submitRequestScreen");
         }
@@ -279,48 +407,83 @@ public class RequestController : Controller
     {
         if(ModelState.IsValid)
         {
-            Business business = new Business();
-            
-            business.Name = obj.bussinessFirstname + " " + obj.bussinessLastname;
-            business.Createdby = DateTime.Now.ToString();
+            Business business = new Business
+            {
+                Name = obj.bussinessFirstname + " " + obj.bussinessLastname,
+                Createdby = DateTime.Now.ToString()
+            };
 
-            User user = new User();
-            user.Firstname = obj.Firstname;
-            user.Lastname = obj.Lastname;
-            user.Email = obj.Email;
-            user.Mobile = obj.Phonenumber;
-            user.Street = obj.Street;
-            user.City = obj.City;
-            user.State = obj.State;
-            user.Zipcode = obj.Zipcode;
-            user.Createddate = DateTime.Now;
-            user.Createdby = "admin";
+            var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
+            Guid guid = Guid.NewGuid();
+
+            //Inserting into AspNetUser
+            AspNetUser aspNetUser = new AspNetUser();
+
+            if (existUser == null)
+            {
+
+                aspNetUser.Id = guid.ToString();
+                aspNetUser.UserName = obj.Firstname;
+                aspNetUser.Email = obj.Email;
+                aspNetUser.PhoneNumber = obj.Phonenumber;
+                aspNetUser.CreatedDate = DateTime.UtcNow;
+                _db.AspNetUsers.Add(aspNetUser);
+                _db.SaveChanges();
+            }
+            //Inserting into User table
+            User user = new User
+            {
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Mobile = obj.Phonenumber,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Createddate = DateTime.Now,
+                Createdby = "admin"
+            };
+            if (existUser == null)
+            {
+                user.Aspnetuserid = aspNetUser.Id;
+            }
+            else
+            {
+                user.Aspnetuserid = existUser.Id;
+            }
+
             _db.Users.Add(user);
             _db.SaveChanges();
 
-            Request request = new Request();
-            request.Requesttypeid = 1;
-            request.Userid = user.Userid;
-            request.Firstname = obj.Firstname;
-            request.Lastname = obj.Lastname;
-            request.Email = obj.Email;
-            request.Status = 4;
-            request.Createddate = DateTime.Now;
-            request.Isurgentemailsent = false;
+            Request request = new Request
+            {
+                Requesttypeid = 1,
+                Userid = user.Userid,
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Status = 4,
+                Createddate = DateTime.Now,
+                Isurgentemailsent = false
+            };
             _db.Requests.Add(request);
             _db.SaveChanges();
 
-            Requestbusiness requestbusiness = new Requestbusiness();
-
-            requestbusiness.Businessid = business.Id;
-            requestbusiness.Requestid = request.Requestid;
+            Requestbusiness requestbusiness = new Requestbusiness
+            {
+                Businessid = business.Id,
+                Requestid = request.Requestid
+            };
             _db.Requestbusinesses.Add(requestbusiness);
             _db.SaveChanges();
 
-            Requeststatuslog requeststatuslog = new Requeststatuslog();
-            requeststatuslog.Requestid = request.Requestid;
-            requeststatuslog.Status = 4;
-            requeststatuslog.Createddate = DateTime.Now;
+            Requeststatuslog requeststatuslog = new Requeststatuslog
+            {
+                Requestid = request.Requestid,
+                Status = 4,
+                Createddate = DateTime.Now
+            };
             _db.Requeststatuslogs.Add(requeststatuslog);
             _db.SaveChanges();  
 

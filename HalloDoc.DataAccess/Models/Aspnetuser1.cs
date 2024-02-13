@@ -40,6 +40,4 @@ public partial class Aspnetuser1
     public virtual ICollection<Shiftdetail> Shiftdetails { get; set; } = new List<Shiftdetail>();
 
     public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();
-
-    public virtual ICollection<User> Users { get; set; } = new List<User>();
 }

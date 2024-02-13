@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Submit Request";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/submit-request-screen.css">
+    <link rel="stylesheet" href="~/css/PatientDashBoard.css">
+}
+
+
+<div id="tabs" class="border-top ">
+    <div class="tab-content">
+        <div class="tab-pane fade show active m-5" id="tab1">
+            <h4>Medical History</h4>
+            <div class="shadow">
+                <a class="btn m-3 m-lg-4 float-end"
+                   style="color: #01bce9; border: 1px solid #01bce9;">
+                    <span class="d-none d-md-block">Create New Request</span>
+                    <img src="~/images/plus-lg.svg" id="addImg" class="d-md-none">
+                </a>
+            </div>
+            <div class="w-100 table-responsive shadow">
+                <div class="d-block d-md-none">
+                    @foreach (var item in Model)
+                    {
+                        <p class="d-inline-flex gap-1">
+                            <div class="ms-1 ps-1" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                <img src="~/images/clock.svg">
+                                Created date : @item.Createddate
+                            </div>
+                        </p>
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                Provider: 
+                                <div>
+                                    <img src="~/images/check-circle.svg">
+                                    CurrentStatus: @item.Status
+                                </div>
+                                <div>
+                                    <button class="btn" id="doc" style="color: #01bce9; border: 1px solid #01bce9;">
+                                        Document
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <table class="table m-auto d-none d-md-table">
+                    <thead>
+                        <tr>
+                            <th>Created Date</th>
+                            <th>Current Status</th>
+                            <th>Document</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Createddate</td>
+                                <td>@item.Status</td>
+                                <td>
+                                    @if (item.Filename != null)
+                                    {
+                                        <a asp-controller="Patient" asp-action="Document" class="btn" id="doc" style="color: #01bce9; border: 1px solid #01bce9;">
+                                            Document
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade show " id="tab2">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam eveniet dolores minima voluptas quisquam incidunt fugit praesentium modi reprehenderit facere.</p>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

@@ -51,7 +51,7 @@ public partial class User
 
     public bool? Isrequestwithemail { get; set; }
 
-    public virtual Aspnetuser1? Aspnetuser { get; set; }
+    public virtual AspNetUser? Aspnetuser { get; set; }
 
     public virtual Region? Region { get; set; }
 

@@ -1,0 +1,64 @@
+﻿body {
+}
+
+header {
+    /* background-color: white; */
+    width: 100vw;
+    height: 80px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 0 1 0 0 black;
+}
+
+#logout-btn {
+    color: #01bce9;
+    border: 1px solid #01bce9;
+}
+
+#light-dark-btn {
+    filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
+}
+
+#logoutImg {
+    filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
+}
+
+#addImg {
+    filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
+}
+
+#listImg {
+    filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
+}
+
+.footer {
+    position: fixed;
+    bottom: 0%;
+    height: 75px;
+    padding: 10px;
+    color: white;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    z-index: 3;
+}
+
+#navToggle li a {
+    color: black;
+}
+#navToggle li a.active {
+        color: #01bce9;
+        border-bottom: 1px solid #01bce9;
+        background: none;
+        font-weight: 500;
+    }
+
+#togglebar li a {
+    color: black;
+}
+#togglebar li a.active {
+    color: #01bce9;
+    border-bottom: 1px solid #01bce9;
+    background: none;
+    font-weight: 500;
+}
