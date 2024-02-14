@@ -69,6 +69,10 @@
       "PackagePath": "staticwebassets\\images\\clock.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\cloud-arrow-down.svg",
+      "PackagePath": "staticwebassets\\images\\cloud-arrow-down.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\cloud_upload.svg",
       "PackagePath": "staticwebassets\\images\\cloud_upload.svg"
     },
@@ -381,12 +385,32 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\Fig7. Admin dashboard in Conclude state.jpg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees-14Feb24.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees-14Feb24.pdf"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees_12Feb24.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees_12Feb24.pdf"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\check-circle (1).svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\check-circle (1).svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\image_2024_01_30T04_10_24_494Z.png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\image_2024_01_30T04_10_24_494Z.png"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\image_2024_01_30T04_16_23_085Z.png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\image_2024_01_30T04_16_23_085Z.png"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\person-circle (1).svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\person-circle (1).svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\person-circle (2).svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\person-circle (2).svg"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.HalloDoc.Microsoft.AspNetCore.StaticWebAssets.props",

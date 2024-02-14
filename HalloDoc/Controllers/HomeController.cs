@@ -45,8 +45,7 @@ public class HomeController : Controller
         else
         {
             HttpContext.Session.SetString("token", user.UserName);
-            String AspId = myUser.Id;
-
+            String AspId = myUser.Id;          
             return RedirectToAction("Dashboard", "Patient", new { AspId = AspId});
         }
     }

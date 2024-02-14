@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Submit Request";
+    ViewData["Title"] = "View Document";
 }
 
 @section Styles {
@@ -12,10 +12,12 @@
     <h3>
         Documents
     </h3>
-    <a asp-action="Dashboard" asp-controller="Patient" class="text-decoration-none" id="back-btn">
+    <form method="post">
+        <button class="btn" type="submit" id="back-btn">
         <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="" alt="">
         <span>Back</span>
-    </a>
+    </button>
+    </form>
     </div>
     <div class="p-3 shadow">
         <span>Patient Name</span>
@@ -37,7 +39,7 @@
              <h5>Documents</h5>
             <a class="btn float-end"
                style="color: #01bce9; border: 1px solid #01bce9;">
-                <span class="d-none d-md-block">Download</span>
+                <span class="d-none d-md-block">Download All</span>
                 <img src="~/images/plus-lg.svg" id="addImg" class="d-md-none">
             </a>
          </div>
@@ -54,13 +56,23 @@
                      <th>Actions</th>
                  </tr>
                 <tr>
+                    @foreach(var item in Model)
+                    {
                     <td>
                         <input type="checkbox" />
-                    </td>
-                     <td>1</td>
-                     <td>2</td>
-                     <td>3</td>
-                     <td>4</td>
+                   </td>
+                   <td>@item.Filename</td>
+                   <td>@item.RequestId</td>
+                   <td>@item.createdate</td>
+                   <td>
+                            <a href="@Url.Action("Download", "Patient", new{filename = @item.Filename})"
+                            class="btn"
+                           style="color: #01bce9; border: 1px solid #01bce9;">
+                                <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
+                        </a>
+                   </td>
+                    
+                    }
                  </tr>
 
              </thead>

@@ -30,7 +30,9 @@ header {
 #listImg {
     filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
 }
-
+#uploadFile {
+    filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
+}
 .footer {
     position: fixed;
     bottom: 0%;
@@ -43,9 +45,7 @@ header {
     z-index: 3;
 }
 
-#navToggle li a {
-    color: black;
-}
+
 #navToggle li a.active {
         color: #01bce9;
         border-bottom: 1px solid #01bce9;
@@ -61,4 +61,8 @@ header {
     border-bottom: 1px solid #01bce9;
     background: none;
     font-weight: 500;
+}
+
+[data-theme='dark'] a {
+    color: white !important;
 }

@@ -55,8 +55,9 @@
 </div>
 <div class="container-fluid d-flex justify-content-center">
 
-    <form id="patient-request-form" asp-controller="Request" asp-action="createFamilyfriendRequest" class="form-floating patient-request-form p-2">
+    <form id="patient-request-form" asp-controller="Request" asp-action="createFamilyfriendRequest" enctype="multipart/form-data" class="form-floating patient-request-form p-2">
         <h4 class="mt-4 mb-4 ms-2">Family/Friend Information</h4>
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="row g-2 m-1">
             <div class="col-md-6">
                 <div class="form-floating">
@@ -111,4 +112,7 @@
 @section Scripts {
         <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/pop up.js" asp-append-version="true"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

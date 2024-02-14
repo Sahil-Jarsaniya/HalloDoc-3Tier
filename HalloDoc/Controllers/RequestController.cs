@@ -38,52 +38,51 @@ public class RequestController : Controller
 
             var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
-
-            //Inserting into AspNetUser
-            AspNetUser aspNetUser = new AspNetUser();
-          
-            if (existUser ==null)
+            var uid = 0;
+            if (existUser == null)
             {
+                AspNetUser aspNetUser = new AspNetUser
+                {
 
-                aspNetUser.Id = guid.ToString();
-                aspNetUser.UserName = obj.Firstname;
-                aspNetUser.Email = obj.Email;
-                aspNetUser.PhoneNumber = obj.Phonenumber;
-                aspNetUser.CreatedDate = DateTime.UtcNow;
-            _db.AspNetUsers.Add(aspNetUser);
+                    Id = guid.ToString(),
+                    UserName = obj.Firstname,
+                    CreatedDate = DateTime.UtcNow,
+                    PhoneNumber = obj.Phonenumber,
+                    Email = obj.Email,
+                };
+                _db.AspNetUsers.Add(aspNetUser);
                 _db.SaveChanges();
-            }
-            //Inserting into User table
-            User user = new User
-            {
-                Firstname = obj.Firstname,
-                Lastname = obj.Lastname,
-                Email = obj.Email,
-                Mobile = obj.Phonenumber,
-                Street = obj.Street,
-                City = obj.City,
-                State = obj.State,
-                Zipcode = obj.Zipcode,
-                Createddate = DateTime.Now,
-                Createdby = "admin"
-            };
-            if(existUser == null)
-            {
-                user.Aspnetuserid = aspNetUser.Id;
+
+                User user = new User
+                {
+                    Aspnetuserid = guid.ToString(),
+                    Firstname = obj.Firstname,
+                    Lastname = obj.Lastname,
+                    Email = obj.Email,
+                    Mobile = obj.Phonenumber,
+                    Street = obj.Street,
+                    City = obj.City,
+                    State = obj.State,
+                    Zipcode = obj.Zipcode,
+                    Createddate = DateTime.Now,
+                    Strmonth = obj.Strmonth,
+                    Createdby = "admin"
+                };
+                _db.Users.Add(user);
+                _db.SaveChanges();
+                uid = user.Userid;
             }
             else
             {
-                user.Aspnetuserid = existUser.Id;
+                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
+                uid = user.Userid;
             }
-
-            _db.Users.Add(user);
-            _db.SaveChanges();
 
             //Inserting into Request
             Request request = new Request
             {
                 Requesttypeid = 1,
-                Userid = user.Userid,
+                Userid = uid,
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,
@@ -166,52 +165,51 @@ public class RequestController : Controller
         {
             var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
-
-            //Inserting into AspNetUser
-            AspNetUser aspNetUser = new AspNetUser();
-
+            var uid = 0;
             if (existUser == null)
             {
+                AspNetUser aspNetUser = new AspNetUser
+                {
 
-                aspNetUser.Id = guid.ToString();
-                aspNetUser.UserName = obj.Firstname;
-                aspNetUser.Email = obj.Email;
-                aspNetUser.PhoneNumber = obj.Phonenumber;
-                aspNetUser.CreatedDate = DateTime.UtcNow;
+                    Id = guid.ToString(),
+                    UserName = obj.Firstname,
+                    CreatedDate = DateTime.UtcNow,
+                    PhoneNumber = obj.Phonenumber,
+                    Email = obj.Email,
+                };
                 _db.AspNetUsers.Add(aspNetUser);
                 _db.SaveChanges();
-            }
-            //Inserting into User table
-            User user = new User
-            {
-                Firstname = obj.Firstname,
-                Lastname = obj.Lastname,
-                Email = obj.Email,
-                Mobile = obj.Phonenumber,
-                Street = obj.Street,
-                City = obj.City,
-                State = obj.State,
-                Zipcode = obj.Zipcode,
-                Createddate = DateTime.Now,
-                Createdby = "admin"
-            };
-            if (existUser == null)
-            {
-                user.Aspnetuserid = aspNetUser.Id;
+
+                User user = new User
+                {
+                    Aspnetuserid = guid.ToString(),
+                    Firstname = obj.Firstname,
+                    Lastname = obj.Lastname,
+                    Email = obj.Email,
+                    Mobile = obj.Phonenumber,
+                    Street = obj.Street,
+                    City = obj.City,
+                    State = obj.State,
+                    Zipcode = obj.Zipcode,
+                    Createddate = DateTime.Now,
+                    Strmonth = obj.Strmonth,
+                    Createdby = "admin"
+                };
+                _db.Users.Add(user);
+                _db.SaveChanges();
+                uid = user.Userid;
             }
             else
             {
-                user.Aspnetuserid = existUser.Id;
+                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
+                uid = user.Userid;
             }
-
-            _db.Users.Add(user);
-            _db.SaveChanges();
 
             //Inserting into request table
             Request request = new Request
             {
                 Requesttypeid = 1,
-                Userid = user.Userid,
+                Userid = uid,
                 Firstname = obj.FamilyFirstname,
                 Lastname = obj.FamilyLastname,
                 Email = obj.FamilyEmail,
@@ -292,23 +290,45 @@ public class RequestController : Controller
 
             var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
-
-            //Inserting into AspNetUser
-            AspNetUser aspNetUser = new AspNetUser();
-
+            var uid = 0;
             if (existUser == null)
             {
+                AspNetUser aspNetUser = new AspNetUser
+                {
 
-                aspNetUser.Id = guid.ToString();
-                aspNetUser.UserName = obj.Firstname;
-                aspNetUser.Email = obj.Email;
-                aspNetUser.PhoneNumber = obj.Phonenumber;
-                aspNetUser.CreatedDate = DateTime.UtcNow;
+                    Id = guid.ToString(),
+                    UserName = obj.Firstname,
+                    CreatedDate = DateTime.UtcNow,
+                    PhoneNumber = obj.Phonenumber,
+                    Email = obj.Email,
+                };
                 _db.AspNetUsers.Add(aspNetUser);
                 _db.SaveChanges();
-            }
-            
 
+                User user = new User
+                {
+                    Aspnetuserid = guid.ToString(),
+                    Firstname = obj.Firstname,
+                    Lastname = obj.Lastname,
+                    Email = obj.Email,
+                    Mobile = obj.Phonenumber,
+                    Street = obj.Street,
+                    City = obj.City,
+                    State = obj.State,
+                    Zipcode = obj.Zipcode,
+                    Createddate = DateTime.Now,
+                    Strmonth = obj.Strmonth,
+                    Createdby = "admin"
+                };
+                _db.Users.Add(user);
+                _db.SaveChanges();
+                uid = user.Userid;
+            }
+            else
+            {
+                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
+                uid = user.Userid;
+            }
             //inserting into concierge table
             Concierge concierge = new Concierge
             {
@@ -324,38 +344,11 @@ public class RequestController : Controller
             _db.Concierges.Add(concierge);
             _db.SaveChanges();
 
-            //Inserting into User table
-            User user = new User
-            {
-                Firstname = obj.Firstname,
-                Lastname = obj.Lastname,
-                Email = obj.Email,
-                Mobile = obj.Phonenumber,
-                Street = obj.Street,
-                City = obj.City,
-                State = obj.State,
-                Zipcode = obj.Zipcode,
-                Createddate = DateTime.Now,
-                Createdby = "admin"
-            };
-            if (existUser == null)
-            {
-                user.Aspnetuserid = aspNetUser.Id;
-            }
-            else
-            {
-                user.Aspnetuserid = existUser.Id;
-            }
-
-            _db.Users.Add(user);
-            _db.SaveChanges();
-
-
             //Inserting into request table
             Request request = new Request
             {
                 Requesttypeid = 1,
-                Userid = user.Userid,
+                Userid = uid,
                 Firstname = obj.ConciergeFirstname,
                 Lastname = obj.ConciergeLastname,
                 Email = obj.ConciergeEmail,
@@ -410,56 +403,57 @@ public class RequestController : Controller
             Business business = new Business
             {
                 Name = obj.bussinessFirstname + " " + obj.bussinessLastname,
-                Createdby = DateTime.Now.ToString()
+                Createddate = DateTime.Now
             };
+            _db.Businesses.Add(business);
+            _db.SaveChanges();
 
             var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
-
-            //Inserting into AspNetUser
-            AspNetUser aspNetUser = new AspNetUser();
-
-            if (existUser == null)
+            var uid = 0;
+           if(existUser == null)
             {
-
-                aspNetUser.Id = guid.ToString();
-                aspNetUser.UserName = obj.Firstname;
-                aspNetUser.Email = obj.Email;
-                aspNetUser.PhoneNumber = obj.Phonenumber;
-                aspNetUser.CreatedDate = DateTime.UtcNow;
+                AspNetUser aspNetUser = new AspNetUser
+                {
+                    
+                    Id = guid.ToString(),
+                    UserName = obj.Firstname,
+                    CreatedDate = DateTime.UtcNow,
+                    PhoneNumber = obj.Phonenumber,
+                    Email = obj.Email,
+                };
                 _db.AspNetUsers.Add(aspNetUser);
                 _db.SaveChanges();
-            }
-            //Inserting into User table
-            User user = new User
-            {
-                Firstname = obj.Firstname,
-                Lastname = obj.Lastname,
-                Email = obj.Email,
-                Mobile = obj.Phonenumber,
-                Street = obj.Street,
-                City = obj.City,
-                State = obj.State,
-                Zipcode = obj.Zipcode,
-                Createddate = DateTime.Now,
-                Createdby = "admin"
-            };
-            if (existUser == null)
-            {
-                user.Aspnetuserid = aspNetUser.Id;
+
+                User user = new User
+                {
+                    Aspnetuserid = guid.ToString(),
+                    Firstname = obj.Firstname,
+                    Lastname = obj.Lastname,
+                    Email = obj.Email,
+                     Mobile = obj.Phonenumber,
+                     Street = obj.Street,
+                     City = obj.City,
+                     State  = obj.State,
+                     Zipcode = obj.Zipcode,
+                     Createddate = DateTime.Now,
+                     Strmonth = obj.Strmonth,
+                     Createdby = "admin"
+                };
+                _db.Users.Add(user);
+                _db.SaveChanges();
+                uid = user.Userid;
             }
             else
             {
-                user.Aspnetuserid = existUser.Id;
+                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
+                 uid = user.Userid;
             }
-
-            _db.Users.Add(user);
-            _db.SaveChanges();
 
             Request request = new Request
             {
                 Requesttypeid = 1,
-                Userid = user.Userid,
+                Userid = uid,
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,

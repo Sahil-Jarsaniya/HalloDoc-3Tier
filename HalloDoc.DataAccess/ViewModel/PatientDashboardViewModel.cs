@@ -1,11 +1,4 @@
-﻿using HalloDoc.DataAccess.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HalloDoc.DataAccess.ViewModel
+﻿namespace HalloDoc.DataAccess.ViewModel
 {
     public class PatientDashboardViewModel
     {
@@ -14,6 +7,6 @@ namespace HalloDoc.DataAccess.ViewModel
         public String? Status { get; set; }
 
         public string Filename { get; set; } = null!;
-
+        public int RequestId { get; set; }
     }
 }
