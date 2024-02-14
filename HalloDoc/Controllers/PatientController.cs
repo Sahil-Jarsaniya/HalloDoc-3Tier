@@ -28,19 +28,19 @@ namespace HalloDoc.Controllers
             var patientAspId = _db.Users.Where(x => x.Aspnetuserid == AspId).FirstOrDefault();
             var userId = patientAspId.Userid;
 
-            //var requestData = from t1 in _db.Requests
-            //                  join t3 in _db.RequestStatuses on t1.Status equals t3.StatusId
-            //                  join t2 in _db.Requestwisefiles
-            //                  on t1.Requestid equals t2.Requestid into files
-            //                  from t2 in files.DefaultIfEmpty()
-            //                  where t1.Userid == userId
-            //                  select new PatientDashboardViewModel
-            //                  {
-            //                      RequestId = t1.Requestid,
-            //                      Createddate = t1.Createddate,
-            //                      Status = t3.Status,
-            //                      Filename = t2 != null ? t2.Filename : null
-            //                  };
+            var requestData = from t1 in _db.Requests
+                              join t3 in _db.RequestStatuses on t1.Status equals t3.StatusId
+                              join t2 in _db.Requestwisefiles
+                              on t1.Requestid equals t2.Requestid into files
+                              from t2 in files.DefaultIfEmpty()
+                              where t1.Userid == userId
+                              select new PatientDashboardViewModel
+                              {
+                                  RequestId = t1.Requestid,
+                                  Createddate = t1.Createddate,
+                                  Status = t3.Status,
+                                  Filename = t2 != null ? t2.Filename : null
+                              };
 
             var data = from rwf in _db.Requestwisefiles
                        join r in _db.Requests on rwf.Requestid equals r.Requestid
@@ -54,7 +54,7 @@ namespace HalloDoc.Controllers
                            Filename = rwf != null ? rwf.Filename : null
                        };
 
-            return View(data);
+            return View(requestData);
         }
 
         public IActionResult Document(int reqId)
