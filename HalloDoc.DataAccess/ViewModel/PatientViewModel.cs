@@ -33,6 +33,16 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(50)]
         public string? Email { get; set; }
 
+
+        [Column("Password")]
+        [StringLength(100)]
+        public  string? Password { get; set; }
+
+
+        [Column("confirmPassword")]
+        [StringLength(100)]
+        public string? confirmPassword { get; set; }
+
         [Column("strmonth")]
         [StringLength(20)]
         public string? Strmonth { get; set; }
@@ -53,6 +63,6 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(10)]
         public string? Zipcode { get; set; }
 
-        public IFormFile formFile { get; set; }
+        public IFormFile? formFile { get; set; }
     }
 }

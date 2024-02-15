@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
-   
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
 }
 <!-- alert box -->
 <div class="modal fade" tabindex="-1" id="myModal">
@@ -21,12 +22,11 @@
             <div class="modal-body">
                 @* <img src="~/images/exclamation2.jpg" alt="" id="warning-icon"> *@
                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="white"
-                        class="bi bi-exclamation-circle" viewBox="0 0 16 16"
-                        style="background-color: #ffc107;border:3px #ffc107 solid;   border-radius: 100%;">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                        <path
-                            d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
-                    </svg>
+                     class="bi bi-exclamation-circle" viewBox="0 0 16 16"
+                     style="background-color: #ffc107;border:3px #ffc107 solid;   border-radius: 100%;">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
+                </svg>
                 <h4>Information</h4>
                 <p>
                     When submitting a request, you must provide the correct contact information about the patient or
@@ -44,18 +44,18 @@
 </div>
 
 <div class="d-block ms-auto me-auto" style="max-width: 1000px; width: 100%; ">
-            <a asp-action="submitRequestScreen" asp-controller="Request" class="m-2 text-decoration-none float-end"
-                id="create-patient-request-backBtn">
-                <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
-                <span>Back</span>
-            </a>
-            <br>
-            <br>
-        </div>
+    <a asp-action="submitRequestScreen" asp-controller="Request" class="m-2 text-decoration-none float-end"
+       id="create-patient-request-backBtn">
+        <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+        <span>Back</span>
+    </a>
+    <br>
+    <br>
+</div>
 
 <div class="container-fluid d-flex justify-content-center">
     <form method="post" asp-controller="Request" asp-action="createPatientRequest" enctype="multipart/form-data" id="patient-request-form" class="form-floating patient-request-form p-2">
-        
+
         <partial name="_PatientForm" />
 
         <h4 class="mt-4 mb-4 ms-2">(Optional) Upload Photo or Document</h4>
@@ -64,39 +64,22 @@
             <span asp-validation-for="formFile" id="fileChoosen" class="form-control">No file chosen</span>
             <label class="input-group-text" id="uploadFileLabel" for="actualFileBtn">
                 <img src="~/images/cloud_upload.svg" alt="">
-                Upload</label>
+                Upload
+            </label>
         </div>
         <button type="submit" id="cancelBtn" class="btn btn-primary float-end m-1">Cancel</button>
         <button type="submit" id="submitBtn" class="btn btn-primary float-end m-1">Submit</button>
     </form>
 </div>
 <br>
-<br><br><br>
+<br>
+<br>
+<br>
 
 @section Scripts {
-        <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/password.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/pop up.js" asp-append-version="true"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-
-            $('#checkEmail').on('blur', function () {
-                var email = $(this).val();
-                $.ajax({
-                    url: '/Patient/PatientCheckEmail',
-                    type: 'POST',
-                    data: { email: email },
-                    success: function (data) {
-                        if (!data.exists) {
-                            $('#hiddendiv').show();
-                        }
-                        else {
-                            $('#hiddendiv').hide();
-                        }
-                    }
-                });
-            });
-        });
-    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

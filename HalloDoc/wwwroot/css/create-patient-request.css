@@ -52,12 +52,12 @@ body {
     color: #01bce9;
 }
 
-#patient-request-form input:focus+label {
+.patient-request-form input:focus+label {
     color: #01bce9;
     font-size: small;
 }
 
-#patient-request-form textarea:focus+label {
+.patient-request-form textarea:focus+label {
     color: #01bce9;
     font-size: small;
 }
@@ -89,6 +89,17 @@ body {
     background-color: white;
     color: #01bce9;
 }
+
+#editBtn {
+    background-color: #01bce9;
+    border: #01bce9 1px solid;
+}
+
+    #editBtn:hover {
+        background-color: white;
+        color: #01bce9;
+    }
+
 
 #cancelBtn {
     background-color: white;

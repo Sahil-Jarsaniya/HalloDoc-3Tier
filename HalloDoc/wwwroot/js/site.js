@@ -3,12 +3,22 @@
 
 document.getElementById('light-dark-btn').addEventListener('click',()=>{
     if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
+        localStorage.setItem("PageTheme", "light");
         document.documentElement.setAttribute('data-bs-theme','light')
     }
     else {
+        localStorage.setItem("PageTheme", "dark");
         document.documentElement.setAttribute('data-bs-theme','dark')
     }
 })
+
+if (localStorage.getItem("PageTheme") === "light") {
+    document.documentElement.setAttribute('data-bs-theme', 'light')
+}
+else {
+    document.documentElement.setAttribute('data-bs-theme', 'dark')
+}
+
 
 
 
@@ -66,4 +76,37 @@ $(window).on('load', function () {
 });
 function closeModal() {
     $('#myModal').modal('hide')
+}
+
+// Edit Details buttons
+function editDetails() {
+    var cancelbtn = document.getElementById("cancelBtn");
+    var submitBtn = document.getElementById("submitBtn");
+    var editBtn = document.getElementById("editBtn");
+    var field = document.getElementById("field")
+    cancelbtn.classList.remove("d-none");
+    submitBtn.classList.remove("d-none");
+    editBtn.classList.remove("d-block");
+
+    cancelbtn.classList.add("d-block");
+    submitBtn.classList.add("d-block");
+    editBtn.classList.add("d-none");
+
+    field.disabled = false;
+}
+
+function cancelEdit() {
+    var cancelbtn = document.getElementById("cancelBtn");
+    var submitBtn = document.getElementById("submitBtn");
+    var editBtn = document.getElementById("editBtn");
+    var field = document.getElementById("field")
+    cancelbtn.classList.remove("d-block");
+    submitBtn.classList.remove("d-block");
+    editBtn.classList.remove("d-none");
+
+    cancelbtn.classList.add("d-none");
+    submitBtn.classList.add("d-none");
+    editBtn.classList.add("d-block");
+
+    field.disabled = true;
 }

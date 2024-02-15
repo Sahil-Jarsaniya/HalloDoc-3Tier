@@ -117,6 +117,10 @@
       "PackagePath": "staticwebassets\\js\\bussinessphone.js"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\password.js",
+      "PackagePath": "staticwebassets\\js\\password.js"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\phone.js",
       "PackagePath": "staticwebassets\\js\\phone.js"
     },
@@ -391,6 +395,10 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees_12Feb24.pdf",
       "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees_12Feb24.pdf"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\check-circle (1) (1).svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\check-circle (1) (1).svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\check-circle (1).svg",

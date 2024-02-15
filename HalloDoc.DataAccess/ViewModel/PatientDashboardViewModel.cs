@@ -2,7 +2,6 @@
 {
     public class PatientDashboardViewModel
     {
-
         public DateTime Createddate { get; set; }
 
         public String? Status { get; set; }

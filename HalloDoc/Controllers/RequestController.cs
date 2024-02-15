@@ -5,6 +5,8 @@ using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.Data;
 using System;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace HalloDoc.Controllers;
 
@@ -22,6 +24,20 @@ public class RequestController : Controller
         bool emailExists = _db.Users.Any(u => u.Email == email);
         return Json(new { exists = emailExists });
     }
+
+    public static string GetHash(string text)
+    {
+        // SHA512 is disposable by inheritance.  
+        using (var sha256 = SHA256.Create())
+        {
+            // Send a sample text to hash.  
+            var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
+            // Get the hashed string.  
+            return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
+        }
+    }
+
+
     public IActionResult submitRequestScreen()
     {
         return View();
@@ -35,17 +51,24 @@ public class RequestController : Controller
     {
         if (ModelState.IsValid)
         {
-
+            if(obj.Password != obj.confirmPassword)
+            {
+                return View();
+            }
             var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;
+
             if (existUser == null)
             {
+                var hashPass = GetHash(obj.Password);
+
                 AspNetUser aspNetUser = new AspNetUser
                 {
 
                     Id = guid.ToString(),
-                    UserName = obj.Firstname,
+                    Password = hashPass,
+                    UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
                     PhoneNumber = obj.Phonenumber,
                     Email = obj.Email,
@@ -172,7 +195,7 @@ public class RequestController : Controller
                 {
 
                     Id = guid.ToString(),
-                    UserName = obj.Firstname,
+                    UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
                     PhoneNumber = obj.Phonenumber,
                     Email = obj.Email,
@@ -297,7 +320,7 @@ public class RequestController : Controller
                 {
 
                     Id = guid.ToString(),
-                    UserName = obj.Firstname,
+                    UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
                     PhoneNumber = obj.Phonenumber,
                     Email = obj.Email,
@@ -417,7 +440,7 @@ public class RequestController : Controller
                 {
                     
                     Id = guid.ToString(),
-                    UserName = obj.Firstname,
+                    UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
                     PhoneNumber = obj.Phonenumber,
                     Email = obj.Email,

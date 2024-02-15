@@ -1,10 +1,16 @@
-﻿@{
+﻿@model HalloDoc.DataAccess.ViewModel.DashboardViewModel;
+@{
     ViewData["Title"] = "Patient Dashboard";
 }
 
 @section Styles {
     <link rel="stylesheet" href="~/css/submit-request-screen.css">
     <link rel="stylesheet" href="~/css/PatientDashBoard.css">
+    <link rel="stylesheet" href="~/css/create-patient-request.css">
+
+    <!-- js ans css for phone input -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 }
 
 
@@ -22,7 +28,7 @@
             </div>
             <div class="w-100 table-responsive shadow">
                 <div class="d-block d-md-none">
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.PatientDashboardViewModel)
                     {
                         <p class="d-inline-flex gap-1">
                             <div class="ms-1 ps-1" data-bs-toggle="collapse" href="#@item.RequestId" role="button" aria-expanded="false">
@@ -56,7 +62,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        @foreach (var item in Model.PatientDashboardViewModel)
                         {
                             <tr>
                                 <td>@item.Createddate</td>
@@ -77,7 +83,114 @@
             </div>
         </div>
         <div class="tab-pane fade show " id="tab2">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam eveniet dolores minima voluptas quisquam incidunt fugit praesentium modi reprehenderit facere.</p>
+            <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+            <h4>User Profile</h4>
+                <button class="btn" type="submit" id="back-btn">
+                    <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="" alt="">
+                    <span>Back</span>
+                </button>
+            </div>
+            <div class="container-fluid d-flex justify-content-center mt-4">
+
+                <form id="patient-request-form" method="post" asp-action="Profile" asp-controller="Patient" class="form-floating shadow patient-request-form p-2">
+                    <fieldset disabled id="field">
+                        <input asp-for="ProfileEditViewModel.UserId"  hidden/>
+                        <span asp-validation-for="ProfileEditViewModel.UserId"></span>
+                    <h4 class="mt-4 mb-4 ms-2">General Information</h4>
+                    <div class="row g-2 m-1">
+                        <div class="col-md">
+                            <div class="form-floating">
+                                    <input asp-for="ProfileEditViewModel.Firstname" type="text" class="form-control" placeholder="">
+                                <label for="">First Name</label>
+                            </div>
+                            <span asp-validation-for="ProfileEditViewModel.Firstname"></span>
+                        </div>
+                        <div class="col-md">
+                            <div class="form-floating">
+                                    <input asp-for="ProfileEditViewModel.Lastname" type="text" class="form-control" placeholder="">
+                                <label for="floatingSelectGrid">Last Name</label>
+                            </div>
+                                <span asp-validation-for="ProfileEditViewModel.Lastname"></span>
+                        </div>
+                    </div>
+
+                    <div class="row g-2 m-1">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                    <input asp-for="ProfileEditViewModel.Strmonth" type="date" class="form-control" placeholder="">
+                                <label for="">Date Of Birth</label>
+                            </div>
+                                <span asp-validation-for="ProfileEditViewModel.Strmonth"></span>
+                        </div>
+                    </div>
+
+                    <h4 class="mt-4 mb-4 ms-2">Patient Contact Information</h4>
+                    <div class="row g-2 m-1">
+                        @*<div class="col-md-2">
+                            <div class="dropdown h-100">
+                                <select class="form-select h-100" aria-label="type">
+                                    <option selected>type</option>
+                                    <option value="1">Mobile</option>
+                                    <option value="2">Laptop</option>
+                                </select>
+                            </div>
+                        </div>*@
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                    <input asp-for="ProfileEditViewModel.Email" id="checkEmail" type="email" class="form-control" placeholder="name@example.com">
+                                <label for="">Email</label>
+                            </div>
+                                <span asp-validation-for="ProfileEditViewModel.Email"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating phone-div w-100 h-100 ">
+                                    <input asp-for="ProfileEditViewModel.Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                                <label for=""></label>
+                            </div>
+                                <span asp-validation-for="ProfileEditViewModel.Phonenumber"></span>
+                        </div>
+                    </div>
+
+
+                    <h4 class="mt-4 mb-4 ms-2">Location Information</h4>
+                    <div class="row g-2 m-1">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                    <input asp-for="ProfileEditViewModel.Street" type="text" class="form-control" placeholder="">
+                                <label for="">Street</label>
+                            </div>
+                                <span asp-validation-for="ProfileEditViewModel.Street"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                    <input asp-for="ProfileEditViewModel.City" type="text" class="form-control" placeholder="">
+                                <label for="">City</label>
+                            </div>
+                                <span asp-validation-for="ProfileEditViewModel.City"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                    <input asp-for="ProfileEditViewModel.State" type="text" class="form-control" placeholder="">
+                                <label for="">State</label>
+                            </div>
+                                <span asp-validation-for="ProfileEditViewModel.State"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                    <input type="text" asp-for="ProfileEditViewModel.Zipcode" class="form-control" placeholder="">
+                                <label for="">Zip Code</label>
+                            </div>
+                                <span asp-validation-for="ProfileEditViewModel.Zipcode"></span>
+                        </div>
+                    </div>
+
+                    </fieldset>
+                    <button type="reset" onclick="cancelEdit()" id="cancelBtn" class="btn btn-primary float-end m-1 d-none">Cancel</button>
+                    <button type="submit"  id="submitBtn" class="btn btn-primary float-end m-1 d-none">Submit</button>
+                    <button type="button" onclick="editDetails()" id="editBtn" class="btn btn-primary float-end m-1 d-block">Edit</button>
+                    <br><br><br><br><br>
+                </form>
+            </div>
         </div>
     </div>
 

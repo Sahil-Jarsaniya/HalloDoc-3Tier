@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "View Document";
 }
 
@@ -24,15 +25,16 @@
          <h4>@ViewBag.Data</h4>
          <p>Check here  for any files that you or doctors of your subsequents requestors have attached for you to review.</p>
 
-        <form  class="form-floating patient-request-form p-2">
+        <form asp-action="UploadFile" asp-controller="Patient" class="form-floating patient-request-form p-2" method="post">
             <div class="input-group m-1 mb-3">
-                <input  type="file" id="actualFileBtn" class="form-control" id="inputGroupFile02" hidden>
+                <input required  type="file" id="actualFileBtn" class="form-control" id="inputGroupFile02" hidden>
                 <span  id="fileChoosen" class="form-control">Select File</span>
                 <label class="input-group-text" id="uploadFileLabel" for="actualFileBtn">
                     <img src="~/images/cloud_upload.svg" alt="">
                     Upload
                 </label>
             </div>
+            <button class="btn submitBtn" type="submit">Submit</button>
          </form>
 
          <div class="d-flex justify-content-between mt-5">

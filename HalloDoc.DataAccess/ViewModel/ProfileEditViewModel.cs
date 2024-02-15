@@ -5,39 +5,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
 namespace HalloDoc.DataAccess.ViewModel
 {
-    public class FamilyViewModel
+    public class ProfileEditViewModel
     {
-        [Required]
-        [Column("familyFirstname")]
-        [StringLength(100)]
-        public string? FamilyFirstname { get; set; }
 
-        [Column("bussinessLastname")]
-        [StringLength(100)]
-        public string? FamilyLastname { get; set; }
+        public int UserId { get; set; }
 
-        [Column("BussinessPhonenumber")]
-        [StringLength(23)]
-        public string? FamilyPhonenumber { get; set; }
-
-        [Column("bussinessEmail")]
-        [StringLength(50)]
-        public string? FamilyEmail { get; set; }
-
-        [Column("RelationWithPatient")]
-        [StringLength(50)]
-        public string? RelationWithPatient { get; set; }
-
-        [Required]
-        [Column("notes")]
-        [StringLength(500)]
-        public string? Notes { get; set; }
-
-        [Required]
         [Column("firstname")]
         [StringLength(100)]
         public string? Firstname { get; set; }
@@ -53,15 +28,6 @@ namespace HalloDoc.DataAccess.ViewModel
         [Column("email")]
         [StringLength(50)]
         public string? Email { get; set; }
-
-        [Column("Password")]
-        [StringLength(100)]
-        public string? Password { get; set; }
-
-
-        [Column("confirmPassword")]
-        [StringLength(100)]
-        public string? confirmPassword { get; set; }
 
         [Column("strmonth")]
         [StringLength(20)]
@@ -82,7 +48,5 @@ namespace HalloDoc.DataAccess.ViewModel
         [Column("zipcode")]
         [StringLength(10)]
         public string? Zipcode { get; set; }
-
-        public IFormFile? formFile { get; set; }
     }
 }

@@ -42,19 +42,27 @@ namespace HalloDoc.Controllers
                                   Filename = t2 != null ? t2.Filename : null
                               };
 
-            var data = from rwf in _db.Requestwisefiles
-                       join r in _db.Requests on rwf.Requestid equals r.Requestid
-                       join rs in _db.RequestStatuses on r.Status equals rs.StatusId 
-                       where r.Userid == userId
-                       select new PatientDashboardViewModel
-                       {
-                           RequestId = r.Requestid,
-                           Createddate = r.Createddate,
-                           Status = rs.Status,
-                           Filename = rwf != null ? rwf.Filename : null
-                       };
+            var userdata = new ProfileEditViewModel
+            {
+                UserId = patientAspId.Userid,
+                Firstname = patientAspId.Firstname,
+                Lastname = patientAspId.Lastname,
+                Email = patientAspId.Email,
+                Phonenumber = patientAspId.Mobile,
+                Strmonth = patientAspId.Strmonth,
+                Street = patientAspId.Street,
+                City = patientAspId.City,
+                State = patientAspId.State,
+                Zipcode = patientAspId.Zipcode
+            };
 
-            return View(requestData);
+            var data = new DashboardViewModel
+            {
+                PatientDashboardViewModel = requestData,
+                ProfileEditViewModel = userdata
+            };
+
+            return View(data);
         }
 
         public IActionResult Document(int reqId)
@@ -94,7 +102,52 @@ namespace HalloDoc.Controllers
                         join t3 in _db.AspNetUsers on t2.Aspnetuserid equals t3.Id
                         where t1.Requestid == reqId
                         select t3.Id;
-            return RedirectToAction("Dashboard", "Patient", new { AspId = aspId});
+            return RedirectToAction("Dashboard", "Patient", new { AspId = aspId });
+        }
+
+        [HttpPost]
+        public IActionResult Profile(DashboardViewModel obj)
+        {
+            if (HttpContext.Session.GetString("token") != null)
+            {
+                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+            }
+            else
+            {
+                return RedirectToAction("login");
+            }
+
+            var aspId = from t1 in _db.AspNetUsers
+                        join t2 in _db.Users on t1.Id equals t2.Aspnetuserid
+                        where t2.Userid == obj.ProfileEditViewModel.UserId
+                        select t1.Id;
+
+            var existUser = _db.Users.FirstOrDefault(x => x.Userid == obj.ProfileEditViewModel.UserId);
+
+            existUser.Firstname = obj.ProfileEditViewModel.Firstname;
+            existUser.Lastname = obj.ProfileEditViewModel.Lastname;
+            existUser.Email = obj.ProfileEditViewModel.Email;
+            existUser.Mobile = obj.ProfileEditViewModel.Phonenumber;
+            existUser.Street = obj.ProfileEditViewModel.Street;
+            existUser.City = obj.ProfileEditViewModel.City;
+            existUser.State = obj.ProfileEditViewModel.State;
+            existUser.Zipcode = obj.ProfileEditViewModel.Zipcode;
+            existUser.Modifieddate = DateTime.Now;
+            _db.Users.Update(existUser);
+            _db.SaveChanges();
+
+            var existAsp = _db.AspNetUsers.FirstOrDefault(x => x.Id == existUser.Aspnetuserid);
+
+            existAsp.Email = obj.ProfileEditViewModel.Email;
+            existAsp.PhoneNumber = obj.ProfileEditViewModel.Phonenumber;
+            existAsp.ModifiedDate = DateTime.UtcNow;
+
+            _db.AspNetUsers.Update(existAsp);
+            _db.SaveChanges();
+
+            
+
+            return RedirectToAction("Dashboard", new { AspId = aspId });
         }
 
         public async Task<IActionResult> Download(String filename)

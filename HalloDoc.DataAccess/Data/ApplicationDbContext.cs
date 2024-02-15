@@ -199,7 +199,7 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Ip)
                 .HasMaxLength(20)
                 .HasColumnName("IP");
-            entity.Property(e => e.PasswordHash).HasColumnType("character varying");
+            entity.Property(e => e.Password).HasColumnType("character varying");
             entity.Property(e => e.PhoneNumber).HasColumnType("character varying");
             entity.Property(e => e.UserName).HasMaxLength(256);
 

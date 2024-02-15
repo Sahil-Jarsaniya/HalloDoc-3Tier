@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HalloDoc.DataAccess.Models;
 
@@ -9,7 +11,8 @@ public partial class AspNetUser
 
     public string UserName { get; set; } = null!;
 
-    public string? PasswordHash { get; set; }
+    [Column("PasswordHash")]
+    public string Password { get; set; }
 
     public string? Email { get; set; }
 

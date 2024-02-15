@@ -50,13 +50,13 @@
 <div class="row g-2 m-1" id="hiddendiv" style="display: none">
 
     <div class="col-md-6 input-div form-floating mb-3 d-flex border rounded">
-        <input type="password" class="form-control border-0" id="floatingPassword" placeholder="Password">
-        <label for="floatingPassword">Confirm Password</label>
+        <input asp-for="Password" type="password" class="form-control border-0" id="floatingPassword" placeholder="Password">
+        <label for="floatingPassword">Password</label>
         <img id="passImg2" src="~/images/password_visibility_on.svg" onclick="showHidePassword()" class="pe-3" alt="">
     </div>
-
+    
     <div class="col-md-6 input-div form-floating mb-3 d-flex border rounded">
-        <input type="password" class="form-control border-0" id="floatingPassword2" placeholder="Password">
+        <input asp-for="confirmPassword" type="password" class="form-control border-0" id="floatingPassword2" placeholder="Password">
         <label for="floatingPassword">Confirm Password</label>
         <img id="passImg3" src="~/images/password_visibility_on.svg" onclick="showHidePassword()" class="pe-3" alt="">
     </div>
