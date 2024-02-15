@@ -150,6 +150,11 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Dashboard", new { AspId = aspId });
         }
 
+        public IActionResult UploadFile()
+        {
+            return View();
+        }
+
         public async Task<IActionResult> Download(String filename)
         {
             if (filename == null)
