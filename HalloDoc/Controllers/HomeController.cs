@@ -3,11 +3,12 @@ using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace HalloDoc.Controllers;
-
-using HalloDoc.DataAccess.ViewModel;
 using Microsoft.AspNetCore.Http;
+using MimeKit;
 using System.Security.Cryptography;
 using System.Text;
+using MailKit.Net.Smtp;
+using HalloDoc.DataAccess.ViewModel;
 
 public class HomeController : Controller
 {
@@ -40,6 +41,50 @@ public class HomeController : Controller
     {
         return View();
     }
+    [HttpPost]
+    public IActionResult forget_password_page(AspNetUser asp)
+    {
+        var existUser = _db.AspNetUsers.Where(x => x.Email == asp.Email).FirstOrDefault();
+
+        if (existUser == null)
+        {
+            return View();
+        }
+        else
+        {
+            TempData.Remove("email");
+            TempData.Add("email",asp.Email);
+
+            return RedirectToAction("Resetpassword");
+        }
+    }
+
+    public IActionResult ResetPassword()
+    {
+        return View();
+    }
+    [HttpPost]
+    public IActionResult ResetPassword(ResetPassword obj)
+    {
+        string email = TempData["email"].ToString();
+        var aspUser = _db.AspNetUsers.Where(x => x.Email == email).FirstOrDefault();
+
+        if(obj.Password != obj.ConfirmPassword)
+        {
+            return View();
+        }
+        else
+        {
+            aspUser.Password = GetHash(obj.ConfirmPassword);
+            //aspUser.Password = obj.ConfirmPassword;
+            _db.AspNetUsers.Update(aspUser);
+            _db.SaveChanges();
+
+
+        return RedirectToAction("login", "Home");
+        }
+
+    }
 
     public IActionResult login()
     {
@@ -50,8 +95,6 @@ public class HomeController : Controller
     {
         var hashPass = GetHash(user.Password);
         var myUser = _db.AspNetUsers.Where(x => x.UserName == user.UserName && x.Password == hashPass).FirstOrDefault();
-        var userId = _db.Users.Where(x => x.Aspnetuserid == myUser.Id).FirstOrDefault();
-        String userName = userId.Firstname + " " + userId.Lastname;
         if (myUser == null)
         {
             ViewBag.message = "Login Failed";
@@ -59,9 +102,11 @@ public class HomeController : Controller
         }
         else
         {
+        var userId = _db.Users.Where(x => x.Aspnetuserid == myUser.Id).FirstOrDefault();
+        String userName = userId.Firstname + " " + userId.Lastname;
             HttpContext.Session.SetString("token", userName);
-            String AspId = myUser.Id;          
-            return RedirectToAction("Dashboard", "Patient", new { AspId = AspId});
+            String AspId = myUser.Id;
+            return RedirectToAction("Dashboard", "Patient", new { AspId = AspId });
         }
     }
     public IActionResult logout()
@@ -73,13 +118,9 @@ public class HomeController : Controller
         }
         return View();
     }
-    [HttpPost]
-    public IActionResult ResetPassword(String email)
-    {
 
 
-        return RedirectToAction("login");
-    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
@@ -87,3 +128,4 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
+

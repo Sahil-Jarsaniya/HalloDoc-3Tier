@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "pidRtmT0+TbsfEdE9DjFcgplKla4SgmA27GbVDW9i3w=",
+  "Hash": "dHuTTHhFzPsHk6PnZOnVnEjrJXMQrkpCkETleKXxBwA=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -1632,6 +1632,40 @@
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\Fig27. Roles.jpg"
     },
     {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig3. Admin Dashboard.jpg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/Fig3. Admin Dashboard.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\Fig3. Admin Dashboard.jpg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig30. Create Role Physician.jpg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/Fig30. Create Role Physician.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\Fig30. Create Role Physician.jpg"
+    },
+    {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig35. Provider on call (MDs On Call).jpg",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -1649,6 +1683,23 @@
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\Fig35. Provider on call (MDs On Call).jpg"
     },
     {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig4. Admin dashboard in New state.jpg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/Fig4. Admin dashboard in New state.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\Fig4. Admin dashboard in New state.jpg"
+    },
+    {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig41.Add business page.png",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -1664,6 +1715,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\Fig41.Add business page.png"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig45. Search Records.jpg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/Fig45. Search Records.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\Fig45. Search Records.jpg"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig5. Admin dashboard in pending state.jpg",

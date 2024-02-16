@@ -28,19 +28,18 @@ namespace HalloDoc.Controllers
             var patientAspId = _db.Users.Where(x => x.Aspnetuserid == AspId).FirstOrDefault();
             var userId = patientAspId.Userid;
 
-            var requestData = from t1 in _db.Requests
-                              join t3 in _db.RequestStatuses on t1.Status equals t3.StatusId
-                              join t2 in _db.Requestwisefiles
-                              on t1.Requestid equals t2.Requestid into files
-                              from t2 in files.DefaultIfEmpty()
-                              where t1.Userid == userId
-                              select new PatientDashboardViewModel
-                              {
-                                  RequestId = t1.Requestid,
-                                  Createddate = t1.Createddate,
-                                  Status = t3.Status,
-                                  Filename = t2 != null ? t2.Filename : null
-                              };
+            var reqData = (from r in _db.Requests
+                                    where r.Userid == userId
+                                    join s in _db.RequestStatuses on r.Status equals s.StatusId
+                                    select new PatientDashboardViewModel
+                                    {
+                                        RequestId = r.Requestid,
+                                        fileCount = 1,
+                                        Status = s.Status,
+                                        Createddate = r.Createddate
+                                    }).ToList();
+
+
 
             var userdata = new ProfileEditViewModel
             {
@@ -58,7 +57,7 @@ namespace HalloDoc.Controllers
 
             var data = new DashboardViewModel
             {
-                PatientDashboardViewModel = requestData,
+                PatientDashboardViewModel = reqData,
                 ProfileEditViewModel = userdata
             };
 
@@ -75,11 +74,24 @@ namespace HalloDoc.Controllers
             {
                 return RedirectToAction("login");
             }
-            var aspid = from t1 in _db.Requests
-                        join t2 in _db.Users on t1.Userid equals t2.Userid
-                        where t1.Requestid == reqId
-                        select t2.Aspnetuserid;
+            var userId = from t1 in _db.Requests
+                         join t2 in _db.Users on t1.Userid equals t2.Userid
+                         where t1.Requestid == reqId
+                         select t2.Userid;
+            //var requestData = from t2 in _db.Requests
+            //                  join t1 in _db.Requestwisefiles
+            //                  on t2.Requestid equals t1.Requestid into files
+            //                  from t1 in files.DefaultIfEmpty()
+            //                  where t2.Requestid == reqId
+            //                  select new PatientDocumentViewModel
+            //                  {
+            //                      RequestId = t2.Requestid,
+            //                      createdate = t2.Createddate,
+            //                      Filename = t1 != null ? t1.Filename : null
+            //                  };
+
             var requestData = from t1 in _db.Requests
+                              join t3 in _db.RequestStatuses on t1.Status equals t3.StatusId
                               join t2 in _db.Requestwisefiles
                               on t1.Requestid equals t2.Requestid into files
                               from t2 in files.DefaultIfEmpty()
@@ -91,19 +103,56 @@ namespace HalloDoc.Controllers
                                   Filename = t2 != null ? t2.Filename : null
                               };
 
-            return View(requestData);
+            var uploadData = new UploadFileViewModel
+            {
+                reqId = reqId,
+                formFile = null
+            };
+            var data = new DocumentViewModel
+            {
+                PatientDocumentViewModel = requestData,
+                UploadFileViewModel = uploadData
+            };
+            return View(data);
         }
 
         [HttpPost]
-        public IActionResult Document(int? reqId)
+        public IActionResult Document(UploadFileViewModel obj)
         {
             var aspId = from t1 in _db.Requests
                         join t2 in _db.Users on t1.Userid equals t2.Userid
                         join t3 in _db.AspNetUsers on t2.Aspnetuserid equals t3.Id
-                        where t1.Requestid == reqId
+                        where t1.Requestid == obj.reqId
                         select t3.Id;
+            var id = obj.reqId;
+            //uploading files
+            if (obj.formFile != null && obj.formFile.Length > 0)
+            {
+                //get file name
+                var fileName = Path.GetFileName(obj.formFile.FileName);
+
+                //define path
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
+
+                // Copy the file to the desired location
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    obj.formFile.CopyTo(stream);
+                }
+                Requestwisefile requestwisefile = new Requestwisefile
+                {
+                    Filename = fileName,
+                    Requestid = obj.reqId,
+                    Createddate = DateTime.Now
+                };
+
+                _db.Requestwisefiles.Add(requestwisefile);
+                _db.SaveChanges();
+            }
+
             return RedirectToAction("Dashboard", "Patient", new { AspId = aspId });
         }
+
 
         [HttpPost]
         public IActionResult Profile(DashboardViewModel obj)
@@ -143,60 +192,14 @@ namespace HalloDoc.Controllers
             existAsp.ModifiedDate = DateTime.UtcNow;
 
             _db.AspNetUsers.Update(existAsp);
+            _db.AspNetUsers.Update(existAsp);
             _db.SaveChanges();
 
-            
+
 
             return RedirectToAction("Dashboard", new { AspId = aspId });
         }
 
-        public IActionResult UploadFile()
-        {
-            return View();
-        }
 
-        public async Task<IActionResult> Download(String filename)
-        {
-            if (filename == null)
-                return Content("filename is not availble");
-
-            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", filename);
-
-            var memory = new MemoryStream();
-            using (var stream = new FileStream(path, FileMode.Open))
-            {
-                await stream.CopyToAsync(memory);
-            }
-            memory.Position = 0;
-            return File(memory, GetContentType(path), Path.GetFileName(path));
-        }
-
-        // Get content type
-        private string GetContentType(string path)
-        {
-            var types = GetMimeTypes();
-            var ext = Path.GetExtension(path).ToLowerInvariant();
-            return types[ext];
-        }
-
-        // Get mime types
-        private Dictionary<string, string> GetMimeTypes()
-        {
-            return new Dictionary<string, string>
-    {
-        {".txt", "text/plain"},
-        {".pdf", "application/pdf"},
-        {".doc", "application/vnd.ms-word"},
-        {".docx", "application/vnd.ms-word"},
-        {".xls", "application/vnd.ms-excel"},
-        {".xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"},
-        {".png", "image/png"},
-        {".jpg", "image/jpeg"},
-        {".jpeg", "image/jpeg"},
-        {".gif", "image/gif"},
-        {".csv", "text/csv"},
-        {".svg", "image/svg"}
-    };
-        }
     }
 }

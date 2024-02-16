@@ -68,7 +68,7 @@
                                 <td>@item.Createddate</td>
                                 <td>@item.Status</td>
                                 <td>
-                                    @if (item.Filename != null)
+                                    @if (item.fileCount != 0)
                                     {
 
                                         <a href="@Url.Action("Document", "Patient", new{reqId = item.RequestId})" class="btn" id="doc" style="color: #01bce9; border: 1px solid #01bce9;">
@@ -85,10 +85,10 @@
         <div class="tab-pane fade show " id="tab2">
             <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
             <h4>User Profile</h4>
-                <button class="btn" type="submit" id="back-btn">
+                @*<button class="btn" type="submit" id="back-btn">
                     <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="" alt="">
                     <span>Back</span>
-                </button>
+                </button>*@
             </div>
             <div class="container-fluid d-flex justify-content-center mt-4">
 

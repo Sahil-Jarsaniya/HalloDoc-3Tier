@@ -257,3 +257,8 @@ G:\HalloDoc\HalloDoc\bin\Debug\net7.0\HalloDoc.DataAccess.dll
 G:\HalloDoc\HalloDoc\bin\Debug\net7.0\HalloDoc.DataAccess.pdb
 G:\HalloDoc\HalloDoc\bin\Debug\net7.0\HalloDoc.BussinessAccess.dll
 G:\HalloDoc\HalloDoc\bin\Debug\net7.0\HalloDoc.BussinessAccess.pdb
+G:\HalloDoc\HalloDoc\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+G:\HalloDoc\HalloDoc\bin\Debug\net7.0\MailKit.dll
+G:\HalloDoc\HalloDoc\bin\Debug\net7.0\MimeKit.dll
+G:\HalloDoc\HalloDoc\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+G:\HalloDoc\HalloDoc\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll

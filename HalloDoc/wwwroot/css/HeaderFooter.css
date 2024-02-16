@@ -30,9 +30,11 @@ header {
 #listImg {
     filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
 }
+
 #uploadFile {
     filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
 }
+
 .footer {
     position: fixed;
     bottom: 0%;
@@ -47,22 +49,27 @@ header {
 
 
 #navToggle li a.active {
-        color: #01bce9;
-        border-bottom: 1px solid #01bce9;
-        background: none;
-        font-weight: 500;
-    }
-
-#togglebar li a {
-    color: black;
-}
-#togglebar li a.active {
     color: #01bce9;
     border-bottom: 1px solid #01bce9;
     background: none;
     font-weight: 500;
 }
 
-[data-theme='dark'] a {
-    color: white !important;
+#togglebar li a {
+    color: black;
 }
+
+    #togglebar li a.active {
+        color: #01bce9;
+        border-bottom: 1px solid #01bce9;
+        background: none;
+        font-weight: 500;
+    }
+
+[data-bs-theme=dark] #togglebar li a {
+    color: white;
+}
+
+    [data-bs-theme=dark] #togglebar li a.active {
+        color: #01bce9;
+    }

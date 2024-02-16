@@ -6,7 +6,7 @@
 
         public String? Status { get; set; }
 
-        public string Filename { get; set; } = null!;
+        public int fileCount { get; set; }
         public int RequestId { get; set; }
     }
 }

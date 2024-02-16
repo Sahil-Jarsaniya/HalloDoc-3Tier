@@ -1,4 +1,4 @@
-﻿
+﻿@model DocumentViewModel;
 @{
     ViewData["Title"] = "View Document";
 }
@@ -10,75 +10,100 @@
 
 <div class="container">
     <div class="d-flex justify-content-between mt-5">
-    <h3>
-        Documents
-    </h3>
-    <form method="post">
-        <button class="btn" type="submit" id="back-btn">
-        <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="" alt="">
-        <span>Back</span>
-    </button>
-    </form>
+        <h3>
+            Documents
+        </h3>
+        <form method="post" enctype="multipart/form-data">
+            <button class="btn" type="submit" id="back-btn">
+                <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="" alt="">
+                <span>Back</span>
+            </button>
+        </form>
     </div>
     <div class="p-3 shadow">
         <span>Patient Name</span>
-         <h4>@ViewBag.Data</h4>
-         <p>Check here  for any files that you or doctors of your subsequents requestors have attached for you to review.</p>
+        <h4>@ViewBag.Data</h4>
+        <p>Check here  for any files that you or doctors of your subsequents requestors have attached for you to review.</p>
 
-        <form asp-action="UploadFile" asp-controller="Patient" class="form-floating patient-request-form p-2" method="post">
+        <form class="form-floating p-2" method="post" asp-action="Document" asp-controller="Patient" enctype="multipart/form-data">
             <div class="input-group m-1 mb-3">
-                <input required  type="file" id="actualFileBtn" class="form-control" id="inputGroupFile02" hidden>
-                <span  id="fileChoosen" class="form-control">Select File</span>
+                <input type="hidden" name="reqId" value="@Model.UploadFileViewModel.reqId" />
+                <input asp-for="UploadFileViewModel.formFile" name="formFile" type="file" id="actualFileBtn" class="form-control" id="inputGroupFile02" hidden>
+                <span asp-validation-for="UploadFileViewModel.formFile" id="fileChoosen" class="form-control">Select File</span>
                 <label class="input-group-text" id="uploadFileLabel" for="actualFileBtn">
                     <img src="~/images/cloud_upload.svg" alt="">
                     Upload
                 </label>
+                <button class="btn border border-primary" type="submit">Submit</button>
             </div>
-            <button class="btn submitBtn" type="submit">Submit</button>
-         </form>
+        </form>
 
-         <div class="d-flex justify-content-between mt-5">
-             <h5>Documents</h5>
+        <div class="d-flex justify-content-between mt-5">
+            <h5>Documents</h5>
             <a class="btn float-end"
                style="color: #01bce9; border: 1px solid #01bce9;">
-                <span class="d-none d-md-block">Download All</span>
-                <img src="~/images/plus-lg.svg" id="addImg" class="d-md-none">
+                <span class="">Download All</span>
             </a>
-         </div>
+        </div>
 
-         <table class="table shadow mt-3">
-             <thead>
-                 <tr>
-                     <th>
-                     <input type="checkbox"/>
-                     </th>
-                     <th></th>
-                     <th>Uploader</th>
-                     <th>Upload Date</th>
-                     <th>Actions</th>
-                 </tr>
-                <tr>
-                    @foreach(var item in Model)
-                    {
-                    <td>
+        <div class="d-md-none">
+            @foreach (var item in Model.PatientDocumentViewModel)
+            {
+                <div>
+
+                    <div class="">
                         <input type="checkbox" />
-                   </td>
-                   <td>@item.Filename</td>
-                   <td>@item.RequestId</td>
-                   <td>@item.createdate</td>
-                   <td>
-                            <a href="@Url.Action("Download", "Patient", new{filename = @item.Filename})"
-                            class="btn"
-                           style="color: #01bce9; border: 1px solid #01bce9;">
-                                <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
-                        </a>
-                   </td>
-                    
-                    }
-                 </tr>
+                        @item.Filename
+                    </div>
+                    <span class="">@item.RequestId</span><br />
+                    <span class="">@item.createdate</span><br />
+                    <span class="">
 
-             </thead>
-         </table>
+                        <a href="/uploadedFiles/@item.Filename"
+                           class="btn"
+                           style="color: #01bce9; border: 1px solid #01bce9;" download>
+                            <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
+                        </a>
+                    </span>
+
+                </div>
+            }
+        </div>
+
+        <table class="table shadow mt-3 d-none d-md-table">
+            <thead>
+                <tr>
+                    <th>
+                        <input type="checkbox" />
+                    </th>
+                    <th></th>
+                    <th>Uploader</th>
+                    <th>Upload Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.PatientDocumentViewModel)
+                {
+                    <tr>
+                        <td>
+                            <input type="checkbox" />
+                        </td>
+                        <td>@item.Filename</td>
+                        <td>@item.RequestId</td>
+                        <td>@item.createdate</td>
+                        <td>
+
+                            <a href="/uploadedFiles/@item.Filename"
+                               class="btn"
+                               style="color: #01bce9; border: 1px solid #01bce9;" download>
+                                <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 
