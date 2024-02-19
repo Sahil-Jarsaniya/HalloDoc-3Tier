@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using MailKit.Net.Smtp;
 using HalloDoc.DataAccess.ViewModel;
+using System.Net.Mail;
 
 public class HomeController : Controller
 {
@@ -18,7 +19,7 @@ public class HomeController : Controller
     public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
     {
         _logger = logger;
-        _db = db;
+        _db = db;   
     }
 
     public static string GetHash(string text)
@@ -41,23 +42,98 @@ public class HomeController : Controller
     {
         return View();
     }
+    //[HttpPost]
+    //public IActionResult forget_password_page(AspNetUser asp)
+    //{
+    //    var existUser = _db.AspNetUsers.Where(x => x.Email == asp.Email).FirstOrDefault();
+
+    //    if (existUser == null)
+    //    {
+    //        return View();
+    //    }
+    //    else
+    //    {
+    //        TempData.Remove("email");
+    //        TempData.Add("email",asp.Email);
+
+    //        return RedirectToAction("Resetpassword");
+    //    }
+    //}
+
+    public class Message
+    {
+        public List<MailboxAddress> To { get; set; }
+        public string Subject { get; set; }
+        public string Content { get; set; }
+        public Message(IEnumerable<string> to, string subject, string content)
+        {
+            To = new List<MailboxAddress>();
+            To.AddRange(to.Select(x => new MailboxAddress("email", x)));
+            Subject = subject;
+            Content = content;
+        }
+    }
+    private MimeMessage CreateEmailMessage(Message message)
+    {
+        var emailMessage = new MimeMessage();
+        emailMessage.From.Add(new MailboxAddress("email", "sahil.jarsaniya@etatvasoft.com"));
+        emailMessage.To.AddRange(message.To);
+        emailMessage.Subject = message.Subject;
+        emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
+        return emailMessage;
+    }
+
     [HttpPost]
     public IActionResult forget_password_page(AspNetUser asp)
     {
-        var existUser = _db.AspNetUsers.Where(x => x.Email == asp.Email).FirstOrDefault();
+        string emailFrom = "sahil.jarsaniya@etatvasoft.com";
+        string pass = "LHV0@YOA?)M";
+        string SmtpServer = "mail.etatvasoft.com";
+        int Port = 465;
 
-        if (existUser == null)
+        if (true)
         {
-            return View();
+            //using var smtp = new MailKit.Net.Smtp.SmtpClient();
+            //smtp.Connect("mail.etatvasoft.com", 587, SecureSocketOptions.StartTls);
+            //smtp.Authenticate(emailFrom, pass);
+            //smtp.Send(CreateEmailMessage(new Message(new string[] { forPasVM.Email }, "test", "content")));
+            //smtp.Disconnect(true);
+            //smtp.Dispose();
+
+            using (var client = new MailKit.Net.Smtp.SmtpClient())
+            {
+                try
+                {
+                    client.CheckCertificateRevocation = false;
+                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                    client.Connect(SmtpServer, Port, true);
+
+                    client.AuthenticationMechanisms.Remove("XOAUTH2");
+                    //client.Authenticate(emailFrom, pass);
+
+                    client.Send(CreateEmailMessage(new Message(new string[] { asp.Email }, "Change Your Password", "Visit https://www.google.com to change password.")));
+                }
+                catch
+                {
+                    throw;
+                }
+                finally
+                {
+                    client.Disconnect(true);
+                    client.Dispose();
+                }
+            }
+
+            return View("Index");
         }
         else
         {
-            TempData.Remove("email");
-            TempData.Add("email",asp.Email);
-
-            return RedirectToAction("Resetpassword");
+            return View();
         }
+
     }
+
+
 
     public IActionResult ResetPassword()
     {
@@ -105,6 +181,7 @@ public class HomeController : Controller
         var userId = _db.Users.Where(x => x.Aspnetuserid == myUser.Id).FirstOrDefault();
         String userName = userId.Firstname + " " + userId.Lastname;
             HttpContext.Session.SetString("token", userName);
+            HttpContext.Session.SetInt32("userId", userId.Userid);
             String AspId = myUser.Id;
             return RedirectToAction("Dashboard", "Patient", new { AspId = AspId });
         }

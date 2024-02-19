@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\HalloDoc.bundle.scp.css"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\AdminDashboard.css",
+      "PackagePath": "staticwebassets\\css\\AdminDashboard.css"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\HeaderFooter.css",
       "PackagePath": "staticwebassets\\css\\HeaderFooter.css"
     },
@@ -91,6 +95,10 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\list.svg",
       "PackagePath": "staticwebassets\\images\\list.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\logo.png",
+      "PackagePath": "staticwebassets\\images\\logo.png"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\password_visibility_off.svg",
@@ -365,6 +373,30 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\7774236_3736765.jpg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162213.zip",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162213.zip"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162219.zip",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162219.zip"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162220.zip",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162220.zip"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162242.zip",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162242.zip"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162412.zip",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162412.zip"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162937.zip",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162937.zip"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig27. Roles.jpg",
       "PackagePath": "staticwebassets\\uploadedFiles\\Fig27. Roles.jpg"
     },
@@ -413,6 +445,10 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees_12Feb24.pdf"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\TT.png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\TT.png"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\check-circle (1) (1).svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\check-circle (1) (1).svg"
     },
@@ -435,6 +471,10 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\person-circle (2).svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\person-circle (2).svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\sql TT.png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\sql TT.png"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.HalloDoc.Microsoft.AspNetCore.StaticWebAssets.props",

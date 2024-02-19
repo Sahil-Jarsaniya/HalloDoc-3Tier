@@ -36,7 +36,7 @@ header {
 }
 
 .footer {
-    position: fixed;
+    position: relative;
     bottom: 0%;
     height: 75px;
     padding: 10px;
@@ -71,5 +71,14 @@ header {
 }
 
     [data-bs-theme=dark] #togglebar li a.active {
+        color: #01bce9;
+    }
+
+
+[data-bs-theme=dark] #navToggle li a {
+    color: white;
+}
+
+    [data-bs-theme=dark] #navToggle li a.active {
         color: #01bce9;
     }

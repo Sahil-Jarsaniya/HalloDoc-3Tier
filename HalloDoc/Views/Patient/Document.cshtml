@@ -13,12 +13,11 @@
         <h3>
             Documents
         </h3>
-        <form method="post" enctype="multipart/form-data">
-            <button class="btn" type="submit" id="back-btn">
-                <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="" alt="">
-                <span>Back</span>
-            </button>
-        </form>
+        <a href="@Url.Action("Back")" class="btn m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            <span>Back</span>
+        </a>
     </div>
     <div class="p-3 shadow">
         <span>Patient Name</span>
@@ -34,13 +33,13 @@
                     <img src="~/images/cloud_upload.svg" alt="">
                     Upload
                 </label>
-                <button class="btn border border-primary" type="submit">Submit</button>
+                <button class="btn border " style="background-color: #01bce9; color: white;" type="submit">Submit</button>
             </div>
         </form>
 
         <div class="d-flex justify-content-between mt-5">
             <h5>Documents</h5>
-            <a class="btn float-end"
+            <a class="btn float-end" href="@Url.Action("DownloadAllFiles", new{requestId = Model.UploadFileViewModel.reqId})"
                style="color: #01bce9; border: 1px solid #01bce9;">
                 <span class="">Download All</span>
             </a>
@@ -50,22 +49,19 @@
             @foreach (var item in Model.PatientDocumentViewModel)
             {
                 <div>
-
                     <div class="">
                         <input type="checkbox" />
                         @item.Filename
                     </div>
-                    <span class="">@item.RequestId</span><br />
+                    <span class="">@item.Name</span><br />
                     <span class="">@item.createdate</span><br />
                     <span class="">
-
                         <a href="/uploadedFiles/@item.Filename"
                            class="btn"
                            style="color: #01bce9; border: 1px solid #01bce9;" download>
                             <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
                         </a>
                     </span>
-
                 </div>
             }
         </div>
@@ -90,7 +86,7 @@
                             <input type="checkbox" />
                         </td>
                         <td>@item.Filename</td>
-                        <td>@item.RequestId</td>
+                        <td>@item.Name</td>
                         <td>@item.createdate</td>
                         <td>
 

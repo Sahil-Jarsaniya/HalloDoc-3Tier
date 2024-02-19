@@ -2,6 +2,8 @@
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.IO.Compression;
 using System.Text;
 
 namespace HalloDoc.Controllers
@@ -29,15 +31,15 @@ namespace HalloDoc.Controllers
             var userId = patientAspId.Userid;
 
             var reqData = (from r in _db.Requests
-                                    where r.Userid == userId
-                                    join s in _db.RequestStatuses on r.Status equals s.StatusId
-                                    select new PatientDashboardViewModel
-                                    {
-                                        RequestId = r.Requestid,
-                                        fileCount = 1,
-                                        Status = s.Status,
-                                        Createddate = r.Createddate
-                                    }).ToList();
+                           where r.Userid == userId
+                           join s in _db.RequestStatuses on r.Status equals s.StatusId
+                           select new PatientDashboardViewModel
+                           {
+                               RequestId = r.Requestid,
+                               fileCount = 1,
+                               Status = s.Status,
+                               Createddate = r.Createddate
+                           }).ToList();
 
 
 
@@ -78,17 +80,6 @@ namespace HalloDoc.Controllers
                          join t2 in _db.Users on t1.Userid equals t2.Userid
                          where t1.Requestid == reqId
                          select t2.Userid;
-            //var requestData = from t2 in _db.Requests
-            //                  join t1 in _db.Requestwisefiles
-            //                  on t2.Requestid equals t1.Requestid into files
-            //                  from t1 in files.DefaultIfEmpty()
-            //                  where t2.Requestid == reqId
-            //                  select new PatientDocumentViewModel
-            //                  {
-            //                      RequestId = t2.Requestid,
-            //                      createdate = t2.Createddate,
-            //                      Filename = t1 != null ? t1.Filename : null
-            //                  };
 
             var requestData = from t1 in _db.Requests
                               join t3 in _db.RequestStatuses on t1.Status equals t3.StatusId
@@ -99,6 +90,7 @@ namespace HalloDoc.Controllers
                               select new PatientDocumentViewModel
                               {
                                   RequestId = t1.Requestid,
+                                  Name = t1.Firstname + " "+ t1.Lastname,
                                   createdate = t1.Createddate,
                                   Filename = t2 != null ? t2.Filename : null
                               };
@@ -200,6 +192,165 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Dashboard", new { AspId = aspId });
         }
 
+        public IActionResult CreateRequest(int? reqId)
+        {
 
+            if (HttpContext.Session.GetString("token") != null)
+            {
+                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+            }
+            else
+            {
+                return RedirectToAction("login");
+            }
+
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateRequest(PatientViewModel obj)
+        {
+
+            if (HttpContext.Session.GetString("token") != null)
+            {
+                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+            }
+            else
+            {
+                return RedirectToAction("login");
+            }
+
+            if (ModelState.IsValid)
+            {
+                int uid = (int)HttpContext.Session.GetInt32("userId");
+
+                var aspId = _db.Users.Where(x => x.Userid == uid).FirstOrDefault().Aspnetuserid;
+
+                //Inserting into Request
+                Request request = new Request
+                {
+                    Requesttypeid = 1,
+                    Userid = uid,
+                    Firstname = obj.Firstname,
+                    Lastname = obj.Lastname,
+                    Email = obj.Email,
+                    Status = 1,
+                    Createddate = DateTime.Now,
+                    Isurgentemailsent = false
+                };
+                _db.Requests.Add(request);
+                _db.SaveChanges();
+                //Insertung into RequestClient
+                Requestclient requestclient = new Requestclient
+                {
+                    Requestid = request.Requestid,
+                    Firstname = obj.Firstname,
+                    Lastname = obj.Lastname,
+                    Email = obj.Email,
+                    Phonenumber = obj.Phonenumber,
+                    Strmonth = obj.Strmonth,
+                    Street = obj.Street,
+                    City = obj.City,
+                    State = obj.State,
+                    Zipcode = obj.Zipcode,
+                    Notes = obj.Notes
+                };
+                _db.Requestclients.Add(requestclient);
+                _db.SaveChanges();
+                //Inserting into requestStatusLog
+
+                Requeststatuslog requeststatuslog = new Requeststatuslog
+                {
+                    Requestid = request.Requestid,
+                    Status = 4,
+                    Createddate = DateTime.Now
+                };
+                _db.Requeststatuslogs.Add(requeststatuslog);
+                _db.SaveChanges();
+
+
+                //uploading files
+                if (obj.formFile != null && obj.formFile.Length > 0)
+                {
+                    //get file name
+                    var fileName = Path.GetFileName(obj.formFile.FileName);
+
+                    //define path
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
+
+                    // Copy the file to the desired location
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        obj.formFile.CopyTo(stream);
+                    }
+                    Requestwisefile requestwisefile = new Requestwisefile
+                    {
+                        Filename = fileName,
+                        Requestid = request.Requestid,
+                        Createddate = DateTime.Now
+                    };
+
+                    _db.Requestwisefiles.Add(requestwisefile);
+                    _db.SaveChanges();
+                }
+
+                return RedirectToAction("Dashboard", new {AspId = aspId});
+            }
+            return View();
+        }
+
+
+        public async Task<IActionResult> DownloadAllFiles(int requestId)
+        {
+            try
+            {
+                // Fetch all document details for the given request:
+                var documentDetails = _db.Requestwisefiles.Where(m => m.Requestid == requestId).ToList();
+
+                if (documentDetails == null || documentDetails.Count == 0)
+                {
+                    return NotFound("No documents found for download");
+                }
+
+                // Create a unique zip file name
+                var zipFileName = $"Documents_{DateTime.Now:yyyyMMddHHmmss}.zip";
+                var zipFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", zipFileName);
+
+                // Create the directory if it doesn't exist
+                var zipDirectory = Path.GetDirectoryName(zipFilePath);
+                if (!Directory.Exists(zipDirectory))
+                {
+                    Directory.CreateDirectory(zipDirectory);
+                }
+
+                // Create a new zip archive
+                using (var zipArchive = ZipFile.Open(zipFilePath, ZipArchiveMode.Create))
+                {
+                    // Add each document to the zip archive
+                    foreach (var document in documentDetails)
+                    {
+                        var documentPath = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", "uploadedFiles", document.Filename);
+                        zipArchive.CreateEntryFromFile(documentPath, document.Filename);
+                    }
+                }
+
+                // Return the zip file for download
+                var zipFileBytes = await System.IO.File.ReadAllBytesAsync(zipFilePath);
+                return File(zipFileBytes, "application/zip", zipFileName);
+            }
+            catch
+            {
+                return BadRequest("Error downloading files");
+            }
+        }
+
+
+        public IActionResult Back()
+            {
+                int userId = (int)HttpContext.Session.GetInt32("userId");
+                var aspId = _db.Users.FirstOrDefault(x => x.Userid == userId).Aspnetuserid;
+
+                return RedirectToAction("Dashboard", new { AspId = aspId });
+            }
+        }
     }
-}
