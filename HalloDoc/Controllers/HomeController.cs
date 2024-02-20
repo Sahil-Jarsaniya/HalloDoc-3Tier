@@ -60,77 +60,29 @@ public class HomeController : Controller
     //    }
     //}
 
-    public class Message
-    {
-        public List<MailboxAddress> To { get; set; }
-        public string Subject { get; set; }
-        public string Content { get; set; }
-        public Message(IEnumerable<string> to, string subject, string content)
-        {
-            To = new List<MailboxAddress>();
-            To.AddRange(to.Select(x => new MailboxAddress("email", x)));
-            Subject = subject;
-            Content = content;
-        }
-    }
-    private MimeMessage CreateEmailMessage(Message message)
-    {
-        var emailMessage = new MimeMessage();
-        emailMessage.From.Add(new MailboxAddress("email", "sahil.jarsaniya@etatvasoft.com"));
-        emailMessage.To.AddRange(message.To);
-        emailMessage.Subject = message.Subject;
-        emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
-        return emailMessage;
-    }
+
 
     [HttpPost]
     public IActionResult forget_password_page(AspNetUser asp)
     {
-        string emailFrom = "sahil.jarsaniya@etatvasoft.com";
-        string pass = "LHV0@YOA?)M";
-        string SmtpServer = "mail.etatvasoft.com";
-        int Port = 465;
+        var emailToSend = new MimeMessage();
 
-        if (true)
+        emailToSend.From.Add(MailboxAddress.Parse("tatva.dotnet.sahiljarsaniya@outlook.com"));
+        emailToSend.To.Add(MailboxAddress.Parse(asp.Email));
+        emailToSend.Subject = "Reset Passowrd";
+        emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = "link" };
+
+
+        //send mail
+        using (var emailClient = new MailKit.Net.Smtp.SmtpClient())
         {
-            //using var smtp = new MailKit.Net.Smtp.SmtpClient();
-            //smtp.Connect("mail.etatvasoft.com", 587, SecureSocketOptions.StartTls);
-            //smtp.Authenticate(emailFrom, pass);
-            //smtp.Send(CreateEmailMessage(new Message(new string[] { forPasVM.Email }, "test", "content")));
-            //smtp.Disconnect(true);
-            //smtp.Dispose();
-
-            using (var client = new MailKit.Net.Smtp.SmtpClient())
-            {
-                try
-                {
-                    client.CheckCertificateRevocation = false;
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                    client.Connect(SmtpServer, Port, true);
-
-                    client.AuthenticationMechanisms.Remove("XOAUTH2");
-                    //client.Authenticate(emailFrom, pass);
-
-                    client.Send(CreateEmailMessage(new Message(new string[] { asp.Email }, "Change Your Password", "Visit https://www.google.com to change password.")));
-                }
-                catch
-                {
-                    throw;
-                }
-                finally
-                {
-                    client.Disconnect(true);
-                    client.Dispose();
-                }
-            }
-
-            return View("Index");
-        }
-        else
-        {
-            return View();
+            emailClient.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+            emailClient.Authenticate("tatva.dotnet.sahiljarsaniya@outlook.com","$@hilpj1");
+            emailClient.Send(emailToSend);
+            emailClient.Disconnect(true);
         }
 
+        return RedirectToAction("login");
     }
 
 

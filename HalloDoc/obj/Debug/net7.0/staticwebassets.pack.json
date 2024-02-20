@@ -5,10 +5,6 @@
       "PackagePath": "staticwebassets\\HalloDoc.bundle.scp.css"
     },
     {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\AdminDashboard.css",
-      "PackagePath": "staticwebassets\\css\\AdminDashboard.css"
-    },
-    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\HeaderFooter.css",
       "PackagePath": "staticwebassets\\css\\HeaderFooter.css"
     },

@@ -10,7 +10,9 @@ body {
     flex-direction: column;
     overflow-x: hidden;
 }
-
+#floatingPassword {
+    box-shadow: none;
+}
 #create-patient-request-backBtn {
     /* background: none; */
     color: #01bce9;

@@ -44,20 +44,24 @@
             <label for=""></label>
         </div>
     </div>
-
-
 </div>
-<div id="hideRelation" class="d-none">
-    <h4 class="mt-4 mb-4 ms-2">Relation</h4>
-    <div class="row g-2 m-1">
-
-    <div class="col-md-6">
-        <div class="form-floating">
-            <input  type="text" class="form-control" placeholder="">
-            <label >Relation with Patient</label>
+<div class="row  g-2 m-1" id="hiddendiv" style="display:none">
+    <div class="col-md-6 col-12">
+        <div class="input-div form-floating mb-3 d-flex border rounded shadow-none" >
+            <input asp-for="Password" type="password" class="form-control border border-0" id="floatingPassword" placeholder="Password">
+            <label asp-for="Password" for="floatingPassword">Password</label>
+            <img id="passImg" src="~/images/password_visibility_on.svg" onclick="showHidePassword()" class="pe-3" alt="">
         </div>
     </div>
+
+    <div class="col-md-6 col-12">
+        <div class="input-div form-floating mb-3 d-flex border rounded shadow-none">
+            <input asp-for="confirmPassword" type="password" class="form-control border border-0" id="floatingPassword2" placeholder="Password">
+            <label asp-for="confirmPassword" for="floatingPassword">Password</label>
+            <img id="passImg2" src="~/images/password_visibility_on.svg" onclick="showHideConfirmPassword()" class="pe-3" alt="">
+        </div>
     </div>
+
 </div>
 
 <h4 class="mt-4 mb-4 ms-2">Patient Location</h4>
