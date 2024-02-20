@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "LeaT24SFnxKIWzmmNNdXJeY/K/bLQh5ANKt9YOKFTqlQgMbLshQRw+OXU4Po4IXgqItsw2WcWM2V+OXMkNBK4g==",
+  "dgSpecHash": "NtkcKelOSzM10MdtI1wUWAMyiDHGMfW8YC+E2dYcBpxKasx3neKWxDJclyfEZaG4Pn3miN6T3Q77Pxw/XM5Rbw==",
   "success": true,
   "projectFilePath": "G:\\HalloDoc\\HalloDoc\\HalloDoc.csproj",
   "expectedPackageFiles": [
@@ -58,6 +58,7 @@
     "C:\\Users\\pca17\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\mailkit\\4.3.0\\mailkit.4.3.0.nupkg.sha512",
+    "C:\\Users\\pca17\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.11\\microsoft.aspnetcore.razor.language.6.0.11.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",

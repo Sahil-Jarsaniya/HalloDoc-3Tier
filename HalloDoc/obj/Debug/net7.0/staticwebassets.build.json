@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "CzUbNViKWesbbuw0pMnq0vL+nLk8TgQeappyWlR/tmw=",
+  "Hash": "TbtRxsaatmzZabGmbxKwBkIjvFUHhc7Mfzk4YqzVn7Y=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "G:\\HalloDoc\\HalloDoc\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\HalloDoc.bundle.scp.css"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\AdminDashboard.css",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "css/AdminDashboard.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\AdminDashboard.css"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\create-patient-request.css",
@@ -525,6 +542,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\user_circle.svg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\admin.js",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "js/admin.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\admin.js"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\bussinessphone.js",

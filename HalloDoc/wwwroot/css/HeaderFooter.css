@@ -1,5 +1,4 @@
-﻿body {
-}
+﻿
 
 header {
     /* background-color: white; */
@@ -9,8 +8,13 @@ header {
     padding-right: 10px;
     box-shadow: 0 1 0 0 black;
 }
+.nav-link:active,
+.nav-link.active {
+    color: #01bce9;
+    border-bottom: 1px solid #01bce9;
+}
 
-#logout-btn {
+    #logout-btn {
     color: #01bce9;
     border: 1px solid #01bce9;
 }
@@ -38,7 +42,7 @@ header {
 .footer {
     position: relative;
     bottom: 0%;
-    height: 75px;
+    height: 5vh;
     padding: 10px;
     color: white;
     display: flex;
@@ -74,6 +78,9 @@ header {
         color: #01bce9;
     }
 
+#adminNav {
+    background-color: white;
+}
 
 [data-bs-theme=dark] #navToggle li a {
     color: white;
@@ -82,3 +89,8 @@ header {
     [data-bs-theme=dark] #navToggle li a.active {
         color: #01bce9;
     }
+
+
+[data-bs-theme=dark] #adminNav {
+    background-color: #212529;
+}

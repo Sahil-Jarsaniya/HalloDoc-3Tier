@@ -149,14 +149,7 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult Profile(DashboardViewModel obj)
         {
-            if (HttpContext.Session.GetString("token") != null)
-            {
-                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
-            }
-            else
-            {
-                return RedirectToAction("login");
-            }
+            
 
             var aspId = from t1 in _db.AspNetUsers
                         join t2 in _db.Users on t1.Id equals t2.Aspnetuserid
@@ -187,8 +180,15 @@ namespace HalloDoc.Controllers
             _db.AspNetUsers.Update(existAsp);
             _db.SaveChanges();
 
-
-
+            HttpContext.Session.SetString("token", existUser.Firstname + " "+ existUser.Lastname);
+            if (HttpContext.Session.GetString("token") != null)
+            {
+                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+            }
+            else
+            {
+                return RedirectToAction("login");
+            }
             return RedirectToAction("Dashboard", new { AspId = aspId });
         }
 

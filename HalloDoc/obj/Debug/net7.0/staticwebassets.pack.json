@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\HalloDoc.bundle.scp.css"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\AdminDashboard.css",
+      "PackagePath": "staticwebassets\\css\\AdminDashboard.css"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\css\\HeaderFooter.css",
       "PackagePath": "staticwebassets\\css\\HeaderFooter.css"
     },
@@ -115,6 +119,10 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\user_circle.svg",
       "PackagePath": "staticwebassets\\images\\user_circle.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\admin.js",
+      "PackagePath": "staticwebassets\\js\\admin.js"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\bussinessphone.js",

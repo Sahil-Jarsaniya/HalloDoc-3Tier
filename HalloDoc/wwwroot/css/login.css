@@ -84,22 +84,20 @@ footer {
     box-shadow: none;
 }
 
-.bg-img {
+/*.bg-img {
     background: url(../images/11116016_415.jpg) no-repeat center center fixed;
     height: 100vh;
     width: 100vw;
     background-size: cover;
     filter: opacity(20%);
-}
+}*/
 
 #login-form input {
     background: rgba(255, 255, 255, 0);
     background: transparent;
 }
 
-/*#login-form div {
-    backdrop-filter: blur(10px);
-}*/
+
 /* media query */
 
 @media screen and (max-width: 767px) {

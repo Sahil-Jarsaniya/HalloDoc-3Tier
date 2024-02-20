@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <div class="main w-100 h-100">
+    <div class="main w-100 h-100" style="min-height:95vh">
         <header id="header" class="shadow-lg w-100" >
             @if (ViewBag.Data != null)
             {
@@ -66,7 +66,7 @@
             }
 
         @RenderBody()
-    <footer id="footer" class="footer w-100 mt-auto bg-dark position-fixed shadow">
+    <footer id="footer" class="footer w-100 mt-auto bg-dark  shadow">
         <span class="border-end border-white border-2 pe-3">Terms and Conditions</span>
         <span class="ps-3">Privacy Policy</span>
     </footer>

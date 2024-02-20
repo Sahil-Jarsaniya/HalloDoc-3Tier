@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - HalloDoc</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/AdminDashboard.css" />
+    <link rel="stylesheet" href="~/css/HeaderFooter.css" />
+    @RenderSection("Styles", required: false)
+
+</head>
+
+<body>
+    <div class="main w-100 h-100" style="min-height:95vh; overflow-x: hidden;">
+        <header id="header" class="shadow-lg w-100 border-bottom">
+            @if (ViewBag.AdminName != null)
+            {
+                <a id="listImg" class="btn border d-md-none mt-3 mb-3">
+                <img src="~/images/list.svg" alt="">
+            </a>
+            }
+
+            <img src="~/images/logo.png" class="" height="80%" alt="">
+
+            <div class="float-end d-flex">
+                @if (ViewBag.AdminName != null)
+                {
+                <h4 class="m-auto d-none d-md-block">Welcome <b>@ViewBag.AdminName</b></h4>
+                <a id="logout-btn"
+                   asp-controller="AdminLogin" asp-action="logout"
+                   class="btn mt-3 mb-3 me-1 m-md-3 m-lg-4 float-end"
+                   style="color: #01bce9; border: 1px solid #01bce9;">
+                    <span class="d-none d-md-block">Log Out</span>
+                    <img id="logoutImg" src="~/images/box-arrow-right.svg" class="d-md-none">
+                </a>
+
+                }   
+                <a id="light-dark-btn" class="btn border border-black mt-3 mb-3 m-md-3 m-lg-4">
+                    <img src="~/images/dark_mode_black_24dp.svg" alt="">
+                </a>
+            </div>
+        </header>
+        <nav id="adminNav">
+            <ul class="d-none d-md-flex nav w-100 border-bottom" id="togglebar">
+                <li class="nav-item ms-3 me-1">
+                    <a class="nav-link active" href="#tab1">Dashboard</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="#tab2">Provider Location</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="#tab2">My Profile</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="#tab2">Providers</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="#tab2">Partners</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="#tab2">Access</a>
+                <li class="nav-item ">
+                    <a class="nav-link" href="#tab2">Records</a>
+                </li>
+            </ul>
+        </nav>
+
+        @RenderBody()
+    <footer id="footer" class="footer w-100 mt-auto bg-dark shadow">
+
+        <span class="border-end border-white border-2 pe-3">Terms and Conditions</span>
+        <span class="ps-3">Privacy Policy</span>
+    </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/admin.js"></script>
+    @RenderSection("AdminScript", required: false)
+</body>
+
+</html>
