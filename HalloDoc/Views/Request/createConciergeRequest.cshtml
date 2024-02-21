@@ -19,12 +19,11 @@
             <div class="modal-body">
                 @* <img src="~/images/exclamation2.jpg" alt="" id="warning-icon"> *@
                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="white"
-                        class="bi bi-exclamation-circle" viewBox="0 0 16 16"
-                        style="background-color: #ffc107;border:3px #ffc107 solid;   border-radius: 100%;">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                        <path
-                            d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
-                    </svg>
+                     class="bi bi-exclamation-circle" viewBox="0 0 16 16"
+                     style="background-color: #ffc107;border:3px #ffc107 solid;   border-radius: 100%;">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
+                </svg>
                 <h4>Information</h4>
                 <p>
                     When submitting a request, you must provide the correct contact information about the patient or
@@ -43,7 +42,7 @@
 
 <div class="d-block ms-auto me-auto" style="max-width: 1000px; width: 100%; ">
     <a asp-controller="Request" asp-action="submitRequestScreen" class="m-2 text-decoration-none float-end"
-        id="create-patient-request-backBtn">
+       id="create-patient-request-backBtn">
         <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
         <span>Back</span>
     </a>
@@ -126,6 +125,6 @@
 @section Scripts {
     <script src="~/js/password.js" asp-append-version="true"></script>
     <script src="~/js/phone.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/pop up.js" asp-append-version="true"></script>
 }

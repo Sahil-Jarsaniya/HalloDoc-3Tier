@@ -85,6 +85,10 @@
       "PackagePath": "staticwebassets\\images\\dark_mode_black_24dp.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\envelope.svg",
+      "PackagePath": "staticwebassets\\images\\envelope.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\exclamation.svg",
       "PackagePath": "staticwebassets\\images\\exclamation.svg"
     },
@@ -113,8 +117,16 @@
       "PackagePath": "staticwebassets\\images\\person-circle.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\personal_injury.svg",
+      "PackagePath": "staticwebassets\\images\\personal_injury.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\plus-lg.svg",
       "PackagePath": "staticwebassets\\images\\plus-lg.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\user-doctor-solid.svg",
+      "PackagePath": "staticwebassets\\images\\user-doctor-solid.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\user_circle.svg",
@@ -399,6 +411,10 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162937.zip",
       "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162937.zip"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240220181155.zip",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240220181155.zip"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig27. Roles.jpg",

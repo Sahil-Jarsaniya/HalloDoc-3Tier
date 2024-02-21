@@ -5,9 +5,10 @@
 
 <div class="px-2 px-lg-4">
 
-    <div class="row mt-3">
+    <div class="row mt-3 nav nav-tabs">
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab active align-items-center" id="status-new-tab">
+        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab active align-items-center" id="status-new-tab"
+             data-bs-toggle="tab" data-bs-target="#newTab" type="button" role="tab" aria-controls="newTab" aria-selected="true">
 
             <div class="py-2 ps-2 w-100 status-new">
                 <div class="d-flex">
@@ -18,7 +19,7 @@
                     </svg>
                     <span class="ms-2 text-uppercase">new</span>
                 </div>
-                <span class="fw-bold">1452</span>
+                <span class="fw-bold">@Model.countRequestViewModel.newCount</span>
             </div>
 
             <svg class="d-none" fill="#203f9a" height="10px" width="20px" viewBox="0 0 200 100">
@@ -27,7 +28,8 @@
 
         </div>
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center">
+        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center"
+             data-bs-toggle="tab" data-bs-target="#pendingTab" type="button" role="tab" aria-controls="pendingTab" aria-selected="true">
             <div class="py-2 ps-2 w-100 status-pending">
                 <div class="d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
@@ -37,7 +39,7 @@
                     </svg>
                     <span class="ms-2 text-uppercase">pending</span>
                 </div>
-                <span class="fw-bold">266</span>
+                <span class="fw-bold">@Model.countRequestViewModel.pendingCount</span>
             </div>
 
             <svg class="d-none" fill="#00adef" height="10px" width="20px" viewBox="0 0 200 100">
@@ -46,7 +48,8 @@
 
         </div>
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center">
+        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center"
+             data-bs-toggle="tab" data-bs-target="#ActiveTab" type="button" role="tab" aria-controls="ActiveTab" aria-selected="true">
             <div class="py-2 ps-2 w-100 status-active">
                 <div class="d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
@@ -56,7 +59,7 @@
                     </svg>
                     <span class="ms-2 text-uppercase">active</span>
                 </div>
-                <span class="fw-bold">266</span>
+                <span class="fw-bold">@Model.countRequestViewModel.activeCount</span>
             </div>
 
             <svg class="d-none" fill="#228c20" height="10px" width="20px" viewBox="0 0 200 100">
@@ -65,7 +68,8 @@
 
         </div>
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center">
+        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center"
+             data-bs-toggle="tab" data-bs-target="#concludeTab" type="button" role="tab" aria-controls="concludeTab" aria-selected="true">
             <div class="py-2 ps-2 w-100 status-conclude">
                 <div class="d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
@@ -75,7 +79,7 @@
                     </svg>
                     <span class="ms-2 text-uppercase">conclude</span>
                 </div>
-                <span class="fw-bold">266</span>
+                <span class="fw-bold">@Model.countRequestViewModel.concludeCount</span>
             </div>
 
             <svg class="d-none" fill="#da0f82" height="10px" width="20px" viewBox="0 0 200 100">
@@ -84,7 +88,8 @@
 
         </div>
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center">
+        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center"
+             data-bs-toggle="tab" data-bs-target="#toCloseTab" type="button" role="tab" aria-controls="toCloseTab" aria-selected="true">
             <div class="py-2 ps-2 w-100 status-to-close">
                 <div class="d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
@@ -94,7 +99,7 @@
                     </svg>
                     <span class="ms-2 text-uppercase">to close</span>
                 </div>
-                <span class="fw-bold">266</span>
+                <span class="fw-bold">@Model.countRequestViewModel.closeCount</span>
             </div>
 
             <svg class="d-none" fill="#0370d7" height="10px" width="20px" viewBox="0 0 200 100">
@@ -103,7 +108,8 @@
 
         </div>
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center">
+        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center"
+             data-bs-toggle="tab" data-bs-target="#unpaidTab" type="button" role="tab" aria-controls="unpaidTab" aria-selected="true">
             <div class="py-2 ps-2 w-100 status-unpaid">
                 <div class="d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
@@ -113,7 +119,7 @@
                     </svg>
                     <span class="ms-2 text-uppercase">unpaid</span>
                 </div>
-                <span class="fw-bold">266</span>
+                <span class="fw-bold">@Model.countRequestViewModel.unpaidCount</span>
             </div>
 
             <svg class="d-none" fill="#9966cd" height="10px" width="20px" viewBox="0 0 200 100">
@@ -181,7 +187,7 @@
 
     </div>
 
-    <div class="d-block d-lg-flex ps-lg-3 mt-3 align-items-center justify-content-between">
+    <div class="d-block d-lg-flex mt-3 align-items-center justify-content-between">
 
         <div class="d-md-flex mb-3 mb-lg-0">
 
@@ -208,7 +214,7 @@
         </div>
         <div class="d-flex align-items-center">
 
-            <a class=" d-none d-lg-flex  align-items-center  px-lg-2 py-1 border rounded">
+            <a class="d-none d-lg-flex  align-items-center  px-lg-2 py-1 border rounded">
                 <span>All</span>
             </a>
 
@@ -246,16 +252,36 @@
 
         </div>
     </div>
+
+    <div class="tab-content  mt-3 ">
+        <div class="tab-pane fade show active overflow-auto" id="newTab" role="tabpanel" aria-labelledby="newTab" tabindex="0">
+            <partial name="_newRequestView" />
+        </div>
+        <div class="tab-pane fade show overflow-auto" id="pendingTab" role="tabpanel" aria-labelledby="pendingTab" tabindex="0">
+            <partial name="_pendingRequestView" />
+        </div>
+        <div class="tab-pane fade show overflow-auto" id="ActiveTab" role="tabpanel" aria-labelledby="ActiveTab" tabindex="0">
+            <partial name="_activeRequestView" />
+        </div>
+        <div class="tab-pane fade show overflow-auto" id="concludeTab" role="tabpanel" aria-labelledby="concludeTab" tabindex="0">
+            <partial name="_concludeReqView" />
+        </div>
+        <div class="tab-pane fade show overflow-auto" id="toCloseTab" role="tabpanel" aria-labelledby="toCloseTab" tabindex="0">
+            <partial name="_closeReqView" />
+            </div>
+        <div class="tab-pane fade show overflow-auto" id="unpaidTab" role="tabpanel" aria-labelledby="unpaidTab" tabindex="0">
+            <partial name="_unpaidReqView" />
+        </div>
+    </div>
+
 </div>
 
 
-
 @section AdminScript {
-
-    <script src="/js/admin.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
+    <script src="~/js/admin.js"></script>
     <script>
         $(".status-tab").click(function () {
             $(this).addClass("active");
@@ -265,24 +291,5 @@
         });
 
         $("#status-new-tab").click();
-
-        //dark mode
-
-        document.getElementById('light-dark-btn').addEventListener('click', () => {
-            if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-                localStorage.setItem("DarkTheme", "light");
-                document.documentElement.setAttribute('data-bs-theme', 'light')
-            }
-            else {
-                localStorage.setItem("DarkTheme", "dark");
-                document.documentElement.setAttribute('data-bs-theme', 'dark')
-            }
-        })
-        if (localStorage.getItem("DarkTheme") === "light") {
-            document.documentElement.setAttribute('data-bs-theme', 'light')
-        }
-        else {
-            document.documentElement.setAttribute('data-bs-theme', 'dark')
-        }
     </script>
 }

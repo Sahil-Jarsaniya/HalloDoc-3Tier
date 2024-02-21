@@ -1,0 +1,122 @@
+﻿<table class="table table-hover table-responsive ">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td></td>
+            <td>Date of Birth</td>
+            <td>Requestor</td>
+            <td>Physician Name</td>
+            <td>Date of Service</td>
+            <td>Phone</td>
+            <td>Address</td>
+            <td>Notes</td>
+            <td>Chat With</td>
+            <td>Actions</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.activeReqViewModels)
+        {
+            <tr>
+                <td>@item.Firstname @item.Lastname</td>
+                <td>
+                    <a class="btn border rounded">
+                        <img src="~/images/envelope.svg" />
+                    </a>
+                </td>
+                <td>
+                    @item.Strmonth
+                </td>
+                <td>
+                    @if (item.reqTypeId == 1)
+                    {
+                        <div>
+                            Patient <br />
+                            @item.reqFirstname @item.reqLastname
+                        </div>
+                    }
+                    @if (item.reqTypeId == 2)
+                    {
+                        <div>
+                            Family/Friend < br />
+                            @item.reqFirstname @item.reqLastname
+                        </div>
+                    }
+                    @if (item.reqTypeId == 3)
+                    {
+                        <div>
+                            Concierge < br />
+                            @item.reqFirstname @item.reqLastname
+                        </div>
+                    }
+                    @if (item.reqTypeId == 4)
+                    {
+                        <div>
+                            Business < br />
+                            @item.reqFirstname @item.reqLastname
+                        </div>
+                    }
+                </td>
+                <td>
+                    @item.physicianName
+                </td>
+                <td>
+                    @item.Createddate
+                </td>
+                <td>
+                    <div>
+                        @item.Phonenumber
+                        <br />
+                        (Patient)
+                    </div>
+                    @if (item.reqTypeId == 2)
+                    {
+                        <div>
+                            Family/Friend < br />
+                            @item.ConciergePhonenumber
+                        </div>
+                    }
+                    @if (item.reqTypeId == 3)
+                    {
+                        <div>
+                            Concierge < br />
+                            @item.ConciergePhonenumber
+                        </div>
+                    }
+                    @if (item.reqTypeId == 4)
+                    {
+                        <div>
+                            Business < br />
+                            @item.BusinessPhonenumber
+                        </div>
+                    }
+                </td>
+                <td>
+                    @item.Street, @item.City, @item.State, @item.Zipcode
+                </td>
+                <td>
+                    @item.Notes
+                </td>
+                <td>
+                    <a class="btn border rounded">
+                        <img src="~/images/personal_injury.svg" />
+                        Provider
+                    </a>
+                </td>
+                <td>
+                    <a class="btn border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                        <li><a class="dropdown-item" href="#">View Case</a></li>
+                        <li><a class="dropdown-item" href="#">View Uploads</a></li>
+                        <li><a class="dropdown-item" href="#">View Notes</a></li>
+                        <li><a class="dropdown-item" href="#">Orders</a></li>
+                        <li><a class="dropdown-item" href="#">Doctors Note</a></li>
+                        <li><a class="dropdown-item" href="#">Encounter</a></li>
+                    </ul>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

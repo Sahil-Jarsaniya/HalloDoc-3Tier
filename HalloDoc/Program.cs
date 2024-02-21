@@ -12,6 +12,7 @@ builder.Services.AddSession();
 builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
+builder.Services.AddScoped<IAdminDashboardRepository, AdminDashboardRepository>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -39,6 +40,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=AdminLogin}/{action=login}/{id?}");
+    //pattern: "{controller=Home}/{action=Index}/{id?}");
+pattern: "{controller=AdminLogin}/{action=login}/{id?}");
 
 app.Run();

@@ -207,6 +207,23 @@ namespace HalloDoc.Controllers
 
             return View();
         }
+
+        public IActionResult CreateRequestForElse(int? reqId)
+        {
+
+            if (HttpContext.Session.GetString("token") != null)
+            {
+                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+            }
+            else
+            {
+                return RedirectToAction("login");
+            }
+
+
+            return View();
+        }
+
         [HttpPost]
         public IActionResult CreateRequest(PatientViewModel obj)
         {
@@ -236,7 +253,8 @@ namespace HalloDoc.Controllers
                     Email = obj.Email,
                     Status = 1,
                     Createddate = DateTime.Now,
-                    Isurgentemailsent = false
+                    Isurgentemailsent = false,
+                    Relationname = obj.Relationname
                 };
                 _db.Requests.Add(request);
                 _db.SaveChanges();

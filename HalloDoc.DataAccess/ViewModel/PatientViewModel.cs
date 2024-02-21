@@ -64,5 +64,7 @@ namespace HalloDoc.DataAccess.ViewModel
         public string? Zipcode { get; set; }
 
         public IFormFile? formFile { get; set; }
+
+        public string? Relationname { get; set; }
     }
 }
