@@ -1,6 +1,6 @@
 ﻿<table class="table table-hover table-responsive ">
     <thead>
-        <tr>
+        <tr class="table-secondary">
             <td>Name</td>
             <td></td>
             <td>Date of Birth</td>
@@ -17,66 +17,87 @@
     <tbody>
         @foreach (var item in Model.closeReqViewModels)
         {
+            var bg = "";
+            @switch (item.reqTypeId)
+            {
+                case 1:
+                    bg = "#4fc54d";
+                    break;
+                case 2:
+                    bg = "#ff9e2c";
+                    break;
+                case 3:
+                    bg = "#10bce9";
+                    break;
+                case 4:
+                    bg = "#f745aa";
+                    break;
+            }
             <tr>
-                <td>@item.Firstname @item.Lastname</td>
-                <td>
+                <td style="background-color: @bg;">@item.Firstname @item.Lastname</td>
+                <td style="background-color: @bg;">
                     <a class="btn border rounded">
                         <img src="~/images/envelope.svg" />
                     </a>
                 </td>
-                <td>
+                <td style="background-color: @bg;">
                     @item.Strmonth
                 </td>
-                <td>
+                <td style="background-color: @bg;">
                     Asia
                 </td>
-                <td>
+                <td style="background-color: @bg;">
                     @item.physicianName
                 </td>
-                <td>
+                <td style="background-color: @bg;">
                     @item.Createddate
                 </td>
-                <td>
-                    <div>
+                <td style="background-color: @bg;">
+                    <div class="border rounded d-flex justify-content-center">
                         @item.Phonenumber
-                        <br />
-                        (Patient)
                     </div>
+                    (Patient)
                     @if (item.reqTypeId == 2)
                     {
                         <div>
-                            Family/Friend < br />
-                            @item.ConciergePhonenumber
+                            <div class="border rounded d-flex justify-content-center">
+                                @item.FamilyPhonenumber
+                            </div>
+                            (Family/Friend)
                         </div>
                     }
                     @if (item.reqTypeId == 3)
                     {
                         <div>
-                            Concierge < br />
-                            @item.ConciergePhonenumber
+                            <div class="border rounded d-flex justify-content-center">
+                                @item.ConciergePhonenumber
+                            </div>
+                            (Concierge)
                         </div>
                     }
                     @if (item.reqTypeId == 4)
                     {
                         <div>
-                            Business < br />
-                            @item.BusinessPhonenumber
+                            <div class="border rounded d-flex justify-content-center">
+                                @item.BusinessPhonenumber
+                            </div>
+                            (Business)
                         </div>
                     }
                 </td>
-                <td>
+                <td style="background-color: @bg;">
                     @item.Street, @item.City, @item.State, @item.Zipcode
                 </td>
-                <td>
+                <td style="background-color: @bg;">
                     @item.Notes
                 </td>
-                <td>
+                <td style="background-color: @bg;">
                     <a class="btn border rounded">
                         <img src="~/images/personal_injury.svg" />
                         Provider
                     </a>
                 </td>
-                <td>
+                <td style="background-color: @bg;">
                     <a class="btn border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Actions
                     </a>

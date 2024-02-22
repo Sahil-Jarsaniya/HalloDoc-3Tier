@@ -125,6 +125,10 @@
       "PackagePath": "staticwebassets\\images\\plus-lg.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\telephone.svg",
+      "PackagePath": "staticwebassets\\images\\telephone.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\user-doctor-solid.svg",
       "PackagePath": "staticwebassets\\images\\user-doctor-solid.svg"
     },
@@ -385,116 +389,20 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\7774236_3736765.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\7774236_3736765.jpg"
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\clock.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\clock.svg"
     },
     {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162213.zip",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162213.zip"
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\cloud_upload.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\cloud_upload.svg"
     },
     {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162219.zip",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162219.zip"
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\exclamation.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\exclamation.svg"
     },
     {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162220.zip",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162220.zip"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162242.zip",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162242.zip"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162412.zip",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162412.zip"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240219162937.zip",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240219162937.zip"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240220181155.zip",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240220181155.zip"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig27. Roles.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Fig27. Roles.jpg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig3. Admin Dashboard.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Fig3. Admin Dashboard.jpg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig30. Create Role Physician.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Fig30. Create Role Physician.jpg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig35. Provider on call (MDs On Call).jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Fig35. Provider on call (MDs On Call).jpg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig4. Admin dashboard in New state.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Fig4. Admin dashboard in New state.jpg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig41.Add business page.png",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Fig41.Add business page.png"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig45. Search Records.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Fig45. Search Records.jpg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig5. Admin dashboard in pending state.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Fig5. Admin dashboard in pending state.jpg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig6. Admin dashboard in Active state.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Fig6. Admin dashboard in Active state.jpg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Fig7. Admin dashboard in Conclude state.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Fig7. Admin dashboard in Conclude state.jpg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees-14Feb24.pdf",
-      "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees-14Feb24.pdf"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees_12Feb24.pdf",
-      "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees_12Feb24.pdf"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\TT.png",
-      "PackagePath": "staticwebassets\\uploadedFiles\\TT.png"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\check-circle (1) (1).svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\check-circle (1) (1).svg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\check-circle (1).svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\check-circle (1).svg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\image_2024_01_30T04_10_24_494Z.png",
-      "PackagePath": "staticwebassets\\uploadedFiles\\image_2024_01_30T04_10_24_494Z.png"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\image_2024_01_30T04_16_23_085Z.png",
-      "PackagePath": "staticwebassets\\uploadedFiles\\image_2024_01_30T04_16_23_085Z.png"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\person-circle (1).svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\person-circle (1).svg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\person-circle (2).svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\person-circle (2).svg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\sql TT.png",
-      "PackagePath": "staticwebassets\\uploadedFiles\\sql TT.png"
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\plus-lg.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\plus-lg.svg"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.HalloDoc.Microsoft.AspNetCore.StaticWebAssets.props",

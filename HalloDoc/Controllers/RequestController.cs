@@ -111,7 +111,8 @@ public class RequestController : Controller
                 Email = obj.Email,
                 Status = 1,
                 Createddate = DateTime.Now,
-                Isurgentemailsent = false
+                Isurgentemailsent = false,
+                Phonenumber = obj.Phonenumber
             };
             _db.Requests.Add(request);
             _db.SaveChanges();
@@ -137,7 +138,7 @@ public class RequestController : Controller
             Requeststatuslog requeststatuslog = new Requeststatuslog
             {
                 Requestid = request.Requestid,
-                Status = 4,
+                Status = 1,
                 Createddate = DateTime.Now
             };
             _db.Requeststatuslogs.Add(requeststatuslog);
@@ -189,11 +190,14 @@ public class RequestController : Controller
             var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;
+            
+
             if (existUser == null)
             {
+                var hashPass = GetHash(obj.Password);
                 AspNetUser aspNetUser = new AspNetUser
                 {
-
+                    Password = hashPass,
                     Id = guid.ToString(),
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
@@ -231,14 +235,15 @@ public class RequestController : Controller
             //Inserting into request table
             Request request = new Request
             {
-                Requesttypeid = 1,
+                Requesttypeid = 2,
                 Userid = uid,
                 Firstname = obj.FamilyFirstname,
                 Lastname = obj.FamilyLastname,
                 Email = obj.FamilyEmail,
-                Status = 3,
+                Status = 1,
                 Createddate = DateTime.Now,
-                Isurgentemailsent = false
+                Isurgentemailsent = false,
+                Phonenumber = obj.FamilyPhonenumber
             };
             _db.Requests.Add(request);
             _db.SaveChanges();
@@ -258,16 +263,19 @@ public class RequestController : Controller
                 Zipcode = obj.Zipcode,
                 Notes = obj.Notes
             };
+            _db.Requestclients.Add(requestclient);
+            _db.SaveChanges();
 
             //Inserting into requestStatusLog
 
             Requeststatuslog requeststatuslog = new Requeststatuslog
             {
                 Requestid = request.Requestid,
-                Status = 4,
+                Status = 1,
                 Createddate = DateTime.Now
             };
-
+            _db.Requeststatuslogs.Add(requeststatuslog);
+            _db.SaveChanges();
 
             //uploading files
             if (obj.formFile != null && obj.formFile.Length > 0)
@@ -316,9 +324,11 @@ public class RequestController : Controller
             var uid = 0;
             if (existUser == null)
             {
+                var hashPass = GetHash(obj.Password);
+
                 AspNetUser aspNetUser = new AspNetUser
                 {
-
+                    Password = hashPass,
                     Id = guid.ToString(),
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
@@ -370,14 +380,15 @@ public class RequestController : Controller
             //Inserting into request table
             Request request = new Request
             {
-                Requesttypeid = 1,
+                Requesttypeid = 3,
                 Userid = uid,
                 Firstname = obj.ConciergeFirstname,
                 Lastname = obj.ConciergeLastname,
                 Email = obj.ConciergeEmail,
-                Status = 3,
+                Status = 1,
                 Createddate = DateTime.Now,
-                Isurgentemailsent = false
+                Isurgentemailsent = false,
+                Phonenumber = obj.ConciergePhonenumber
             };
             _db.Requests.Add(request);
         _db.SaveChanges();
@@ -397,16 +408,18 @@ public class RequestController : Controller
                 Zipcode = obj.Zipcode,
                 Notes = obj.Notes
             };
-
+            _db.Requestclients.Add(requestclient);
+            _db.SaveChanges();
             //Inserting into requestStatusLog
 
             Requeststatuslog requeststatuslog = new Requeststatuslog
             {
                 Requestid = request.Requestid,
-                Status = 4,
+                Status = 1,
                 Createddate = DateTime.Now
             };
-
+            _db.Requeststatuslogs.Add(requeststatuslog);
+            _db.SaveChanges();
             return RedirectToAction("submitRequestScreen");
         }
         else
@@ -436,9 +449,10 @@ public class RequestController : Controller
             var uid = 0;
            if(existUser == null)
             {
+                var hashPass = GetHash(obj.Password);
                 AspNetUser aspNetUser = new AspNetUser
                 {
-                    
+                    Password = hashPass,
                     Id = guid.ToString(),
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
@@ -475,16 +489,35 @@ public class RequestController : Controller
 
             Request request = new Request
             {
-                Requesttypeid = 1,
+                Requesttypeid = 4,
                 Userid = uid,
+                Firstname = obj.bussinessFirstname,
+                Lastname = obj.bussinessLastname,
+                Email = obj.bussinessEmail,
+                Status = 1,
+                Createddate = DateTime.Now,
+                Isurgentemailsent = false,
+                Phonenumber = obj.bussinessPhonenumber
+            };
+            _db.Requests.Add(request);
+            _db.SaveChanges();
+
+            //Insertung into RequestClient
+            Requestclient requestclient = new Requestclient
+            {
+                Requestid = request.Requestid,
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,
-                Status = 4,
-                Createddate = DateTime.Now,
-                Isurgentemailsent = false
+                Phonenumber = obj.Phonenumber,
+                Strmonth = obj.Strmonth,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Notes = obj.Notes
             };
-            _db.Requests.Add(request);
+            _db.Requestclients.Add(requestclient);
             _db.SaveChanges();
 
             Requestbusiness requestbusiness = new Requestbusiness
@@ -498,7 +531,7 @@ public class RequestController : Controller
             Requeststatuslog requeststatuslog = new Requeststatuslog
             {
                 Requestid = request.Requestid,
-                Status = 4,
+                Status = 1,
                 Createddate = DateTime.Now
             };
             _db.Requeststatuslogs.Add(requeststatuslog);

@@ -1,6 +1,7 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public AdminDashboardViewModel adminDashboard()
         {
+            
+
             var newCount = (from t1 in _db.Requests
                             where t1.Status == 1
                             select t1
@@ -55,9 +58,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 unpaidCount = unpaidCount
             };
 
-            var newReqData = from req in _db.Requests
+            var newReqData =( from req in _db.Requests
                           join rc in _db.Requestclients on req.Requestid equals rc.Requestid 
-                          join phy in _db.Physicians on req.Physicianid equals phy.Physicianid 
                           where req.Status == 1 
                           select new newReqViewModel
                           {
@@ -76,9 +78,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                               State = rc.State,
                               Zipcode = rc.Zipcode,
                               Notes = rc.Notes,
-                              reqTypeId = req.Requesttypeid,
-                              physicianName = phy.Firstname+ " "+phy.Lastname
-                          };
+                              reqTypeId = req.Requesttypeid
+                          }).ToList();
             var pendingReqData = from req in _db.Requests
                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                              join phy in _db.Physicians on req.Physicianid equals phy.Physicianid

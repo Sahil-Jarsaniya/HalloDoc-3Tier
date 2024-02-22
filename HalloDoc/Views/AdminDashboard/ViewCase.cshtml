@@ -1,0 +1,148 @@
+﻿@model Requestclient;
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_adminLayout";
+}
+<div class="tab-pane fade show " id="tab2">
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>View Reservation 
+            <span class="border bg-success rounded-pill h-50 fs-6 p-1 ">Patient</span>
+        </h4>
+        <a href="@Url.Action("Dashboard")" class="btn m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            <span>Back</span>
+        </a>
+    </div>
+    <div class="container-fluid d-flex justify-content-center mt-4">
+
+        <form  method="post" class="viewCaseForm form-floating shadow patient-request-form p-3">
+                <input asp-for="Requestid" hidden />
+                <span asp-validation-for="Requestid"></span>
+
+                <h5>Patient Information</h5>
+                <div>
+                    <span>Confirmation Number</span><br />
+                    <span style="color: #10bce9">MD092723TETE0002</span>
+                </div>
+                <div class="form-floating m-1 form-div">
+                    <textarea asp-for="Notes" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                          style="height: 100px" disabled></textarea>
+                    <label for="">Patient Note</label>
+                </div>
+                <div class="row g-2 m-1">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input asp-for="Firstname" type="text" class="form-control" placeholder="" disabled>
+                            <label for="">First Name</label>
+                        </div>
+                        <span asp-validation-for="Firstname"></span>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-floating">
+                        <input asp-for="Lastname" type="text" class="form-control" placeholder="" disabled>
+                            <label for="floatingSelectGrid">Last Name</label>
+                        </div>
+                        <span asp-validation-for="Lastname"></span>
+                    </div>
+                </div>
+
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                        <input asp-for="Strmonth" type="date" class="form-control" placeholder="" disabled>
+                            <label for="">Date Of Birth</label>
+                        </div>
+                        <span asp-validation-for="Strmonth"></span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                        <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" placeholder="" disabled>
+                            <label for=""></label>
+                        </div>
+                        <span asp-validation-for="Phonenumber"></span>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="btn btn-secondary form-floating rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
+                            <img src="~/images/telephone.svg"/>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                        <input asp-for="Email" id="checkEmail" type="email" class="form-control" placeholder="name@example.com" disabled>
+                            <label for="">Email</label>
+                        </div>
+                        <span asp-validation-for="Email"></span>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button"  id="editBtn" class="btn btn-secondary form-floating w-100 h-100 float-end" enabled>Edit</button>
+                    </div>
+                    
+                </div>
+
+                <h5>Location Information</h5>
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="" disabled>
+                            <label for="">Regoin</label>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="" disabled>
+                            <label for="">Business Name/ Address</label>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" placeholder="" disabled>
+                            <label for="">Room #</label>
+                        </div>
+                        <span ></span>
+                    </div>
+                </div>
+            <button type="reset" id="cancelBtn" class="btn btn-danger float-end m-1">Cancel</button>
+            <button type="button" id="viewNoteBtn"  class="btn btn-primary float-end m-1">View Notes</button>
+        </form>
+    </div>
+</div>
+
+
+@section AdminScript {
+    <!-- js ans css for phone input -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <script src="~/js/admin.js"></script>
+    <script>
+        // Edit Details buttons
+        var editBtn = document.getElementById("editBtn");
+        editBtn.addEventListener("click", () => {
+            var input = document.querySelectorAll('.viewCaseForm input');
+
+            
+
+            input.forEach(function (input) {
+                if(input.disabled){
+                input.disabled = false;
+                }else{
+                    input.disabled = true;
+                }
+            });
+            var txt = document.getElementById('floatingTextarea2');
+            if(txt.disabled){
+                txt.disabled = false;
+            }else{
+                txt.disabled = true;
+            }
+        });  
+    </script>
+}

@@ -10,6 +10,8 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
     {
         public  countRequestViewModel countRequestViewModel { get; set; }
 
+        public searchViewModel searchViewModel { get; set; }
+
         public IEnumerable<newReqViewModel> newReqViewModel { get; set; }
 
         public IEnumerable<pendingReqViewModel> pendingReqViewModel { get; set; }

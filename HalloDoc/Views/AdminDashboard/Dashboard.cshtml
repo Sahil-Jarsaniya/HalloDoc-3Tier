@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HalloDoc.DataAccess.ViewModel.AdminViewModel.AdminDashboardViewModel
+@{
     ViewData["Title"] = "Admin Dashboard";
     Layout = "_adminLayout";
 }
@@ -186,93 +187,94 @@
         </div>
 
     </div>
+    <form method="post" asp-action="Dashboard">
 
-    <div class="d-block d-lg-flex mt-3 align-items-center justify-content-between">
+        <div class="d-block d-lg-flex mt-3 align-items-center justify-content-between">
 
-        <div class="d-md-flex mb-3 mb-lg-0">
+            <div class="d-md-flex mb-3 mb-lg-0">
 
-            <div class="d-flex normal-input rounded align-items-center ps-2 me-md-2 mb-2 mb-md-0">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
-                    <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
-                    </path>
-                </svg>
-                <input type="text" class="form-control border border-0" placeholder="Search Patients">
+                <div class="d-flex normal-input rounded align-items-center ps-2 me-md-2 mb-2 mb-md-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
+                        <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
+                        </path>
+                    </svg>
+                    <input type="search"  asp-for="searchViewModel.Name" class="form-control border border-0" placeholder="Search Patients">
+                </div>
+
+                <div class="d-flex normal-input rounded align-items-center ms-lg-2 ps-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
+                        <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
+                        </path>
+                    </svg>
+                    <select class="form-select border-0" aria-label="Default select example">
+                        <option selected>All Regions</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
             </div>
+            <div class="d-flex align-items-center">
 
-            <div class="d-flex normal-input rounded align-items-center ms-lg-2 ps-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
-                    <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
-                    </path>
-                </svg>
-                <select class="form-select border-0" aria-label="Default select example">
-                    <option selected>All Regions</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
+                <a class="d-none d-lg-flex  align-items-center  px-lg-2 py-1 border rounded">
+                    <span>All</span>
+                </a>
+
+                <a class="px-lg-1 py-1 rounded d-md-flex align-items-center ms-2">
+                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="#5fbc61" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                    </svg>
+                    <h6 class="fs-6 ms-lg-2 m-auto">Patient</h6>
+                </a>
+
+                <a class=" px-lg-1 py-1 rounded d-md-flex align-items-center ms-2">
+                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="#ed9124" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                    </svg>
+                    <h6 class="fs-6 ms-lg-2  m-auto">Family</h6>
+                </a>
+                <a class=" px-lg-1 py-1 rounded d-md-flex align-items-center ms-2">
+                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="#e26277" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                    </svg>
+                    <h6 class="fs-6 ms-lg-2  m-auto">Business</h6>
+                </a>
+                <a class="px-lg-1 py-1 rounded d-md-flex align-items-center ms-2">
+                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="#007fc6" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                    </svg>
+                    <h6 class="fs-6 ms-lg-2 m-auto">Concierge</h6>
+                </a>
+                <a class=" px-lg-1 py-1 rounded d-md-flex align-items-center ms-2">
+                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="#9966cd" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                    </svg>
+                    <h6 class="fs-6 ms-lg-2 m-auto">VIP</h6>
+                </a>
+
             </div>
         </div>
-        <div class="d-flex align-items-center">
-
-            <a class="d-none d-lg-flex  align-items-center  px-lg-2 py-1 border rounded">
-                <span>All</span>
-            </a>
-
-            <a class="px-lg-1 py-1 rounded d-md-flex align-items-center ms-2">
-                <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle fill="#5fbc61" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
-                </svg>
-                <h6 class="fs-6 ms-lg-2 m-auto">Patient</h6>
-            </a>
-
-            <a class=" px-lg-1 py-1 rounded d-md-flex align-items-center ms-2">
-                <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle fill="#ed9124" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
-                </svg>
-                <h6 class="fs-6 ms-lg-2  m-auto">Family</h6>
-            </a>
-            <a class=" px-lg-1 py-1 rounded d-md-flex align-items-center ms-2">
-                <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle fill="#e26277" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
-                </svg>
-                <h6 class="fs-6 ms-lg-2  m-auto">Business</h6>
-            </a>
-            <a class="px-lg-1 py-1 rounded d-md-flex align-items-center ms-2">
-                <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle fill="#007fc6" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
-                </svg>
-                <h6 class="fs-6 ms-lg-2 m-auto">Concierge</h6>
-            </a>
-            <a class=" px-lg-1 py-1 rounded d-md-flex align-items-center ms-2">
-                <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle fill="#9966cd" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
-                </svg>
-                <h6 class="fs-6 ms-lg-2 m-auto">VIP</h6>
-            </a>
-
-        </div>
-    </div>
-
-    <div class="tab-content  mt-3 ">
-        <div class="tab-pane fade show active overflow-auto" id="newTab" role="tabpanel" aria-labelledby="newTab" tabindex="0">
-            <partial name="_newRequestView" />
-        </div>
-        <div class="tab-pane fade show overflow-auto" id="pendingTab" role="tabpanel" aria-labelledby="pendingTab" tabindex="0">
-            <partial name="_pendingRequestView" />
-        </div>
-        <div class="tab-pane fade show overflow-auto" id="ActiveTab" role="tabpanel" aria-labelledby="ActiveTab" tabindex="0">
-            <partial name="_activeRequestView" />
-        </div>
-        <div class="tab-pane fade show overflow-auto" id="concludeTab" role="tabpanel" aria-labelledby="concludeTab" tabindex="0">
-            <partial name="_concludeReqView" />
-        </div>
-        <div class="tab-pane fade show overflow-auto" id="toCloseTab" role="tabpanel" aria-labelledby="toCloseTab" tabindex="0">
-            <partial name="_closeReqView" />
+        <div class="tab-content  mt-3 ">
+            <div class="tab-pane fade show active overflow-auto" id="newTab" role="tabpanel" aria-labelledby="newTab" tabindex="0">
+                <partial name="_newRequestView" />
             </div>
-        <div class="tab-pane fade show overflow-auto" id="unpaidTab" role="tabpanel" aria-labelledby="unpaidTab" tabindex="0">
-            <partial name="_unpaidReqView" />
+            <div class="tab-pane fade show overflow-auto" id="pendingTab" role="tabpanel" aria-labelledby="pendingTab" tabindex="0">
+                <partial name="_pendingRequestView" />
+            </div>
+            <div class="tab-pane fade show overflow-auto" id="ActiveTab" role="tabpanel" aria-labelledby="ActiveTab" tabindex="0">
+                <partial name="_activeRequestView" />
+            </div>
+            <div class="tab-pane fade show overflow-auto" id="concludeTab" role="tabpanel" aria-labelledby="concludeTab" tabindex="0">
+                <partial name="_concludeReqView" />
+            </div>
+            <div class="tab-pane fade show overflow-auto" id="toCloseTab" role="tabpanel" aria-labelledby="toCloseTab" tabindex="0">
+                <partial name="_closeReqView" />
+            </div>
+            <div class="tab-pane fade show overflow-auto" id="unpaidTab" role="tabpanel" aria-labelledby="unpaidTab" tabindex="0">
+                <partial name="_unpaidReqView" />
+            </div>
         </div>
-    </div>
+    </form>
 
 </div>
 
@@ -282,7 +284,7 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
     <script src="~/js/admin.js"></script>
-    <script>
+    <script type="text/javascript">
         $(".status-tab").click(function () {
             $(this).addClass("active");
             $(this).children("svg").addClass('d-lg-block');
@@ -292,4 +294,30 @@
 
         $("#status-new-tab").click();
     </script>
+    <script type="text/javascript">
+
+        document.getElementById("search").onchange = function () {
+            console.log("hi")
+            var serch = {
+                Name: document.getElementById("search").value
+            };
+            $.ajax({
+                type: "POST",
+                url: "/AdminDashboard/Search",
+                data: { search: search },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function () {
+                    console.log("success")
+                },
+                failure: function () {
+                    alert("faile");
+                },
+                error: function () {
+                    alert("error");
+                }
+            })
+        }
+    </script>
+
 }
