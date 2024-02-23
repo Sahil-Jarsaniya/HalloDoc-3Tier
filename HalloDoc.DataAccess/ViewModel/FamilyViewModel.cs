@@ -35,11 +35,11 @@ namespace HalloDoc.DataAccess.ViewModel
         [Required]
         [Column("firstname")]
         [StringLength(100)]
-        public string? Firstname { get; set; }
+        public string Firstname { get; set; }
 
         [Column("lastname")]
         [StringLength(100)]
-        public string? Lastname { get; set; }
+        public string Lastname { get; set; }
 
         [Column("phonenumber")]
         [StringLength(23)]
@@ -47,7 +47,7 @@ namespace HalloDoc.DataAccess.ViewModel
 
         [Column("email")]
         [StringLength(50)]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [Column("Password")]
         [StringLength(100)]

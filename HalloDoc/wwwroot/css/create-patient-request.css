@@ -132,3 +132,9 @@ body {
     background-color: white;
     color: #01bce9;
 }
+
+
+input:-webkit-autofill {
+    color: inherit;
+    background-color: inherit;
+}

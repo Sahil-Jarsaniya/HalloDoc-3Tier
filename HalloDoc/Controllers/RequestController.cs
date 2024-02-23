@@ -37,6 +37,12 @@ public class RequestController : Controller
         }
     }
 
+    public static string GetConfirmationNumber( DateTime createtime, String lastName, string firstName)
+    {
+        String confirmationNumber = "AM" + createtime.ToString("yyMM") + lastName.ToUpper().Substring(0, Math.Min(2, lastName.Length))+ firstName.ToUpper().Substring(0, Math.Min(2, firstName.Length)) + "0001";
+
+        return confirmationNumber;
+    }
 
     public IActionResult submitRequestScreen()
     {
@@ -112,7 +118,8 @@ public class RequestController : Controller
                 Status = 1,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
-                Phonenumber = obj.Phonenumber
+                Phonenumber = obj.Phonenumber,
+                Confirmationnumber = GetConfirmationNumber(DateTime.Now, obj.Lastname, obj.Firstname)
             };
             _db.Requests.Add(request);
             _db.SaveChanges();
@@ -243,7 +250,8 @@ public class RequestController : Controller
                 Status = 1,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
-                Phonenumber = obj.FamilyPhonenumber
+                Phonenumber = obj.FamilyPhonenumber,
+                Confirmationnumber = GetConfirmationNumber(DateTime.Now, obj.Lastname, obj.Firstname)
             };
             _db.Requests.Add(request);
             _db.SaveChanges();
@@ -388,7 +396,8 @@ public class RequestController : Controller
                 Status = 1,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
-                Phonenumber = obj.ConciergePhonenumber
+                Phonenumber = obj.ConciergePhonenumber,
+                Confirmationnumber = GetConfirmationNumber(DateTime.Now, obj.Lastname, obj.Firstname)
             };
             _db.Requests.Add(request);
         _db.SaveChanges();
@@ -497,7 +506,8 @@ public class RequestController : Controller
                 Status = 1,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
-                Phonenumber = obj.bussinessPhonenumber
+                Phonenumber = obj.bussinessPhonenumber,
+                Confirmationnumber = GetConfirmationNumber(DateTime.Now, obj.Lastname, obj.Firstname)
             };
             _db.Requests.Add(request);
             _db.SaveChanges();

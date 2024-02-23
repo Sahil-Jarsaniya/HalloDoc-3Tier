@@ -1,29 +1,35 @@
-﻿@model Requestclient;
+﻿@model HalloDoc.DataAccess.ViewModel.AdminViewModel.viewCaseViewModel;
 @{
     ViewData["Title"] = "Admin Dashboard";
     Layout = "_adminLayout";
 }
-<div class="tab-pane fade show " id="tab2">
+<div class="tab-pane fade show" id="tab2">
     <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
         <h4>View Reservation 
-            <span class="border bg-success rounded-pill h-50 fs-6 p-1 ">Patient</span>
+            <span class="border bg-success rounded-pill h-50 fs-6 p-1 text-white">Patient</span>
         </h4>
-        <a href="@Url.Action("Dashboard")" class="btn m-2 text-decoration-none float-end"
+        <a href="@Url.Action("Dashboard")" class="btn btn-secondary m-2 text-decoration-none float-end"
            id="back-btn">
             <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
-            <span>Back</span>
+            Back
         </a>
     </div>
     <div class="container-fluid d-flex justify-content-center mt-4">
-
-        <form  method="post" class="viewCaseForm form-floating shadow patient-request-form p-3">
-                <input asp-for="Requestid" hidden />
-                <span asp-validation-for="Requestid"></span>
+        @if(ViewBag.error != null)
+        {   
+        <span>@ViewBag.error</span>
+        }
+        @if (ViewBag.success != null)
+        {
+            <span>@ViewBag.success</span>
+        }
+        <form  method="post" asp-action="ViewCase" class="viewCaseForm form-floating shadow patient-request-form p-3">
 
                 <h5>Patient Information</h5>
+                <input name="Requestclientid" value="@Model.Requestclientid" type="hidden" disabled/>
                 <div>
-                    <span>Confirmation Number</span><br />
-                    <span style="color: #10bce9">MD092723TETE0002</span>
+                    <span style="font-size: 10px;">Confirmation Number</span><br />
+                    <span class="fw-bold" style="color: #10bce9" >@Model.confirmationNumber</span>
                 </div>
                 <div class="form-floating m-1 form-div">
                     <textarea asp-for="Notes" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
@@ -79,6 +85,7 @@
                     </div>
                     <div class="col-md-1">
                         <button type="button"  id="editBtn" class="btn btn-secondary form-floating w-100 h-100 float-end" enabled>Edit</button>
+                    <button type="submit" id="submitBtn" class="btn btn-secondary form-floating w-100 h-100 float-end d-none" enabled>submit</button>
                     </div>
                     
                 </div>
@@ -107,8 +114,9 @@
                         <span ></span>
                     </div>
                 </div>
-            <button type="reset" id="cancelBtn" class="btn btn-danger float-end m-1">Cancel</button>
+            <button type="reset" onclick="cancle()" id="cancelBtn" class="btn btn-danger float-end m-1">Cancel</button>
             <button type="button" id="viewNoteBtn"  class="btn btn-primary float-end m-1">View Notes</button>
+            <button type="button" id="assignBtn" class="btn btn-primary float-end m-1">Assign</button>
         </form>
     </div>
 </div>
@@ -124,12 +132,10 @@
     <script src="~/js/admin.js"></script>
     <script>
         // Edit Details buttons
+        var submitBtn = document.getElementById("submitBtn");
         var editBtn = document.getElementById("editBtn");
         editBtn.addEventListener("click", () => {
             var input = document.querySelectorAll('.viewCaseForm input');
-
-            
-
             input.forEach(function (input) {
                 if(input.disabled){
                 input.disabled = false;
@@ -143,6 +149,24 @@
             }else{
                 txt.disabled = true;
             }
-        });  
+            editBtn.classList.add("d-none");
+            submitBtn.classList.remove("d-none");
+        });
+
+        var cancleBtn = document.getElementById("cancleBtn");
+        function cancle(){
+            var input = document.querySelectorAll('.viewCaseForm input');
+            input.forEach(function (input) {
+                if (!input.disabled) {
+                    input.disabled = true;
+                } 
+            });
+            var txt = document.getElementById('floatingTextarea2');
+            if (!txt.disabled) {
+                txt.disabled = true;
+            } 
+            editBtn.classList.remove("d-none");
+            submitBtn.classList.add("d-none");
+        }
     </script>
 }

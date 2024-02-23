@@ -74,6 +74,7 @@ header {
         font-weight: 500;
     }
 
+
 [data-bs-theme=dark] #togglebar li a {
     color: white;
 }

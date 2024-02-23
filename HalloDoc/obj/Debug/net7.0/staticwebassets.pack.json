@@ -405,6 +405,10 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\plus-lg.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\user-doctor-solid.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\user-doctor-solid.svg"
+    },
+    {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.HalloDoc.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

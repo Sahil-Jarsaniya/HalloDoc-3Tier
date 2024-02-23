@@ -9,6 +9,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 {
     public class newReqViewModel
     {
+        public int reqClientId { get; set; }
         public string? Firstname { get; set; }
 
         public string? Lastname { get; set; }

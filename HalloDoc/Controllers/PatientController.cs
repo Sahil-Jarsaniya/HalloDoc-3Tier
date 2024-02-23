@@ -142,21 +142,22 @@ namespace HalloDoc.Controllers
                 _db.SaveChanges();
             }
 
-            return RedirectToAction("Dashboard", "Patient", new { AspId = aspId });
+            return RedirectToAction("Document", "Patient", new { reqId = id });
         }
 
 
         [HttpPost]
         public IActionResult Profile(DashboardViewModel obj)
         {
-            
-
             var aspId = from t1 in _db.AspNetUsers
                         join t2 in _db.Users on t1.Id equals t2.Aspnetuserid
                         where t2.Userid == obj.ProfileEditViewModel.UserId
                         select t1.Id;
 
+
+
             var existUser = _db.Users.FirstOrDefault(x => x.Userid == obj.ProfileEditViewModel.UserId);
+            var email = existUser.Email;
 
             existUser.Firstname = obj.ProfileEditViewModel.Firstname;
             existUser.Lastname = obj.ProfileEditViewModel.Lastname;
@@ -179,6 +180,32 @@ namespace HalloDoc.Controllers
             _db.AspNetUsers.Update(existAsp);
             _db.AspNetUsers.Update(existAsp);
             _db.SaveChanges();
+
+            _db.Requests.Where(x => x.Userid == existUser.Userid).ToList().ForEach(x =>
+            {
+                x.Firstname = obj.ProfileEditViewModel.Firstname;
+                x.Lastname = obj.ProfileEditViewModel.Lastname;
+                x.Email = obj.ProfileEditViewModel.Email;
+                x.Phonenumber = obj.ProfileEditViewModel.Phonenumber;
+                x.Modifieddate = DateTime.Now;
+
+                _db.Requests.Update(x);
+                _db.SaveChanges();  
+            });
+
+            _db.Requestclients.Where(x => x.Email == email).ToList().ForEach(x =>
+            {
+                x.Firstname = obj.ProfileEditViewModel.Firstname;
+                x.Lastname = obj.ProfileEditViewModel.Lastname;
+                x.Email = obj.ProfileEditViewModel.Email;
+                x.Phonenumber = obj.ProfileEditViewModel.Phonenumber;
+                x.Street = obj.ProfileEditViewModel.Street;
+                x.City = obj.ProfileEditViewModel.City;
+                x.State = obj.ProfileEditViewModel.State;
+                x.Zipcode = obj.ProfileEditViewModel.Zipcode;
+                _db.Requestclients.Update(x);
+                _db.SaveChanges();
+            });
 
             HttpContext.Session.SetString("token", existUser.Firstname + " "+ existUser.Lastname);
             if (HttpContext.Session.GetString("token") != null)

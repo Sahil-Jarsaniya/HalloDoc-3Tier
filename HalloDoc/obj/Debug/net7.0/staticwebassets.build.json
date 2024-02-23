@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lyNHXuF2ASrbOvF5CYkjlivZBZ61vlf9EkrHSJDvwuw=",
+  "Hash": "mRoxZqYHJJOFxBXFluhGa+hf46qc/Gj1kg3vgxo5G9w=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -1749,6 +1749,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\plus-lg.svg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\user-doctor-solid.svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/user-doctor-solid.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\user-doctor-solid.svg"
     }
   ]
 }

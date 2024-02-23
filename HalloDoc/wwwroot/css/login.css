@@ -98,6 +98,11 @@ footer {
 }
 
 
+input:-webkit-autofill {
+    color: inherit;
+    background-color: inherit;
+}
+
 /* media query */
 
 @media screen and (max-width: 767px) {

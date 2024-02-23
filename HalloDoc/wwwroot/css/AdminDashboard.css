@@ -24,10 +24,14 @@
         border: 1px solid white;
         color: white;
     }
+    .btn-secondary img {
+        filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
+    }
 
-.back-btn svg {
-    fill: var(--primary);
-}
+        .btn-secondary:hover img {
+            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+        }
+
 
 .btn span {
     color: var(--primary);
@@ -240,20 +244,7 @@ a{
         color: var(--primary);
     }
 
-    #back-btn {
-        /* background: none; */
-        color: #01bce9;
-        border: 1px solid #01bce9;
-        border-radius: 10%;
-        padding: 10px;
-    }
-
-    #back-btn:hover {
-        color: white;
-        background-color: #00adef;
-    }
-
-        #back-btn:hover img {
+       #back-btn:hover img {
             filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
         }
 
