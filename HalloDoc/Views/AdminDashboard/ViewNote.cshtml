@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Requestnote>
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "_adminLayout";
+}
+@section Styles{
+    <style>
+        .viewCaseForm textarea:focus {
+            box-shadow: none;
+            border: 1px solid #01bce9;
+            color: #01bce9;
+        }
+
+            .viewCaseForm textarea:focus + label {
+                color: #01bce9;
+                font-size: small;
+            }
+    </style>
+}
+<div class="tab-pane fade show">
+    <div class=" d-flex container justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Notes
+        </h4>
+        <a href="@Url.Action("Dashboard")" class="btn btn-secondary m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="container" style="max-width: 1000px">
+        @foreach (var item in Model)
+        {
+            <div class="row g-3">
+                <div class="col-md-6 col-12">
+                    <div class="border shadow rounded d-flex p-3">
+                        <div class="me-2">
+                            <img src="~/images/clock.svg" />
+                        </div>
+                        <div class="" style="width: 97%">
+                            <h6>Transfer Notes</h6>
+                            <p>@item.Administrativenotes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="border shadow rounded d-flex p-3">
+                        <div class="me-2">
+                            <img src="~/images/clock.svg" />
+                        </div>
+                        <div class="" style="width: 97%">
+                            <h6>Physiciannotes</h6>
+                            <p>@item.Physiciannotes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-12 ">
+                    <div class="border shadow rounded d-flex p-3">
+                        <div class="me-2">
+                            <img src="~/images/clock.svg" />
+                        </div>
+                        <div class="" style="width: 97%">
+                            <h6>Adminnotes</h6>
+                            <p>@item.Adminnotes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <form class="form-floating viewCaseForm border rounded shadow p-2 mt-5">
+            <div class="row g-3 mt-1 justify-content-end">
+                <div class="col-12">
+                    <div class="form-floating m-1 form-div">
+                        <textarea  class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                  style="height: 100px"></textarea>
+                        <label for="">Admin Notes</label>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary form-floating w-100 h-100 float-end">Save Changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+@section AdminScript {
+    <!-- js ans css for phone input -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <script src="~/js/admin.js"></script>
+}

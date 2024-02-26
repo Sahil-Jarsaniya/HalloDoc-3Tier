@@ -208,15 +208,20 @@
                             </div>
                                 <span asp-validation-for="ProfileEditViewModel.State"></span>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-floating">
                                     <input type="text" asp-for="ProfileEditViewModel.Zipcode" class="form-control" placeholder="">
                                 <label for="">Zip Code</label>
                             </div>
                                 <span asp-validation-for="ProfileEditViewModel.Zipcode"></span>
                         </div>
+                            <div class="col-md-2">
+                                    <a target="_blank" id="mapBtn"  href="http://maps.google.com/?q= +@Model.ProfileEditViewModel.State + @Model.ProfileEditViewModel.City + @Model.ProfileEditViewModel.Street"
+                                       class="btn d-flex align-item-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
+                                        <img src="~/images/map.svg" class="h-50 m-auto"/><span class="m-auto">Map</span>
+                                    </a>
+                            </div>
                     </div>
-
                     </fieldset>
                     <button type="reset" onclick="cancelEdit()" id="cancelBtn" class="btn btn-primary float-end m-1 d-none">Cancel</button>
                     <button type="submit"  id="submitBtn" class="btn btn-primary float-end m-1 d-none">Submit</button>

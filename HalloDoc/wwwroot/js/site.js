@@ -87,6 +87,7 @@ function editDetails() {
     var cancelbtn = document.getElementById("cancelBtn");
     var submitBtn = document.getElementById("submitBtn");
     var editBtn = document.getElementById("editBtn");
+    var mapBtn = document.getElementById("mapBtn");
     var field = document.getElementById("field")
     cancelbtn.classList.remove("d-none");
     submitBtn.classList.remove("d-none");
@@ -97,12 +98,14 @@ function editDetails() {
     editBtn.classList.add("d-none");
 
     field.disabled = false;
+    mapBtn.disabled = false;
 }
 
 function cancelEdit() {
     var cancelbtn = document.getElementById("cancelBtn");
     var submitBtn = document.getElementById("submitBtn");
     var editBtn = document.getElementById("editBtn");
+    var mapBtn = document.getElementById("mapBtn");
     var field = document.getElementById("field")
     cancelbtn.classList.remove("d-block");
     submitBtn.classList.remove("d-block");
@@ -111,6 +114,6 @@ function cancelEdit() {
     cancelbtn.classList.add("d-none");
     submitBtn.classList.add("d-none");
     editBtn.classList.add("d-block");
-
     field.disabled = true;
+    mapBtn.disabled = false;
 }

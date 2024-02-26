@@ -59,5 +59,13 @@ namespace HalloDoc.Controllers
             }
 
         }
+
+        public IActionResult ViewNote(int reqClientId)
+        {
+            var ReqId = _db.Requestclients.Where(x => x.Requestclientid ==  reqClientId).FirstOrDefault();
+            List<Requestnote> reqNotes = (from t1 in _db.Requestnotes
+                                          select t1).ToList();
+            return View(reqNotes);
+        }
     }
 }

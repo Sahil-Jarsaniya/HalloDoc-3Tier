@@ -1,4 +1,5 @@
-﻿using HalloDoc.DataAccess.Data;
+﻿using HalloDoc.BussinessAccess.Repository.Interface;
+using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,11 @@ namespace HalloDoc.Controllers
     public class PatientController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public PatientController(ApplicationDbContext db)
+        private readonly IPatientRepository _patientrepo;
+        public PatientController(ApplicationDbContext db, IPatientRepository patientrepo)
         {
             _db = db;
+            _patientrepo = patientrepo; 
         }
 
         public IActionResult Dashboard(String AspId)
@@ -21,49 +24,14 @@ namespace HalloDoc.Controllers
             if (HttpContext.Session.GetString("token") != null)
             {
                 ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+                var data = _patientrepo.PatientDashboard(AspId);
+
+                return View(data);
             }
             else
             {
                 return RedirectToAction("login");
             }
-
-            var patientAspId = _db.Users.Where(x => x.Aspnetuserid == AspId).FirstOrDefault();
-            var userId = patientAspId.Userid;
-
-            var reqData = (from r in _db.Requests
-                           where r.Userid == userId
-                           join s in _db.RequestStatuses on r.Status equals s.StatusId
-                           select new PatientDashboardViewModel
-                           {
-                               RequestId = r.Requestid,
-                               fileCount = 1,
-                               Status = s.Status,
-                               Createddate = r.Createddate
-                           }).ToList();
-
-
-
-            var userdata = new ProfileEditViewModel
-            {
-                UserId = patientAspId.Userid,
-                Firstname = patientAspId.Firstname,
-                Lastname = patientAspId.Lastname,
-                Email = patientAspId.Email,
-                Phonenumber = patientAspId.Mobile,
-                Strmonth = patientAspId.Strmonth,
-                Street = patientAspId.Street,
-                City = patientAspId.City,
-                State = patientAspId.State,
-                Zipcode = patientAspId.Zipcode
-            };
-
-            var data = new DashboardViewModel
-            {
-                PatientDashboardViewModel = reqData,
-                ProfileEditViewModel = userdata
-            };
-
-            return View(data);
         }
 
         public IActionResult Document(int reqId)

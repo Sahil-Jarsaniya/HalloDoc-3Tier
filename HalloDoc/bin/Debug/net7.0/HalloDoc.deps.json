@@ -2582,7 +2582,9 @@
       "HalloDoc.BussinessAccess/1.0.0": {
         "dependencies": {
           "HalloDoc.DataAccess": "1.0.0",
-          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0"
+          "MailKit": "4.3.0",
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "MimeKit": "4.3.0"
         },
         "runtime": {
           "HalloDoc.BussinessAccess.dll": {}

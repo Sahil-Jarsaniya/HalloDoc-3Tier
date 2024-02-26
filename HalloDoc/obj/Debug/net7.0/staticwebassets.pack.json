@@ -105,6 +105,10 @@
       "PackagePath": "staticwebassets\\images\\logo.png"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\map.svg",
+      "PackagePath": "staticwebassets\\images\\map.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\password_visibility_off.svg",
       "PackagePath": "staticwebassets\\images\\password_visibility_off.svg"
     },
@@ -389,6 +393,14 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240226092436.zip",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240226092436.zip"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\box-arrow-right.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\box-arrow-right.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\clock.svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\clock.svg"
     },
@@ -399,6 +411,10 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\exclamation.svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\exclamation.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\list.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\list.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\plus-lg.svg",

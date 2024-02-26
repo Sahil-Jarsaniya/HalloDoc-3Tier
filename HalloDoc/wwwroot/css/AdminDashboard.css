@@ -4,24 +4,28 @@
 
 .btn-primary {
     background-color: #10bce9;
-    border: 1px solid white;
     color: white;
+    border: none;
+}
+[data-bs-theme="dark"] .btn-primary {
+    background-color: #10bce9;
+    color: white;
+    border: none;
 }
     .btn-primary:hover {
-        background-color: white;
         color: #10bce9;
         border: 1px solid #10bce9;
+        background-color: white;
     }
 .btn-secondary {
-    
-    background-color: white;
     color: #10bce9;
     border: 1px solid #10bce9;
+    background-color: white;
 }
 
     .btn-secondary:hover {
+        border: 1px solid #10bce9;
         background-color: #10bce9;
-        border: 1px solid white;
         color: white;
     }
     .btn-secondary img {

@@ -99,12 +99,18 @@
                         </div>
                         <span></span>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="form-floating">
                         <input type="text" class="form-control" placeholder="" disabled>
                             <label for="">Business Name/ Address</label>
                         </div>
                         <span></span>
+                    </div>
+                    <div class="col-md-1">
+                    <a target="_blank" href="http://maps.google.com/?q= +@Model.State + @Model.City + @Model.Street" 
+                    class="btn btn-secondary d-flex align-item-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
+                        <img src="~/images/map.svg" class="" />
+                    </a>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
@@ -115,7 +121,7 @@
                     </div>
                 </div>
             <button type="reset" onclick="cancle()" id="cancelBtn" class="btn btn-danger float-end m-1">Cancel</button>
-            <button type="button" id="viewNoteBtn"  class="btn btn-primary float-end m-1">View Notes</button>
+            <a type="button" href="@Url.Action("ViewNote")" id="viewNoteBtn"  class="btn btn-primary float-end m-1">View Notes</a>
             <button type="button" id="assignBtn" class="btn btn-primary float-end m-1">Assign</button>
         </form>
     </div>

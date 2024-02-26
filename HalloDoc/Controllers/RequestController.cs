@@ -7,15 +7,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Security.Cryptography;
+using HalloDoc.BussinessAccess.Repository.Interface;
 
 namespace HalloDoc.Controllers;
 
 public class RequestController : Controller
 {
     private readonly ApplicationDbContext _db;
-    public RequestController(ApplicationDbContext db)
+    private readonly IPatientRepository _patientRepo;
+    private readonly ILoginRepository _login;
+    public RequestController(ApplicationDbContext db, IPatientRepository patientRepo, ILoginRepository login)
     {
         _db = db;
+        _patientRepo = patientRepo;
+        _login = login; 
     }
 
     [HttpPost]
@@ -197,14 +202,14 @@ public class RequestController : Controller
             var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;
+
             
 
             if (existUser == null)
             {
-                var hashPass = GetHash(obj.Password);
+                
                 AspNetUser aspNetUser = new AspNetUser
                 {
-                    Password = hashPass,
                     Id = guid.ToString(),
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
@@ -235,6 +240,7 @@ public class RequestController : Controller
             }
             else
             {
+                _login.SendEmail(obj.Email);
                 var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
                 uid = user.Userid;
             }
@@ -332,11 +338,9 @@ public class RequestController : Controller
             var uid = 0;
             if (existUser == null)
             {
-                var hashPass = GetHash(obj.Password);
 
                 AspNetUser aspNetUser = new AspNetUser
                 {
-                    Password = hashPass,
                     Id = guid.ToString(),
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
@@ -364,6 +368,7 @@ public class RequestController : Controller
                 _db.Users.Add(user);
                 _db.SaveChanges();
                 uid = user.Userid;
+                 _login.SendEmail(obj.Email);
             }
             else
             {
@@ -461,7 +466,6 @@ public class RequestController : Controller
                 var hashPass = GetHash(obj.Password);
                 AspNetUser aspNetUser = new AspNetUser
                 {
-                    Password = hashPass,
                     Id = guid.ToString(),
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
@@ -489,6 +493,8 @@ public class RequestController : Controller
                 _db.Users.Add(user);
                 _db.SaveChanges();
                 uid = user.Userid;
+
+                _login.SendEmail(obj.Email);
             }
             else
             {
