@@ -1,5 +1,4 @@
-﻿@model IEnumerable<Requestnote>
-@{
+﻿@{
     ViewData["Title"] = "Admin Dashboard";
     Layout = "_adminLayout";
 }
@@ -29,20 +28,35 @@
         </a>
     </div>
     <div class="container" style="max-width: 1000px">
-        @foreach (var item in Model)
-        {
-            <div class="row g-3">
-                <div class="col-md-6 col-12">
-                    <div class="border shadow rounded d-flex p-3">
-                        <div class="me-2">
-                            <img src="~/images/clock.svg" />
-                        </div>
-                        <div class="" style="width: 97%">
-                            <h6>Transfer Notes</h6>
-                            <p>@item.Administrativenotes</p>
-                        </div>
+
+        <div class="row g-3">
+            <div class="col-md-6 col-12">
+                <div class="border shadow rounded d-flex p-3">
+                    <div class="me-2">
+                        <img src="~/images/clock.svg" />
+                    </div>
+                    <div class="" style="width: 97%">
+                        <h6>Transfer Notes</h6>
+                        @foreach (var item in Model.Requeststatuslog)
+                        {
+                            @if (item.Notes != null)
+                            {
+                                <p> @item.Notes</p>
+                            }
+                            else
+                            {
+                                <p>-</p>
+                            }
+                        }
                     </div>
                 </div>
+            </div>
+        </div>
+
+        @foreach (var item in Model.Requestnote)
+        {
+            <div class="row g-3 mt-3">
+
                 <div class="col-md-6 col-12">
                     <div class="border shadow rounded d-flex p-3">
                         <div class="me-2">
@@ -50,7 +64,14 @@
                         </div>
                         <div class="" style="width: 97%">
                             <h6>Physiciannotes</h6>
-                            <p>@item.Physiciannotes</p>
+                            @if (item.Physiciannotes != null)
+                            {
+                                <p>@item.Physiciannotes</p>
+                            }
+                            else
+                            {
+                                <p>-</p>
+                            }
                         </div>
                     </div>
                 </div>
@@ -61,7 +82,12 @@
                         </div>
                         <div class="" style="width: 97%">
                             <h6>Adminnotes</h6>
-                            <p>@item.Adminnotes</p>
+                            @if (@item.Adminnotes != null)
+                            {
+                                <p>@item.Adminnotes</p>
+                            }else{
+                                <p>-</p>
+                            }
                         </div>
                     </div>
                 </div>
@@ -71,7 +97,7 @@
             <div class="row g-3 mt-1 justify-content-end">
                 <div class="col-12">
                     <div class="form-floating m-1 form-div">
-                        <textarea  class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                                   style="height: 100px"></textarea>
                         <label for="">Admin Notes</label>
                     </div>

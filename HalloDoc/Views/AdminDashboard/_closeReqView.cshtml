@@ -36,7 +36,7 @@
             <tr>
                 <td style="background-color: @bg;">@item.Firstname @item.Lastname</td>
                 <td style="background-color: @bg;">
-                    <a class="btn border rounded">
+                    <a href="mailto: @item.Email" class="btn border rounded">
                         <img src="~/images/envelope.svg" />
                     </a>
                 </td>
@@ -53,34 +53,38 @@
                     @item.Createddate
                 </td>
                 <td style="background-color: @bg;">
-                    <div class="border rounded d-flex justify-content-center">
+                    <a href="tel:@item.Phonenumber" class="btn border rounded d-flex justify-content-center">
+                        <img src="~/images/telephone.svg" />
                         @item.Phonenumber
-                    </div>
+                    </a>
                     (Patient)
                     @if (item.reqTypeId == 2)
                     {
                         <div>
-                            <div class="border rounded d-flex justify-content-center">
+                            <a href="tel:@item.FamilyPhonenumber" class="btn border rounded d-flex justify-content-center">
+                                <img src="~/images/telephone.svg" />
                                 @item.FamilyPhonenumber
-                            </div>
+                            </a>
                             (Family/Friend)
                         </div>
                     }
                     @if (item.reqTypeId == 3)
                     {
                         <div>
-                            <div class="border rounded d-flex justify-content-center">
+                            <a href="tel:@item.ConciergePhonenumber" class="btn border rounded d-flex justify-content-center">
+                                <img src="~/images/telephone.svg" />
                                 @item.ConciergePhonenumber
-                            </div>
+                            </a>
                             (Concierge)
                         </div>
                     }
                     @if (item.reqTypeId == 4)
                     {
                         <div>
-                            <div class="border rounded d-flex justify-content-center">
+                            <a href="tel:@item.BusinessPhonenumber" class="btn border rounded d-flex justify-content-center">
+                                <img src="~/images/telephone.svg" />
                                 @item.BusinessPhonenumber
-                            </div>
+                            </a>
                             (Business)
                         </div>
                     }
@@ -104,7 +108,7 @@
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a class="dropdown-item" href="@Url.Action("ViewCase", new {reqClientId = item.reqClientId})">View Case</a></li>
                         <li><a class="dropdown-item" href="#">View Uploads</a></li>
-                        <li><a class="dropdown-item" href="#">View Notes</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
                         <li><a class="dropdown-item" href="#">Orders</a></li>
                         <li><a class="dropdown-item" href="#">Close Case</a></li>
                         <li><a class="dropdown-item" href="#">Doctors Note</a></li>

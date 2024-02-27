@@ -12,7 +12,9 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public DashboardViewModel PatientDashboard(String AspId);
 
+        public DocumentViewModel Document(int reqId);
 
+        public int Document(UploadFileViewModel obj);
 
     }
 }

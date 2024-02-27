@@ -3,7 +3,6 @@
     ViewData["Title"] = "Admin Dashboard";
     Layout = "_adminLayout";
 }
-
 <div class="px-2 px-lg-4">
 
     <div class="row mt-3 nav nav-tabs">
@@ -187,7 +186,7 @@
         </div>
 
     </div>
-    <form method="post" asp-action="Dashboard">
+    <form method="post" asp-action="Dashboard" id="DashboradForm">
 
         <div class="d-block d-lg-flex mt-3 align-items-center justify-content-between">
 
@@ -198,7 +197,7 @@
                         <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
                         </path>
                     </svg>
-                    <input type="search"  asp-for="searchViewModel.Name" class="form-control border border-0" placeholder="Search Patients">
+                    <input type="search" asp-for="Name" id="search" class="form-control border border-0" placeholder="Search Patients">
                 </div>
 
                 <div class="d-flex normal-input rounded align-items-center ms-lg-2 ps-2">
@@ -215,7 +214,6 @@
                 </div>
             </div>
             <div class="d-flex align-items-center">
-
                 <a class="d-none d-lg-flex  align-items-center  px-lg-2 py-1 border rounded">
                     <span>All</span>
                 </a>
@@ -250,27 +248,26 @@
                         <circle fill="#9966cd" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
                     </svg>
                     <h6 class="fs-6 ms-lg-2 m-auto">VIP</h6>
-                </a>
-
+                </a>    
             </div>
         </div>
         <div class="tab-content  mt-3 ">
-            <div class="tab-pane fade show active overflow-auto" id="newTab" role="tabpanel" aria-labelledby="newTab" tabindex="0">
+            <div class="tab-pane fade show active overflow-auto divPartial" id="newTab" role="tabpanel" aria-labelledby="newTab" tabindex="0">
                 <partial name="_newRequestView" />
             </div>
-            <div class="tab-pane fade show overflow-auto" id="pendingTab" role="tabpanel" aria-labelledby="pendingTab" tabindex="0">
+            <div class="tab-pane fade show overflow-auto divPartial" id="pendingTab" role="tabpanel" aria-labelledby="pendingTab" tabindex="0">
                 <partial name="_pendingRequestView" />
             </div>
-            <div class="tab-pane fade show overflow-auto" id="ActiveTab" role="tabpanel" aria-labelledby="ActiveTab" tabindex="0">
+            <div class="tab-pane fade show overflow-auto divPartial" id="ActiveTab" role="tabpanel" aria-labelledby="ActiveTab" tabindex="0">
                 <partial name="_activeRequestView" />
             </div>
-            <div class="tab-pane fade show overflow-auto" id="concludeTab" role="tabpanel" aria-labelledby="concludeTab" tabindex="0">
+            <div class="tab-pane fade show overflow-auto divPartial" id="concludeTab" role="tabpanel" aria-labelledby="concludeTab" tabindex="0">
                 <partial name="_concludeReqView" />
             </div>
-            <div class="tab-pane fade show overflow-auto" id="toCloseTab" role="tabpanel" aria-labelledby="toCloseTab" tabindex="0">
+            <div class="tab-pane fade show overflow-auto divPartial" id="toCloseTab" role="tabpanel" aria-labelledby="toCloseTab" tabindex="0">
                 <partial name="_closeReqView" />
             </div>
-            <div class="tab-pane fade show overflow-auto" id="unpaidTab" role="tabpanel" aria-labelledby="unpaidTab" tabindex="0">
+            <div class="tab-pane fade show overflow-auto divPartial" id="unpaidTab" role="tabpanel" aria-labelledby="unpaidTab" tabindex="0">
                 <partial name="_unpaidReqView" />
             </div>
         </div>
@@ -296,28 +293,16 @@
     </script>
     <script type="text/javascript">
 
-        document.getElementById("search").onchange = function () {
-            console.log("hi")
-            var serch = {
-                Name: document.getElementById("search").value
-            };
-            $.ajax({
-                type: "POST",
-                url: "/AdminDashboard/Search",
-                data: { search: search },
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function () {
-                    console.log("success")
-                },
-                failure: function () {
-                    alert("faile");
-                },
-                error: function () {
-                    alert("error");
-                }
+        //const search = document.getElementById("search");
+        //search.addEventListener("change", function () {
+        //    document.getElementById("DashboradForm").submit();
+        //});
+
+        $("#search").change(function (e) {
+                $('#DashboradForm').submit();
+                $('.divPartial').load('/AdminDashboard/Dashboard');
             })
-        }
+
     </script>
 
 }

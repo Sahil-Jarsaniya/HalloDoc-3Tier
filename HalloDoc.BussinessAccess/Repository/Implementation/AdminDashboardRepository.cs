@@ -1,13 +1,7 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
@@ -224,6 +218,33 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return data;
         }
 
+        public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data)
+        {
+            if (obj.Name == null)
+            {
+                return data;
+            }
+            else
+            {
+                var name = obj.Name.ToUpper();
+                var sortedNew = data.newReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+                var sortedConclude = data.concludeReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+                var sortedClose = data.closeReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+                var sortedPending = data.pendingReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+                var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+                var sortedActive = data.activeReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+
+                data.newReqViewModel = sortedNew;
+                data.concludeReqViewModel = sortedConclude;
+                data.closeReqViewModels = sortedClose;
+                data.pendingReqViewModel = sortedPending;
+                data.activeReqViewModels = sortedActive;
+                data.unpaidReqViewModels = sortedUnpaid;
+
+                return data;
+            }
+        }
+
         public viewCaseViewModel viewCase(int reqClientId)
         {
             var data = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == reqClientId);
@@ -266,18 +287,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var email = aspRow.Email;
 
 
-                uRow.Firstname = obj.Firstname;
-                uRow.Lastname = obj.Lastname;
                 uRow.Email = obj.Email;
                 uRow.Mobile = obj.Phonenumber;
-                uRow.Strmonth = obj.Strmonth;
 
                 _db.Users.Update(uRow);
                 _db.SaveChanges();
 
 
                 aspRow.Email = obj.Email;
-                aspRow.UserName = obj.Email;
                 aspRow.PhoneNumber = obj.Phonenumber;
                 aspRow.ModifiedDate = DateTime.UtcNow;
 
@@ -286,21 +303,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
                 _db.Requestclients.Where(x => x.Email == email).ToList().ForEach(item =>
                 {
-                    item.Firstname = obj.Firstname;
-                    item.Lastname = obj.Lastname;
                     item.Email = obj.Email;
                     item.Phonenumber = obj.Phonenumber;
-                    item.Address = obj.Address;
-                    item.Strmonth = obj.Strmonth;
-
                     _db.Requestclients.Update(item);
                     _db.SaveChanges();
                 });
 
                 _db.Requests.Where(x => x.Email == email).ToList().ForEach(item =>
                 {
-                    item.Firstname = obj.Firstname;
-                    item.Lastname = obj.Lastname;
                     item.Email = obj.Email;
                     item.Phonenumber = obj.Phonenumber;
                     item.Modifieddate = DateTime.UtcNow;

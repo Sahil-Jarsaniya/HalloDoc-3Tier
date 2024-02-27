@@ -36,7 +36,7 @@
             <tr>
                 <td style="background-color: @bg;">@item.Firstname @item.Lastname</td>
                 <td style="background-color: @bg;">
-                    <a class="btn border rounded">
+                    <a href="mailto: @item.Email" class="btn border rounded">
                         <img src="~/images/envelope.svg" />
                     </a>
                 </td>
@@ -44,32 +44,39 @@
                     @item.Strmonth
                 </td>
                 <td style="background-color: @bg;">
-                    @if (item.reqTypeId == 1)
-                    {
-                        <div>
-                            Patient <br />
-                            @item.reqFirstname @item.reqLastname
-                        </div>
-                    }
+                    <a href="tel:@item.Phonenumber" class="btn border rounded d-flex justify-content-center">
+                        <img src="~/images/telephone.svg" />
+                        @item.Phonenumber
+                    </a>
+                    (Patient)
                     @if (item.reqTypeId == 2)
                     {
                         <div>
-                            Family/Friend <br />
-                            @item.reqFirstname @item.reqLastname
+                            <a href="tel:@item.FamilyPhonenumber" class="btn border rounded d-flex justify-content-center">
+                                <img src="~/images/telephone.svg" />
+                                @item.FamilyPhonenumber
+                            </a>
+                            (Family/Friend)
                         </div>
                     }
                     @if (item.reqTypeId == 3)
                     {
                         <div>
-                            Concierge <br />
-                            @item.reqFirstname @item.reqLastname
+                            <a href="tel:@item.ConciergePhonenumber" class="btn border rounded d-flex justify-content-center">
+                                <img src="~/images/telephone.svg" />
+                                @item.ConciergePhonenumber
+                            </a>
+                            (Concierge)
                         </div>
                     }
                     @if (item.reqTypeId == 4)
                     {
                         <div>
-                            Business <br />
-                            @item.reqFirstname @item.reqLastname
+                            <a href="tel:@item.BusinessPhonenumber" class="btn border rounded d-flex justify-content-center">
+                                <img src="~/images/telephone.svg" />
+                                @item.BusinessPhonenumber
+                            </a>
+                            (Business)
                         </div>
                     }
                 </td>
@@ -131,7 +138,7 @@
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a class="dropdown-item" href="@Url.Action("ViewCase", new {reqClientId = item.reqClientId})">View Case</a></li>
                         <li><a class="dropdown-item" href="#">View Uploads</a></li>
-                        <li><a class="dropdown-item" href="#">View Notes</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
                         <li><a class="dropdown-item" href="#">Transfer</a></li>
                         <li><a class="dropdown-item" href="#">Clear Case</a></li>
                         <li><a class="dropdown-item" href="#">Send Agreement</a></li>

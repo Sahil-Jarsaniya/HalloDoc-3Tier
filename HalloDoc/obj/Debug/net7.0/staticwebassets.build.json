@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "AD75CnZ2l81H1ywTo+PsB/2+xtBGk67PXg/a0+ww79s=",
+  "Hash": "hIKcrCS1O8XtP+3zuFLqe0OcQgOGKFmfSvSMEnTuivM=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -1817,6 +1817,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\plus-lg.svg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\telephone.svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/telephone.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\telephone.svg"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\user-doctor-solid.svg",

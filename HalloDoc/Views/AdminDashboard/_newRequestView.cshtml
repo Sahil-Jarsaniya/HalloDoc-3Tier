@@ -35,8 +35,9 @@
             <tr>
                 <td style="background-color: @bg;">@item.Firstname @item.Lastname</td>
                 <td style="background-color: @bg;">
-                    <a class="btn border rounded">
+                    <a href="mailto: @item.Email" class="btn border rounded">
                         <img src="~/images/envelope.svg" />
+
                     </a>
                 </td>
                 <td style="background-color: @bg;">
@@ -76,34 +77,38 @@
                     @item.Createddate
                 </td>
                 <td style="background-color: @bg;">
-                    <div class="border rounded d-flex justify-content-center">
+                    <a href="tel:@item.Phonenumber" class="btn border rounded d-flex justify-content-center">
+                        <img src="~/images/telephone.svg" />
                         @item.Phonenumber
-                    </div>
+                    </a>
                     (Patient)
                     @if (item.reqTypeId == 2)
                     {
                         <div>
-                            <div class="border rounded d-flex justify-content-center">
+                            <a href="tel:@item.FamilyPhonenumber" class="btn border rounded d-flex justify-content-center">
+                                <img src="~/images/telephone.svg" />
                                 @item.FamilyPhonenumber
-                            </div>
+                            </a>
                             (Family/Friend)
                         </div>
                     }
                     @if (item.reqTypeId == 3)
                     {
                         <div>
-                            <div class="border rounded d-flex justify-content-center">
+                            <a href="tel:@item.ConciergePhonenumber" class="btn border rounded d-flex justify-content-center">
+                                <img src="~/images/telephone.svg" />
                                 @item.ConciergePhonenumber
-                            </div>
+                            </a>
                             (Concierge)
                         </div>
                     }
                     @if (item.reqTypeId == 4)
                     {
                         <div>
-                            <div class="border rounded d-flex justify-content-center">
+                            <a href="tel:@item.BusinessPhonenumber" class="btn border rounded d-flex justify-content-center">
+                                <img src="~/images/telephone.svg" />
                                 @item.BusinessPhonenumber
-                            </div>
+                            </a>
                             (Business)
                         </div>
                     }
@@ -126,13 +131,46 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a class="dropdown-item" href="">Assign Case</a></li>
-                        <li><a class="dropdown-item" href="#">Cancel Case</a></li>
+                        <li><a class="btn dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#cancelReqModal">Cancel Case</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewCase", new {reqClientId = item.reqClientId})">View Case</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
                         <li><a class="dropdown-item" href="#">Block Patient</a></li>
                     </ul>
                 </td>
             </tr>
+
+            @*<div class="modal fade" id="cancelReqModal" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #01bce9; color:white;">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="dropdown">
+                                <form>
+                                    <h5>Patient Name: @item.Firstname @item.Lastname</h5>
+                                    <select class="form-select form-select mb-3" aria-label="Large select example">
+                                        <option selected>Reasons for Cancellation</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                    <div class="form-floating m-1 form-div">
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                                                  style="height: 100px"></textarea>
+                                        <label for="">Provide Additional Notes</label>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn" style="background-color: #01bce9; color:white;" data-bs-dismiss="modal">Confirm</button>
+                            <button type="button" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
         }
     </tbody>
 </table>

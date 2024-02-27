@@ -4,13 +4,14 @@
 }
 
 @section Styles {
+    <!-- js ans css for phone input -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+
     <link rel="stylesheet" href="~/css/submit-request-screen.css">
     <link rel="stylesheet" href="~/css/PatientDashBoard.css">
     <link rel="stylesheet" href="~/css/create-patient-request.css">
 
-    <!-- js ans css for phone input -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 }
 <div class="modal  fade" id="newReqModal" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -24,12 +25,6 @@
                 Here, I want to create  new request for...
                 </p>
                 <div class="d-flex justify-content-center">
-                    @*<button type="button" class="btn me-1" style="background-color: #01bce9; color:white;">
-                        Me
-                    </button>
-                    <button type="button" class="btn me-1" style="color: #01bce9; border: #01bce9 1px solid;">
-                        Some One Else
-                    </button>*@
                     <input type="radio" class="btn-check me-1"  name="options" id="me" autocomplete="off" checked>
                     <label class="btn btn-outline-primary me-1" for="me">Me</label>
 
@@ -235,7 +230,18 @@
 </div>
 
 @section Scripts {
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
     <script>
+        const patientPhone = document.querySelector(".patientPhone");
+        var phoneInput = window.intlTelInput(patientPhone,
+            {
+                utilsScript:
+                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+                preferredCountries: ["in"],
+                separateDialCode: true,
+                initialCountry: "in"
+            });
         function choseMeOrELse(){
             if (document.getElementById('me').checked == true) {
                 window.location.href = "CreateRequest";
@@ -244,5 +250,4 @@
             }
         }
     </script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 }

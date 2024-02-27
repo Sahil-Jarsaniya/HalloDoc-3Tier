@@ -12,6 +12,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
     {
         public AdminDashboardViewModel adminDashboard();
 
+        public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data);
+
         public viewCaseViewModel viewCase(int reqClientId);
 
         public bool viewCase(viewCaseViewModel obj);

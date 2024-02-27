@@ -10,6 +10,6 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
     {
         public string Name { get; set; }
 
-
+        public string sorting { get; set; }
     }
 }

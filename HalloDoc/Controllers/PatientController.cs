@@ -16,7 +16,7 @@ namespace HalloDoc.Controllers
         public PatientController(ApplicationDbContext db, IPatientRepository patientrepo)
         {
             _db = db;
-            _patientrepo = patientrepo; 
+            _patientrepo = patientrepo;
         }
 
         public IActionResult Dashboard(String AspId)
@@ -39,76 +39,19 @@ namespace HalloDoc.Controllers
             if (HttpContext.Session.GetString("token") != null)
             {
                 ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+                var data = _patientrepo.Document(reqId);
+                return View(data);
             }
             else
             {
                 return RedirectToAction("login");
             }
-            var userId = from t1 in _db.Requests
-                         join t2 in _db.Users on t1.Userid equals t2.Userid
-                         where t1.Requestid == reqId
-                         select t2.Userid;
-
-            var requestData = from t1 in _db.Requests
-                              join t3 in _db.RequestStatuses on t1.Status equals t3.StatusId
-                              join t2 in _db.Requestwisefiles
-                              on t1.Requestid equals t2.Requestid into files
-                              from t2 in files.DefaultIfEmpty()
-                              where t1.Requestid == reqId
-                              select new PatientDocumentViewModel
-                              {
-                                  RequestId = t1.Requestid,
-                                  Name = t1.Firstname + " "+ t1.Lastname,
-                                  createdate = t1.Createddate,
-                                  Filename = t2 != null ? t2.Filename : null
-                              };
-
-            var uploadData = new UploadFileViewModel
-            {
-                reqId = reqId,
-                formFile = null
-            };
-            var data = new DocumentViewModel
-            {
-                PatientDocumentViewModel = requestData,
-                UploadFileViewModel = uploadData
-            };
-            return View(data);
         }
 
         [HttpPost]
         public IActionResult Document(UploadFileViewModel obj)
         {
-            var aspId = from t1 in _db.Requests
-                        join t2 in _db.Users on t1.Userid equals t2.Userid
-                        join t3 in _db.AspNetUsers on t2.Aspnetuserid equals t3.Id
-                        where t1.Requestid == obj.reqId
-                        select t3.Id;
-            var id = obj.reqId;
-            //uploading files
-            if (obj.formFile != null && obj.formFile.Length > 0)
-            {
-                //get file name
-                var fileName = Path.GetFileName(obj.formFile.FileName);
-
-                //define path
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
-
-                // Copy the file to the desired location
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    obj.formFile.CopyTo(stream);
-                }
-                Requestwisefile requestwisefile = new Requestwisefile
-                {
-                    Filename = fileName,
-                    Requestid = obj.reqId,
-                    Createddate = DateTime.Now
-                };
-
-                _db.Requestwisefiles.Add(requestwisefile);
-                _db.SaveChanges();
-            }
+            var id = _patientrepo.Document(obj);
 
             return RedirectToAction("Document", "Patient", new { reqId = id });
         }
@@ -158,7 +101,7 @@ namespace HalloDoc.Controllers
                 x.Modifieddate = DateTime.Now;
 
                 _db.Requests.Update(x);
-                _db.SaveChanges();  
+                _db.SaveChanges();
             });
 
             _db.Requestclients.Where(x => x.Email == email).ToList().ForEach(x =>
@@ -175,7 +118,7 @@ namespace HalloDoc.Controllers
                 _db.SaveChanges();
             });
 
-            HttpContext.Session.SetString("token", existUser.Firstname + " "+ existUser.Lastname);
+            HttpContext.Session.SetString("token", existUser.Firstname + " " + existUser.Lastname);
             if (HttpContext.Session.GetString("token") != null)
             {
                 ViewBag.Data = HttpContext.Session.GetString("token").ToString();
@@ -270,17 +213,6 @@ namespace HalloDoc.Controllers
                 };
                 _db.Requestclients.Add(requestclient);
                 _db.SaveChanges();
-                //Inserting into requestStatusLog
-
-                Requeststatuslog requeststatuslog = new Requeststatuslog
-                {
-                    Requestid = request.Requestid,
-                    Status = 4,
-                    Createddate = DateTime.Now
-                };
-                _db.Requeststatuslogs.Add(requeststatuslog);
-                _db.SaveChanges();
-
 
                 //uploading files
                 if (obj.formFile != null && obj.formFile.Length > 0)
@@ -307,7 +239,7 @@ namespace HalloDoc.Controllers
                     _db.SaveChanges();
                 }
 
-                return RedirectToAction("Dashboard", new {AspId = aspId});
+                return RedirectToAction("Dashboard", new { AspId = aspId });
             }
             return View();
         }
@@ -342,7 +274,7 @@ namespace HalloDoc.Controllers
                     // Add each document to the zip archive
                     foreach (var document in documentDetails)
                     {
-                        var documentPath = Path.Combine(Directory.GetCurrentDirectory(),"wwwroot", "uploadedFiles", document.Filename);
+                        var documentPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", document.Filename);
                         zipArchive.CreateEntryFromFile(documentPath, document.Filename);
                     }
                 }
@@ -359,11 +291,11 @@ namespace HalloDoc.Controllers
 
 
         public IActionResult Back()
-            {
-                int userId = (int)HttpContext.Session.GetInt32("userId");
-                var aspId = _db.Users.FirstOrDefault(x => x.Userid == userId).Aspnetuserid;
+        {
+            int userId = (int)HttpContext.Session.GetInt32("userId");
+            var aspId = _db.Users.FirstOrDefault(x => x.Userid == userId).Aspnetuserid;
 
-                return RedirectToAction("Dashboard", new { AspId = aspId });
-            }
+            return RedirectToAction("Dashboard", new { AspId = aspId });
         }
     }
+}

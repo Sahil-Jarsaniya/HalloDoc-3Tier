@@ -1,11 +1,11 @@
-﻿@model HalloDoc.DataAccess.ViewModel.AdminViewModel.viewCaseViewModel;
+﻿    @model HalloDoc.DataAccess.ViewModel.AdminViewModel.viewCaseViewModel;
 @{
     ViewData["Title"] = "Admin Dashboard";
     Layout = "_adminLayout";
 }
 <div class="tab-pane fade show" id="tab2">
     <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
-        <h4>View Reservation 
+        <h4>New Request 
             <span class="border bg-success rounded-pill h-50 fs-6 p-1 text-white">Patient</span>
         </h4>
         <a href="@Url.Action("Dashboard")" class="btn btn-secondary m-2 text-decoration-none float-end"
@@ -63,22 +63,22 @@
                     </div>
                     <div class="col-md-5">
                         <div class="form-floating phone-div w-100 h-100 ">
-                        <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" placeholder="" disabled>
+                        <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100 inputDis" placeholder="" disabled>
                             <label for=""></label>
                         </div>
                         <span asp-validation-for="Phonenumber"></span>
                     </div>
                     <div class="col-md-1">
-                        <button class="btn btn-secondary form-floating rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
+                        <a href="tel:@Model.Phonenumber" class="btn btn-secondary form-floating d-flex align-items-center justify-content-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
                             <img src="~/images/telephone.svg"/>
-                        </button>
+                        </a>
                     </div>
                 </div>
 
                 <div class="row g-2 m-1">
                     <div class="col-md-6">
                         <div class="form-floating">
-                        <input asp-for="Email" id="checkEmail" type="email" class="form-control" placeholder="name@example.com" disabled>
+                        <input asp-for="Email" id="checkEmail" type="email" class="form-control inputDis" placeholder="name@example.com" disabled>
                             <label for="">Email</label>
                         </div>
                         <span asp-validation-for="Email"></span>
@@ -108,8 +108,8 @@
                     </div>
                     <div class="col-md-1">
                     <a target="_blank" href="http://maps.google.com/?q= +@Model.State + @Model.City + @Model.Street" 
-                    class="btn btn-secondary d-flex align-item-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
-                        <img src="~/images/map.svg" class="" />
+                    class="btn btn-secondary d-flex align-item-center justify-content-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
+                        <img src="~/images/map.svg" />
                     </a>
                     </div>
                     <div class="col-md-6">
@@ -120,7 +120,7 @@
                         <span ></span>
                     </div>
                 </div>
-            <button type="reset" onclick="cancle()" id="cancelBtn" class="btn btn-danger float-end m-1">Cancel</button>
+            <button type="reset"  id="cancelBtn" class="btn btn-danger float-end m-1">Cancel</button>
             <a type="button" href="@Url.Action("ViewNote")" id="viewNoteBtn"  class="btn btn-primary float-end m-1">View Notes</a>
             <button type="button" id="assignBtn" class="btn btn-primary float-end m-1">Assign</button>
         </form>
@@ -141,7 +141,7 @@
         var submitBtn = document.getElementById("submitBtn");
         var editBtn = document.getElementById("editBtn");
         editBtn.addEventListener("click", () => {
-            var input = document.querySelectorAll('.viewCaseForm input');
+            var input = document.querySelectorAll('.inputDis');
             input.forEach(function (input) {
                 if(input.disabled){
                 input.disabled = false;
@@ -158,21 +158,5 @@
             editBtn.classList.add("d-none");
             submitBtn.classList.remove("d-none");
         });
-
-        var cancleBtn = document.getElementById("cancleBtn");
-        function cancle(){
-            var input = document.querySelectorAll('.viewCaseForm input');
-            input.forEach(function (input) {
-                if (!input.disabled) {
-                    input.disabled = true;
-                } 
-            });
-            var txt = document.getElementById('floatingTextarea2');
-            if (!txt.disabled) {
-                txt.disabled = true;
-            } 
-            editBtn.classList.remove("d-none");
-            submitBtn.classList.add("d-none");
-        }
     </script>
 }
