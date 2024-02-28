@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "hIKcrCS1O8XtP+3zuFLqe0OcQgOGKFmfSvSMEnTuivM=",
+  "Hash": "LuRW1HVjXJesoepM9x67UxcqNun7e+Yb5vDRQrTFqvY=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -644,6 +644,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\admin.js"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\AdminDashboard.js",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "js/AdminDashboard.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\AdminDashboard.js"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\bussinessphone.js",

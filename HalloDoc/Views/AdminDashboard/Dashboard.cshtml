@@ -1,4 +1,4 @@
-﻿@model HalloDoc.DataAccess.ViewModel.AdminViewModel.AdminDashboardViewModel
+﻿@model HalloDoc.DataAccess.ViewModel.AdminViewModel.AdminDashboardViewModel;
 @{
     ViewData["Title"] = "Admin Dashboard";
     Layout = "_adminLayout";
@@ -7,8 +7,7 @@
 
     <div class="row mt-3 nav nav-tabs">
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab active align-items-center" id="status-new-tab"
-             data-bs-toggle="tab" data-bs-target="#newTab" type="button" role="tab" aria-controls="newTab" aria-selected="true">
+        <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab active align-items-center" id="status-new-tab">
 
             <div class="py-2 ps-2 w-100 status-new">
                 <div class="d-flex">
@@ -26,10 +25,9 @@
                 <polygon points="0,0 100,100 200,0 " />
             </svg>
 
-        </div>
+        </a>
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center"
-             data-bs-toggle="tab" data-bs-target="#pendingTab" type="button" role="tab" aria-controls="pendingTab" aria-selected="true">
+        <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center" id='status-pending-tab'>
             <div class="py-2 ps-2 w-100 status-pending">
                 <div class="d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
@@ -46,10 +44,9 @@
                 <polygon points="0,0 100,100 200,0 " />
             </svg>
 
-        </div>
+        </a>
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center"
-             data-bs-toggle="tab" data-bs-target="#ActiveTab" type="button" role="tab" aria-controls="ActiveTab" aria-selected="true">
+        <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center" id="status-active-tab">
             <div class="py-2 ps-2 w-100 status-active">
                 <div class="d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
@@ -66,10 +63,9 @@
                 <polygon points="0,0 100,100 200,0 " />
             </svg>
 
-        </div>
+        </a>
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center"
-             data-bs-toggle="tab" data-bs-target="#concludeTab" type="button" role="tab" aria-controls="concludeTab" aria-selected="true">
+        <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center" id="status-conclude-tab">
             <div class="py-2 ps-2 w-100 status-conclude">
                 <div class="d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
@@ -86,10 +82,9 @@
                 <polygon points="0,0 100,100 200,0 " />
             </svg>
 
-        </div>
+        </a>
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center"
-             data-bs-toggle="tab" data-bs-target="#toCloseTab" type="button" role="tab" aria-controls="toCloseTab" aria-selected="true">
+        <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center" id="status-to-close-tab">
             <div class="py-2 ps-2 w-100 status-to-close">
                 <div class="d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
@@ -106,10 +101,9 @@
                 <polygon points="0,0 100,100 200,0 " />
             </svg>
 
-        </div>
+        </a>
 
-        <div class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center"
-             data-bs-toggle="tab" data-bs-target="#unpaidTab" type="button" role="tab" aria-controls="unpaidTab" aria-selected="true">
+        <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center" id="status-unpaid-tab">
             <div class="py-2 ps-2 w-100 status-unpaid">
                 <div class="d-flex">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
@@ -126,7 +120,7 @@
                 <polygon points="0,0 100,100 200,0 " />
             </svg>
 
-        </div>
+        </a>
 
     </div>
 
@@ -186,7 +180,7 @@
         </div>
 
     </div>
-    <form method="post" asp-action="Dashboard" id="DashboradForm">
+    <form method="post" asp-action="PartialTable" id="DashboradForm">
 
         <div class="d-block d-lg-flex mt-3 align-items-center justify-content-between">
 
@@ -251,8 +245,8 @@
                 </a>    
             </div>
         </div>
-        <div class="tab-content  mt-3 ">
-            <div class="tab-pane fade show active overflow-auto divPartial" id="newTab" role="tabpanel" aria-labelledby="newTab" tabindex="0">
+        <div class="tab-content  mt-3 " id="PartialTable">
+            @*<div class="tab-pane fade show active overflow-auto divPartial" id="newTab" role="tabpanel" aria-labelledby="newTab" tabindex="0">
                 <partial name="_newRequestView" />
             </div>
             <div class="tab-pane fade show overflow-auto divPartial" id="pendingTab" role="tabpanel" aria-labelledby="pendingTab" tabindex="0">
@@ -269,7 +263,7 @@
             </div>
             <div class="tab-pane fade show overflow-auto divPartial" id="unpaidTab" role="tabpanel" aria-labelledby="unpaidTab" tabindex="0">
                 <partial name="_unpaidReqView" />
-            </div>
+            </div>*@
         </div>
     </form>
 
@@ -281,28 +275,6 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
     <script type="text/javascript" src="~/js/admin.js"></script>
-    <script type="text/javascript">
-        $(".status-tab").click(function () {
-            $(this).addClass("active");
-            $(this).children("svg").addClass('d-lg-block');
-            $('.status-tab').not(this).removeClass("active");
-            $('.status-tab').not(this).children("svg").removeClass("d-lg-block");
-        });
-
-        $("#status-new-tab").click();
-    </script>
-    <script type="text/javascript">
-
-        //const search = document.getElementById("search");
-        //search.addEventListener("change", function () {
-        //    document.getElementById("DashboradForm").submit();
-        //});
-
-        $("#search").change(function (e) {
-                $('#DashboradForm').submit();
-                $('.divPartial').load('/AdminDashboard/Dashboard');
-            })
-
-    </script>
+    <script type="text/javascript" src="~/js/AdminDashboard.js"></script>
 
 }

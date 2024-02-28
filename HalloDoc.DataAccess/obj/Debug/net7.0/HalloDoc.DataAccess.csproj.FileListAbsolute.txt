@@ -1,11 +1,11 @@
+G:\HalloDoc\HalloDoc.DataAccess\bin\Debug\net7.0\HalloDoc.DataAccess.deps.json
+G:\HalloDoc\HalloDoc.DataAccess\bin\Debug\net7.0\HalloDoc.DataAccess.dll
+G:\HalloDoc\HalloDoc.DataAccess\bin\Debug\net7.0\HalloDoc.DataAccess.pdb
 G:\HalloDoc\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.csproj.AssemblyReference.cache
 G:\HalloDoc\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
 G:\HalloDoc\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.AssemblyInfoInputs.cache
 G:\HalloDoc\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.AssemblyInfo.cs
 G:\HalloDoc\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.csproj.CoreCompileInputs.cache
-G:\HalloDoc\HalloDoc.DataAccess\bin\Debug\net7.0\HalloDoc.DataAccess.deps.json
-G:\HalloDoc\HalloDoc.DataAccess\bin\Debug\net7.0\HalloDoc.DataAccess.dll
-G:\HalloDoc\HalloDoc.DataAccess\bin\Debug\net7.0\HalloDoc.DataAccess.pdb
 G:\HalloDoc\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.dll
 G:\HalloDoc\HalloDoc.DataAccess\obj\Debug\net7.0\refint\HalloDoc.DataAccess.dll
 G:\HalloDoc\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.pdb

@@ -141,6 +141,10 @@
       "PackagePath": "staticwebassets\\images\\user_circle.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\AdminDashboard.js",
+      "PackagePath": "staticwebassets\\js\\AdminDashboard.js"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\admin.js",
       "PackagePath": "staticwebassets\\js\\admin.js"
     },

@@ -5,6 +5,7 @@ using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.Controllers
 {
@@ -24,11 +25,14 @@ namespace HalloDoc.Controllers
             ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
             ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
             var data = _adminRepo.adminDashboard();
-
-            return View(data);
+            var dashData = new AdminDashboardViewModel
+            {
+                countRequestViewModel = data.countRequestViewModel,
+            };
+            return View(dashData);
         }
         [HttpPost]
-        public IActionResult Dashboard(searchViewModel obj)
+        public IActionResult Dashboard(searchViewModel? obj)
         {
             ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
             ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
@@ -36,8 +40,87 @@ namespace HalloDoc.Controllers
 
             var searchedData = _adminRepo.searchPatient(obj, data);
 
-            return View(searchedData);
+            var dashData = new AdminDashboardViewModel
+            {
+                countRequestViewModel = searchedData.countRequestViewModel,
+            };
 
+            return View(dashData);
+
+        }
+
+        [HttpPost]
+        public IActionResult PartialTable(int status, searchViewModel? obj)
+        {
+            var data = _adminRepo.adminDashboard();
+
+            if(obj.Name != null || obj.sorting !=null)
+            {
+                var searchData = _adminRepo.searchPatient(obj, data);
+                if (status == 1)
+                {
+                    var parseData = searchData.newReqViewModel;
+                    return PartialView("_newRequestView", parseData);
+                }
+                else if (status == 2)
+                {
+                    var parseData = searchData.pendingReqViewModel;
+                    return PartialView("_PendingRequestView", parseData);
+                }
+                else if (status == 8)
+                {
+                    var parseData = searchData.activeReqViewModels;
+                    return PartialView("_activeRequestView", parseData);
+                }
+                else if (status == 4)
+                {
+                    var parseData = searchData.concludeReqViewModel;
+                    return PartialView("_concludeReqView", parseData);
+                }
+                else if (status == 5)
+                {
+                    var parseData = searchData.closeReqViewModels;
+                    return PartialView("_closeReqView", parseData);
+                }
+                else
+                {
+                    var parseData = searchData.unpaidReqViewModels;
+                    return PartialView("_unpaidReqView", parseData);
+                }
+            }
+
+            if (status == 1)
+            {
+                var parseData = data.newReqViewModel;
+                return PartialView("_newRequestView", parseData);
+            }
+            else if (status == 2)
+            {
+                var parseData = data.pendingReqViewModel;
+                return PartialView("_PendingRequestView", parseData);
+            }
+            else if (status == 8)
+            {
+                var parseData = data.activeReqViewModels;
+                return PartialView("_activeRequestView", parseData);
+            }
+            else if (status == 4)
+            {
+                var parseData = data.concludeReqViewModel;
+                return PartialView("_concludeReqView", parseData);
+            }
+            else if (status == 5)
+            {
+                var parseData = data.closeReqViewModels;
+                return PartialView("_closeReqView", parseData);
+            }
+            else
+            {
+                var parseData = data.unpaidReqViewModels;
+                return PartialView("_unpaidReqView", parseData);
+            }
+
+            
         }
 
         public IActionResult ViewCase(int reqClientId)

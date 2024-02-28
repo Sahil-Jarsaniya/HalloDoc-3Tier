@@ -38,5 +38,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public string? Zipcode { get; set; }
 
         public String confirmationNumber { get; set; }
+
+        public int? status { get; set; }
     }
 }

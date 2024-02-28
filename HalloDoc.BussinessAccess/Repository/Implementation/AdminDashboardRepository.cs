@@ -267,6 +267,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Street = data.Street,
                 Zipcode = data.Zipcode,
                 Regionid = data.Regionid,
+                status = cNumber.Status
             };
 
             return viewdata;

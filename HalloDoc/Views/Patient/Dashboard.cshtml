@@ -34,7 +34,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="choseMeOrELse()" class="btn" style="background-color: #01bce9; color:white;" data-bs-dismiss="modal">Continue</button>
+                <button type="button" onclick="choseMeOrELse()" class="btn" style="background-color: #01bce9; color:white;" >Continue</button>
                 <button type="button" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -231,17 +231,7 @@
 
 @section Scripts {
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     <script>
-        const patientPhone = document.querySelector(".patientPhone");
-        var phoneInput = window.intlTelInput(patientPhone,
-            {
-                utilsScript:
-                    "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-                preferredCountries: ["in"],
-                separateDialCode: true,
-                initialCountry: "in"
-            });
         function choseMeOrELse(){
             if (document.getElementById('me').checked == true) {
                 window.location.href = "CreateRequest";

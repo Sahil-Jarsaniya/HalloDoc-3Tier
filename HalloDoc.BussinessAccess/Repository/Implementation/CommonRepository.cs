@@ -20,13 +20,13 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public void uploadFile(string file, int reqId)
         {
             ////uploading files
-            //if (file!= null && file.Length > 0)
+            //if (file != null && file.Length > 0)
             //{
             //    //get file name
             //    var fileName = Path.GetFileName(file);
 
             //    //define path
-            //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "././HalloDoc", "wwwroot", "uploadedFiles", fileName);
+            //    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
 
             //    // Copy the file to the desired location
             //    using (var stream = new FileStream(filePath, FileMode.Create))

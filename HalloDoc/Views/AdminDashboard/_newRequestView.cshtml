@@ -14,9 +14,10 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.newReqViewModel)
+        @foreach (var item in Model)
         {
             var bg = "";
+            var name = item.Firstname + " " + item.Lastname; 
             @switch (item.reqTypeId)
             {
                 case 1:
@@ -131,15 +132,14 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a class="dropdown-item" href="">Assign Case</a></li>
-                        <li><a class="btn dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#cancelReqModal">Cancel Case</a></li>
+                        <li><a class="btn dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#cancelModel-@item.reqClientId">Cancel Case</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewCase", new {reqClientId = item.reqClientId})">View Case</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("ViewNote", new {reqClientId = item.reqClientId})">View Notes</a></li>
                         <li><a class="dropdown-item" href="#">Block Patient</a></li>
                     </ul>
                 </td>
             </tr>
-
-            @*<div class="modal fade" id="cancelReqModal" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+            <div class="modal fade" id="cancelModel-@item.reqClientId" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header" style="background-color: #01bce9; color:white;">
@@ -148,8 +148,8 @@
                         </div>
                         <div class="modal-body">
                             <div class="dropdown">
-                                <form>
-                                    <h5>Patient Name: @item.Firstname @item.Lastname</h5>
+                                <form method="post">
+                                    <h5>Patient Name: @name</h5>
                                     <select class="form-select form-select mb-3" aria-label="Large select example">
                                         <option selected>Reasons for Cancellation</option>
                                         <option value="1">One</option>
@@ -165,12 +165,12 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn" style="background-color: #01bce9; color:white;" data-bs-dismiss="modal">Confirm</button>
+                            <button type="submit" class="btn" style="background-color: #01bce9; color:white;" data-bs-dismiss="modal">Confirm</button>
                             <button type="button" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>
-            </div>*@
+            </div>
         }
     </tbody>
 </table>
