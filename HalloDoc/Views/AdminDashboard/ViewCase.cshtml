@@ -135,7 +135,7 @@
                             <div class="dropdown">
                                 <form>
                                     <h5>Patient Name: @Model.Firstname @Model.Lastname</h5>
-                                    <input id="reqClientId" value="@Model.Requestclientid"/>
+                                    <input id="reqClientId" value="@Model.Requestclientid" hidden/>
                                     <select class="form-select form-select mb-3 CaseTag" id="CaseTag-@Model.Requestclientid" aria-label="Large select example">
                                         <option selected>Reasons for Cancellation</option>
                                         <option value="1">No Respone to call or text, left message</option>
