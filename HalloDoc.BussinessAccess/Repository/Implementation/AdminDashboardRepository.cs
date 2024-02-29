@@ -1,5 +1,6 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
+using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -325,6 +326,72 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 return false;
             }
+        }
+
+        public viewNoteViewModel ViewNoteGet(int reqClientId)
+        {
+            var ReqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqNotes = from t1 in _db.Requestnotes
+                           where t1.Requestid == ReqId.Requestid
+                           select t1;
+
+            var transferNote = from t1 in _db.Requeststatuslogs
+                               where t1.Requestid == ReqId.Requestid
+                               select t1;
+
+            var data = new viewNoteViewModel
+            {
+                reqClientId = reqClientId,
+                Requestnote = reqNotes,
+                Requeststatuslog = transferNote
+            };
+
+            return data;
+        }
+
+        public void ViewNotePost(int reqClientId, string adminNote, int adminId)
+        {
+            var reqIdCol = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqId = reqIdCol.Requestid;
+            var Status = _db.Requests.Where(x => x.Requestid == reqId).FirstOrDefault().Status;
+
+            var reqNote = _db.Requestnotes.Where(x => x.Requestid == reqId).FirstOrDefault();
+            var adminAspId = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault().Aspnetuserid;
+
+            if (reqNote == null)
+            {
+                var reqNoteDb = new Requestnote
+                {
+                    Requestid = (int)reqId,
+                    Adminnotes = adminNote,
+                    Createddate = DateTime.Now,
+                    Createdby = adminAspId
+                };
+                _db.Requestnotes.Add(reqNoteDb);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var reqNoteDb = _db.Requestnotes.Where(x => x.Requestid == reqId).FirstOrDefault();
+
+                reqNoteDb.Requestid = (int)reqId;
+                reqNoteDb.Adminnotes = adminNote;
+                reqNoteDb.Modifieddate = DateTime.Now;
+                reqNoteDb.Modifiedby = adminAspId;
+                _db.Requestnotes.Update(reqNoteDb);
+                _db.SaveChanges();
+            }
+
+            var reqStatusLog = new Requeststatuslog
+            {
+                Requestid = (int)reqId,
+                Status = Status,
+                Adminid = adminId,
+                Notes = adminNote,
+                Createddate = DateTime.Now,
+            };
+            _db.Requeststatuslogs.Add(reqStatusLog);
+            _db.SaveChanges();
         }
     }
 }

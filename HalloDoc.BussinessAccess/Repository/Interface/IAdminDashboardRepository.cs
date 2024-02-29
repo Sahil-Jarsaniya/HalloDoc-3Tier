@@ -17,5 +17,9 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public viewCaseViewModel viewCase(int reqClientId);
 
         public bool viewCase(viewCaseViewModel obj);
+
+        public viewNoteViewModel ViewNoteGet(int reqClientId);
+
+        public void ViewNotePost(int reqClientId, string adminNote, int adminId);
     }
 }

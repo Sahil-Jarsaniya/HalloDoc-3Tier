@@ -1,4 +1,5 @@
-﻿using HalloDoc.BussinessAccess.Repository.Interface;
+﻿using Azure.Core;
+using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
@@ -54,7 +55,7 @@ namespace HalloDoc.Controllers
         {
             var data = _adminRepo.adminDashboard();
 
-            if(obj.Name != null || obj.sorting !=null)
+            if (obj.Name != null || obj.sorting != null)
             {
                 var searchData = _adminRepo.searchPatient(obj, data);
                 if (status == 1)
@@ -91,7 +92,7 @@ namespace HalloDoc.Controllers
 
             if (status == 1)
             {
-                var parseData = data.newReqViewModel;
+                var parseData =  data.newReqViewModel;
                 return PartialView("_newRequestView", parseData);
             }
             else if (status == 2)
@@ -119,8 +120,6 @@ namespace HalloDoc.Controllers
                 var parseData = data.unpaidReqViewModels;
                 return PartialView("_unpaidReqView", parseData);
             }
-
-            
         }
 
         public IActionResult ViewCase(int reqClientId)
@@ -158,22 +157,34 @@ namespace HalloDoc.Controllers
 
         public IActionResult ViewNote(int reqClientId)
         {
-            var ReqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
-            var reqNotes = from t1 in _db.Requestnotes
-                           where t1.Requestid == ReqId.Requestid
-                           select t1 ;
-
-            var transferNote = from t1 in _db.Requeststatuslogs
-                               where t1.Requestid == ReqId.Requestid
-                               select t1;
-
-            var data = new viewNoteViewModel
-            {
-                Requestnote = reqNotes,
-                Requeststatuslog = transferNote
-            };
+            var data = _adminRepo.ViewNoteGet(reqClientId);
 
             return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult ViewNote(string adminNote, int reqClientId)
+        {
+            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
+            int adminId = ViewBag.AdminId;
+
+            _adminRepo.ViewNotePost(reqClientId, adminNote, adminId);
+
+            return RedirectToAction("ViewNote" ,new { reqClientId = reqClientId });
+        }
+
+        [HttpPost]
+        public IActionResult CancelCase(string CaseTag, string addNote, int reqClientId)
+        {
+            var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqCol = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
+
+            reqCol.Status = 5;
+
+            _db.Requests.Update(reqCol);
+            _db.SaveChanges();
+
+            return RedirectToAction("Dashboard");
         }
     }
 }

@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = G:\HalloDoc\HalloDoc
 build_property._RazorSourceGeneratorDebug = 
 
+[G:/HalloDoc/HalloDoc/Views/AdminDashboard/CancelCase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcQ2FuY2VsQ2FzZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/HalloDoc/HalloDoc/Views/AdminDashboard/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcRGFzaGJvYXJkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

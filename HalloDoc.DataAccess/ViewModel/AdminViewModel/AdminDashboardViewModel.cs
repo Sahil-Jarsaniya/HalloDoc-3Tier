@@ -23,5 +23,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public IEnumerable<unpaidReqViewModel> unpaidReqViewModels { get; set; }
         public IEnumerable<activeReqViewModel> activeReqViewModels { get; set; }
+
+        public CancelcaseViewModel CancelcaseViewModel { get; set; }
     }
 }

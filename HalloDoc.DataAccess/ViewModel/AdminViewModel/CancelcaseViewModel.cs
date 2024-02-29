@@ -8,7 +8,10 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 {
     public class CancelcaseViewModel
     {
-        public String CancelationNote { get; set; }
+        public int reqClientId { get; set; }
+
+        public string Name { get; set; }
+        public String CaseTag { get; set; }
 
         public String AddCancelationNote { get; set; }
     }
