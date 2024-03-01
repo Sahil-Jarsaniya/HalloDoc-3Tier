@@ -202,8 +202,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                     physicianName = phy.Firstname + " " + phy.Lastname
                                 };
 
-
-
+            var CaseTag = from t1 in _db.Casetags select t1;
+            var Region = from t1 in _db.Regions select t1;
 
             var data = new AdminDashboardViewModel
             {
@@ -213,8 +213,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 closeReqViewModels = closeReqData,
                 activeReqViewModels = activeReqData,
                 pendingReqViewModel = pendingReqData,
-                unpaidReqViewModels = unpaidReqData
-                
+                unpaidReqViewModels = unpaidReqData,
+                Casetag = CaseTag,
+                Region = Region
+
             };
             return data;
         }
@@ -251,7 +253,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var data = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == reqClientId);
             var cNumber = _db.Requests.FirstOrDefault(x => x.Requestid == data.Requestid);
             var confirm = cNumber.Confirmationnumber;
-
+            var Casetag = from t1 in _db.Casetags select t1;
             var viewdata = new viewCaseViewModel
             {
                 Requestclientid = reqClientId,
@@ -268,7 +270,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Street = data.Street,
                 Zipcode = data.Zipcode,
                 Regionid = data.Regionid,
-                status = cNumber.Status
+                status = cNumber.Status,
+                Casetag = Casetag
             };
 
             return viewdata;
@@ -392,6 +395,49 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             };
             _db.Requeststatuslogs.Add(reqStatusLog);
             _db.SaveChanges();
+        }
+
+        public void CancelCase(int CaseTag, string addNote, int reqClientId, int adminId)
+        {
+            var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqCol = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
+
+            reqCol.Status = 5;
+            reqCol.Casetag = _db.Casetags.Where(x => x.Casetagid == CaseTag).FirstOrDefault().Name;
+            _db.Requests.Update(reqCol);
+            _db.SaveChanges();
+
+            var reqStatuslog = new Requeststatuslog
+            {
+                Requestid = (int)reqId.Requestid,
+                Notes = addNote,
+                Createddate = DateTime.Now,
+                Adminid = adminId,
+                Status = 5
+            };
+            _db.Requeststatuslogs.Add(reqStatuslog);
+            _db.SaveChanges();
+        }
+
+        public void BlockCase(int reqClientId, string addNote, int adminId)
+        {
+            var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqCol = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
+
+            reqCol.Status = 14;
+            _db.Requests.Update(reqCol);
+            _db.SaveChanges();
+
+            var reqStatuslog = new Requeststatuslog
+            {
+                Requestid = (int)reqId.Requestid,
+                Notes = addNote,
+                Createddate = DateTime.Now,
+                Adminid = adminId,
+                Status = 14
+            };
+            _db.Requeststatuslogs.Add(reqStatuslog);
+            _db.SaveChanges();      
         }
     }
 }

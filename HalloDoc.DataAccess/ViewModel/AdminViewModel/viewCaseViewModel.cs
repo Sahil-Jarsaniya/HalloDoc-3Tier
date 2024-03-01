@@ -40,5 +40,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public String confirmationNumber { get; set; }
 
         public int? status { get; set; }
+
+        public IEnumerable<Casetag> Casetag { get; set; }    
     }
 }

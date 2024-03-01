@@ -145,6 +145,10 @@
       "PackagePath": "staticwebassets\\js\\AdminDashboard.js"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\CasesPopUp.js",
+      "PackagePath": "staticwebassets\\js\\CasesPopUp.js"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\admin.js",
       "PackagePath": "staticwebassets\\js\\admin.js"
     },

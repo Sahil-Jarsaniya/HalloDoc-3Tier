@@ -5,3 +5,5 @@ $(window).on('load', function () {
 function closeModal() {
     $('#myModal').modal('hide')
 }
+
+

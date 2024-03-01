@@ -5,6 +5,7 @@ using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using System.Reflection;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -29,6 +30,8 @@ namespace HalloDoc.Controllers
             var dashData = new AdminDashboardViewModel
             {
                 countRequestViewModel = data.countRequestViewModel,
+                Casetag =data.Casetag,
+                Region =data.Region,
             };
             return View(dashData);
         }
@@ -92,7 +95,7 @@ namespace HalloDoc.Controllers
 
             if (status == 1)
             {
-                var parseData =  data.newReqViewModel;
+                var parseData = data.newReqViewModel;
                 return PartialView("_newRequestView", parseData);
             }
             else if (status == 2)
@@ -145,12 +148,12 @@ namespace HalloDoc.Controllers
             if (task)
             {
                 ViewBag.success = "updated successfully";
-                return RedirectToAction("ViewCase", new { reqClientId = obj.Requestclientid });
+                return RedirectToAction("Dashboard");
             }
             else
             {
                 ViewBag.error = "Error Occured!!!!";
-                return RedirectToAction("ViewCase", new { reqClientId = obj.Requestclientid });
+                return RedirectToAction("Dashboard");
             }
 
         }
@@ -170,18 +173,65 @@ namespace HalloDoc.Controllers
 
             _adminRepo.ViewNotePost(reqClientId, adminNote, adminId);
 
-            return RedirectToAction("ViewNote" ,new { reqClientId = reqClientId });
+            return RedirectToAction("ViewNote", new { reqClientId = reqClientId });
         }
 
         [HttpPost]
-        public IActionResult CancelCase(string CaseTag, string addNote, int reqClientId)
+        public IActionResult CancelCase(int CaseTag, string addNote, int reqClientId)
         {
-            var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
-            var reqCol = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
+            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
+            int adminId = ViewBag.AdminId;
 
-            reqCol.Status = 5;
+            _adminRepo.CancelCase(CaseTag, addNote, reqClientId, adminId);
 
-            _db.Requests.Update(reqCol);
+            return RedirectToAction("Dashboard");
+        }
+        [HttpPost]
+        public IActionResult BlockCase(int reqClientId, string addNote)
+        {
+            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
+            int adminId = ViewBag.AdminId;
+
+            _adminRepo.BlockCase(reqClientId,addNote, adminId);
+
+            return RedirectToAction("Dashboard");
+        }
+
+        public object FilterPhysician(int Region)
+        {
+            var physicians = (from t1 in _db.Physicianregions
+                              join t2 in _db.Physicians on t1.Physicianid equals t2.Physicianid
+                              where t1.Regionid == Region
+                              select new 
+                              {
+                                  physicians = t2.Firstname+ " " + t2.Lastname,
+                                  PhysicianId = t1.Physicianid
+                              }).ToList();
+            return physicians;
+        }
+
+        public IActionResult AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
+        {
+            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
+            int adminId = ViewBag.AdminId;
+
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
+            reqRow.Status = 2;
+            reqRow.Physicianid = PhysicianSelect;
+            reqRow.Modifieddate = DateTime.Now;
+            _db.Requests.Update(reqRow);
+            _db.SaveChanges();
+
+            var reqStatusLog = new Requeststatuslog
+            {
+                Createddate = DateTime.Now,
+                Requestid = reqRow.Requestid,
+                Adminid = adminId,
+                Notes = addNote,
+                Status = 2
+            };
+            _db.Requeststatuslogs.Add(reqStatusLog);
             _db.SaveChanges();
 
             return RedirectToAction("Dashboard");

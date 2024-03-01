@@ -21,5 +21,9 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public viewNoteViewModel ViewNoteGet(int reqClientId);
 
         public void ViewNotePost(int reqClientId, string adminNote, int adminId);
+
+        public void CancelCase(int CaseTag, string addNote, int reqClientId, int adminId);
+
+        public void BlockCase(int reqClientId, string addNote, int adminId);
     }
 }

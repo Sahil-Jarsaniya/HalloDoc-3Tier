@@ -120,50 +120,51 @@
                         <span ></span>
                     </div>
                 </div>
-            <button type="reset" id="cancelBtn" class="btn btn-danger float-end m-1" data-bs-toggle="modal" data-bs-target="#cancelModel">Cancel</button>
+            <button type="reset" id="cancelBtn" class="btn btn-danger float-end m-1 " data-name="@Model.Firstname @Model.Lastname" data-id="@Model.Requestclientid">Cancel</button>
             <a type="button" href="@Url.Action("ViewNote", new{reqClientId = Model.Requestclientid})" id="viewNoteBtn" class="btn btn-primary float-end m-1">View Notes</a>
             <button type="button" id="assignBtn" class="btn btn-primary float-end m-1">Assign</button>
 
-            <div class="modal fade" id="cancelModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #01bce9; color:white;">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="dropdown">
-                                <form>
-                                    <h5>Patient Name: @Model.Firstname @Model.Lastname</h5>
-                                    <input id="reqClientId" value="@Model.Requestclientid" hidden/>
-                                    <select class="form-select form-select mb-3 CaseTag" id="CaseTag-@Model.Requestclientid" aria-label="Large select example">
-                                        <option selected>Reasons for Cancellation</option>
-                                        <option value="1">No Respone to call or text, left message</option>
-                                        <option value="2">Cost Issue</option>
-                                        <option value="3">Insurance Issue</option>
-                                        <option value="4">Out of Service Area</option>
-                                        <option value="5">Not appropriate for service</option>
-                                        <option value="6">Referral to Clinic or Hospital</option>
-                                    </select>
-                                    <div class="form-floating m-1 form-div">
-                                        <textarea class="form-control" placeholder="Leave a comment here" id="addNote"
-                                                  style="height: 100px"></textarea>
-                                        <label for="">Provide Additional Notes</label>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn"  id="CancelCaseBtn" style="background-color: #01bce9; color:white;">Confirm</button>
-                            <button type="button" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </form>
     </div>
 </div>
+@*Cancel Case Modal*@
 
+<div class="modal fade" id="cancelModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <form>
+                        <h5 id="PatientName" class="mb-2">Patient Name: </h5>
+                        <input id="reqClientId" value="" hidden />
+                        <select class="form-select form-select mb-3 CaseTag" id="CaseTag" aria-label="Large select example">
+                            <option>Reasons for Cancellation</option>
+
+                            @foreach (var item in Model.Casetag)
+                            {
+                                <option value="@item.Casetagid">@item.Name</option>
+                            }
+                        </select>
+                        <div class="form-floating m-1 form-div">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="addNote"
+                                      style="height: 100px"></textarea>
+                            <label for="">Provide Additional Notes</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="ConfirmCancelBtn" style="background-color: #01bce9; color:white;">Confirm</button>
+                <button type="button" id="CloseModal" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section AdminScript {
     <!-- js ans css for phone input -->
@@ -174,23 +175,30 @@
     </script>
     <script src="~/js/admin.js"></script>
     <script>
-        var addNote = $("#addNote").val();
-        var casetag = $(".CaseTag").val();
-        var reqClientId = $("#reqClientId").val();
-        $("#CancelCaseBtn").click(function () {
+        $("#cancelBtn").click(function () {
+            $("#PatientName").text("Patient Name:" + $(this).data('name'));
+            $("#reqClientId").val($(this).data('id'));
+            $("#cancelModel").modal('show');
+        })
+
+        $("#ConfirmCancelBtn").click(function () {
+            var addNote = $("#addNote").val();
+            var casetag = $(".CaseTag").val();
+            var reqClientId = $("#reqClientId").val();
             $.ajax({
                 url: '/AdminDashboard/CancelCase',
                 type: 'POST',
                 data: { reqClientId: reqClientId, addNote: addNote, CaseTag: casetag },
                 success: function (result) {
-                    $("CloseModal").click();
+                    $("#CloseModal").click();
+                    location.reload();
                 },
                 error: function (error) {
                     console.log(error);
                     alert('error fetching details')
                 },
             })
-        })
+        });
     </script>
     <script>
         // Edit Details buttons

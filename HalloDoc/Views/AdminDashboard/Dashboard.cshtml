@@ -242,31 +242,122 @@
                         <circle fill="#9966cd" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
                     </svg>
                     <h6 class="fs-6 ms-lg-2 m-auto">VIP</h6>
-                </a>    
+                </a>
             </div>
         </div>
         <div class="tab-content  mt-3 " id="PartialTable">
-            @*<div class="tab-pane fade show active overflow-auto divPartial" id="newTab" role="tabpanel" aria-labelledby="newTab" tabindex="0">
-                <partial name="_newRequestView" />
-            </div>
-            <div class="tab-pane fade show overflow-auto divPartial" id="pendingTab" role="tabpanel" aria-labelledby="pendingTab" tabindex="0">
-                <partial name="_pendingRequestView" />
-            </div>
-            <div class="tab-pane fade show overflow-auto divPartial" id="ActiveTab" role="tabpanel" aria-labelledby="ActiveTab" tabindex="0">
-                <partial name="_activeRequestView" />
-            </div>
-            <div class="tab-pane fade show overflow-auto divPartial" id="concludeTab" role="tabpanel" aria-labelledby="concludeTab" tabindex="0">
-                <partial name="_concludeReqView" />
-            </div>
-            <div class="tab-pane fade show overflow-auto divPartial" id="toCloseTab" role="tabpanel" aria-labelledby="toCloseTab" tabindex="0">
-                <partial name="_closeReqView" />
-            </div>
-            <div class="tab-pane fade show overflow-auto divPartial" id="unpaidTab" role="tabpanel" aria-labelledby="unpaidTab" tabindex="0">
-                <partial name="_unpaidReqView" />
-            </div>*@
         </div>
     </form>
 
+</div>
+
+
+@*Cancel Case Modal*@
+
+<div class="modal fade" id="cancelModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <form>
+                        <h5 id="PatientName" class="mb-2">Patient Name: </h5>
+                        <input id="reqClientId" value="" hidden />
+                        <select class="form-select form-select mb-3 CaseTag" id="CaseTag" aria-label="Large select example">
+                            <option>Reasons for Cancellation</option>
+
+                            @foreach (var item in Model.Casetag)
+                            {
+                                <option value="@item.Casetagid">@item.Name</option>
+                            }
+                        </select>
+                        <div class="form-floating m-1 form-div">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="addNote"
+                                      style="height: 100px"></textarea>
+                            <label for="">Provide Additional Notes</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="ConfirmCancelBtn" style="background-color: #01bce9; color:white;">Confirm</button>
+                <button type="button" id="CloseModal" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Block Case*@
+<div class="modal fade" id="BlockModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Block</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <form>
+                        <h5 id="BloackPatientName" class="mb-2"> </h5>
+                        <input id="blockreqClientId" value="" hidden />
+                        <div class="form-floating m-1 form-div">
+                            <textarea class="form-control"  id="addBlockNote"
+                                      style="height: 100px"></textarea>
+                            <label for="">Provide Additional Notes</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="ConfirmBlockBtn" style="background-color: #01bce9; color:white;">Confirm</button>
+                <button type="button" id="CloseModal" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Assign Case Model*@
+<div class="modal fade" id="AssignModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Assign Request</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <form>
+                        <p>To assign this request, search and select anthoer Phiysician</p>
+                        <input id="AssignreqClientId" value="" hidden />
+
+                        <select class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
+                            <option>Narrow Search by Region</option>
+                            @foreach (var item in Model.Region)
+                            {
+                                <option value="@item.Regionid">@item.Name</option>
+                            }
+                        </select>
+                        <select class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
+                            <option>Select Physician</option>
+                        </select>
+
+                        <div class="form-floating m-1 form-div">
+                            <textarea class="form-control" id="addAssignNote"
+                                      style="height: 100px"></textarea>
+                            <label for="">Description</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="ConfirmAssignBtn" style="background-color: #01bce9; color:white;">Confirm</button>
+                <button type="button" id="CloseModal" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -276,5 +367,5 @@
     </script>
     <script type="text/javascript" src="~/js/admin.js"></script>
     <script type="text/javascript" src="~/js/AdminDashboard.js"></script>
-
+    <script src="~/js/CasesPopUp.js"></script>
 }

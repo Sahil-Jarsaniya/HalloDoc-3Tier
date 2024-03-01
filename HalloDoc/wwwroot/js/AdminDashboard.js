@@ -72,5 +72,3 @@ $("#search").keyup(function (e) {
         },
     })
 })
-
-
