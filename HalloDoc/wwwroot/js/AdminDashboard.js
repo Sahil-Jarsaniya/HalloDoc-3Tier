@@ -53,16 +53,15 @@ $(".status-tab").click(function () {
 
 $("#status-new-tab").click();
 
-//search box
-$("#search").keyup(function (e) {
-    /*  $('#DashboradForm').submit();*/
-    var Name = $(this).val();
+//region filter
+$("#RegionFilter").change(function () {
+    var RegionId = $(this).val();
+    var Name = $("#search").val();
+    console.log(RegionId)
     $.ajax({
-
-        url:'/AdminDashboard/PartialTable',
+        url: '/AdminDashboard/PartialTable',
         type: 'POST',
-        data: {
-            status: dashboardStatus, Name: Name },
+        data: { RegionId: RegionId, Name: Name, status: dashboardStatus },
         success: function (result) {
             $('#PartialTable').html(result);
         },
@@ -71,4 +70,50 @@ $("#search").keyup(function (e) {
             alert('error fetching details')
         },
     })
+});
+
+//search box
+$("#search").keyup(function (e) {
+    /*  $('#DashboradForm').submit();*/
+    var ReginoId = $("#RegionFilter").val();
+    var Name = $(this).val();
+    $.ajax({
+
+        url: '/AdminDashboard/PartialTable',
+        type: 'POST',
+        data: {
+            status: dashboardStatus, Name: Name, ReginoId: ReginoId
+        },
+        success: function (result) {
+            $('#PartialTable').html(result);
+        },
+        error: function (error) {
+            console.log(error);
+            alert('error fetching details')
+        },
+    });
+});
+
+
+//filter by request Type
+$(".filterReqByType").click(function () {
+    var reqType = $(this).children().val()
+    var RegionId = $("#RegionFilter").val();
+    var Name = $("#search").val();
+    console.log(reqType + " " + RegionId + " " + Name)
+    $.ajax({
+
+        url: '/AdminDashboard/PartialTable',
+        type: 'POST',
+        data: {
+            status: dashboardStatus, Name: Name, RegionId: RegionId, reqType: reqType
+        },
+        success: function (result) {
+            $('#PartialTable').html(result);
+        },
+        error: function (error) {
+            console.log(error);
+            alert('error fetching details')
+        },
+    });
 })

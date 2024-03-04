@@ -9,6 +9,15 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 {
     public interface IRequestRepository
     {
-        Task CreatePatientRequest(PatientViewModel obj);
+        public string GetConfirmationNumber(DateTime createtime, String lastName, string firstName);
+
+        public void CreatePatientRequest(PatientViewModel obj);
+
+        public void CreateFamilyfriendRequest(FamilyViewModel obj);
+
+        public void CreateConciergeRequest(ConciergeViewModel obj);
+
+        public void CreateBusinessRequest(BussinessViewModel obj);
+
     }
 }

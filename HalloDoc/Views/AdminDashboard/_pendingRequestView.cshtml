@@ -1,4 +1,4 @@
-﻿<table class="table table-hover table-responsive ">
+﻿<table class="table table-responsive ">
     <thead>
         <tr class="table-secondary">
             <td>Name</td>
@@ -44,6 +44,43 @@
                     @item.Strmonth
                 </td>
                 <td style="background-color: @bg;">
+                    @if (item.reqTypeId == 1)
+                    {
+                        <p>
+                            Patient
+                            @item.reqFirstname @item.reqLastname
+                        </p>
+                    }
+                    @if (item.reqTypeId == 2)
+                    {
+                        <p>
+                            Family/Friend
+                            @item.reqFirstname @item.reqLastname
+                        </p>
+                    }
+                    @if (item.reqTypeId == 3)
+                    {
+                        <p>
+                            Concierge
+                            @item.reqFirstname @item.reqLastname
+                        </p>
+                    }
+                    @if (item.reqTypeId == 4)
+                    {
+                        <p>
+                            Business
+                        @item.reqFirstname @item.reqLastname
+                        </p>
+
+                    }
+                </td>
+                <td style="background-color: @bg;">
+                    @item.physicianName
+                </td>
+                <td style="background-color: @bg;">
+                    @item.Createddate
+                </td>
+                <td style="background-color: @bg;">
                     <a href="tel:@item.Phonenumber" class="btn border rounded d-flex justify-content-center">
                         <img src="~/images/telephone.svg" />
                         @item.Phonenumber
@@ -81,45 +118,6 @@
                     }
                 </td>
                 <td style="background-color: @bg;">
-                    @item.physicianName
-                </td>
-                <td style="background-color: @bg;">
-                    @item.Createddate
-                </td>
-                <td style="background-color: @bg;">
-                    <div class="border rounded d-flex justify-content-center">
-                        @item.Phonenumber
-                    </div>
-                    (Patient)
-                    @if (item.reqTypeId == 2)
-                    {
-                        <div>
-                            <div class="border rounded d-flex justify-content-center">
-                                @item.FamilyPhonenumber
-                            </div>
-                            (Family/Friend)
-                        </div>
-                    }
-                    @if (item.reqTypeId == 3)
-                    {
-                        <div>
-                            <div class="border rounded d-flex justify-content-center">
-                                @item.ConciergePhonenumber
-                            </div>
-                            (Concierge)
-                        </div>
-                    }
-                    @if (item.reqTypeId == 4)
-                    {
-                        <div>
-                            <div class="border rounded d-flex justify-content-center">
-                                @item.BusinessPhonenumber
-                            </div>
-                            (Business)
-                        </div>
-                    }
-                </td>
-                <td style="background-color: @bg;">
                     @item.Street, @item.City, @item.State, @item.Zipcode
                 </td>
                 <td style="background-color: @bg;">
@@ -137,9 +135,9 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
                         <li><a class="dropdown-item" href="@Url.Action("ViewCase", new {reqClientId = item.reqClientId})">View Case</a></li>
-                        <li><a class="dropdown-item" href="#">View Uploads</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("ViewUpload","AdminDashboard", new {reqClientId = item.reqClientId})">View Uploads</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
-                        <li><a class="dropdown-item" href="#">Transfer</a></li>
+                        <li><a class="dropdown-item TransferCasebtn" data-id="@item.reqClientId" >Transfer</a></li>
                         <li><a class="dropdown-item" href="#">Clear Case</a></li>
                         <li><a class="dropdown-item" href="#">Send Agreement</a></li>
                     </ul>
@@ -148,3 +146,9 @@
         }
     </tbody>
 </table>
+<script>
+    $(".TransferCasebtn").click(function () {
+        $("#TransferClientId").val($(this).data('id'));
+        $("#TransferModel").modal('show');
+    })
+</script>

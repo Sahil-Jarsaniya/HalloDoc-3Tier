@@ -48,9 +48,9 @@ $(".RegionSelect").change(function () {
             region: selectedRegion
         },
         success: function (response) {
-            $("#PhysicianSelect").empty();
+            $(".PhysicianSelect").empty();
             $.each(response, function (index, doctor) {
-                $("#PhysicianSelect").append($('<option>').text(doctor.physicians).val(doctor.physicianId));
+                $(".PhysicianSelect").append($('<option>').text(doctor.physicians).val(doctor.physicianId));
             })
         }
     })

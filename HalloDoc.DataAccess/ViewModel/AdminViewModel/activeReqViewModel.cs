@@ -50,5 +50,6 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public string? physicianName { get; set; }
         public int reqClientId { get; set; }
+        public int? RegionId { get; set; }
     }
 }

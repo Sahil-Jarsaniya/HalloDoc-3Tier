@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Due/dpAdRHd2Sje5STQxdf8V8iLL0srRnvM+/0LMQwU=",
+  "Hash": "8ktmG8a7tiFxckXDVvTOcndmOJXPZG1evF+VoKHw2F4=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -593,6 +593,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\telephone.svg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\trash3.svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "images/trash3.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\trash3.svg"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\user_circle.svg",

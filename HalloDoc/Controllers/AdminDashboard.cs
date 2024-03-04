@@ -1,7 +1,8 @@
-﻿using Azure.Core;
+﻿    using Azure.Core;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
+using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -58,7 +59,7 @@ namespace HalloDoc.Controllers
         {
             var data = _adminRepo.adminDashboard();
 
-            if (obj.Name != null || obj.sorting != null)
+            if (obj.Name != null || obj.reqType != 0 || obj.RegionId!=0)
             {
                 var searchData = _adminRepo.searchPatient(obj, data);
                 if (status == 1)
@@ -199,15 +200,7 @@ namespace HalloDoc.Controllers
 
         public object FilterPhysician(int Region)
         {
-            var physicians = (from t1 in _db.Physicianregions
-                              join t2 in _db.Physicians on t1.Physicianid equals t2.Physicianid
-                              where t1.Regionid == Region
-                              select new 
-                              {
-                                  physicians = t2.Firstname+ " " + t2.Lastname,
-                                  PhysicianId = t1.Physicianid
-                              }).ToList();
-            return physicians;
+            return _adminRepo.FilterPhysician(Region);
         }
 
         public IActionResult AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
@@ -215,26 +208,15 @@ namespace HalloDoc.Controllers
             ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
             int adminId = ViewBag.AdminId;
 
-            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
-            var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
-            reqRow.Status = 2;
-            reqRow.Physicianid = PhysicianSelect;
-            reqRow.Modifieddate = DateTime.Now;
-            _db.Requests.Update(reqRow);
-            _db.SaveChanges();
-
-            var reqStatusLog = new Requeststatuslog
-            {
-                Createddate = DateTime.Now,
-                Requestid = reqRow.Requestid,
-                Adminid = adminId,
-                Notes = addNote,
-                Status = 2
-            };
-            _db.Requeststatuslogs.Add(reqStatusLog);
-            _db.SaveChanges();
+            _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId);
 
             return RedirectToAction("Dashboard");
+        }
+
+        public IActionResult ViewUpload(int reqClientId)
+        {
+            var data = _adminRepo.ViewUpload(reqClientId);
+            return View(data);
         }
     }
 }

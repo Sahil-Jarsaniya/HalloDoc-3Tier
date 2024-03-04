@@ -5,18 +5,21 @@
 .btn-primary {
     background-color: #10bce9;
     color: white;
-    border: none;
+    border: 1px solid #10bce9;
 }
+
 [data-bs-theme="dark"] .btn-primary {
     background-color: #10bce9;
     color: white;
-    border: none;
+    border: 1px solid #10bce9;
 }
-    .btn-primary:hover {
-        color: #10bce9;
-        border: 1px solid #10bce9;
-        background-color: white;
-    }
+
+.btn-primary:hover {
+    color: #10bce9;
+    border: 1px solid #10bce9;
+    background-color: white;
+}
+
 .btn-secondary {
     color: #10bce9;
     border: 1px solid #10bce9;
@@ -28,13 +31,14 @@
         background-color: #10bce9;
         color: white;
     }
+
     .btn-secondary img {
         filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
     }
 
-        .btn-secondary:hover img {
-            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
-        }
+    .btn-secondary:hover img {
+        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+    }
 
 
 .btn span {
@@ -217,17 +221,20 @@
 .active-filter {
     border: 1px solid grey;
 }
-.normal-input input:focus{
+
+.normal-input input:focus {
     box-shadow: none;
 }
+
 .normal-input select:focus {
     box-shadow: none;
 }
-.normal-input:focus-within{
+
+.normal-input:focus-within {
     border: 1px solid var(--primary);
 }
 
-a{
+a {
     color: black;
     text-decoration: none;
 }
@@ -242,20 +249,21 @@ a{
     width: 100%;
     box-shadow: 0 1 0 0 black;
 }
-    .viewCaseForm input:focus{
+
+    .viewCaseForm input:focus {
         box-shadow: none;
         border: 1px solid var(--primary);
         color: var(--primary);
     }
 
-       #back-btn:hover img {
-            filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
-        }
+#back-btn:hover img {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
+}
 
 
-    #back-btn img {
-        filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
-    }
+#back-btn img {
+    filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
+}
 
 .phone-div > * {
     z-index: 3;

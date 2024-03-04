@@ -42,5 +42,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public int? status { get; set; }
 
         public IEnumerable<Casetag> Casetag { get; set; }    
+
+        public IEnumerable<Region> Region { get; set; }
     }
 }

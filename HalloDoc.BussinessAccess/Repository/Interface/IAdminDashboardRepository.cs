@@ -1,4 +1,5 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Implementation;
+using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using System;
 using System.Collections.Generic;
@@ -25,5 +26,11 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void CancelCase(int CaseTag, string addNote, int reqClientId, int adminId);
 
         public void BlockCase(int reqClientId, string addNote, int adminId);
+
+        public object FilterPhysician(int Region);
+
+        public void AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect, int adminId);
+
+        public DocumentViewModel ViewUpload(int reqClientId);
     }
 }

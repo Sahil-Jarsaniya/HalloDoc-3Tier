@@ -1,7 +1,9 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
+using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using System.Xml.Linq;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
@@ -74,7 +76,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                               State = rc.State,
                               Zipcode = rc.Zipcode,
                               Notes = rc.Notes,
-                              reqTypeId = req.Requesttypeid
+                              reqTypeId = req.Requesttypeid,
+                              Regionid = rc.Regionid
                           });
             var pendingReqData = from req in _db.Requests
                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -99,7 +102,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  Zipcode = rc.Zipcode,
                                  Notes = rc.Notes,
                                  reqTypeId = req.Requesttypeid,
-                                 physicianName = phy.Firstname + " " + phy.Lastname
+                                 physicianName = phy.Firstname + " " + phy.Lastname,
+                                 Regionid = rc.Regionid
                              };
             var closeReqData = from req in _db.Requests
                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -124,7 +128,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  Zipcode = rc.Zipcode,
                                  Notes = rc.Notes,
                                  reqTypeId = req.Requesttypeid,
-                                 physicianName = phy.Firstname + " " + phy.Lastname
+                                 physicianName = phy.Firstname + " " + phy.Lastname,
+                                 Regionid = rc.Regionid
                              };
             var concludeReqData = from req in _db.Requests
                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -149,7 +154,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  Zipcode = rc.Zipcode,
                                  Notes = rc.Notes,
                                  reqTypeId = req.Requesttypeid,
-                                 physicianName = phy.Firstname + " " + phy.Lastname
+                                 physicianName = phy.Firstname + " " + phy.Lastname,
+                                 Regionid = rc.Regionid
                              };
             var unpaidReqData = from req in _db.Requests
                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -174,7 +180,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  Zipcode = rc.Zipcode,
                                  Notes = rc.Notes,
                                  reqTypeId = req.Requesttypeid,
-                                 physicianName = phy.Firstname + " " + phy.Lastname
+                                 physicianName = phy.Firstname + " " + phy.Lastname,
+                                 Regionid = rc.Regionid
                              };
             var activeReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -199,7 +206,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                     Zipcode = rc.Zipcode,
                                     Notes = rc.Notes,
                                     reqTypeId = req.Requesttypeid,
-                                    physicianName = phy.Firstname + " " + phy.Lastname
+                                    physicianName = phy.Firstname + " " + phy.Lastname,
+                                    Regionid = rc.Regionid
                                 };
 
             var CaseTag = from t1 in _db.Casetags select t1;
@@ -223,11 +231,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data)
         {
-            if (obj.Name == null)
+            if (obj.Name == null && obj.RegionId == 0 && obj.reqType ==0)
             {
                 return data;
             }
-            else
+            if (obj.Name != null)
             {
                 var name = obj.Name.ToUpper();
                 var sortedNew = data.newReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
@@ -244,8 +252,44 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 data.activeReqViewModels = sortedActive;
                 data.unpaidReqViewModels = sortedUnpaid;
 
-                return data;
             }
+
+            if (obj.RegionId != 0)
+            {
+                var sortedNew = data.newReqViewModel.Where(s => s.Regionid == obj.RegionId);
+                var sortedConclude = data.concludeReqViewModel.Where(s => s.Regionid == obj.RegionId);
+                var sortedClose = data.closeReqViewModels.Where(s => s.Regionid == obj.RegionId);
+                var sortedPending = data.pendingReqViewModel.Where(s => s.Regionid == obj.RegionId);
+                var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.Regionid == obj.RegionId);
+                var sortedActive = data.activeReqViewModels.Where(s => s.Regionid == obj.RegionId);
+
+                data.newReqViewModel = sortedNew;
+                data.concludeReqViewModel = sortedConclude;
+                data.closeReqViewModels = sortedClose;
+                data.pendingReqViewModel = sortedPending;
+                data.activeReqViewModels = sortedActive;
+                data.unpaidReqViewModels = sortedUnpaid;
+
+            }
+            if(obj.reqType != 0)
+            {
+                var sortedNew = data.newReqViewModel.Where(s => s.reqTypeId == obj.reqType);
+                var sortedConclude = data.concludeReqViewModel.Where(s => s.reqTypeId == obj.reqType);
+                var sortedClose = data.closeReqViewModels.Where(s => s.reqTypeId == obj.reqType);
+                var sortedPending = data.pendingReqViewModel.Where(s => s.reqTypeId == obj.reqType);
+                var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.reqTypeId == obj.reqType);
+                var sortedActive = data.activeReqViewModels.Where(s => s.reqTypeId == obj.reqType);
+
+                data.newReqViewModel = sortedNew;
+                data.concludeReqViewModel = sortedConclude;
+                data.closeReqViewModels = sortedClose;
+                data.pendingReqViewModel = sortedPending;
+                data.activeReqViewModels = sortedActive;
+                data.unpaidReqViewModels = sortedUnpaid;
+            }
+            
+
+                return data;
         }
 
         public viewCaseViewModel viewCase(int reqClientId)
@@ -254,6 +298,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var cNumber = _db.Requests.FirstOrDefault(x => x.Requestid == data.Requestid);
             var confirm = cNumber.Confirmationnumber;
             var Casetag = from t1 in _db.Casetags select t1;
+            var region = from t1 in _db.Regions select t1;
             var viewdata = new viewCaseViewModel
             {
                 Requestclientid = reqClientId,
@@ -271,7 +316,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Zipcode = data.Zipcode,
                 Regionid = data.Regionid,
                 status = cNumber.Status,
-                Casetag = Casetag
+                Casetag = Casetag,
+                Region = region,
             };
 
             return viewdata;
@@ -437,7 +483,83 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Status = 14
             };
             _db.Requeststatuslogs.Add(reqStatuslog);
-            _db.SaveChanges();      
+            _db.SaveChanges();
+
+            var reqBlock = new Blockrequest
+            {
+                Phonenumber = reqId.Phonenumber,
+                Email = reqId.Email,
+                Reason = addNote,
+                Requestid = _db.Users.Where(x => x.Userid == reqCol.Userid).FirstOrDefault().Aspnetuserid,
+                Createddate = DateTime.Now
+            };
+        }
+
+        public object FilterPhysician(int Region)
+        {
+            var physicians = (from t1 in _db.Physicianregions
+                              join t2 in _db.Physicians on t1.Physicianid equals t2.Physicianid
+                              where t1.Regionid == Region
+                              select new
+                              {
+                                  physicians = t2.Firstname + " " + t2.Lastname,
+                                  PhysicianId = t1.Physicianid
+                              }).ToList();
+            return physicians;
+        }
+
+        public void AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect, int adminId)
+        {
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
+            reqRow.Status = 2;
+            reqRow.Physicianid = PhysicianSelect;
+            reqRow.Modifieddate = DateTime.Now;
+            _db.Requests.Update(reqRow);
+            _db.SaveChanges();
+
+            var reqStatusLog = new Requeststatuslog
+            {
+                Createddate = DateTime.Now,
+                Requestid = reqRow.Requestid,
+                Adminid = adminId,
+                Notes = addNote,
+                Status = 2
+            };
+            _db.Requeststatuslogs.Add(reqStatusLog);
+            _db.SaveChanges();
+        }
+
+        public DocumentViewModel ViewUpload(int reqClientId)
+        {
+            var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).First().Requestid;
+
+            var requestData = from t1 in _db.Requests
+                              join t3 in _db.RequestStatuses on t1.Status equals t3.StatusId
+                              join t2 in _db.Requestwisefiles
+                              on t1.Requestid equals t2.Requestid into files
+                              from t2 in files.DefaultIfEmpty()
+                              where t1.Requestid == reqId
+                              select new PatientDocumentViewModel
+                              {
+                                  RequestId = t1.Requestid,
+                                  Name = t1.Firstname + " " + t1.Lastname,
+                                  createdate = t1.Createddate,
+                                  Filename = t2 != null ? t2.Filename : null
+                              };
+
+            var uploadData = new UploadFileViewModel
+            {
+                reqId = (int)reqId,
+                formFile = null
+            };
+            var data = new DocumentViewModel
+            {
+                PatientDocumentViewModel = requestData,
+                UploadFileViewModel = uploadData
+            };
+
+            return data;
         }
     }
 }

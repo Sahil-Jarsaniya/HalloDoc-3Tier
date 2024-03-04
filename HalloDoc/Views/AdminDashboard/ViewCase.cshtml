@@ -120,9 +120,15 @@
                         <span ></span>
                     </div>
                 </div>
+            @if(Model.status == 1)
+            {   
             <button type="reset" id="cancelBtn" class="btn btn-danger float-end m-1 " data-name="@Model.Firstname @Model.Lastname" data-id="@Model.Requestclientid">Cancel</button>
+            }
             <a type="button" href="@Url.Action("ViewNote", new{reqClientId = Model.Requestclientid})" id="viewNoteBtn" class="btn btn-primary float-end m-1">View Notes</a>
-            <button type="button" id="assignBtn" class="btn btn-primary float-end m-1">Assign</button>
+            @if(Model.status == 1)
+            {   
+            <button type="button" class="btn btn-primary float-end m-1 AssignCaseBtn" data-name="@Model.Firstname @Model.Lastname" data-id="@Model.Requestclientid">Assign</button>
+            }
 
             
         </form>
@@ -160,6 +166,47 @@
             </div>
             <div class="modal-footer">
                 <button class="btn" id="ConfirmCancelBtn" style="background-color: #01bce9; color:white;">Confirm</button>
+                <button type="button" id="CloseModal" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Assign Case Model*@
+<div class="modal fade" id="AssignModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Assign Request</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <form>
+                        <p>To assign this request, search and select anthoer Phiysician</p>
+                        <input id="AssignreqClientId" value="" hidden />
+
+                        <select class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
+                            <option>Narrow Search by Region</option>
+                            @foreach (var item in Model.Region)
+                            {
+                                <option value="@item.Regionid">@item.Name</option>
+                            }
+                        </select>
+                        <select class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
+                            <option>Select Physician</option>
+                        </select>
+
+                        <div class="form-floating m-1 form-div">
+                            <textarea class="form-control" id="addAssignNote"
+                                      style="height: 100px"></textarea>
+                            <label for="">Description</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" id="ConfirmAssignBtn" style="background-color: #01bce9; color:white;">Confirm</button>
                 <button type="button" id="CloseModal" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -213,15 +260,54 @@
                     input.disabled = true;
                 }
             });
-            var txt = document.getElementById('floatingTextarea2');
-            if(txt.disabled){
-                txt.disabled = false;
-            }else{
-                txt.disabled = true;
-            }
             editBtn.classList.add("d-none");
             submitBtn.classList.remove("d-none");
         });
     </script>
-    
+    <script>
+        $(".AssignCaseBtn").click(function () {
+            $("#AssignreqClientId").val($(this).data('id'));
+            $("#AssignModel").modal('show');
+        })
+
+        //Region and Physicians Filter
+        $(".RegionSelect").change(function () {
+            var selectedRegion = $(this).val();
+            console.log("assign")
+            $.ajax({
+                url: '/AdminDashboard/FilterPhysician',
+                method: 'POST',
+                data: {
+                    region: selectedRegion
+                },
+                success: function (response) {
+                    $("#PhysicianSelect").empty();
+                    $.each(response, function (index, doctor) {
+                        $("#PhysicianSelect").append($('<option>').text(doctor.physicians).val(doctor.physicianId));
+                    })
+                }
+            })
+        })
+
+        //Assign Case
+        $("#ConfirmAssignBtn").click(function () {
+            var addNote = $("#addAssignNote").val();
+            var reqClientId = $("#AssignreqClientId").val();
+            var PhysicianSelect = $(".PhysicianSelect").val();
+            var RegionSelect = $(".RegionSelect").val();
+            $.ajax({
+                url: '/AdminDashboard/AssignCase',
+                type: 'POST',
+                data: { reqClientId: reqClientId, addNote: addNote, PhysicianSelect: PhysicianSelect, RegionSelect: RegionSelect },
+                success: function (result) {
+                    $("#CloseModal").click();
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('error fetching details')
+                },
+            })
+        })
+    </script>
 }

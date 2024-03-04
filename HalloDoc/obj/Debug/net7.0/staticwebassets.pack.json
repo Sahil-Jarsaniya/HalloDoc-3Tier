@@ -133,6 +133,10 @@
       "PackagePath": "staticwebassets\\images\\telephone.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\trash3.svg",
+      "PackagePath": "staticwebassets\\images\\trash3.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\user-doctor-solid.svg",
       "PackagePath": "staticwebassets\\images\\user-doctor-solid.svg"
     },
