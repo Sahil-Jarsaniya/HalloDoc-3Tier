@@ -153,6 +153,10 @@
       "PackagePath": "staticwebassets\\js\\CasesPopUp.js"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\ViewUploadJs.js",
+      "PackagePath": "staticwebassets\\js\\ViewUploadJs.js"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\admin.js",
       "PackagePath": "staticwebassets\\js\\admin.js"
     },
@@ -405,12 +409,24 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\11116016_415.jpg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\11116016_415.jpg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240226092436.zip",
       "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240226092436.zip"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\box-arrow-right.svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\box-arrow-right.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\check-circle.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\check-circle.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\clock.svg",
@@ -419,6 +435,10 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\cloud_upload.svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\cloud_upload.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\dark_mode_black_24dp.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\dark_mode_black_24dp.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\exclamation.svg",
@@ -439,6 +459,10 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\user-doctor-solid.svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\user-doctor-solid.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\user_circle.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\user_circle.svg"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.HalloDoc.Microsoft.AspNetCore.StaticWebAssets.props",

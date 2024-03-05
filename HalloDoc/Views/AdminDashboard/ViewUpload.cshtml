@@ -9,8 +9,8 @@
         <h3>
             Documents
         </h3>
-        <a href="@Url.Action("Dashboard", "AdminDashboard")" class="btn btn-secondary m-2 text-decoration-none float-end"
-           id="back-btn">
+        <a href="@Url.Action("Dashboard", "AdminDashboard")"
+           class="btn btn-secondary m-2 text-decoration-none float-end" id="back-btn">
             <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
             Back
         </a>
@@ -20,52 +20,66 @@
         <h4>@ViewBag.Data</h4>
         <p>Check here to review and add files that you or client/Member has attached to the Request.</p>
 
-        <form class="form-floating p-2" method="post" asp-action="Document" asp-controller="Patient" enctype="multipart/form-data">
+        <form class="form-floating p-2" method="post" asp-action="UploadDocument" asp-controller="AdminDashboard"
+              enctype="multipart/form-data">
             <div class="input-group m-1 mb-3">
-                <input type="hidden" name="reqId" value="@*@Model.UploadFileViewModel.reqId*@" />
-                <input asp-for="UploadFileViewModel.formFile" name="formFile" type="file" id="actualFileBtn" class="form-control" id="inputGroupFile02" hidden>
-                <span asp-validation-for="UploadFileViewModel.formFile" id="fileChoosen" class="form-control">Select File</span>
+                <input type="hidden" asp-for="UploadFileViewModel.reqId" name="reqId" value="@Model.UploadFileViewModel.reqId" />
+                <input asp-for="UploadFileViewModel.formFile" name="formFile" type="file" id="actualFileBtn"
+                       class="form-control" hidden>
+                <span asp-validation-for="UploadFileViewModel.formFile" id="fileChoosen" class="form-control">
+                    Select
+                    File
+                </span>
                 <label class="input-group-text" id="uploadFileLabel" for="actualFileBtn">
                     <img src="~/images/cloud_upload.svg" alt="">
                     Upload
                 </label>
-                <button class="btn border " style="background-color: #01bce9; color: white;" type="submit">Submit</button>
+                <button class="btn border " style="background-color: #01bce9; color: white;"
+                        type="submit">
+                    Submit
+                </button>
             </div>
         </form>
 
         <div class="d-flex justify-content-between mt-5">
             <h5>Documents</h5>
             <div>
-                <a class="btn float-end" @* href="@Url.Action("DownloadAllFiles", new{requestId = Model.UploadFileViewModel.reqId})"*@
-                   style="color: #01bce9; border: 1px solid #01bce9;">
+                <a class="btn float-end " id="DeleteAll" style="color: #01bce9; border: 1px solid #01bce9;">
                     <span class="">Delete All</span>
                 </a>
-            <a class="btn float-end me-2" @* href="@Url.Action("DownloadAllFiles", new{requestId = Model.UploadFileViewModel.reqId})"*@
-               style="color: #01bce9; border: 1px solid #01bce9;">
-                <span class="">Download All</span>
-            </a>
-           
+                <a class="btn float-end me-2" id="DownloadAll" style="color: #01bce9; border: 1px solid #01bce9;">
+                    <span class="">Download All</span>
+                </a>
+
             </div>
         </div>
 
         <div class="d-md-none">
             @foreach (var item in Model.PatientDocumentViewModel)
             {
-                <div>
-                    <div class="">
-                        <input type="checkbox" />
-                        @item.Filename
+                @if (item.IsDeleted != true)
+                {
+                    <div>
+                        <div>
+                            <input class="selectFile" type="checkbox" />
+                            <span class="FileName">
+                                @item.Filename
+                            </span>
+                        </div>
+                        <span class="">@item.createdate</span><br />
+                        <span class="">
+                            <input value="@item.ReqClientId" class="ReqClientId" hidden>
+                            <a href="/uploadedFiles/@item.Filename" class="btn"
+                               style="color: #01bce9; border: 1px solid #01bce9;" download>
+                                <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
+                            </a>
+                            <a class="btn button-secondary DeleteFile" style="color: #01bce9; border: 1px solid #01bce9;"
+                               download>
+                                <img id="uploadFile" src="~/images/trash3.svg" />
+                            </a>
+                        </span>
                     </div>
-                    <span class="">@item.Name</span><br />
-                    <span class="">@item.createdate</span><br />
-                    <span class="">
-                        <a href="/uploadedFiles/@item.Filename"
-                           class="btn"
-                           style="color: #01bce9; border: 1px solid #01bce9;" download>
-                            <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
-                        </a>
-                    </span>
-                </div>
+                }
             }
         </div>
 
@@ -83,24 +97,27 @@
             <tbody>
                 @foreach (var item in Model.PatientDocumentViewModel)
                 {
-                    <tr>
-                        <td>
-                            <input class="selectFile" type="checkbox" />
-                        </td>
-                        <td>@item.Filename</td>
-                        <td>@item.createdate</td>
-                        <td>
-
-                            <a href="/uploadedFiles/@item.Filename"
-                               class="btn btn-secondary" download>
-                                <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
-                            </a>
-                            <a class="btn button-secondary DeleteFile"
-                               style="color: #01bce9; border: 1px solid #01bce9;" download>
-                                <img id="uploadFile" src="~/images/trash3.svg" />
-                            </a>
-                        </td>
-                    </tr>
+                    @if (item.IsDeleted != true)
+                    {
+                        <tr>
+                            <td>
+                                <input class="selectFile" type="checkbox" />
+                            </td>
+                            <td class="FileName">@item.Filename</td>
+                            <td>@item.createdate</td>
+                            <td>
+                                <input value="@item.ReqClientId" class="ReqClientId" hidden>
+                                <a href="/uploadedFiles/@item.Filename" class="btn"
+                                   style="color: #01bce9; border: 1px solid #01bce9;" download>
+                                    <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
+                                </a>
+                                <a class="btn button-secondary DeleteFile" style="color: #01bce9; border: 1px solid #01bce9;"
+                                   download>
+                                    <img id="uploadFile" src="~/images/trash3.svg" />
+                                </a>
+                            </td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
@@ -108,15 +125,9 @@
 </div>
 
 @section AdminScript {
+    <script src="/js/ViewUploadJs.js"></script>
     <script>
-        $("#selectAll").click(function () {
-            $(".selectFile").each(function () {
-                if ($("#selectAll").prop('checked')) {
-                    $(this).prop('checked', true);
-                }else{
-                    $(this).prop('checked', false);
-                }
-            })
-        })
+        
+
     </script>
 }

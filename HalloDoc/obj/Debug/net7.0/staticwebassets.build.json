@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8ktmG8a7tiFxckXDVvTOcndmOJXPZG1evF+VoKHw2F4=",
+  "Hash": "+NnPoyKnB8YBPIUyBVzBPPxyweskWX31UxL2qa7ZwpQ=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -780,6 +780,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\ViewUploadJs.js",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "js/ViewUploadJs.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\ViewUploadJs.js"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
@@ -1751,6 +1768,40 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\11116016_415.jpg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/11116016_415.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\11116016_415.jpg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg"
+    },
+    {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\box-arrow-right.svg",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -1766,6 +1817,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\box-arrow-right.svg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\check-circle.svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/check-circle.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\check-circle.svg"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\clock.svg",
@@ -1800,6 +1868,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\cloud_upload.svg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\dark_mode_black_24dp.svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/dark_mode_black_24dp.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\dark_mode_black_24dp.svg"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240226092436.zip",
@@ -1885,6 +1970,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\telephone.svg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\user_circle.svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/user_circle.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\user_circle.svg"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\user-doctor-solid.svg",

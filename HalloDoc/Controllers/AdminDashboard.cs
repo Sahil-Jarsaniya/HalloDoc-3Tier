@@ -218,5 +218,44 @@ namespace HalloDoc.Controllers
             var data = _adminRepo.ViewUpload(reqClientId);
             return View(data);
         }
+
+        public IActionResult UploadDocument(UploadFileViewModel obj)
+        {
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == obj.reqId).FirstOrDefault();
+
+            if (obj.formFile != null && obj.formFile.Length > 0)
+            {
+                //get file name
+                var fileName = Path.GetFileName(obj.formFile.FileName);
+
+                //define path
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
+
+                // Copy the file to the desired location
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    obj.formFile.CopyTo(stream);
+                }
+                Requestwisefile requestwisefile = new Requestwisefile
+                {
+                    Filename = fileName,
+                    Requestid = (int)reqClientRow.Requestid,
+                    Createddate = DateTime.Now
+                };
+
+                _db.Requestwisefiles.Add(requestwisefile);
+                _db.SaveChanges();
+            }
+            return RedirectToAction("ViewUpload", new { reqClientId = obj.reqId });
+        }
+        public void DeleteFile(int reqClientId, string FileName)
+        {
+            _adminRepo.DeleteFile(reqClientId, FileName);   
+
+            //return RedirectToAction("ViewUpload", new { reqClientId = ReqClientId}); 
+        }
+
+        
+        
     }
 }

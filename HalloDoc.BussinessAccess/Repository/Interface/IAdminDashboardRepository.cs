@@ -32,5 +32,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect, int adminId);
 
         public DocumentViewModel ViewUpload(int reqClientId);
+
+        public void DeleteFile(int ReqClientId, string FileName);
     }
 }

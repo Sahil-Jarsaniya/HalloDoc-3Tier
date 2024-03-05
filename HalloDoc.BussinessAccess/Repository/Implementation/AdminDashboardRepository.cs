@@ -543,14 +543,16 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                               select new PatientDocumentViewModel
                               {
                                   RequestId = t1.Requestid,
+                                  ReqClientId = reqClientId,
                                   Name = t1.Firstname + " " + t1.Lastname,
                                   createdate = t1.Createddate,
-                                  Filename = t2 != null ? t2.Filename : null
+                                  Filename = t2 != null ? t2.Filename : null,
+                                  IsDeleted = t2.Isdeleted
                               };
 
             var uploadData = new UploadFileViewModel
             {
-                reqId = (int)reqId,
+                reqId = reqClientId,
                 formFile = null
             };
             var data = new DocumentViewModel
@@ -560,6 +562,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             };
 
             return data;
+        }
+    
+        public void DeleteFile(int reqClientId, string FileName){
+            var requestId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault().Requestid;
+            var rwf = _db.Requestwisefiles.Where(x => x.Requestid == requestId && x.Filename == FileName).FirstOrDefault();
+                rwf.Isdeleted = true;
+            _db.Requestwisefiles.Update(rwf);
+            _db.SaveChanges();
         }
     }
 }
