@@ -82,7 +82,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                   createdate = t1.Createddate,
                                   Filename = t2 != null ? t2.Filename : null
                               };
-
+            var reqClientRow = _db.Requestclients.Where(x =>x.Requestid == reqId).FirstOrDefault();
             var uploadData = new UploadFileViewModel
             {
                 reqId = reqId,
@@ -90,6 +90,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             };
             var data = new DocumentViewModel
             {
+                PatientName = reqClientRow.Firstname + " " + reqClientRow.Lastname,
                 PatientDocumentViewModel = requestData,
                 UploadFileViewModel = uploadData
             };

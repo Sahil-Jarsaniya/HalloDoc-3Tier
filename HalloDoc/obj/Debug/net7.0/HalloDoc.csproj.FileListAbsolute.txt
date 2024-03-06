@@ -262,3 +262,5 @@ G:\HalloDoc\HalloDoc\obj\Debug\net7.0\HalloDoc.csproj.CopyComplete
 G:\HalloDoc\HalloDoc\obj\Debug\net7.0\refint\HalloDoc.dll
 G:\HalloDoc\HalloDoc\obj\Debug\net7.0\HalloDoc.genruntimeconfig.cache
 G:\HalloDoc\HalloDoc\obj\Debug\net7.0\ref\HalloDoc.dll
+G:\HalloDoc\HalloDoc\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+G:\HalloDoc\HalloDoc\bin\Debug\net7.0\RestSharp.dll

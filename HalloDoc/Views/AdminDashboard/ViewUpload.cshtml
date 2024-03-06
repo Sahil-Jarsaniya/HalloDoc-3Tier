@@ -17,7 +17,7 @@
     </div>
     <div class="p-3 shadow">
         <span>Patient Name</span>
-        <h4>@ViewBag.Data</h4>
+        <h4>@Model.PatientName</h4>
         <p>Check here to review and add files that you or client/Member has attached to the Request.</p>
 
         <form class="form-floating p-2" method="post" asp-action="UploadDocument" asp-controller="AdminDashboard"
@@ -44,13 +44,15 @@
         <div class="d-flex justify-content-between mt-5">
             <h5>Documents</h5>
             <div>
-                <a class="btn float-end " id="DeleteAll" style="color: #01bce9; border: 1px solid #01bce9;">
+                <a class="btn float-end me-2" id="sendEmailDoc" style="color: #01bce9; border: 1px solid #01bce9;">
+                    <span class="">Send Email</span>
+                </a>
+                <a class="btn float-end me-2 " id="DeleteAll" style="color: #01bce9; border: 1px solid #01bce9;">
                     <span class="">Delete All</span>
                 </a>
                 <a class="btn float-end me-2" id="DownloadAll" style="color: #01bce9; border: 1px solid #01bce9;">
                     <span class="">Download All</span>
                 </a>
-
             </div>
         </div>
 
@@ -107,7 +109,7 @@
                             <td>@item.createdate</td>
                             <td>
                                 <input value="@item.ReqClientId" class="ReqClientId" hidden>
-                                <a href="/uploadedFiles/@item.Filename" class="btn"
+                                <a href="/uploadedFiles/@item.Filename" class="btn downloadFile"
                                    style="color: #01bce9; border: 1px solid #01bce9;" download>
                                     <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
                                 </a>
@@ -126,8 +128,4 @@
 
 @section AdminScript {
     <script src="/js/ViewUploadJs.js"></script>
-    <script>
-        
-
-    </script>
 }

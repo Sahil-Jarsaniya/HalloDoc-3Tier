@@ -4,6 +4,7 @@ using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using HalloDoc.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
@@ -12,6 +13,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.Controllers
 {
+    [CustomAuth("Admin")]
     public class AdminDashboard : Controller
     {
         private readonly IAdminDashboardRepository _adminRepo;
@@ -27,6 +29,7 @@ namespace HalloDoc.Controllers
         {
             ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
             ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
+            
             var data = _adminRepo.adminDashboard();
             var dashData = new AdminDashboardViewModel
             {
@@ -57,6 +60,9 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult PartialTable(int status, searchViewModel? obj)
         {
+            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
+            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
+
             var data = _adminRepo.adminDashboard();
 
             if (obj.Name != null || obj.reqType != 0 || obj.RegionId!=0)
@@ -130,7 +136,6 @@ namespace HalloDoc.Controllers
         {
             ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
             ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
-
             var viewdata = _adminRepo.viewCase(reqClientId);
 
             return View(viewdata);
@@ -139,10 +144,8 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult ViewCase(viewCaseViewModel obj)
         {
-
             ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
             ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
-
 
             bool task = _adminRepo.viewCase(obj);
 
@@ -161,17 +164,20 @@ namespace HalloDoc.Controllers
 
         public IActionResult ViewNote(int reqClientId)
         {
+            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
+            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
+            int adminId = ViewBag.AdminId;
             var data = _adminRepo.ViewNoteGet(reqClientId);
-
+            
             return View(data);
         }
 
         [HttpPost]
         public IActionResult ViewNote(string adminNote, int reqClientId)
         {
+            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
             ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
             int adminId = ViewBag.AdminId;
-
             _adminRepo.ViewNotePost(reqClientId, adminNote, adminId);
 
             return RedirectToAction("ViewNote", new { reqClientId = reqClientId });
@@ -180,6 +186,7 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult CancelCase(int CaseTag, string addNote, int reqClientId)
         {
+            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
             ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
             int adminId = ViewBag.AdminId;
 
@@ -190,6 +197,7 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult BlockCase(int reqClientId, string addNote)
         {
+            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
             ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
             int adminId = ViewBag.AdminId;
 
@@ -205,9 +213,9 @@ namespace HalloDoc.Controllers
 
         public IActionResult AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
         {
+            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
             ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
             int adminId = ViewBag.AdminId;
-
             _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId);
 
             return RedirectToAction("Dashboard");
@@ -215,6 +223,9 @@ namespace HalloDoc.Controllers
 
         public IActionResult ViewUpload(int reqClientId)
         {
+            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
+            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
+            int adminId = ViewBag.AdminId;
             var data = _adminRepo.ViewUpload(reqClientId);
             return View(data);
         }
@@ -255,7 +266,10 @@ namespace HalloDoc.Controllers
             //return RedirectToAction("ViewUpload", new { reqClientId = ReqClientId}); 
         }
 
-        
+        public IActionResult SendOrders()
+        {
+            return View();
+        }
         
     }
 }

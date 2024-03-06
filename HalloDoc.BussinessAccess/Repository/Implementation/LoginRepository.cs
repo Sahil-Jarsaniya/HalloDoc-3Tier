@@ -2,6 +2,7 @@
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using MimeKit;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -46,7 +47,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public User PatientLogin(AspNetUser obj, String hashPass)
         {
-            var myUser = _db.AspNetUsers.Where(x => x.UserName == obj.UserName && x.Password == hashPass).FirstOrDefault();
+            var myUser = _db.AspNetUsers.Include(x => x.Roles).Where(x => x.UserName == obj.UserName && x.Password == hashPass).FirstOrDefault();
             if (myUser == null)
             {
                 return null;

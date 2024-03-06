@@ -4,25 +4,24 @@ using HalloDoc.DataAccess.Models;
 using Microsoft.AspNetCore.Mvc;
 namespace HalloDoc.Controllers;
 using Microsoft.AspNetCore.Http;
-using MimeKit;
-using System.Security.Cryptography;
 using System.Text;
-using MailKit.Net.Smtp;
 using HalloDoc.DataAccess.ViewModel;
-using System.Net.Mail;
 using HalloDoc.BussinessAccess.Repository.Interface;
+
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly ApplicationDbContext _db;
     private readonly ILoginRepository _login;
+    private readonly IJwtService _jwtService;
 
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, ILoginRepository login)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, ILoginRepository login, IJwtService jwtService)
     {
         _logger = logger;
         _db = db;
         _login = login;
+        _jwtService = jwtService;
     }
 
     public IActionResult Index()
@@ -54,7 +53,7 @@ public class HomeController : Controller
         string email = TempData["email"].ToString();
         var aspUser = _db.AspNetUsers.Where(x => x.Email == email).FirstOrDefault();
 
-        if(obj.Password != obj.ConfirmPassword)
+        if (obj.Password != obj.ConfirmPassword)
         {
             return View();
         }
@@ -66,7 +65,7 @@ public class HomeController : Controller
             _db.SaveChanges();
 
 
-        return RedirectToAction("login", "Home");
+            return RedirectToAction("login", "Home");
         }
     }
 
@@ -79,6 +78,7 @@ public class HomeController : Controller
     {
         var hashPass = _login.GetHash(user.Password);
         var myUser = _login.PatientLogin(user, hashPass);
+
         if (myUser == null)
         {
             ViewBag.message = "Login Failed";
@@ -86,7 +86,20 @@ public class HomeController : Controller
         }
         else
         {
-        String userName = myUser.Firstname + " " + myUser.Lastname;
+            var user2 = new LoggedUser
+            {
+                AspId = myUser.Aspnetuserid,
+                FirstName = myUser.Firstname,
+                LastName = myUser.Lastname,
+                Email = myUser.Email,
+                Role = "patient"
+            };
+
+            var jwtToken = _jwtService.GenerateJwtToken(user2);
+            Response.Cookies.Append("jwt", jwtToken);
+
+            String userName = myUser.Firstname + " " + myUser.Lastname;
+
             HttpContext.Session.SetString("token", userName);
             HttpContext.Session.SetInt32("userId", myUser.Userid);
             String AspId = myUser.Aspnetuserid;
@@ -100,9 +113,20 @@ public class HomeController : Controller
             HttpContext.Session.Remove("token");
             return RedirectToAction("login");
         }
+
+        if (Request.Cookies["MyCookie"] != null)
+        {
+            Response.Cookies.Delete("jwt");
+        };
+
         return View();
     }
-    
+
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

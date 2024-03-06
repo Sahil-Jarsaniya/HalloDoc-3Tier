@@ -21,7 +21,7 @@
     </div>
     <div class="p-3 shadow">
         <span>Patient Name</span>
-        <h4>@ViewBag.Data</h4>
+        <h4>@Model.PatientName</h4>
         <p>Check here  for any files that you or doctors of your subsequents requestors have attached for you to review.</p>
 
         <form class="form-floating p-2" method="post" asp-action="Document" asp-controller="Patient" enctype="multipart/form-data">

@@ -1,0 +1,93 @@
+﻿@model DocumentViewModel
+@{
+    ViewData["Title"] = "View Upload";
+    Layout = "_adminLayout";
+}
+
+<div>
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Send Order
+        </h4>
+        <a href="@Url.Action("Dashboard", "AdminDashboard")" class="btn btn-secondary m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="container shadow" style="max-width: 1000px">
+        <form id="patient-request-form" class="form-floating patient-request-form p-2 ">
+            <h4 class="mt-4 mb-4 ms-2">Business Information</h4>
+            <div class="row g-2 m-1">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <select class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
+                            <option>Narrow Search by Region</option>
+                            <option>Narrow Search by Region</option>
+                            <option>Narrow Search by Region</option>
+                            <option>Narrow Search by Region</option>
+                            @*@foreach (var item in Model.Region)
+                            {
+                            <option value="@item.Regionid">@item.Name</option>
+                            }*@
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="">
+                        <label for="">Business</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating phone-div w-100 h-100 ">
+                        <input type="tel" class="bussinessPhone form-control w-100 h-100" placeholder="">
+                        <label for="">Business Contact</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="email" class="form-control" placeholder="">
+                        <label for="">Email</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="">
+                        <label for="">Fax Number</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-2 m-1">
+                <div class="col-12">
+                <div class="form-floating m-1 form-div">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" cols="3"></textarea>
+                    <label for="">Enter Brief Details Of Symptoms</label>
+                </div>
+                </div>
+            </div>
+            <div class="row g-2 m-1">
+                <div class="col-lg-6">
+                    <div class="form-floating m-1 form-div">
+                        <select class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
+                            <option>Narrow Search by Region</option>
+                            <option>Narrow Search by Region</option>
+                            <option>Narrow Search by Region</option>
+                            <option>Narrow Search by Region</option>
+                            @*@foreach (var item in Model.Region)
+                            {
+                            <option value="@item.Regionid">@item.Name</option>
+                            }*@
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" id="cancelBtn" class="btn btn-primary float-end m-1">Cancel</button>
+            <button type="submit" id="submitBtn" class="btn btn-primary float-end m-1">Submit</button><br /><br />
+        </form>
+    </div>
+</div>
+
+@section AdminScript {
+    <script src="/js/ViewUploadJs.js"></script>
+}

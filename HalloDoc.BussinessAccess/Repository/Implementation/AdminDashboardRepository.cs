@@ -532,14 +532,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public DocumentViewModel ViewUpload(int reqClientId)
         {
-            var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).First().Requestid;
+            var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).First();
 
             var requestData = from t1 in _db.Requests
                               join t3 in _db.RequestStatuses on t1.Status equals t3.StatusId
                               join t2 in _db.Requestwisefiles
                               on t1.Requestid equals t2.Requestid into files
                               from t2 in files.DefaultIfEmpty()
-                              where t1.Requestid == reqId
+                              where t1.Requestid == reqId.Requestid
                               select new PatientDocumentViewModel
                               {
                                   RequestId = t1.Requestid,
@@ -549,7 +549,6 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                   Filename = t2 != null ? t2.Filename : null,
                                   IsDeleted = t2.Isdeleted
                               };
-
             var uploadData = new UploadFileViewModel
             {
                 reqId = reqClientId,
@@ -557,6 +556,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             };
             var data = new DocumentViewModel
             {
+                PatientName = reqId.Firstname+ " "+reqId.Lastname,
                 PatientDocumentViewModel = requestData,
                 UploadFileViewModel = uploadData
             };

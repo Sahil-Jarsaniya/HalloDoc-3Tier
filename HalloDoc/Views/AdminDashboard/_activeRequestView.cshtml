@@ -1,4 +1,4 @@
-﻿<table class="table table-hover table-responsive ">
+﻿<table class="table table-responsive ">
     <thead>
         <tr class="table-secondary">
             <td>Name</td>
@@ -136,9 +136,9 @@
                         <li>
                             <a class="dropdown-item" >View Case</a>
                             </li>
-                        <li><a class="dropdown-item" href="#">View Uploads</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("ViewUpload","AdminDashboard", new {reqClientId = item.reqClientId})">View Uploads</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
-                        <li><a class="dropdown-item" href="#">Orders</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("SendOrders")">Orders</a></li>
                         <li><a class="dropdown-item" href="#">Doctors Note</a></li>
                         <li><a class="dropdown-item" href="#">Encounter</a></li>
                     </ul>

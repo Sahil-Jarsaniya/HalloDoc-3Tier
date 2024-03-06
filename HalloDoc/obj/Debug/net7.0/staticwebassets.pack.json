@@ -413,8 +413,20 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\11116016_415.jpg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\7768657_3763028.jpg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\7768657_3763028.jpg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240226092436.zip",
       "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240226092436.zip"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\HalloDoc - DB (1).xlsx",
+      "PackagePath": "staticwebassets\\uploadedFiles\\HalloDoc - DB (1).xlsx"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees-21Feb24.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees-21Feb24.pdf"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg",
@@ -441,8 +453,16 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\dark_mode_black_24dp.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\database SCHEMA.ods",
+      "PackagePath": "staticwebassets\\uploadedFiles\\database SCHEMA.ods"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\exclamation.svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\exclamation.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\journal-medical.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\journal-medical.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\list.svg",

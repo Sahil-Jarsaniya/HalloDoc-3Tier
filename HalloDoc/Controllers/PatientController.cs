@@ -2,6 +2,7 @@
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
+using HalloDoc.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IO.Compression;
@@ -9,6 +10,7 @@ using System.Text;
 
 namespace HalloDoc.Controllers
 {
+    [CustomAuth("patient")]
     public class PatientController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -18,34 +20,20 @@ namespace HalloDoc.Controllers
             _db = db;
             _patientrepo = patientrepo;
         }
-
+        
         public IActionResult Dashboard(String AspId)
         {
-            if (HttpContext.Session.GetString("token") != null)
-            {
                 ViewBag.Data = HttpContext.Session.GetString("token").ToString();
                 var data = _patientrepo.PatientDashboard(AspId);
 
                 return View(data);
-            }
-            else
-            {
-                return RedirectToAction("login");
-            }
         }
 
         public IActionResult Document(int reqId)
         {
-            if (HttpContext.Session.GetString("token") != null)
-            {
                 ViewBag.Data = HttpContext.Session.GetString("token").ToString();
                 var data = _patientrepo.Document(reqId);
                 return View(data);
-            }
-            else
-            {
-                return RedirectToAction("login");
-            }
         }
 
         [HttpPost]
@@ -63,29 +51,13 @@ namespace HalloDoc.Controllers
             String aspId = _patientrepo.PatientProfile(obj);
             var Name = obj.ProfileEditViewModel.Firstname + " " + obj.ProfileEditViewModel.Lastname;
             HttpContext.Session.SetString("token", Name);
-            if (HttpContext.Session.GetString("token") != null)
-            {
                 ViewBag.Data = HttpContext.Session.GetString("token").ToString();
                 return RedirectToAction("Dashboard", new { AspId = aspId });
-            }
-            else
-            {
-                return RedirectToAction("login");
-            }
         }
 
         public IActionResult CreateRequest(int? reqId)
         {
-
-            if (HttpContext.Session.GetString("token") != null)
-            {
                 ViewBag.Data = HttpContext.Session.GetString("token").ToString();
-            }
-            else
-            {
-                return RedirectToAction("login");
-            }
-
 
             return View();
         }
@@ -93,32 +65,14 @@ namespace HalloDoc.Controllers
         public IActionResult CreateRequestForElse(int? reqId)
         {
 
-            if (HttpContext.Session.GetString("token") != null)
-            {
-                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
-            }
-            else
-            {
-                return RedirectToAction("login");
-            }
-
-
+            ViewBag.Data = HttpContext.Session.GetString("token").ToString();
             return View();
         }
 
         [HttpPost]
         public IActionResult CreateRequest(PatientViewModel obj)
         {
-
-            if (HttpContext.Session.GetString("token") != null)
-            {
-                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
-            }
-            else
-            {
-                return RedirectToAction("login");
-            }
-
+            ViewBag.Data = HttpContext.Session.GetString("token").ToString();
             if (ModelState.IsValid)
             {
                 int uid = (int)HttpContext.Session.GetInt32("userId");

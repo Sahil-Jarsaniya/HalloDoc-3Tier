@@ -1,6 +1,8 @@
-﻿using HalloDoc.BussinessAccess.Repository.Interface;
+﻿using HalloDoc.BussinessAccess.Repository.Implementation;
+using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
+using HalloDoc.DataAccess.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
 using System.Text;
@@ -11,11 +13,13 @@ namespace HalloDoc.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly ILoginRepository _LoginRepository;
+        private readonly IJwtService _JwtService;
 
-        public AdminLoginController(ApplicationDbContext db, ILoginRepository loginRepository)
+        public AdminLoginController(ApplicationDbContext db, ILoginRepository loginRepository, IJwtService jwtService)
         {
             _db = db;
             _LoginRepository = loginRepository;
+            _JwtService = jwtService;
         }
         public IActionResult login()
         {
@@ -33,7 +37,19 @@ namespace HalloDoc.Controllers
             }
             else
             {
-                
+
+                var user2 = new LoggedUser
+                {
+                    AspId = myUser.Aspnetuserid,
+                    FirstName = myUser.Firstname,
+                    LastName = myUser.Lastname,
+                    Email = myUser.Email,
+                    Role = "Admin"
+                };
+
+                var jwtToken = _JwtService.GenerateJwtToken(user2);
+                Response.Cookies.Append("jwt", jwtToken);
+
                 String userName = myUser.Firstname + " " + myUser.Lastname;
                 HttpContext.Session.SetString("adminToken", userName);
                 HttpContext.Session.SetInt32("AdminId", myUser.Adminid);
@@ -44,6 +60,13 @@ namespace HalloDoc.Controllers
         
         public IActionResult logout()
         {
+            HttpContext.Session.Remove("adminToken");
+            HttpContext.Session.Remove("AdminId");
+
+            if (Request.Cookies["MyCookie"] != null)
+            {
+                Response.Cookies.Delete("jwt");
+            };
             return RedirectToAction("login");
         }
     }
