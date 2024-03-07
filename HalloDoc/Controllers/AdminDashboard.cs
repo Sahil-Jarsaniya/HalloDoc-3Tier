@@ -1,4 +1,5 @@
 ﻿    using Azure.Core;
+using HalloDoc.BussinessAccess.Repository.Implementation;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
@@ -6,8 +7,11 @@ using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using NuGet.Protocol;
+using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -18,32 +22,35 @@ namespace HalloDoc.Controllers
     {
         private readonly IAdminDashboardRepository _adminRepo;
         private readonly ApplicationDbContext _db;
+        private readonly IJwtService _jwtService;
 
-        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db)
+        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService)
         {
             _adminRepo = adminRepo;
             _db = db;
+            _jwtService = jwtService;
         }
 
         public IActionResult Dashboard()
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
-            
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
             var data = _adminRepo.adminDashboard();
             var dashData = new AdminDashboardViewModel
             {
                 countRequestViewModel = data.countRequestViewModel,
-                Casetag =data.Casetag,
-                Region =data.Region,
+                Casetag = data.Casetag,
+                Region = data.Region,
             };
             return View(dashData);
         }
         [HttpPost]
         public IActionResult Dashboard(searchViewModel? obj)
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
             var data = _adminRepo.adminDashboard();
 
             var searchedData = _adminRepo.searchPatient(obj, data);
@@ -60,12 +67,9 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult PartialTable(int status, searchViewModel? obj)
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
-
             var data = _adminRepo.adminDashboard();
 
-            if (obj.Name != null || obj.reqType != 0 || obj.RegionId!=0)
+            if (obj.Name != null || obj.reqType != 0 || obj.RegionId != 0)
             {
                 var searchData = _adminRepo.searchPatient(obj, data);
                 if (status == 1)
@@ -134,8 +138,11 @@ namespace HalloDoc.Controllers
 
         public IActionResult ViewCase(int reqClientId)
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            ViewBag.AdminName = fname + "_" + lname;
             var viewdata = _adminRepo.viewCase(reqClientId);
 
             return View(viewdata);
@@ -144,8 +151,6 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult ViewCase(viewCaseViewModel obj)
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
 
             bool task = _adminRepo.viewCase(obj);
 
@@ -164,20 +169,28 @@ namespace HalloDoc.Controllers
 
         public IActionResult ViewNote(int reqClientId)
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
-            int adminId = ViewBag.AdminId;
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            int adminId = _adminRepo.GetAdminId(AspId);
             var data = _adminRepo.ViewNoteGet(reqClientId);
-            
+
             return View(data);
         }
 
         [HttpPost]
         public IActionResult ViewNote(string adminNote, int reqClientId)
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
-            int adminId = ViewBag.AdminId;
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            int adminId = _adminRepo.GetAdminId(AspId);
             _adminRepo.ViewNotePost(reqClientId, adminNote, adminId);
 
             return RedirectToAction("ViewNote", new { reqClientId = reqClientId });
@@ -186,9 +199,10 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult CancelCase(int CaseTag, string addNote, int reqClientId)
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
-            int adminId = ViewBag.AdminId;
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            int adminId = _adminRepo.GetAdminId(AspId);
 
             _adminRepo.CancelCase(CaseTag, addNote, reqClientId, adminId);
 
@@ -197,11 +211,12 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult BlockCase(int reqClientId, string addNote)
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
-            int adminId = ViewBag.AdminId;
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            int adminId = _adminRepo.GetAdminId(AspId);
 
-            _adminRepo.BlockCase(reqClientId,addNote, adminId);
+            _adminRepo.BlockCase(reqClientId, addNote, adminId);
 
             return RedirectToAction("Dashboard");
         }
@@ -213,19 +228,24 @@ namespace HalloDoc.Controllers
 
         public IActionResult AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
-            int adminId = ViewBag.AdminId;
-            _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId);
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            int adminId = _adminRepo.GetAdminId(AspId);
+            _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId, AspId);
 
             return RedirectToAction("Dashboard");
         }
 
         public IActionResult ViewUpload(int reqClientId)
         {
-            ViewBag.AdminName = HttpContext.Session.GetString("adminToken").ToString();
-            ViewBag.AdminId = HttpContext.Session.GetInt32("AdminId");
-            int adminId = ViewBag.AdminId;
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token); 
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            int adminId = _adminRepo.GetAdminId(AspId);
             var data = _adminRepo.ViewUpload(reqClientId);
             return View(data);
         }
@@ -261,15 +281,91 @@ namespace HalloDoc.Controllers
         }
         public void DeleteFile(int reqClientId, string FileName)
         {
-            _adminRepo.DeleteFile(reqClientId, FileName);   
+            _adminRepo.DeleteFile(reqClientId, FileName);
 
             //return RedirectToAction("ViewUpload", new { reqClientId = ReqClientId}); 
         }
 
-        public IActionResult SendOrders()
-        {
-            return View();
+        public void TransferCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
+       {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            int adminId = _adminRepo.GetAdminId(AspId);
+
+            _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId, AspId);
         }
-        
+
+        public IActionResult SendOrders(int reqClientId)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+
+            var sendOrder = new SendOrderViewModel
+            {
+                Healthprofessionaltype = _db.Healthprofessionaltypes,
+                reqClientId = reqClientId
+            };
+
+            return View(sendOrder);
+        }
+        [HttpPost]
+        public IActionResult SendOrders(SendOrderViewModel obj)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            var reqId = _db.Requestclients.Where(x => x.Requestclientid == obj.reqClientId).FirstOrDefault().Requestid;
+
+            var order = new Orderdetail
+            {
+                Requestid = reqId,
+                Vendorid = obj.ProfessionalId,
+                Faxnumber = obj.FaxNumber,
+                Email = obj.email,
+                Businesscontact = obj.ProfessionalPhone,
+                Prescription = obj.OrderDetail,
+                Noofrefill = obj.noOfRefill,
+                Createddate = DateTime.Now,
+                Createdby = AspId
+            };
+            _db.Orderdetails.Add(order);
+            _db.SaveChanges();
+
+            return RedirectToAction("SendOrders", new {reqClientId = obj.reqClientId});
+        }
+
+
+        public object FilterProfession(int ProfessionId)
+        {
+            var data = (from t1 in _db.Healthprofessionals
+                        join t2 in _db.Healthprofessionaltypes on t1.Profession equals t2.Healthprofessionalid
+                        where t2.Healthprofessionalid == ProfessionId
+                        select new
+                        {
+                            vendorname = t1.Vendorname,
+                            vendorid = t1.Vendorid
+                        }).ToList();
+
+            return data;
+        }
+   
+        public object ShowVendorDetail(int selectVendor)
+        {
+            var data = (from t1 in _db.Healthprofessionals
+                        where t1.Vendorid == selectVendor
+                        select new
+                        {
+                            vendorPhone = t1.Phonenumber,
+                            email = t1.Email,
+                            faxNumber = t1.Faxnumber
+                        }).ToList();
+
+            return data;
+        }
     }
 }

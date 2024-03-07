@@ -5,6 +5,7 @@ using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO.Compression;
 using System.Text;
 
@@ -23,7 +24,11 @@ namespace HalloDoc.Controllers
         
         public IActionResult Dashboard(String AspId)
         {
-                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            ViewBag.Data = fname+ " "+ lname;
                 var data = _patientrepo.PatientDashboard(AspId);
 
                 return View(data);
@@ -31,8 +36,12 @@ namespace HalloDoc.Controllers
 
         public IActionResult Document(int reqId)
         {
-                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
-                var data = _patientrepo.Document(reqId);
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            ViewBag.Data = fname + " " + lname;
+            var data = _patientrepo.Document(reqId);
                 return View(data);
         }
 
@@ -49,30 +58,43 @@ namespace HalloDoc.Controllers
         public IActionResult Profile(DashboardViewModel obj)
         {
             String aspId = _patientrepo.PatientProfile(obj);
-            var Name = obj.ProfileEditViewModel.Firstname + " " + obj.ProfileEditViewModel.Lastname;
-            HttpContext.Session.SetString("token", Name);
-                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
-                return RedirectToAction("Dashboard", new { AspId = aspId });
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            ViewBag.Data = fname + " " + lname;
+            return RedirectToAction("Dashboard", new { AspId = aspId });
         }
 
         public IActionResult CreateRequest(int? reqId)
         {
-                ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            ViewBag.Data = fname + " " + lname;
 
             return View();
         }
 
         public IActionResult CreateRequestForElse(int? reqId)
         {
-
-            ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            ViewBag.Data = fname + " " + lname;
             return View();
         }
 
         [HttpPost]
         public IActionResult CreateRequest(PatientViewModel obj)
         {
-            ViewBag.Data = HttpContext.Session.GetString("token").ToString();
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            ViewBag.Data = fname + " " + lname;
             if (ModelState.IsValid)
             {
                 int uid = (int)HttpContext.Session.GetInt32("userId");
@@ -132,10 +154,11 @@ namespace HalloDoc.Controllers
 
         public IActionResult Back()
         {
-            int userId = (int)HttpContext.Session.GetInt32("userId");
-            var aspId = _db.Users.FirstOrDefault(x => x.Userid == userId).Aspnetuserid;
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
-            return RedirectToAction("Dashboard", new { AspId = aspId });
+            return RedirectToAction("Dashboard", new { AspId = AspId });
         }
     }
 }

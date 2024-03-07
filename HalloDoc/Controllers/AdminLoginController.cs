@@ -54,7 +54,7 @@ namespace HalloDoc.Controllers
                 HttpContext.Session.SetString("adminToken", userName);
                 HttpContext.Session.SetInt32("AdminId", myUser.Adminid);
                 String AspId = myUser.Aspnetuserid;
-                return RedirectToAction("Dashboard", "AdminDashboard", new { AspId = AspId });
+                return RedirectToAction("Dashboard", "AdminDashboard");
             }
         }
         
@@ -63,7 +63,7 @@ namespace HalloDoc.Controllers
             HttpContext.Session.Remove("adminToken");
             HttpContext.Session.Remove("AdminId");
 
-            if (Request.Cookies["MyCookie"] != null)
+            if (Request.Cookies["jwt"] != null)
             {
                 Response.Cookies.Delete("jwt");
             };

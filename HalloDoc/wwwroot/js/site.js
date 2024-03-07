@@ -12,7 +12,7 @@ document.getElementById('light-dark-btn').addEventListener('click',()=>{
     }
 })
 
-if (localStorage.getItem("PageTheme") === "light") {
+if (localStorage.getItem("PageTheme") == "light") {
     document.documentElement.setAttribute('data-bs-theme', 'light')
 }
 else {

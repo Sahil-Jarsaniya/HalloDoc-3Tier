@@ -381,19 +381,19 @@
                         <p>To transfer this request, search and select anthoer Physician.</p>
                         <input id="TransferClientId" value="" hidden />
 
-                       <select class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
+                        <select class="form-select form-select mb-3 RegionSelect TransferRegionSelect" aria-label="Large select example">
                             <option>Narrow Search by Region</option>
                             @foreach (var item in Model.Region)
                             {
                                 <option value="@item.Regionid">@item.Name</option>
                             } 
                         </select>
-                        <select class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
+                        <select class="form-select form-select mb-3 TransferPhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
                             <option>Select Physician</option>
                         </select>
 
                         <div class="form-floating m-1 form-div">
-                            <textarea class="form-control" id="addAssignNote"
+                            <textarea class="form-control" id="addTransferNote"
                                       style="height: 100px"></textarea>
                             <label for="">Description</label>
                         </div>

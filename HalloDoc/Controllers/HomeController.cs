@@ -108,17 +108,13 @@ public class HomeController : Controller
     }
     public IActionResult logout()
     {
-        if (HttpContext.Session.GetString("token") != null)
-        {
-            HttpContext.Session.Remove("token");
-            return RedirectToAction("login");
-        }
-
-        if (Request.Cookies["MyCookie"] != null)
+        if (Request.Cookies["jwt"] != null)
         {
             Response.Cookies.Delete("jwt");
-        };
 
+            return RedirectToAction("login");
+
+        };
         return View();
     }
 

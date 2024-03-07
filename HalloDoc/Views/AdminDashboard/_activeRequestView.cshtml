@@ -138,7 +138,7 @@
                             </li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewUpload","AdminDashboard", new {reqClientId = item.reqClientId})">View Uploads</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("SendOrders")">Orders</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("SendOrders", new{reqClientId = item.reqClientId})">Orders</a></li>
                         <li><a class="dropdown-item" href="#">Doctors Note</a></li>
                         <li><a class="dropdown-item" href="#">Encounter</a></li>
                     </ul>

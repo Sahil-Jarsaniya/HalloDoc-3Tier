@@ -40,7 +40,6 @@ $("#ConfirmBlockBtn").click(function () {
 //Region and Physicians Filter
 $(".RegionSelect").change(function () {
     var selectedRegion = $(this).val();
-    console.log("assign")
     $.ajax({
         url: '/AdminDashboard/FilterPhysician',
         method: 'POST',
@@ -64,6 +63,44 @@ $("#ConfirmAssignBtn").click(function () {
     var RegionSelect = $(".RegionSelect").val();
     $.ajax({
         url: '/AdminDashboard/AssignCase',
+        type: 'POST',
+        data: { reqClientId: reqClientId, addNote: addNote, PhysicianSelect: PhysicianSelect, RegionSelect: RegionSelect },
+        success: function (result) {
+            $("#CloseModal").click();
+            location.reload();
+        },
+        error: function (error) {
+            console.log(error);
+            alert('error fetching details')
+        },
+    })
+})
+
+$(".TransferRegionSelect").change(function () {
+    var selectedRegion = $(this).val();
+    console.log("assign")
+    $.ajax({
+        url: '/AdminDashboard/FilterPhysician',
+        method: 'POST',
+        data: {
+            region: selectedRegion
+        },
+        success: function (response) {
+            $(".TransferPhysicianSelect").empty();
+            $.each(response, function (index, doctor) {
+                $(".TransferPhysicianSelect").append($('<option>').text(doctor.physicians).val(doctor.physicianId));
+            })
+        }
+    })
+})
+
+$("#ConfirmTransferBtn").click(function () {
+    var addNote = $("#addTransferNote").val();
+    var reqClientId = $("#TransferClientId").val();
+    var PhysicianSelect = $(".TransferPhysicianSelect").val();
+    var RegionSelect = $(".TransferRegionSelect").val();
+    $.ajax({
+        url: '/AdminDashboard/TransferCase',
         type: 'POST',
         data: { reqClientId: reqClientId, addNote: addNote, PhysicianSelect: PhysicianSelect, RegionSelect: RegionSelect },
         success: function (result) {

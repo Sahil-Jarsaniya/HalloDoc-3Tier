@@ -39,7 +39,7 @@
 
         <div class="d-flex justify-content-between mt-5">
             <h5>Documents</h5>
-            <a class="btn float-end" href="@Url.Action("DownloadAllFiles", new{requestId = Model.UploadFileViewModel.reqId})"
+            <a class="btn float-end" id="DownloadAll"
                style="color: #01bce9; border: 1px solid #01bce9;">
                 <span class="">Download All</span>
             </a>
@@ -105,4 +105,24 @@
 
 @section Scripts {
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        $("#selectAll").click(function () {
+            $(".selectFile").each(function () {
+                if ($("#selectAll").prop('checked')) {
+                    $(this).prop('checked', true);
+                } else {
+                    $(this).prop('checked', false);
+                }
+            })
+        })
+
+        $("#DownloadAll").click(function () {
+            $(".selectFile").each(function () {
+                var downloadFile = $(this).closest("tr").find(".btn[download]");
+                if ($(this).prop("checked")) {
+                    downloadFile[0].click();
+                }
+            });
+        });
+    </script>
 }

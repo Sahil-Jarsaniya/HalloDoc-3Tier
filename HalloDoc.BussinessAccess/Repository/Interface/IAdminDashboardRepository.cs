@@ -11,6 +11,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 {
     public interface IAdminDashboardRepository
     {
+        public int GetAdminId(string AspId);
         public AdminDashboardViewModel adminDashboard();
 
         public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data);
@@ -29,7 +30,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public object FilterPhysician(int Region);
 
-        public void AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect, int adminId);
+        public void AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect, int adminId, string AspId);
 
         public DocumentViewModel ViewUpload(int reqClientId);
 

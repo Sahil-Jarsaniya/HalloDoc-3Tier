@@ -16,11 +16,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             _db = db;
         }
-
-        public AdminDashboardViewModel adminDashboard()
+        public int GetAdminId(string AspId)
         {
-            
-
+            return _db.Admins.Where(x => x.Aspnetuserid == AspId).FirstOrDefault().Adminid;
+        }
+        public AdminDashboardViewModel adminDashboard()
+        {   
             var newCount = (from t1 in _db.Requests
                             where t1.Status == 1
                             select t1
@@ -493,6 +494,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Requestid = _db.Users.Where(x => x.Userid == reqCol.Userid).FirstOrDefault().Aspnetuserid,
                 Createddate = DateTime.Now
             };
+            _db.Blockrequests.Add(reqBlock);
+            _db.SaveChanges();
         }
 
         public object FilterPhysician(int Region)
@@ -508,7 +511,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return physicians;
         }
 
-        public void AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect, int adminId)
+        public void AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect, int adminId, string AspId)
         {
             var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
             var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
@@ -517,6 +520,30 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             reqRow.Modifieddate = DateTime.Now;
             _db.Requests.Update(reqRow);
             _db.SaveChanges();
+
+            var reqNote = _db.Requestnotes.Where(x => x.Requestid == reqRow.Requestid).FirstOrDefault();
+
+            if(reqNote == null)
+            {
+                reqNote = new Requestnote
+                {
+                    Requestid = reqRow.Requestid,
+                    Adminnotes = addNote,
+                    Createddate = DateTime.Now,
+                    Createdby = AspId
+                };
+                _db.Requestnotes.Add(reqNote);
+                _db.SaveChanges();
+            }
+            else
+            {
+            reqNote.Adminnotes = addNote;
+            reqNote.Modifieddate = DateTime.Now;
+            reqNote.Modifiedby = AspId;
+            _db.Requestnotes.Update(reqNote);
+            _db.SaveChanges();
+            }
+
 
             var reqStatusLog = new Requeststatuslog
             {
@@ -528,6 +555,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             };
             _db.Requeststatuslogs.Add(reqStatusLog);
             _db.SaveChanges();
+
         }
 
         public DocumentViewModel ViewUpload(int reqClientId)

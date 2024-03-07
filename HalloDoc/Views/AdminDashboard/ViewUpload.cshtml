@@ -20,15 +20,14 @@
         <h4>@Model.PatientName</h4>
         <p>Check here to review and add files that you or client/Member has attached to the Request.</p>
 
-        <form class="form-floating p-2" method="post" asp-action="UploadDocument" asp-controller="AdminDashboard"
+        <form class="form-floating p-2 viewCaseForm" method="post" asp-action="UploadDocument" asp-controller="AdminDashboard"
               enctype="multipart/form-data">
+            <input type="hidden" asp-for="UploadFileViewModel.reqId" name="reqId" value="@Model.UploadFileViewModel.reqId" />
             <div class="input-group m-1 mb-3">
-                <input type="hidden" asp-for="UploadFileViewModel.reqId" name="reqId" value="@Model.UploadFileViewModel.reqId" />
                 <input asp-for="UploadFileViewModel.formFile" name="formFile" type="file" id="actualFileBtn"
                        class="form-control" hidden>
                 <span asp-validation-for="UploadFileViewModel.formFile" id="fileChoosen" class="form-control">
-                    Select
-                    File
+                    Select File
                 </span>
                 <label class="input-group-text" id="uploadFileLabel" for="actualFileBtn">
                     <img src="~/images/cloud_upload.svg" alt="">
