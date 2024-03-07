@@ -23,7 +23,7 @@ namespace HalloDoc.Services
 
             if (jwtService == null)
             {
-                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Home", action = "login" }));
+                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Home", action = "Index" }));
                 return;
             }
 
@@ -33,7 +33,7 @@ namespace HalloDoc.Services
             //Redirect To Login if not login
             if(token == null || !jwtService.ValidateToken(token, out JwtSecurityToken jwtToken))
             {
-                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Home", action = "login" }));
+                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Home", action = "Index" }));
                 return;
             }
 
@@ -41,7 +41,7 @@ namespace HalloDoc.Services
 
             if(roleClaim == null)
             {
-                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Home", action = "login" }));
+                context.Result = new RedirectToRouteResult(new RouteValueDictionary(new { Controller = "Home", action = "Index" }));
                 return;
             }
 
