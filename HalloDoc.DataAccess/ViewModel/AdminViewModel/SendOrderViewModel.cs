@@ -18,5 +18,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public string? email { get; set; }
         public string? OrderDetail { get; set; }
         public int noOfRefill { get; set; }
+
+        public int? status { get; set; }
     }
 }

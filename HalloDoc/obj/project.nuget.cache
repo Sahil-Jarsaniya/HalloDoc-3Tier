@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "yLPEYw5n6RJ6Mu0Ne4GPHiF/OP2LsViBSuXc3MNKa+R4yosL+HHXmd4iLGLSeSgesK6X4FZY9sF/avlNjzvPMQ==",
+  "dgSpecHash": "5VnLqZ1D3N/mDaSk1RmB8L5kAt5OtQMHyYG9Pgt/rV6cN1BNc4HAbuPKaYDwAXg5jlzuRvTbiUFXxI8XJ/ri7A==",
   "success": true,
   "projectFilePath": "G:\\HalloDoc\\HalloDoc\\HalloDoc.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\pca17\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\aspnetcorehero.toastnotification.1.1.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",

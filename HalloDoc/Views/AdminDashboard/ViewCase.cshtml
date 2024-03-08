@@ -8,7 +8,7 @@
         <h4>New Request 
             <span class="border bg-success rounded-pill h-50 fs-6 p-1 text-white">Patient</span>
         </h4>
-        <a href="@Url.Action("Dashboard", "AdminDashboard")" class="btn btn-secondary m-2 text-decoration-none float-end"
+        <a href="@Url.Action("Dashboard", "AdminDashboard", new{status = Model.status})" class="btn btn-outline-primary m-2 text-decoration-none float-end"
            id="back-btn">
             <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
             Back
@@ -69,7 +69,7 @@
                         <span asp-validation-for="Phonenumber"></span>
                     </div>
                     <div class="col-md-1">
-                        <a href="tel:@Model.Phonenumber" class="btn btn-secondary form-floating d-flex align-items-center justify-content-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
+                        <a href="tel:@Model.Phonenumber" class="btn btn-outline-primary form-floating d-flex align-items-center justify-content-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
                             <img src="~/images/telephone.svg"/>
                         </a>
                     </div>
@@ -84,8 +84,8 @@
                         <span asp-validation-for="Email"></span>
                     </div>
                     <div class="col-md-1">
-                        <button type="button"  id="editBtn" class="btn btn-secondary form-floating w-100 h-100 float-end" enabled>Edit</button>
-                    <button type="submit" id="submitBtn" class="btn btn-secondary form-floating w-100 h-100 float-end d-none" enabled>submit</button>
+                        <button type="button"  id="editBtn" class="btn btn-outline-primary form-floating w-100 h-100 float-end" enabled>Edit</button>
+                    <button type="submit" id="submitBtn" class="btn btn-outline-primary form-floating w-100 h-100 float-end d-none" enabled>submit</button>
                     </div>
                     
                 </div>
@@ -107,8 +107,8 @@
                         <span></span>
                     </div>
                     <div class="col-md-1">
-                    <a target="_blank" href="http://maps.google.com/?q= +@Model.State + @Model.City + @Model.Street" 
-                    class="btn btn-secondary d-flex align-item-center justify-content-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
+                    <a target="_blank" href="http://maps.google.com/?q= +@Model.State + @Model.City + @Model.Street"
+                       class="btn btn-outline-primary d-flex align-item-center justify-content-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
                         <img src="~/images/map.svg" />
                     </a>
                     </div>

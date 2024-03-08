@@ -97,6 +97,7 @@
         }
     </script>
     @RenderSection("AdminScript", required: false)
+    @await Component.InvokeAsync("Notyf")
 </body>
 
 </html>

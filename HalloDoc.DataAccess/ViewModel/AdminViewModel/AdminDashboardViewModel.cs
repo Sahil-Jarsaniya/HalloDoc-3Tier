@@ -9,6 +9,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 {
     public class AdminDashboardViewModel
     {
+        public int? status { get; set; }
         public  countRequestViewModel countRequestViewModel { get; set; }
 
         public IEnumerable<Casetag> Casetag { get; set; }

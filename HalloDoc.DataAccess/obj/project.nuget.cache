@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "k9L4IfcSkyKOC9uCz3I+aNXPJ5olgRkM6JeED2n8CkHNh2QafY9m4F1XM3Ng0AUlgqN6uO4GgS8ZGQXoCBz9uQ==",
+  "dgSpecHash": "hNtg+xZgr7ODdCCoItaqZCokiSgIxfQgB2bfeC4/EWnxoLiaB9Eyu9FpzA8XjC+AOJktZ+Mmu3y3JWfUXWjbsQ==",
   "success": true,
   "projectFilePath": "G:\\HalloDoc\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\pca17\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\aspnetcorehero.toastnotification.1.1.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.15\\microsoft.entityframeworkcore.7.0.15.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.15\\microsoft.entityframeworkcore.abstractions.7.0.15.nupkg.sha512",
@@ -18,6 +19,7 @@
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
+    "C:\\Users\\pca17\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\npgsql\\7.0.6\\npgsql.7.0.6.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\7.0.11\\npgsql.entityframeworkcore.postgresql.7.0.11.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"

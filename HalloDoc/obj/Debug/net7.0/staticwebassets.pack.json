@@ -85,6 +85,10 @@
       "PackagePath": "staticwebassets\\images\\dark_mode_black_24dp.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\doctor-svgrepo-com.svg",
+      "PackagePath": "staticwebassets\\images\\doctor-svgrepo-com.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\envelope.svg",
       "PackagePath": "staticwebassets\\images\\envelope.svg"
     },
@@ -95,6 +99,10 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\exclamation2.jpg",
       "PackagePath": "staticwebassets\\images\\exclamation2.jpg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\journal-text.svg",
+      "PackagePath": "staticwebassets\\images\\journal-text.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\list.svg",
@@ -129,16 +137,24 @@
       "PackagePath": "staticwebassets\\images\\plus-lg.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\repeat_FILL0_wght400_GRAD0_opsz24.svg",
+      "PackagePath": "staticwebassets\\images\\repeat_FILL0_wght400_GRAD0_opsz24.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\reply.svg",
+      "PackagePath": "staticwebassets\\images\\reply.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\send.svg",
+      "PackagePath": "staticwebassets\\images\\send.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\telephone.svg",
       "PackagePath": "staticwebassets\\images\\telephone.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\trash3.svg",
       "PackagePath": "staticwebassets\\images\\trash3.svg"
-    },
-    {
-      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\user-doctor-solid.svg",
-      "PackagePath": "staticwebassets\\images\\user-doctor-solid.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\user_circle.svg",

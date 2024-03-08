@@ -13,5 +13,6 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public int reqType { get; set; }
 
         public int RegionId { get; set; }   
+
     }
 }

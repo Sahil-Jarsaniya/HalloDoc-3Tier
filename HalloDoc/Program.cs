@@ -1,3 +1,5 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using HalloDoc.BussinessAccess.Repository.Implementation;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
@@ -26,7 +28,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnetion")
         );
 });
-
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 2; config.IsDismissable = false; config.Position = NotyfPosition.TopRight; });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,7 +45,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
-
+app.UseNotyf();
 app.MapControllerRoute(
     name: "default",
 pattern: "{controller=Home}/{action=Index}/{id?}");

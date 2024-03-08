@@ -78,7 +78,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                               Zipcode = rc.Zipcode,
                               Notes = rc.Notes,
                               reqTypeId = req.Requesttypeid,
-                              Regionid = rc.Regionid
+                              Regionid = rc.Regionid,
+                              Email = rc.Email,
                           });
             var pendingReqData = from req in _db.Requests
                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -104,7 +105,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  Notes = rc.Notes,
                                  reqTypeId = req.Requesttypeid,
                                  physicianName = phy.Firstname + " " + phy.Lastname,
-                                 Regionid = rc.Regionid
+                                 Regionid = rc.Regionid,
+                                 Email = rc.Email,
                              };
             var closeReqData = from req in _db.Requests
                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -130,7 +132,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  Notes = rc.Notes,
                                  reqTypeId = req.Requesttypeid,
                                  physicianName = phy.Firstname + " " + phy.Lastname,
-                                 Regionid = rc.Regionid
+                                 Regionid = rc.Regionid,
+                                 Email = rc.Email,
                              };
             var concludeReqData = from req in _db.Requests
                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -156,7 +159,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  Notes = rc.Notes,
                                  reqTypeId = req.Requesttypeid,
                                  physicianName = phy.Firstname + " " + phy.Lastname,
-                                 Regionid = rc.Regionid
+                                 Regionid = rc.Regionid,
+                                 Email = rc.Email,
                              };
             var unpaidReqData = from req in _db.Requests
                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -182,7 +186,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  Notes = rc.Notes,
                                  reqTypeId = req.Requesttypeid,
                                  physicianName = phy.Firstname + " " + phy.Lastname,
-                                 Regionid = rc.Regionid
+                                 Regionid = rc.Regionid,
+                                 Email = rc.Email,
                              };
             var activeReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -208,7 +213,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                     Notes = rc.Notes,
                                     reqTypeId = req.Requesttypeid,
                                     physicianName = phy.Firstname + " " + phy.Lastname,
-                                    Regionid = rc.Regionid
+                                    Regionid = rc.Regionid,
+                                    Email = rc.Email,
                                 };
 
             var CaseTag = from t1 in _db.Casetags select t1;
@@ -388,9 +394,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var transferNote = from t1 in _db.Requeststatuslogs
                                where t1.Requestid == ReqId.Requestid
                                select t1;
-
+            var status= _db.Requests.Where(x => x.Requestid == ReqId.Requestid).FirstOrDefault().Status;    
             var data = new viewNoteViewModel
             {
+                status = status, 
                 reqClientId = reqClientId,
                 Requestnote = reqNotes,
                 Requeststatuslog = transferNote
@@ -584,6 +591,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             };
             var data = new DocumentViewModel
             {
+                status = _db.Requests.Where(x => x.Requestid == reqId.Requestid).First().Status,
                 PatientName = reqId.Firstname+ " "+reqId.Lastname,
                 PatientDocumentViewModel = requestData,
                 UploadFileViewModel = uploadData

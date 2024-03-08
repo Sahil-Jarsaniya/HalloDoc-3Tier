@@ -2,13 +2,13 @@
     --primary: #10bce9;
 }
 
-.btn-primary {
+/*.btn-primary {
     background-color: #10bce9;
     color: white;
     border: 1px solid #10bce9;
-}
+}*/
 
-[data-bs-theme="dark"] .btn-primary {
+/*[data-bs-theme="dark"] .btn-primary {
     background-color: #10bce9;
     color: white;
     border: 1px solid #10bce9;
@@ -39,27 +39,15 @@
     .btn-secondary:hover img{
         filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
     }
+*/
 
 
-.btn span {
-    color: var(--primary);
-}
 
-.btn-outline-info {
-    border-color: var(--primary);
-}
 
 .night-mode-btn svg {
     fill: var(--primary);
 }
 
-.btn:focus {
-    box-shadow: none;
-}
-
-.btn:active {
-    box-shadow: none;
-}
 
 .form-card {
     background-color: white;

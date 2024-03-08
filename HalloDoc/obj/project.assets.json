@@ -2,6 +2,29 @@
   "version": 3,
   "targets": {
     "net7.0": {
+      "AspNetCoreHero.ToastNotification/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "compile": {
+          "lib/net5.0/AspNetCoreHero.ToastNotification.Views.dll": {},
+          "lib/net5.0/AspNetCoreHero.ToastNotification.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/AspNetCoreHero.ToastNotification.Views.dll": {},
+          "lib/net5.0/AspNetCoreHero.ToastNotification.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ],
+        "build": {
+          "buildTransitive/AspNetCoreHero.ToastNotification.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/AspNetCoreHero.ToastNotification.props": {}
+        }
+      },
       "Azure.Core/1.25.0": {
         "type": "package",
         "dependencies": {
@@ -4013,6 +4036,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
+          "AspNetCoreHero.ToastNotification": "1.1.0",
           "HalloDoc.DataAccess": "1.0.0",
           "MailKit": "4.3.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.16",
@@ -4030,6 +4054,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
         "dependencies": {
+          "AspNetCoreHero.ToastNotification": "1.1.0",
           "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "Microsoft.EntityFrameworkCore": "7.0.15",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.11"
@@ -4044,6 +4069,30 @@
     }
   },
   "libraries": {
+    "AspNetCoreHero.ToastNotification/1.1.0": {
+      "sha512": "bCAYeD+b2pRelcOrHMNtYGVtRq+J2u+SAaND33v3u6qZCatHf4XSZOEPhBfCKJAjMGvsggtPKaNFnrv4VhwOfA==",
+      "type": "package",
+      "path": "aspnetcorehero.toastnotification/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "aspnetcorehero.toastnotification.1.1.0.nupkg.sha512",
+        "aspnetcorehero.toastnotification.nuspec",
+        "build/AspNetCoreHero.ToastNotification.props",
+        "build/Microsoft.AspNetCore.StaticWebAssets.props",
+        "buildMultiTargeting/AspNetCoreHero.ToastNotification.props",
+        "buildTransitive/AspNetCoreHero.ToastNotification.props",
+        "lib/net5.0/AspNetCoreHero.ToastNotification.Views.dll",
+        "lib/net5.0/AspNetCoreHero.ToastNotification.dll",
+        "lib/netcoreapp3.1/AspNetCoreHero.ToastNotification.Views.dll",
+        "lib/netcoreapp3.1/AspNetCoreHero.ToastNotification.dll",
+        "logo-transparent.png",
+        "staticwebassets/notyf.min.css",
+        "staticwebassets/notyf.min.js",
+        "staticwebassets/toastify.css",
+        "staticwebassets/toastify.js"
+      ]
+    },
     "Azure.Core/1.25.0": {
       "sha512": "X8Dd4sAggS84KScWIjEbFAdt2U1KDolQopTPoHVubG2y3CM54f9l6asVrP5Uy384NWXjsspPYaJgz5xHc+KvTA==",
       "type": "package",
@@ -11609,6 +11658,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "AspNetCoreHero.ToastNotification >= 1.1.0",
       "HalloDoc.BussinessAccess >= 1.0.0",
       "HalloDoc.DataAccess >= 1.0.0",
       "MailKit >= 4.3.0",
@@ -11670,6 +11720,10 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "AspNetCoreHero.ToastNotification": {
+            "target": "Package",
+            "version": "[1.1.0, )"
+          },
           "MailKit": {
             "target": "Package",
             "version": "[4.3.0, )"

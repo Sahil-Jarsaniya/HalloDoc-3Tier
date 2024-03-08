@@ -9,8 +9,8 @@
         <h3>
             Documents
         </h3>
-        <a href="@Url.Action("Dashboard", "AdminDashboard")"
-           class="btn btn-secondary m-2 text-decoration-none float-end" id="back-btn">
+        <a href="@Url.Action("Dashboard", "AdminDashboard", new{status = Model.status})"
+           class="btn btn-outline-primary m-2 text-decoration-none float-end" id="back-btn">
             <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
             Back
         </a>
@@ -33,8 +33,7 @@
                     <img src="~/images/cloud_upload.svg" alt="">
                     Upload
                 </label>
-                <button class="btn border " style="background-color: #01bce9; color: white;"
-                        type="submit">
+                <button class="btn border btn-primary" type="submit">
                     Submit
                 </button>
             </div>
@@ -43,13 +42,13 @@
         <div class="d-flex justify-content-between mt-5">
             <h5>Documents</h5>
             <div>
-                <a class="btn float-end me-2" id="sendEmailDoc" style="color: #01bce9; border: 1px solid #01bce9;">
+                <a class="btn float-end me-2 btn-outline-primary" id="sendEmailDoc" >
                     <span class="">Send Email</span>
                 </a>
-                <a class="btn float-end me-2 " id="DeleteAll" style="color: #01bce9; border: 1px solid #01bce9;">
+                <a class="btn float-end me-2 btn-outline-primary" id="DeleteAll" >
                     <span class="">Delete All</span>
                 </a>
-                <a class="btn float-end me-2" id="DownloadAll" style="color: #01bce9; border: 1px solid #01bce9;">
+                <a class="btn float-end me-2 btn-outline-primary" id="DownloadAll">
                     <span class="">Download All</span>
                 </a>
             </div>
@@ -70,12 +69,10 @@
                         <span class="">@item.createdate</span><br />
                         <span class="">
                             <input value="@item.ReqClientId" class="ReqClientId" hidden>
-                            <a href="/uploadedFiles/@item.Filename" class="btn"
-                               style="color: #01bce9; border: 1px solid #01bce9;" download>
+                            <a href="/uploadedFiles/@item.Filename" class="btn btn-outline-primary" download>
                                 <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
                             </a>
-                            <a class="btn button-secondary DeleteFile" style="color: #01bce9; border: 1px solid #01bce9;"
-                               download>
+                            <a class="btn btn-outline-primary DeleteFile">
                                 <img id="uploadFile" src="~/images/trash3.svg" />
                             </a>
                         </span>

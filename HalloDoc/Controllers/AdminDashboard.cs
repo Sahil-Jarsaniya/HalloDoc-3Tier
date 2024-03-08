@@ -31,7 +31,7 @@ namespace HalloDoc.Controllers
             _jwtService = jwtService;
         }
 
-        public IActionResult Dashboard()
+        public IActionResult Dashboard(int? status)
         {
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
@@ -42,6 +42,7 @@ namespace HalloDoc.Controllers
             var data = _adminRepo.adminDashboard();
             var dashData = new AdminDashboardViewModel
             {
+                status = status,
                 countRequestViewModel = data.countRequestViewModel,
                 Casetag = data.Casetag,
                 Region = data.Region,
@@ -157,7 +158,7 @@ namespace HalloDoc.Controllers
             if (task)
             {
                 ViewBag.success = "updated successfully";
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("Dashboard", new {status = obj.status});
             }
             else
             {
@@ -305,10 +306,15 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
 
+
+            var reqCRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var status = _db.Requests.Where(x => x.Requestid == reqCRow.Requestid).FirstOrDefault().Status;
+
             var sendOrder = new SendOrderViewModel
             {
                 Healthprofessionaltype = _db.Healthprofessionaltypes,
-                reqClientId = reqClientId
+                reqClientId = reqClientId,
+                status = status
             };
 
             return View(sendOrder);

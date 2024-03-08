@@ -32,10 +32,6 @@
 
             <form id="login-form" class="form-floating m-auto" asp-action="login" asp-controller="AdminLogin">
                 <h1 class=" mb-5">Login To Your Account</h1>
-                @if (ViewBag.message != null)
-                {
-                    <p class="float-left" style="color: red;">@ViewBag.message</p>
-                }
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="input-div form-floating mb-3 d-flex border rounded bg-transparent">
                     <input asp-for="UserName" type="text" class="form-control" id="floatingInput" placeholder="username">

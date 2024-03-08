@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "HalloDoc/1.0.0": {
         "dependencies": {
+          "AspNetCoreHero.ToastNotification": "1.1.0",
           "HalloDoc.BussinessAccess": "1.0.0",
           "HalloDoc.DataAccess": "1.0.0",
           "MailKit": "4.3.0",
@@ -23,6 +24,21 @@
         },
         "runtime": {
           "HalloDoc.dll": {}
+        }
+      },
+      "AspNetCoreHero.ToastNotification/1.1.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.1"
+        },
+        "runtime": {
+          "lib/net5.0/AspNetCoreHero.ToastNotification.Views.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          },
+          "lib/net5.0/AspNetCoreHero.ToastNotification.dll": {
+            "assemblyVersion": "1.1.0.0",
+            "fileVersion": "1.1.0.0"
+          }
         }
       },
       "Azure.Core/1.25.0": {
@@ -2606,6 +2622,7 @@
       },
       "HalloDoc.BussinessAccess/1.0.0": {
         "dependencies": {
+          "AspNetCoreHero.ToastNotification": "1.1.0",
           "HalloDoc.DataAccess": "1.0.0",
           "MailKit": "4.3.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.16",
@@ -2618,6 +2635,7 @@
       },
       "HalloDoc.DataAccess/1.0.0": {
         "dependencies": {
+          "AspNetCoreHero.ToastNotification": "1.1.0",
           "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "Microsoft.EntityFrameworkCore": "7.0.15",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "7.0.11"
@@ -2633,6 +2651,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AspNetCoreHero.ToastNotification/1.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bCAYeD+b2pRelcOrHMNtYGVtRq+J2u+SAaND33v3u6qZCatHf4XSZOEPhBfCKJAjMGvsggtPKaNFnrv4VhwOfA==",
+      "path": "aspnetcorehero.toastnotification/1.1.0",
+      "hashPath": "aspnetcorehero.toastnotification.1.1.0.nupkg.sha512"
     },
     "Azure.Core/1.25.0": {
       "type": "package",

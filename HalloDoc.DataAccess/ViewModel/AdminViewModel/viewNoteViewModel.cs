@@ -9,6 +9,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 {
     public class viewNoteViewModel
     {
+        public int status { get; set; }
         public int reqClientId { get; set; } 
         public String adminNote { get; set; }
         public IEnumerable<Requestnote> Requestnote { get; set; }

@@ -1,6 +1,5 @@
+var dashboardStatus = $("#DashboardStatus").val();
 
-//New Pending  ... css
-var dashboardStatus = 0;
 $(".status-tab").click(function () {
     $(this).addClass("active");
     $(this).children("svg").removeClass("d-none");
@@ -9,7 +8,7 @@ $(".status-tab").click(function () {
     $('.status-tab').not(this).removeClass("active");
 
     var id = $(this).attr('id');
-    
+
 
     if (id == 'status-new-tab') {
         dashboardStatus = 1;
@@ -50,18 +49,35 @@ $(".status-tab").click(function () {
     });
 
 });
+if (dashboardStatus == 8) {
+    $("#status-active-tab").click();
+}
+else if (dashboardStatus == 2) {
+    $("#status-pending-tab").click();
+}
+else if (dashboardStatus == 4) {
+    $("#status-conclude-tab").click();
+}
+else if (dashboardStatus ==5) {
+    $("#status-to-close-tab").click();
+}
+else if (dashboardStatus == 13) {
+    $("#status-unpaid-tab").click();
+}
+else {
+    $("#status-new-tab").click();
+}
 
-$("#status-new-tab").click();
 
 //region filter
 $("#RegionFilter").change(function () {
     var RegionId = $(this).val();
     var Name = $("#search").val();
-    console.log(RegionId)
+    var reqType = $("#filterReqType").val();
     $.ajax({
         url: '/AdminDashboard/PartialTable',
         type: 'POST',
-        data: { RegionId: RegionId, Name: Name, status: dashboardStatus },
+        data: { RegionId: RegionId, Name: Name, status: dashboardStatus, reqType: reqType },
         success: function (result) {
             $('#PartialTable').html(result);
         },
@@ -77,12 +93,13 @@ $("#search").keyup(function (e) {
     /*  $('#DashboradForm').submit();*/
     var ReginoId = $("#RegionFilter").val();
     var Name = $(this).val();
+    var reqType = $("#filterReqType").val();
     $.ajax({
 
         url: '/AdminDashboard/PartialTable',
         type: 'POST',
         data: {
-            status: dashboardStatus, Name: Name, ReginoId: ReginoId
+            status: dashboardStatus, Name: Name, ReginoId: ReginoId, reqType: reqType
         },
         success: function (result) {
             $('#PartialTable').html(result);
@@ -98,6 +115,7 @@ $("#search").keyup(function (e) {
 //filter by request Type
 $(".filterReqByType").click(function () {
     var reqType = $(this).children().val()
+    $("#filterReqType").val(reqType);
     var RegionId = $("#RegionFilter").val();
     var Name = $("#search").val();
     console.log(reqType + " " + RegionId + " " + Name)

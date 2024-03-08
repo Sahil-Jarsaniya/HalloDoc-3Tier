@@ -1,4 +1,4 @@
-﻿<table class="table table-hover table-responsive ">
+﻿<table class="table table-responsive d-none d-md-table">
     <thead>
         <tr class="table-secondary">
             <td>Name</td>
@@ -109,10 +109,10 @@
                         <li><a class="dropdown-item" href="@Url.Action("ViewCase", new {reqClientId = item.reqClientId})">View Case</a></li>
                         <li><a class="dropdown-item" href="#">View Uploads</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
-                        <li><a class="dropdown-item" href="#">Orders</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("SendOrders", new{reqClientId = item.reqClientId})">Orders</a></li>
                         <li><a class="dropdown-item" href="#">Close Case</a></li>
                         <li><a class="dropdown-item" href="#">Doctors Note</a></li>
-                        <li><a class="dropdown-item" href="#">Clear Case</a></li>
+                        <li><a class="dropdown-item ClearCaseBtn" href="#">Clear Case</a></li>
                         <li><a class="dropdown-item" href="#">Encounter</a></li>
                     </ul>
                 </td>
@@ -120,3 +120,102 @@
         }
     </tbody>
 </table>
+
+@*Mobile View*@
+<div class="d-md-none">
+    @foreach (var item in Model)
+    {
+        var name = item.Firstname + "," + item.Lastname;
+        <div class="shadow m-1 p-2" data-bs-toggle="collapse" href="#@item.reqClientId" role="button" aria-expanded="false">
+
+            <div class="d-flex justify-content-between mb-2">
+                @name
+                @if (item.reqTypeId == 1)
+                {
+                    <div>
+                        Patient
+                        <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle fill="#5fbc61" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                        </svg>
+                    </div>
+                }
+                @if (item.reqTypeId == 2)
+                {
+                    <div>
+                        Family/Friend
+                        <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle fill="#ed9124" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                        </svg>
+                    </div>
+                }
+                @if (item.reqTypeId == 3)
+                {
+                    <div>
+                        Concierge
+                        <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle fill="#007fc6" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                        </svg>
+                    </div>
+                }
+                @if (item.reqTypeId == 4)
+                {
+                    <div>
+                        Business
+                        <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle fill="#e26277" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                        </svg>
+                    </div>
+                }
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="w-50">
+                    @item.Street, @item.City, @item.State, @item.Zipcode
+                </span>
+                <div class="w-50">
+                    <button type="button" class="btn btn-outline-primary float-end">Map Location</button>
+                </div>
+            </div>
+            <p>
+                <img src="/images/clock.svg" />
+                Wait Time: @item.Createddate
+            </p>
+        </div>
+        <div class="collapse shadow m-1 p-2" id="@item.reqClientId">
+            <a class="btn btn-outline-success float-end" href="@Url.Action("ViewCase", new {reqClientId = item.reqClientId})">View Case</a>
+            <p>Date of birth: @item.Strmonth</p>
+            <p>Email: @item.Email</p>
+            <p>Tranfer Note: @item.Notes</p>
+            <p>Date of service: -</p>
+            <p>Physician: @item.physicianName</p>
+            <p>Region: Gujarat</p>
+            <div class="row">
+                <div class="col-5 m-2">
+                    <a class="btn btn-danger ClearCaseBtn w-100" href="#">Close Case</a>
+                </div>
+                <div class="col-5 m-2">
+                    <a class="btn btn-success w-100" href="@Url.Action("ViewNote", new {reqClientId = item.reqClientId})">View Notes</a>
+                </div>
+                <div class="col-5 m-2">
+                    <a class="btn btn-success w-100" href="@Url.Action("ViewUpload","AdminDashboard", new {reqClientId = item.reqClientId})">View Uploads</a>
+                </div>
+                <div class="col-5 m-2">
+                    <a class="btn btn-success w-100">Encounter</a>
+                </div>
+                <div class="col-5 m-2">
+                    <a class="btn btn-warning ClearCaseBtn w-100" href="#">Clear Case</a>
+                </div>
+                <div class="col-5 m-2">
+                    <a href="mailto: @item.Email" class="w-100 btn btn-success rounded">
+                        Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(".ClearCaseBtn").click(function () {
+        $("#ClearCaseModel").modal('show');
+    })
+</script>

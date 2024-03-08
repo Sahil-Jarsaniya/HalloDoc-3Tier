@@ -1,4 +1,5 @@
-﻿using HalloDoc.BussinessAccess.Repository.Implementation;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HalloDoc.BussinessAccess.Repository.Implementation;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
@@ -14,9 +15,10 @@ namespace HalloDoc.Controllers
         private readonly ApplicationDbContext _db;
         private readonly ILoginRepository _LoginRepository;
         private readonly IJwtService _JwtService;
-
-        public AdminLoginController(ApplicationDbContext db, ILoginRepository loginRepository, IJwtService jwtService)
+        private readonly INotyfService _notyf;
+        public AdminLoginController(ApplicationDbContext db, ILoginRepository loginRepository, IJwtService jwtService,INotyfService notyf )
         {
+            _notyf = notyf;
             _db = db;
             _LoginRepository = loginRepository;
             _JwtService = jwtService;
@@ -32,12 +34,12 @@ namespace HalloDoc.Controllers
             var myUser = _LoginRepository.GetLoginData(obj, hashPass);
             if (myUser == null)
             {
-                ViewBag.message = "Login Failed";
+                //ViewBag.message = "Login Failed";
+                _notyf.Error("Login Failed");
                 return View();
             }
             else
             {
-
                 var user2 = new LoggedUser
                 {
                     AspId = myUser.Aspnetuserid,
@@ -54,6 +56,7 @@ namespace HalloDoc.Controllers
                 HttpContext.Session.SetString("adminToken", userName);
                 HttpContext.Session.SetInt32("AdminId", myUser.Adminid);
                 String AspId = myUser.Aspnetuserid;
+                _notyf.Success("Successful Login");
                 return RedirectToAction("Dashboard", "AdminDashboard");
             }
         }
@@ -67,6 +70,7 @@ namespace HalloDoc.Controllers
             {
                 Response.Cookies.Delete("jwt");
             };
+            _notyf.Success("Successful Logout");
             return RedirectToAction("login");
         }
     }

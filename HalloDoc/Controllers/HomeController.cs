@@ -103,6 +103,7 @@ public class HomeController : Controller
             HttpContext.Session.SetString("token", userName);
             HttpContext.Session.SetInt32("userId", myUser.Userid);
             String AspId = myUser.Aspnetuserid;
+
             return RedirectToAction("Dashboard", "Patient", new { AspId = AspId });
         }
     }
