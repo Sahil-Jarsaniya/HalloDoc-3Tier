@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "gqbjkYRLhWrETQzECdzvJrhRco640mDHhRegcelXrAg=",
+  "Hash": "1t7bqBXSp2izWQoJ137c6g1xcMFOe5ImvwiskYxSGJM=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -1987,6 +1987,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\check-circle.svg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\clock (3).svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/clock (3).svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\clock (3).svg"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\clock.svg",

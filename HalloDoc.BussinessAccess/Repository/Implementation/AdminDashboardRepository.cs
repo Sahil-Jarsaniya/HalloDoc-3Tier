@@ -3,8 +3,6 @@ using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
-using System.Xml.Linq;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
@@ -605,6 +603,78 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var rwf = _db.Requestwisefiles.Where(x => x.Requestid == requestId && x.Filename == FileName).FirstOrDefault();
                 rwf.Isdeleted = true;
             _db.Requestwisefiles.Update(rwf);
+            _db.SaveChanges();
+        }
+
+        public SendOrderViewModel SendOrders(int reqClientId)
+        {
+            var reqCRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var status = _db.Requests.Where(x => x.Requestid == reqCRow.Requestid).FirstOrDefault().Status;
+
+            var sendOrder = new SendOrderViewModel
+            {
+                Healthprofessionaltype = _db.Healthprofessionaltypes,
+                reqClientId = reqClientId,
+                status = status
+            };
+
+            return sendOrder;
+        }
+
+        public void SendOrders(SendOrderViewModel obj, string AspId)
+        {
+            var reqId = _db.Requestclients.Where(x => x.Requestclientid == obj.reqClientId).FirstOrDefault().Requestid;
+
+            var order = new Orderdetail
+            {
+                Requestid = reqId,
+                Vendorid = obj.ProfessionalId,
+                Faxnumber = obj.FaxNumber,
+                Email = obj.email,
+                Businesscontact = obj.ProfessionalPhone,
+                Prescription = obj.OrderDetail,
+                Noofrefill = obj.noOfRefill,
+                Createddate = DateTime.Now,
+                Createdby = AspId
+            };
+            _db.Orderdetails.Add(order);
+            _db.SaveChanges();
+        }
+
+        public object FilterProfession(int ProfessionId)
+        {
+            var data = (from t1 in _db.Healthprofessionals
+                        join t2 in _db.Healthprofessionaltypes on t1.Profession equals t2.Healthprofessionalid
+                        where t2.Healthprofessionalid == ProfessionId
+                        select new
+                        {
+                            vendorname = t1.Vendorname,
+                            vendorid = t1.Vendorid
+                        }).ToList();
+
+            return data;
+        }
+
+        public object ShowVendorDetail(int selectVendor)
+        {
+            var data = (from t1 in _db.Healthprofessionals
+                        where t1.Vendorid == selectVendor
+                        select new
+                        {
+                            vendorPhone = t1.Phonenumber,
+                            email = t1.Email,
+                            faxNumber = t1.Faxnumber
+                        }).ToList();
+
+            return data;
+        }
+
+        public void ClearCase(int reqClientId)
+        {
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
+            reqRow.Status = 9;
+            _db.Update(reqRow);
             _db.SaveChanges();
         }
     }

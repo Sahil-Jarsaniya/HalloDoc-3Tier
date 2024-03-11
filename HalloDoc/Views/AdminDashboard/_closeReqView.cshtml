@@ -112,7 +112,7 @@
                         <li><a class="dropdown-item" href="@Url.Action("SendOrders", new{reqClientId = item.reqClientId})">Orders</a></li>
                         <li><a class="dropdown-item" href="#">Close Case</a></li>
                         <li><a class="dropdown-item" href="#">Doctors Note</a></li>
-                        <li><a class="dropdown-item ClearCaseBtn" href="#">Clear Case</a></li>
+                        <li><a class="dropdown-item ClearCaseBtn" href="#" data-id="@item.reqClientId">Clear Case</a></li>
                         <li><a class="dropdown-item" href="#">Encounter</a></li>
                     </ul>
                 </td>
@@ -202,7 +202,7 @@
                     <a class="btn btn-success w-100">Encounter</a>
                 </div>
                 <div class="col-5 m-2">
-                    <a class="btn btn-warning ClearCaseBtn w-100" href="#">Clear Case</a>
+                    <a class="btn btn-warning ClearCaseBtn w-100" href="#" data-id="@item.reqClientId">Clear Case</a>
                 </div>
                 <div class="col-5 m-2">
                     <a href="mailto: @item.Email" class="w-100 btn btn-success rounded">
@@ -216,6 +216,7 @@
 
 <script>
     $(".ClearCaseBtn").click(function () {
+        $("#ClearClientId").val($(this).data('id'));
         $("#ClearCaseModel").modal('show');
     })
 </script>

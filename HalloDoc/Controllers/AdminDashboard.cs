@@ -1,5 +1,4 @@
-﻿    using Azure.Core;
-using HalloDoc.BussinessAccess.Repository.Implementation;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
@@ -7,14 +6,10 @@ using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-using NuGet.Protocol;
+using OfficeOpenXml;
 using System.IdentityModel.Tokens.Jwt;
-using System.Reflection;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 namespace HalloDoc.Controllers
 {
     [CustomAuth("Admin")]
@@ -23,12 +18,14 @@ namespace HalloDoc.Controllers
         private readonly IAdminDashboardRepository _adminRepo;
         private readonly ApplicationDbContext _db;
         private readonly IJwtService _jwtService;
+        private readonly INotyfService _notyf;
 
-        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService)
+        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf)
         {
             _adminRepo = adminRepo;
             _db = db;
             _jwtService = jwtService;
+            _notyf = notyf;
         }
 
         public IActionResult Dashboard(int? status)
@@ -306,18 +303,9 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
 
+            var data = _adminRepo.SendOrders(reqClientId);
 
-            var reqCRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
-            var status = _db.Requests.Where(x => x.Requestid == reqCRow.Requestid).FirstOrDefault().Status;
-
-            var sendOrder = new SendOrderViewModel
-            {
-                Healthprofessionaltype = _db.Healthprofessionaltypes,
-                reqClientId = reqClientId,
-                status = status
-            };
-
-            return View(sendOrder);
+            return View(data);
         }
         [HttpPost]
         public IActionResult SendOrders(SendOrderViewModel obj)
@@ -325,22 +313,8 @@ namespace HalloDoc.Controllers
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
-            var reqId = _db.Requestclients.Where(x => x.Requestclientid == obj.reqClientId).FirstOrDefault().Requestid;
 
-            var order = new Orderdetail
-            {
-                Requestid = reqId,
-                Vendorid = obj.ProfessionalId,
-                Faxnumber = obj.FaxNumber,
-                Email = obj.email,
-                Businesscontact = obj.ProfessionalPhone,
-                Prescription = obj.OrderDetail,
-                Noofrefill = obj.noOfRefill,
-                Createddate = DateTime.Now,
-                Createdby = AspId
-            };
-            _db.Orderdetails.Add(order);
-            _db.SaveChanges();
+            _adminRepo.SendOrders(obj, AspId);
 
             return RedirectToAction("SendOrders", new {reqClientId = obj.reqClientId});
         }
@@ -348,30 +322,18 @@ namespace HalloDoc.Controllers
 
         public object FilterProfession(int ProfessionId)
         {
-            var data = (from t1 in _db.Healthprofessionals
-                        join t2 in _db.Healthprofessionaltypes on t1.Profession equals t2.Healthprofessionalid
-                        where t2.Healthprofessionalid == ProfessionId
-                        select new
-                        {
-                            vendorname = t1.Vendorname,
-                            vendorid = t1.Vendorid
-                        }).ToList();
-
-            return data;
+            return _adminRepo.FilterProfession(ProfessionId);
         }
    
         public object ShowVendorDetail(int selectVendor)
         {
-            var data = (from t1 in _db.Healthprofessionals
-                        where t1.Vendorid == selectVendor
-                        select new
-                        {
-                            vendorPhone = t1.Phonenumber,
-                            email = t1.Email,
-                            faxNumber = t1.Faxnumber
-                        }).ToList();
-
-            return data;
+            return _adminRepo.ShowVendorDetail(selectVendor);
         }
+
+        public void ClearCase(int reqClientId)
+        {
+            _adminRepo.ClearCase(reqClientId);  
+        }
+
     }
 }

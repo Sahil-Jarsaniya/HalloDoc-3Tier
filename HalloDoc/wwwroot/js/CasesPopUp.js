@@ -76,6 +76,7 @@ $("#ConfirmAssignBtn").click(function () {
     })
 })
 
+//Transfer Case Region filter
 $(".TransferRegionSelect").change(function () {
     var selectedRegion = $(this).val();
     console.log("assign")
@@ -94,6 +95,7 @@ $(".TransferRegionSelect").change(function () {
     })
 })
 
+//Transfer Case
 $("#ConfirmTransferBtn").click(function () {
     var addNote = $("#addTransferNote").val();
     var reqClientId = $("#TransferClientId").val();
@@ -104,6 +106,26 @@ $("#ConfirmTransferBtn").click(function () {
         type: 'POST',
         data: { reqClientId: reqClientId, addNote: addNote, PhysicianSelect: PhysicianSelect, RegionSelect: RegionSelect },
         success: function (result) {
+            $("#CloseModal").click();
+            location.reload();
+        },
+        error: function (error) {
+            console.log(error);
+            alert('error fetching details')
+        },
+    })
+})
+
+//Clear Case
+
+$("#ConfirmClearBtn").click(function () {
+    var reqClientId = $("#ClearClientId").val();
+    console.log(dashboardStatus);
+    $.ajax({
+        url: '/AdminDashboard/ClearCase',
+        type: 'POST',
+        data: { reqClientId: reqClientId },
+        success: function () {
             $("#CloseModal").click();
             location.reload();
         },

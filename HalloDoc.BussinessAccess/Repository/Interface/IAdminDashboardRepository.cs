@@ -35,5 +35,15 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public DocumentViewModel ViewUpload(int reqClientId);
 
         public void DeleteFile(int ReqClientId, string FileName);
+
+        public SendOrderViewModel SendOrders(int reqClientId);
+
+        public void SendOrders(SendOrderViewModel obj, string AspId);
+
+        public object FilterProfession(int ProfessionId);
+
+        public object ShowVendorDetail(int selectVendor);
+
+        public void ClearCase(int reqClientId);
     }
 }

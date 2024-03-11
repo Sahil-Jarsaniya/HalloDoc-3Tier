@@ -146,10 +146,10 @@
                 <span class="d-none d-lg-inline ms-1 ">Create Request</span>
             </button>
 
-            <button type="submit" class="mx-1 px-2 py-1 btn btn-primary ">
+            <a class="mx-1 px-2 py-1 btn btn-primary exportData">
                 <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
                 <span class="d-none d-lg-inline ms-1">Export</span>
-            </button>
+            </a>
 
             <button type="submit" class="mx-1 px-2 py-1 btn btn-primary">
                 <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
@@ -400,12 +400,15 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" id="modalContent">
             <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+                <input id="ClearClientId" value="" hidden />
+                <br />
                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="white"
                      class="bi bi-exclamation-circle" viewBox="0 0 16 16"
                      style="background-color: #ffc107;border:3px #ffc107 solid;   border-radius: 100%;">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                     <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
                 </svg>
+                <br />
                 <h4>Confirmation for clear case</h4>
                 <p>
                     Are you sure you want to clear this request? Once clear this request then you are not able to see this request.
@@ -419,6 +422,34 @@
     </div>
 </div>
 
+@*Send Agreement *@
+<div class="modal fade" id="SendAgreementModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="modalContent">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5">Send Agreement</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Patient</h6>
+                <p>To Send Agreement please make sure you are updating the correct contact information below for the responsible party.</p>
+                <form class="w-100 form-floating">
+                    <div class="form-floating">
+                        <input class="form-control w-100 mb-2" type="text" id="phone" />
+                        <label class="">Phone Number</label>
+                    </div><div class="form-floating">
+                        <input class="form-control w-100 mb-2" type="text" id="email" />
+                        <label class="">Email</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="AgreementConfirmBtn">Submit</button>
+                <button type="button" id="CloseModal" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>  
 
 @section AdminScript {
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
