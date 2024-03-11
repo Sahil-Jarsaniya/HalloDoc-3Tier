@@ -16,16 +16,18 @@ namespace HalloDoc.Controllers
     public class AdminDashboard : Controller
     {
         private readonly IAdminDashboardRepository _adminRepo;
+        private readonly ILoginRepository _loginRepo;
         private readonly ApplicationDbContext _db;
         private readonly IJwtService _jwtService;
         private readonly INotyfService _notyf;
 
-        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf)
+        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf, ILoginRepository loginRepo)
         {
             _adminRepo = adminRepo;
             _db = db;
             _jwtService = jwtService;
             _notyf = notyf;
+            _loginRepo = loginRepo;
         }
 
         public IActionResult Dashboard(int? status)
@@ -335,5 +337,9 @@ namespace HalloDoc.Controllers
             _adminRepo.ClearCase(reqClientId);  
         }
 
+        public void SendAgreement(int reqClientId, string email, string phone)
+        {
+            _loginRepo.SendEmail(email);
+        }
     }
 }

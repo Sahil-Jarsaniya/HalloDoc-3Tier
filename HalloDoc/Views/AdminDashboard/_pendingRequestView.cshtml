@@ -139,7 +139,7 @@
                         <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
                         <li><a class="dropdown-item btn TransferCasebtn" data-id="@item.reqClientId" >Transfer</a></li>
                         <li><a class="dropdown-item ClearCaseBtn" href="#" data-id="@item.reqClientId">Clear Case</a></li>
-                        <li><a class="dropdown-item AgrmenntCaseBtn" href="#">Send Agreement</a></li>
+                        <li><a class="dropdown-item AgrmenntCaseBtn" href="#" data-id="@item.reqClientId" data-email="@item.Email" data-phone="@item.Phonenumber">Send Agreement</a></li>
                     </ul>
                 </td>
             </tr>
@@ -216,7 +216,7 @@
             <p>Requestor: @item.reqFirstname, @item.reqLastname</p>
             <div class="row">
                 <div class="col-5 m-2">
-                    <a class="btn btn-warning AgrmenntCaseBtn w-100">Send Agreement</a>
+                    <a class="btn btn-warning AgrmenntCaseBtn w-100" data-id="@item.reqClientId" data-email="@item.Email" data-phone="@item.Phonenumber">Send Agreement</a>
                 </div>
                 <div class="col-5 m-2">
                     <a class="btn btn-success w-100" href="@Url.Action("ViewNote", new {reqClientId = item.reqClientId})">View Notes</a>
@@ -250,6 +250,10 @@
         $("#ClearCaseModel").modal('show');
     })
     $(".AgrmenntCaseBtn").click(function(){
+        $("#AgreementClientId").val($(this).data('id'));
+        $("#AgreementPhone").val($(this).data('phone'));
+        $("#AgreementEmail").val($(this).data('email'));
+
         $("#SendAgreementModel").modal('show');
     })
 </script>

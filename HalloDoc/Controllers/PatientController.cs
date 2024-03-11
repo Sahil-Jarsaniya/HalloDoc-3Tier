@@ -151,6 +151,10 @@ namespace HalloDoc.Controllers
             }
         }
 
+        public IActionResult ReviewAgreement()
+        {
+            return View();
+        }
 
         public IActionResult Back()
         {

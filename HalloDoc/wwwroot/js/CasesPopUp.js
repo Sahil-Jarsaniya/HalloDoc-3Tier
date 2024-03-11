@@ -135,3 +135,22 @@ $("#ConfirmClearBtn").click(function () {
         },
     })
 })
+
+//Send Agreement
+
+$("#AgreementConfirmBtn").click(function () {
+    var id = $("#AgreementClientId").val();
+    var phone = $("#AgreementPhone").val();
+    var email = $("#AgreementEmail").val();
+
+    $.ajax({
+        url: '/AdminDashboard/SendAgreement',
+        type: 'POST',
+        data: {
+            reqClientId: id, phone: phone, email:email 
+        },
+        success: function () {
+            $("#CloseModal").click();
+        }
+    })
+});

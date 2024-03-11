@@ -66,8 +66,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             emailToSend.From.Add(MailboxAddress.Parse("tatva.dotnet.sahiljarsaniya@outlook.com"));
             emailToSend.To.Add(MailboxAddress.Parse(email));
             emailToSend.Subject = "Reset Passowrd";
-            emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = "link" };
-
+            emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = "link" };    
 
             //send mail
             using (var emailClient = new MailKit.Net.Smtp.SmtpClient())
