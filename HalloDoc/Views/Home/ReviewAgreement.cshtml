@@ -1,0 +1,36 @@
+﻿@model AgreementViewModel;
+<div class="d-flex flex-column justify-content-center align-content-center w-50 m-auto shadow p-3 mt-5">
+    <p>
+        To provide best medical service, we cannot determine the cost right away. If you agree to our service, so we will provide care and follow-up untill all care is completed.
+        So with this points, if you like us to provide care to you click on "Agree" and we'll get started immediately, if you do not agree simply click "Cancel".
+    </p>
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-primary" href="@Url.Action("Agree","Home", new{reqClientId = Model.Requestclientid})">I Agree</a>
+        <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#CancelAgreementModel">Cancel</a>
+    </div>
+</div>
+
+<div class="modal fade" id="CancelAgreementModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="modalContent">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5">Cancel Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>@Model.Firstname @Model.Lastname</h6>
+                <form class="w-100 form-floating">
+                    <div class="form-floating m-1 form-div">
+                        <textarea class="form-control" placeholder="Leave a comment here"
+                                  style="height: 100px" rows="3"></textarea>
+                        <label for="">Please provide a brief explanation for your cancelation</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="@Url.Action("DisAgree", "Home", new{reqClientId = Model.Requestclientid})">Confirm</a>
+                <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

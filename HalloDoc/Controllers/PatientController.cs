@@ -3,6 +3,7 @@ using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
@@ -151,10 +152,7 @@ namespace HalloDoc.Controllers
             }
         }
 
-        public IActionResult ReviewAgreement()
-        {
-            return View();
-        }
+
 
         public IActionResult Back()
         {

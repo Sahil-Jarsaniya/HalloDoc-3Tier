@@ -9,6 +9,7 @@ namespace HalloDoc.DataAccess.ViewModel
     public class DocumentViewModel
     {
         public string? PatientName { get; set; }
+        public string? ConfirmationNo { get; set; }
 
         public int? status { get; set; }
         public UploadFileViewModel UploadFileViewModel { get; set; }

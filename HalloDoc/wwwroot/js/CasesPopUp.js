@@ -8,7 +8,7 @@ $("#ConfirmCancelBtn").click(function () {
         type: 'POST',
         data: { reqClientId: reqClientId, addNote: addNote, CaseTag: casetag },
         success: function (result) {
-            $("#CloseModal").click();
+            $(".CloseModal").click();
             location.reload();
         },
         error: function (error) {
@@ -27,7 +27,7 @@ $("#ConfirmBlockBtn").click(function () {
         type: 'POST',
         data: { reqClientId: reqClientId, addNote: addNote },
         success: function (result) {
-            $("#CloseModal").click();
+            $(".CloseModal").click();
             location.reload();
         },
         error: function (error) {
@@ -66,7 +66,7 @@ $("#ConfirmAssignBtn").click(function () {
         type: 'POST',
         data: { reqClientId: reqClientId, addNote: addNote, PhysicianSelect: PhysicianSelect, RegionSelect: RegionSelect },
         success: function (result) {
-            $("#CloseModal").click();
+            $(".CloseModal").click();
             location.reload();
         },
         error: function (error) {
@@ -106,7 +106,7 @@ $("#ConfirmTransferBtn").click(function () {
         type: 'POST',
         data: { reqClientId: reqClientId, addNote: addNote, PhysicianSelect: PhysicianSelect, RegionSelect: RegionSelect },
         success: function (result) {
-            $("#CloseModal").click();
+            $(".CloseModal").click();
             location.reload();
         },
         error: function (error) {
@@ -126,7 +126,7 @@ $("#ConfirmClearBtn").click(function () {
         type: 'POST',
         data: { reqClientId: reqClientId },
         success: function () {
-            $("#CloseModal").click();
+            $(".CloseModal").click();
             location.reload();
         },
         error: function (error) {
@@ -150,7 +150,11 @@ $("#AgreementConfirmBtn").click(function () {
             reqClientId: id, phone: phone, email:email 
         },
         success: function () {
-            $("#CloseModal").click();
-        }
+            $(".CloseModal").click();
+        },
+        error: function (error) {
+            console.log(error);
+            alert('error fetching details')
+        },
     })
 });

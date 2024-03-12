@@ -16,6 +16,6 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public User PatientLogin(AspNetUser obj, String hashPass);
 
-        public void SendEmail(String email);
+        public void SendEmail(String email, string subject, string body);
     }
 }

@@ -17,7 +17,7 @@
     </div>
     <div class="p-3 shadow">
         <span>Patient Name</span>
-        <h4>@Model.PatientName</h4>
+        <h4>@Model.PatientName (@Model.ConfirmationNo)</h4>
         <p>Check here to review and add files that you or client/Member has attached to the Request.</p>
 
         <form class="form-floating p-2 viewCaseForm" method="post" asp-action="UploadDocument" asp-controller="AdminDashboard"

@@ -19,5 +19,11 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public String PatientProfile(DashboardViewModel obj);
 
         public String CreateReqMeOrElse(PatientViewModel obj, int uid);
+
+        public AgreementViewModel ReviewAgreement(String reqClientId);
+
+        public void Agree(int reqClientId);
+        public void DisAgree(AgreementViewModel obj);
+
     }
 }

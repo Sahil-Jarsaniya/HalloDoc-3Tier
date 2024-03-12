@@ -339,7 +339,40 @@ namespace HalloDoc.Controllers
 
         public void SendAgreement(int reqClientId, string email, string phone)
         {
-            _loginRepo.SendEmail(email);
+            
+            var callBackUrl = Url.Action("ReviewAgreement", "Home", new { reqClientId }, protocol: HttpContext.Request.Scheme, host: "localhost:44349");
+            
+            string subject = "Regarding Agreement";
+            string body = "<a href="+ callBackUrl +">Review</a>";
+
+            _loginRepo.SendEmail(email, subject, body);
+        }
+
+        public IActionResult CloseCase(int reqClientId)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            int adminId = _adminRepo.GetAdminId(AspId);
+            var data = _adminRepo.CloseCase(reqClientId);
+
+            return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult CloseCase(CloseCaseViewModel obj)
+        {
+            _adminRepo.CloseCase(obj);
+            return RedirectToAction("CloseCase", new {reqClientId = obj.ReqClientId});   
+        }
+
+        public IActionResult CloseToUnpaidCase(int reqClientId)
+        {
+            _adminRepo.CloseToUnpaidCase(reqClientId);
+            return RedirectToAction("Dashboard", new { status = 13});
         }
     }
 }

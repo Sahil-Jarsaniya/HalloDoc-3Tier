@@ -59,14 +59,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
         }
 
-        public void SendEmail(string email)
+        public void SendEmail(string email, string subject, string body)
         {
             var emailToSend = new MimeMessage();
 
             emailToSend.From.Add(MailboxAddress.Parse("tatva.dotnet.sahiljarsaniya@outlook.com"));
             emailToSend.To.Add(MailboxAddress.Parse(email));
-            emailToSend.Subject = "Reset Passowrd";
-            emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = "link" };    
+            emailToSend.Subject = subject;
+            emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };    
 
             //send mail
             using (var emailClient = new MailKit.Net.Smtp.SmtpClient())
@@ -74,6 +74,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 emailClient.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
                 emailClient.Authenticate("tatva.dotnet.sahiljarsaniya@outlook.com", "$@hilpj1");
                 emailClient.Send(emailToSend);
+
                 emailClient.Disconnect(true);
             }
         }

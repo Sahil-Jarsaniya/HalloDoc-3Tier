@@ -258,5 +258,49 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
                 return aspId;
             }
+
+        public AgreementViewModel ReviewAgreement(String reqClientId)
+        {
+            int id = int.Parse(reqClientId);
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == id).FirstOrDefault();
+
+            var data = new AgreementViewModel
+            {
+                Requestclientid = id,
+                Firstname = reqClientRow.Firstname,
+                Lastname = reqClientRow.Lastname,
+            };
+
+            return data;
+        }
+        public void Agree(int reqClientId)
+        {
+            var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqRow = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
+
+            reqRow.Status = 8;
+            _db.Requests.Update(reqRow);
+            _db.SaveChanges();
+        }
+        public void DisAgree(AgreementViewModel obj)
+        {
+            var reqId = _db.Requestclients.Where(x => x.Requestclientid == obj.Requestclientid).FirstOrDefault();
+            var reqRow = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
+
+            reqRow.Status = 5;
+            reqRow.Casetag = obj.CancelNote;
+            _db.Requests.Update(reqRow);
+            _db.SaveChanges();
+
+            var reqStatusLog = new Requeststatuslog
+            {
+                Requestid = reqRow.Requestid,
+                Notes = obj.CancelNote,
+                Createddate = DateTime.Now,
+                Status = 5
+            };
+            _db.Requeststatuslogs.Add(reqStatusLog);
+            _db.SaveChanges();
+        }
     }
 }

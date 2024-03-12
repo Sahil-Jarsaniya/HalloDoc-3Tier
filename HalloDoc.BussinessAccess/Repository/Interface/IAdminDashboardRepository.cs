@@ -45,5 +45,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public object ShowVendorDetail(int selectVendor);
 
         public void ClearCase(int reqClientId);
+        public CloseCaseViewModel CloseCase(int reqClientId);
+        public void CloseCase(CloseCaseViewModel obj);
+        public void CloseToUnpaidCase(int reqClientId);
     }
 }

@@ -1,0 +1,169 @@
+﻿@model HalloDoc.DataAccess.ViewModel.AdminViewModel.CloseCaseViewModel;
+@{
+    ViewData["Title"] = "View Upload";
+    Layout = "_adminLayout";
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between mt-5">
+        <h3>
+            Close Case
+        </h3>
+        <a href="@Url.Action("Dashboard", "AdminDashboard", new{status = Model.status})"
+           class="btn btn-outline-primary m-2 text-decoration-none float-end" id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="p-3 shadow">
+        <div class="d-flex justify-content-between">
+        <div>
+        <span>Patient Name</span>
+           <p >
+                    <span class="fs-4" style="color: #01bce9">@Model.Firstname @Model.Lastname </span>(@Model.confirmationNo)
+           </p>    
+        </div>
+        <button class="btn btn-outline-primary h-75">Create Invoice Through Quickbooks</button>
+        </div>
+
+        <div class="">
+            <h5>Documents</h5>
+        </div>
+
+        <div class="d-md-none">
+            @foreach (var item in Model.PatientDocumentViewModel)
+            {
+                @if (item.IsDeleted != true)
+                {
+                    <div>
+                        <div>
+                            <span class="FileName">
+                                @item.Filename
+                            </span>
+                        </div>
+                        <span class="">@item.createdate</span><br />
+                        <span class="">
+                            <input value="@item.ReqClientId" class="ReqClientId" hidden>
+                            <a href="/uploadedFiles/@item.Filename" class="btn btn-outline-primary" download>
+                                <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
+                            </a>
+                        </span>
+                    </div>
+                }
+            }
+            <div>
+
+            </div>
+        </div>
+
+        <table class="table d-none d-md-table">
+            <thead>
+                <tr class="m-0 p-0">
+                    <th colspan="2"></th>
+                    <th>Upload Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.PatientDocumentViewModel)
+                {
+                    @if (item.IsDeleted != true)
+                    {
+                        <tr class="m-0 p-0">
+                            <td colspan="2" class="FileName">@item.Filename</td>
+                            <td>@item.createdate</td>
+                            <td>
+                                <input value="@item.ReqClientId" class="ReqClientId" hidden>
+                                <a href="/uploadedFiles/@item.Filename" class="btn downloadFile"
+                                   style="color: #01bce9; border: 1px solid #01bce9;" download>
+                                    <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <form method="post" asp-action="CloseCase" asp-controller="AdminDashboard">
+            <h4 class="mt-4 mb-4 ms-2">Patient Information</h4>
+            <div class="row g-2 m-1">
+                <div class="col-md">
+                    <div class="form-floating">
+                        <input asp-for="ReqClientId" hidden />
+                        <input asp-for="Firstname" type="text" class="form-control" placeholder="" disabled>
+                        <label for="">First Name</label>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="form-floating">
+                        <input asp-for="Lastname" type="text" class="form-control" placeholder="" disabled>
+                        <label for="floatingSelectGrid">Last Name</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-2 m-1 ">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input asp-for="Strmonth" type="date" class="form-control" placeholder="" disabled>
+                        <label for="">Date Of Birth</label>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-floating phone-div w-100 h-100 ">
+                        <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" id="disablePhone" placeholder="" disabled>
+                        <label for=""></label>
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <a href="@*tel:@Model.Phonenumber*@" class="btn btn-outline-primary form-floating d-flex align-items-center justify-content-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
+                        <img src="~/images/telephone.svg" />
+                    </a>
+                </div>
+            </div>
+            <div class="row g-2 m-1">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input asp-for="Email" type="email" class="form-control" id="disableEmail" placeholder="name@example.com" disabled>
+                        <label for="">Email</label>
+                    </div>
+                </div>
+                
+            </div>
+            <div>
+                <button type="reset" onclick="cancelEdit()" id="cancelBtn" class="btn btn-outline-danger float-end m-1 d-none">Cancel</button>
+                <button type="submit" id="submitBtn" class="btn btn-primary float-end m-1 d-none">Submit</button>
+                <a href="@Url.Action("CloseToUnpaidCase", "AdminDashboard", new {reqClientId = Model.ReqClientId})" id="CloseCaseBtn" class="btn btn-outline-primary float-end m-1 d-block">Close Case</a>
+                <button type="button" onclick="editDetails()" id="editBtn" class="btn btn-primary float-end m-1">Edit</button>
+            </div>
+            <br />
+            <br />
+        </form>
+    </div>
+</div>
+
+@section AdminScript {
+    <script>
+        // Edit Details buttons
+        function editDetails() {
+            document.getElementById("cancelBtn").classList.remove("d-none");
+            document.getElementById("submitBtn").classList.remove("d-none");
+            document.getElementById("editBtn").classList.add("d-none");
+            document.getElementById("CloseCaseBtn").classList.add("d-none");
+
+            document.getElementById("disableEmail").disabled = false;
+            document.getElementById("disablePhone").disabled = false;
+
+        }
+
+        function cancelEdit() {
+            document.getElementById("cancelBtn").classList.add("d-none");
+            document.getElementById("submitBtn").classList.add("d-none");
+            document.getElementById("editBtn").classList.remove("d-none");
+            document.getElementById("CloseCaseBtn").classList.remove("d-none");
+
+            document.getElementById("disableEmail").disabled = true;
+            document.getElementById("disablePhone").disabled = true;
+        }
+    </script>
+}

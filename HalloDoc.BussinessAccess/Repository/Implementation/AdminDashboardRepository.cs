@@ -566,7 +566,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public DocumentViewModel ViewUpload(int reqClientId)
         {
             var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).First();
-
+            var reqRow = _db.Requests.Where(x => x.Requestid == reqId.Requestid).First();
             var requestData = from t1 in _db.Requests
                               join t3 in _db.RequestStatuses on t1.Status equals t3.StatusId
                               join t2 in _db.Requestwisefiles
@@ -591,6 +591,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 status = _db.Requests.Where(x => x.Requestid == reqId.Requestid).First().Status,
                 PatientName = reqId.Firstname+ " "+reqId.Lastname,
+                ConfirmationNo = reqRow.Confirmationnumber,
                 PatientDocumentViewModel = requestData,
                 UploadFileViewModel = uploadData
             };
@@ -675,6 +676,79 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
             reqRow.Status = 9;
             _db.Update(reqRow);
+            _db.SaveChanges();
+        }
+
+        public CloseCaseViewModel CloseCase(int reqClientId)
+        {
+            var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).First();
+            var reqRow = _db.Requests.Where(x => x.Requestid == reqId.Requestid).First();
+
+            var requestData = from t1 in _db.Requests
+                              join t3 in _db.RequestStatuses on t1.Status equals t3.StatusId
+                              join t2 in _db.Requestwisefiles
+                              on t1.Requestid equals t2.Requestid into files
+                              from t2 in files.DefaultIfEmpty()
+                              where t1.Requestid == reqId.Requestid
+                              select new PatientDocumentViewModel
+                              {
+                                  RequestId = t1.Requestid,
+                                  ReqClientId = reqClientId,
+                                  Name = t1.Firstname + " " + t1.Lastname,
+                                  createdate = t1.Createddate,
+                                  Filename = t2 != null ? t2.Filename : null,
+                                  IsDeleted = t2.Isdeleted
+                              };
+
+            var data = new CloseCaseViewModel
+            {
+                ReqClientId = reqId.Requestclientid,
+                confirmationNo = reqRow.Confirmationnumber,
+                status = reqRow.Status,
+                Firstname = reqId.Firstname,
+                Lastname = reqId.Lastname,
+                Phonenumber = reqId.Phonenumber,
+                Email = reqId.Email,
+                Strmonth = reqId.Strmonth,
+                PatientDocumentViewModel = requestData
+            };
+
+            return data;
+        }
+
+        public void CloseCase(CloseCaseViewModel obj)
+        {
+            var ReqClientRow = _db.Requestclients.Where(x => x.Requestclientid == obj.ReqClientId).FirstOrDefault();
+            ReqClientRow.Email = obj.Email;
+            ReqClientRow.Phonenumber = obj.Phonenumber;
+            _db.Requestclients.Update(ReqClientRow);
+            _db.SaveChanges();
+
+            var ReqRow = _db.Requests.Where(x => x.Requestid == ReqClientRow.Requestid).FirstOrDefault();
+            ReqRow.Phonenumber = obj.Phonenumber;
+            ReqRow.Email = obj.Email;
+            _db.Requests.Update(ReqRow);
+            _db.SaveChanges();
+
+            var UserRow = _db.Users.Where(x => x.Userid == ReqRow.Userid).FirstOrDefault();
+            UserRow.Email = obj.Email;
+            UserRow.Mobile = obj.Phonenumber;
+            _db.Users.Update(UserRow);
+            _db.SaveChanges();
+
+            var AspRow = _db.AspNetUsers.Where(x => x.Id == UserRow.Aspnetuserid).FirstOrDefault();
+            AspRow.Email = obj.Email;
+            AspRow.PhoneNumber = obj.Phonenumber;
+            _db.AspNetUsers.Update(AspRow);
+            _db.SaveChanges();
+        }
+
+        public void CloseToUnpaidCase(int reqClientId)
+        {
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
+            reqRow.Status = 13;
+            _db.Requests.Update(reqRow);
             _db.SaveChanges();
         }
     }

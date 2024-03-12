@@ -15,13 +15,14 @@ public class HomeController : Controller
     private readonly ApplicationDbContext _db;
     private readonly ILoginRepository _login;
     private readonly IJwtService _jwtService;
-
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, ILoginRepository login, IJwtService jwtService)
+    private readonly IPatientRepository _patientRepo;
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, ILoginRepository login, IJwtService jwtService, IPatientRepository patientRepo)
     {
         _logger = logger;
         _db = db;
         _login = login;
         _jwtService = jwtService;
+        _patientRepo = patientRepo;
     }
 
     public IActionResult Index()
@@ -38,7 +39,10 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult forget_password_page(AspNetUser asp)
     {
-        _login.SendEmail(asp.Email);
+        string subject = "Reset Password";
+        string body = "link";
+
+        _login.SendEmail(asp.Email, subject, body);
 
         return RedirectToAction("login");
     }
@@ -117,6 +121,24 @@ public class HomeController : Controller
 
         };
         return View();
+    }
+
+    public IActionResult ReviewAgreement(string reqClientId)
+    {
+        var data = _patientRepo.ReviewAgreement(reqClientId);
+
+        return View(data);
+    }
+    public IActionResult Agree(int reqClientId)
+    {
+        _patientRepo.Agree(reqClientId);
+        return RedirectToAction("login", "Home");
+    }
+
+    public IActionResult DisAgree(AgreementViewModel obj)
+    {
+        _patientRepo.DisAgree(obj);
+        return RedirectToAction("login", "Home");
     }
 
     public IActionResult AccessDenied()
