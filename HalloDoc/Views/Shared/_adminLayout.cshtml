@@ -45,24 +45,24 @@
         <nav id="adminNav">
             <ul class="d-none d-md-flex nav w-100 border-bottom" id="togglebar">
                 <li class="nav-item ms-3 me-1">
-                    <a class="nav-link active" href="@Url.Action("Dashboard", "AdminDashboard")">Dashboard</a>
+                    <a class="nav-link" id="DashboardLink" href="@Url.Action("Dashboard", "AdminDashboard")">Dashboard</a>
                 </li>
                 <li class="nav-item pe-1">
-                    <a class="nav-link" href="#tab2">Provider Location</a>
+                    <a class="nav-link" href="@Url.Action("Provider", "AdminDashboard")">Provider Location</a>
                 </li>
                 <li class="nav-item pe-1">
-                    <a class="nav-link" href="#tab2">My Profile</a>
+                    <a class="nav-link" href="@Url.Action("MyProfile", "AdminDashboard")">My Profile</a>
                 </li>
                 <li class="nav-item pe-1">
-                    <a class="nav-link" href="#tab2">Providers</a>
+                    <a class="nav-link" href="@Url.Action("Provider", "AdminDashboard")">Providers</a>
                 </li>
                 <li class="nav-item pe-1">
-                    <a class="nav-link" href="#tab2">Partners</a>
+                    <a class="nav-link" href="@Url.Action("Partners", "AdminDashboard")">Partners</a>
                 </li>
                 <li class="nav-item pe-1">
-                    <a class="nav-link" href="#tab2">Access</a>
+                    <a class="nav-link" href="@Url.Action("Access", "AdminDashboard")">Access</a>
                 <li class="nav-item ">
-                    <a class="nav-link" href="#tab2">Records</a>
+                    <a class="nav-link" href="@Url.Action("Records", "AdminDashboard")">Records</a>
                 </li>
             </ul>
         </nav>
@@ -96,6 +96,7 @@
             document.documentElement.setAttribute('data-bs-theme', 'dark')
         }
     </script>
+    <script src="~/js/admin.js"></script>
     @RenderSection("AdminScript", required: false)
     @await Component.InvokeAsync("Notyf")
 </body>

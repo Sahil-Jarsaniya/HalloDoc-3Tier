@@ -33,7 +33,7 @@
                     bg = "#f745aa";
                     break;
             }
-            <tr >
+            <tr>
                 <td style="background-color: @bg;">@item.Firstname @item.Lastname</td>
                 <td style="background-color: @bg;">
                     <a href="mailto: @item.Email" class="btn border rounded">
@@ -137,7 +137,7 @@
                         <li><a class="dropdown-item" href="@Url.Action("ViewUpload","AdminDashboard", new {reqClientId = item.reqClientId})">View Uploads</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("SendOrders", new{reqClientId = item.reqClientId})">Orders</a></li>
-                        <li><a class="dropdown-item" href="#">Encounter</a></li>
+                        <li><a class="btn dropdown-item EncounterBtn" data-id="@item.reqClientId" href="#">Encounter</a></li>
                     </ul>
                 </td>
             </tr>
@@ -221,8 +221,8 @@
                     <a class="btn btn-success w-100" href="@Url.Action("ViewUpload","AdminDashboard", new {reqClientId = item.reqClientId})">View Uploads</a>
                 </div>
                 <div class="col-5 m-2">
-                    <a class="btn btn-success w-100">Encounter</a>
-                </div>  
+                    <a class="btn btn-success w-100 EncounterBtn" data-id="@item.reqClientId">Encounter</a>
+                </div>
                 <div class="col-5 m-2">
                     <a class="btn btn-warning w-100" href="@Url.Action("SendOrders", new{reqClientId = item.reqClientId})">Orders</a>
                 </div>
@@ -235,3 +235,10 @@
         </div>
     }
 </div>
+
+<script>
+    $(".EncounterBtn").click(function () {
+        $("#EncounterId").val($(this).data('id'));
+        $("#EncounterModal").modal('show');
+    })
+</script>

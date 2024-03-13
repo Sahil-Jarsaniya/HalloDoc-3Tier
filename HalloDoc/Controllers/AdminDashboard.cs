@@ -374,5 +374,87 @@ namespace HalloDoc.Controllers
             _adminRepo.CloseToUnpaidCase(reqClientId);
             return RedirectToAction("Dashboard", new { status = 13});
         }
+
+        public IActionResult Encounter(int reqClientId, string option)
+        {
+           
+                var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+                var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
+            if (option == "Consult")
+            { 
+                reqRow.Status = 4;
+            }
+            else
+            {
+                reqRow.Status = 15;
+            }
+            _db.Requests.Update(reqRow);
+                _db.SaveChanges();
+
+                return RedirectToAction("Dashboard", new { status = reqRow.Status });
+        }
+
+        public IActionResult MyProfile()
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+
+            var adminRow = _db.Admins.Where(x=> x.Aspnetuserid == AspId).FirstOrDefault();
+            var aspRow = _db.AspNetUsers.Where(x => x.Id == AspId).FirstOrDefault();
+            var data = new Profile
+            {
+                Adminid = adminRow.Adminid, 
+                Firstname = adminRow.Firstname,
+                Lastname = adminRow.Lastname,
+                Email = adminRow.Email,
+                Mobile = adminRow.Mobile,
+                Address1 = adminRow.Address1,
+                Address2 = adminRow.Address2,
+                Altphone = adminRow.Altphone,
+                ConfirmEmail = adminRow.Email,
+                Regionid = adminRow.Regionid,
+                Roleid = adminRow.Roleid,
+                Status = adminRow.Status,
+                UserName = aspRow.UserName,
+            };
+
+            return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult MyProfile(Profile obj)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+
+            var adminId = obj.Adminid;
+
+            var adminRow = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault();
+
+            adminRow.Firstname = obj.Firstname;
+            adminRow.Lastname = obj.Lastname;
+            adminRow.Email = obj.Email;
+            adminRow.Mobile = obj.Mobile;
+            adminRow.Altphone = obj.Altphone;
+            adminRow.Address1 = obj.Address1;
+            adminRow.Address2 = obj.Address2;
+            adminRow.Regionid = obj.Regionid;
+            adminRow.Roleid = obj.Roleid;
+            adminRow.Status = obj.Status;
+            adminRow.Zip = obj.Zip;
+            adminRow.City = obj.City;
+            adminRow.Modifieddate = DateTime.Now;
+            adminRow.Modifiedby = AspId;
+
+            _db.Admins.Update(adminRow);
+            _db.SaveChanges();
+
+            return View();
+        }
     }
 }

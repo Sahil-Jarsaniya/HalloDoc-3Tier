@@ -29,7 +29,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                 select t1
                             ).Count();
             var activeCount = (from t1 in _db.Requests
-                               where t1.Status == 8
+                               where t1.Status == 8 || t1.Status == 15
                                select t1
                             ).Count();
             var concludeCount = (from t1 in _db.Requests
@@ -190,7 +190,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var activeReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                 join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                                where req.Status == 8
+                                where req.Status == 8 || req.Status == 15
                                 select new activeReqViewModel
                                 {
                                     reqClientId = rc.Requestclientid,
