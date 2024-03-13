@@ -403,9 +403,9 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
 
-            var adminRow = _db.Admins.Where(x=> x.Aspnetuserid == AspId).FirstOrDefault();
-            var aspRow = _db.AspNetUsers.Where(x => x.Id == AspId).FirstOrDefault();
-            var data = new Profile
+            Admin adminRow = _db.Admins.Where(x=> x.Aspnetuserid == AspId).FirstOrDefault();
+            AspNetUser aspRow = _db.AspNetUsers.Where(x => x.Id == AspId).FirstOrDefault();
+            Profile data = new Profile
             {
                 Adminid = adminRow.Adminid, 
                 Firstname = adminRow.Firstname,
@@ -419,7 +419,7 @@ namespace HalloDoc.Controllers
                 Regionid = adminRow.Regionid,
                 Roleid = adminRow.Roleid,
                 Status = adminRow.Status,
-                UserName = aspRow.UserName,
+                UserName = aspRow.UserName,     
             };
 
             return View(data);
@@ -432,9 +432,9 @@ namespace HalloDoc.Controllers
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
-            var adminId = obj.Adminid;
+            int adminId = obj.Adminid;
 
-            var adminRow = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault();
+            Admin? adminRow = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault();
 
             adminRow.Firstname = obj.Firstname;
             adminRow.Lastname = obj.Lastname;
