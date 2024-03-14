@@ -498,7 +498,9 @@
     <script type="text/javascript">
         $(function () {
             $("#btnSubmit").click(function () {
-                $("input[name='GridHtml']").val($("#PartialTable").html());
+                var cloneaTable = $("#PartialTable").clone();
+                cloneaTable.find("th:nth-last-child(-n+2), td:nth-child(-n+2)").remove();
+                $("input[name='GridHtml']").val(cloneaTable.html());
             });
         });
     </script>
