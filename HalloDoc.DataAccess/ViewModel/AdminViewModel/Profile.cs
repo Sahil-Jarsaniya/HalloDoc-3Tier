@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HalloDoc.DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,5 +41,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public int? Roleid { get; set; }
 
         public string? Altphone { get; set; }
+
+        public IEnumerable<Region> Region { get; set; }
     }
 }

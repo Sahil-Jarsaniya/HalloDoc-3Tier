@@ -102,7 +102,7 @@
                         <li><a class="dropdown-item" href="@Url.Action("ViewUpload","AdminDashboard", new {reqClientId = item.reqClientId})">View Uploads</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("SendOrders", new{reqClientId = item.reqClientId})">Orders</a></li>
-                        <li><a class="dropdown-item" href="#">Encounter</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("EncounterForm", new{reqClientId = item.reqClientId})">Encounter</a></li>
                     </ul>
                 </td>
             </tr>
@@ -184,7 +184,7 @@
                     <a class="btn btn-success w-100" href="@Url.Action("ViewUpload","AdminDashboard", new {reqClientId = item.reqClientId})">View Uploads</a>
                 </div>
                 <div class="col-5 m-2">
-                    <a class="btn btn-success w-100">Encounter</a>
+                    <a class="btn btn-success w-100" href="@Url.Action("EncounterForm", new{reqClientId = item.reqClientId})">Encounter</a>
                 </div>
                 <div class="col-5 m-2">
                     <a class="btn btn-warning w-100" href="@Url.Action("SendOrders", new{reqClientId = item.reqClientId})">Orders</a>

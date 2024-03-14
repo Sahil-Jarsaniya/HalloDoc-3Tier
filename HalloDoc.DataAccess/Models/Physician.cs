@@ -75,7 +75,7 @@ public partial class Physician
 
     public virtual Aspnetuser1? Aspnetuser { get; set; }
 
-    public virtual Aspnetuser1 CreatedbyNavigation { get; set; } = null!;
+    public virtual AspNetUser CreatedbyNavigation { get; set; } = null!;
 
     public virtual Aspnetuser1? ModifiedbyNavigation { get; set; }
 

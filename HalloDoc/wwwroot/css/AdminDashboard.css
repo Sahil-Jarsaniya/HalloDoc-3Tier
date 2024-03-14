@@ -2,47 +2,6 @@
     --primary: #10bce9;
 }
 
-/*.btn-primary {
-    background-color: #10bce9;
-    color: white;
-    border: 1px solid #10bce9;
-}*/
-
-/*[data-bs-theme="dark"] .btn-primary {
-    background-color: #10bce9;
-    color: white;
-    border: 1px solid #10bce9;
-}
-
-.btn-primary:hover {
-    color: #10bce9;
-    border: 1px solid #10bce9;
-    background-color: white;
-}
-
-.btn-secondary {
-    color: #10bce9;
-    border: 1px solid #10bce9;
-    background-color: white;
-}
-
-    .btn-secondary:hover {
-        border: 1px solid #10bce9;
-        background-color: #10bce9;
-        color: white;
-    }
-
-    .btn-secondary img {
-        filter: invert(55%) sepia(96%) saturate(2452%) hue-rotate(154deg) brightness(102%) contrast(99%);
-    }
-
-    .btn-secondary:hover img{
-        filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
-    }
-*/
-
-
-
 
 .night-mode-btn svg {
     fill: var(--primary);
@@ -243,7 +202,11 @@ a {
         border: 1px solid var(--primary);
         color: var(--primary);
     }
-
+    .viewCaseForm textarea:focus {
+        box-shadow: none;
+        border: 1px solid var(--primary);
+        color: var(--primary);
+    }
 #back-btn:hover img {
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(93deg) brightness(103%) contrast(103%);
 }

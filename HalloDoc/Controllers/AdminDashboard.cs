@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+
 namespace HalloDoc.Controllers
 {
     [CustomAuth("Admin")]
@@ -405,6 +407,8 @@ namespace HalloDoc.Controllers
 
             Admin adminRow = _db.Admins.Where(x=> x.Aspnetuserid == AspId).FirstOrDefault();
             AspNetUser aspRow = _db.AspNetUsers.Where(x => x.Id == AspId).FirstOrDefault();
+            var Region = from t1 in _db.Regions select t1;
+
             Profile data = new Profile
             {
                 Adminid = adminRow.Adminid, 
@@ -420,6 +424,7 @@ namespace HalloDoc.Controllers
                 Roleid = adminRow.Roleid,
                 Status = adminRow.Status,
                 UserName = aspRow.UserName,     
+                Region = Region
             };
 
             return View(data);
@@ -455,6 +460,87 @@ namespace HalloDoc.Controllers
             _db.SaveChanges();
 
             return View();
+        }
+
+        public IActionResult EncounterForm(int reqClientId){
+
+            Requestclient? requestclient = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            Request? request = _db.Requests.Where(x => x.Requestid == requestclient.Requestid).FirstOrDefault();
+            Encounter? encounter = _db.Encounters.Where(x => x.Requestid == request.Requestid).FirstOrDefault();
+
+            if(encounter == null)
+            {
+
+                Encounter obj = new Encounter()
+                {
+                    Firstname = requestclient.Firstname,
+                    LastName = requestclient.Lastname,
+                    Email = requestclient.Email,
+                    Phonenumber = requestclient.Phonenumber,
+                    Strmonth = requestclient.Strmonth,
+                    Location = requestclient.Location,
+                    Requestid = request.Requestid
+                };
+
+                ViewBag.status = request.Status;
+                return View(obj);
+            }
+            else
+            {
+                ViewBag.status = request.Status;
+                return View(encounter);
+            }
+
+        }
+        [HttpPost]
+        public IActionResult EncounterForm(Encounter obj)
+        {
+            
+            Encounter encounter = _db.Encounters.Where(x => x.Requestid == obj.Requestid).FirstOrDefault();
+            if(encounter != null)
+            {
+            encounter.Firstname = obj.Firstname;
+            encounter.LastName = obj.LastName;
+            encounter.Email = obj.Email;
+            encounter.Phonenumber = obj.Phonenumber;
+            encounter.Location = obj.Location;
+            encounter.Strmonth = obj.Strmonth;
+            encounter.Servicedate = obj.Servicedate;
+            encounter.MedicalHistory = obj.MedicalHistory;
+            encounter.PresentIllnessHistory = obj.PresentIllnessHistory;
+            encounter.Medications = obj.Medications;
+            encounter.Allergies = obj.Allergies;
+            encounter.Temperature   = obj.Temperature;
+            encounter.HeartRate = obj.HeartRate;
+            encounter.RespirationRate= obj.RespirationRate;
+            encounter.BloodPressureDiastolic= obj.BloodPressureDiastolic;
+            encounter.BloodPressureSystolic= obj.BloodPressureSystolic;
+            encounter.OxygenLevel= obj.OxygenLevel;
+            encounter.Pain= obj.Pain;
+            encounter.Heent= obj.Heent;
+            encounter.Chest= obj.Chest;
+            encounter.Abdomen= obj.Abdomen;
+            encounter.Extremities= obj.Extremities;
+            encounter.Skin= obj.Skin;
+            encounter.Neuro= obj.Neuro;
+            encounter.Other= obj.Other;
+            encounter.Diagnosis= obj.Diagnosis;
+            encounter.TreatmentPlan= obj.TreatmentPlan;
+            encounter.MedicationsDispensed= obj.MedicationsDispensed;
+            encounter.Procedures= obj.Procedures;
+            encounter.FollowUp= obj.FollowUp;
+                
+            _db.Encounters.Update(encounter);
+            _db.SaveChanges();
+            }
+            return View(obj);
+        }
+
+
+        [HttpPost]
+        public FileResult Export(string GridHtml)
+        {
+            return File(Encoding.ASCII.GetBytes(GridHtml), "application/vnd.ms-excel", "Grid.xls");
         }
     }
 }

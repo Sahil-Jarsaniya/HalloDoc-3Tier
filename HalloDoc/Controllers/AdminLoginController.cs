@@ -30,7 +30,7 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult login(AspNetUser obj)
         {
-            var hashPass = _LoginRepository.GetHash(obj.Password);
+            var hashPass = _LoginRepository.GetHash(obj.PasswordHash);
             var myUser = _LoginRepository.GetLoginData(obj, hashPass);
             if (myUser == null)
             {

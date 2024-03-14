@@ -141,15 +141,23 @@
                 <span class="d-none d-lg-inline ms-1">Send Link</span>
             </button>
 
-            <button type="submit" class="mx-1 px-2 py-1 btn btn-primary">
+            <a href="@Url.Action("createPatientRequest", "Request")"  class="mx-1 px-2 py-1 btn btn-primary">
                 <img src="~/images/journal-text.svg"/>
                 <span class="d-none d-lg-inline ms-1 ">Create Request</span>
-            </button>
+            </a>
 
-            <a class="mx-1 px-2 py-1 btn btn-primary exportData">
+            @*<a class="mx-1 px-2 py-1 btn btn-primary exportData">
                 <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
                 <span class="d-none d-lg-inline ms-1">Export</span>
-            </a>
+            </a>*@
+            <form method="post" asp-action="Export" asp-controller="AdminDashboard">
+                <input type="hidden" name="GridHtml" />
+                    <input value="Export" hidden/>
+                <button type="submit" class="mx-1 px-2 py-1 btn btn-primary exportData" id="btnSubmit">
+                    <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
+                    <span class="d-none d-lg-inline ms-1">Export</span>
+                </button>
+            </form>
 
             <button type="submit" class="mx-1 px-2 py-1 btn btn-primary">
                 <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
@@ -234,7 +242,7 @@
                 <circle fill="#9966cd" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
                 </svg>
                 <h6 class="fs-6 ms-lg-2 m-auto">VIP</h6>
-                </a>*@
+                </a>*@ 
             </div>
         </div>
         <div class="tab-content  mt-3 " id="PartialTable" style="overflow-x: scroll">
@@ -487,4 +495,11 @@
     </script>
     <script type="text/javascript" src="~/js/AdminDashboard.js"></script>
     <script src="~/js/CasesPopUp.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSubmit").click(function () {
+                $("input[name='GridHtml']").val($("#PartialTable").html());
+            });
+        });
+    </script>
 }

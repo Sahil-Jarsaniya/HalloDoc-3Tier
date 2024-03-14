@@ -45,11 +45,11 @@ public partial class Admin
 
     public virtual ICollection<Adminregion> Adminregions { get; set; } = new List<Adminregion>();
 
-    public virtual Aspnetuser1? Aspnetuser { get; set; }
+    public virtual AspNetUser? Aspnetuser { get; set; }
 
     public virtual ICollection<Emaillog> Emaillogs { get; set; } = new List<Emaillog>();
 
-    public virtual Aspnetuser1? ModifiedbyNavigation { get; set; }
+    public virtual AspNetUser? ModifiedbyNavigation { get; set; }
 
     public virtual ICollection<Requeststatuslog> Requeststatuslogs { get; set; } = new List<Requeststatuslog>();
 

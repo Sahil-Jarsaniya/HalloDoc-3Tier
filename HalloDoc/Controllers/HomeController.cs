@@ -63,7 +63,7 @@ public class HomeController : Controller
         }
         else
         {
-            aspUser.Password = _login.GetHash(obj.ConfirmPassword);
+            aspUser.PasswordHash = _login.GetHash(obj.ConfirmPassword);
             //aspUser.Password = obj.ConfirmPassword;
             _db.AspNetUsers.Update(aspUser);
             _db.SaveChanges();
@@ -80,7 +80,7 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult login(AspNetUser user)
     {
-        var hashPass = _login.GetHash(user.Password);
+        var hashPass = _login.GetHash(user.PasswordHash);
         var myUser = _login.PatientLogin(user, hashPass);
 
         if (myUser == null)

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HalloDoc.DataAccess.Models;
 
@@ -11,8 +9,7 @@ public partial class AspNetUser
 
     public string UserName { get; set; } = null!;
 
-    [Column("PasswordHash")]
-    public string Password { get; set; }
+    public string? PasswordHash { get; set; }
 
     public string? Email { get; set; }
 
@@ -23,6 +20,12 @@ public partial class AspNetUser
     public DateTime CreatedDate { get; set; }
 
     public DateTime? ModifiedDate { get; set; }
+
+    public virtual ICollection<Admin> AdminAspnetusers { get; set; } = new List<Admin>();
+
+    public virtual ICollection<Admin> AdminModifiedbyNavigations { get; set; } = new List<Admin>();
+
+    public virtual ICollection<Physician> Physicians { get; set; } = new List<Physician>();
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 

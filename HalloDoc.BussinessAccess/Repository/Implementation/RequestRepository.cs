@@ -42,7 +42,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 {
 
                     Id = guid.ToString(),
-                    Password = hashPass,
+                    PasswordHash = hashPass,
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
                     PhoneNumber = obj.Phonenumber,

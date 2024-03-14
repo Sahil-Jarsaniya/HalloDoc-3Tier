@@ -21,10 +21,6 @@ public partial class Aspnetuser1
 
     public DateTime? Modifieddate { get; set; }
 
-    public virtual ICollection<Admin> AdminAspnetusers { get; set; } = new List<Admin>();
-
-    public virtual ICollection<Admin> AdminModifiedbyNavigations { get; set; } = new List<Admin>();
-
     public virtual ICollection<Aspnetuserrole1> Aspnetuserrole1s { get; set; } = new List<Aspnetuserrole1>();
 
     public virtual ICollection<Business> BusinessCreatedbyNavigations { get; set; } = new List<Business>();
@@ -32,8 +28,6 @@ public partial class Aspnetuser1
     public virtual ICollection<Business> BusinessModifiedbyNavigations { get; set; } = new List<Business>();
 
     public virtual ICollection<Physician> PhysicianAspnetusers { get; set; } = new List<Physician>();
-
-    public virtual ICollection<Physician> PhysicianCreatedbyNavigations { get; set; } = new List<Physician>();
 
     public virtual ICollection<Physician> PhysicianModifiedbyNavigations { get; set; } = new List<Physician>();
 
