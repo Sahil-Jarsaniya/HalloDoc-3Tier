@@ -1,4 +1,5 @@
-﻿using HalloDoc.BussinessAccess.Repository.Interface;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
@@ -17,10 +18,12 @@ namespace HalloDoc.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly IPatientRepository _patientrepo;
-        public PatientController(ApplicationDbContext db, IPatientRepository patientrepo)
+        private readonly INotyfService _notyf;
+        public PatientController(ApplicationDbContext db, IPatientRepository patientrepo, INotyfService notyf)
         {
             _db = db;
             _patientrepo = patientrepo;
+            _notyf = notyf;
         }
         
         public IActionResult Dashboard(String AspId)
@@ -51,6 +54,7 @@ namespace HalloDoc.Controllers
         {
             var id = _patientrepo.Document(obj);
 
+            _notyf.Success("Successfully Uploaded");
             return RedirectToAction("Document", "Patient", new { reqId = id });
         }
 

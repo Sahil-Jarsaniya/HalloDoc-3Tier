@@ -1,4 +1,5 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Implementation;
+using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using System;
@@ -13,6 +14,13 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
     {
         public int GetAdminId(string AspId);
         public AdminDashboardViewModel adminDashboard();
+
+        public IEnumerable<newReqViewModel> newReq();
+        public IEnumerable<pendingReqViewModel> pendingReq();
+        public IEnumerable<activeReqViewModel> activeReq();
+        public IEnumerable<concludeReqViewModel> concludeReq();
+        public IEnumerable<closeReqViewModel> closeReq();
+        public IEnumerable<unpaidReqViewModel> unpaidReq();
 
         public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data);
 
@@ -48,5 +56,10 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public CloseCaseViewModel CloseCase(int reqClientId);
         public void CloseCase(CloseCaseViewModel obj);
         public void CloseToUnpaidCase(int reqClientId);
+
+        public Encounter Encounter(int reqClientId);
+        public void Encounter(Encounter obj);
+
+        public int GetStatus(int reqClientId);
     }
 }

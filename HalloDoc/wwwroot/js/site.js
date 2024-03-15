@@ -45,7 +45,7 @@ function showHidePassword() {
     }
 }
 
-showHideConfirmPassword
+//showHideConfirmPassword
 function showHideConfirmPassword() {
     var floatingPassword2 = document.getElementById('floatingPassword2');
     var passImg2 = document.getElementById('passImg2');
@@ -78,7 +78,6 @@ var phoneInput = window.intlTelInput(friendPhone,
         separateDialCode: true,
         initialCountry: "in"
     });
-
 
 // alert box 
 $(window).on('load', function () {

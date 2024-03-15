@@ -18,18 +18,20 @@ namespace HalloDoc.Controllers
     public class AdminDashboard : Controller
     {
         private readonly IAdminDashboardRepository _adminRepo;
+        private readonly IRequestRepository _requestRepo;
         private readonly ILoginRepository _loginRepo;
         private readonly ApplicationDbContext _db;
         private readonly IJwtService _jwtService;
         private readonly INotyfService _notyf;
 
-        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf, ILoginRepository loginRepo)
+        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf, ILoginRepository loginRepo, IRequestRepository requestRepo)
         {
             _adminRepo = adminRepo;
             _db = db;
             _jwtService = jwtService;
             _notyf = notyf;
             _loginRepo = loginRepo;
+            _requestRepo = requestRepo;
         }
 
         public IActionResult Dashboard(int? status)
@@ -73,6 +75,12 @@ namespace HalloDoc.Controllers
 
             if (obj.Name != null || obj.reqType != 0 || obj.RegionId != 0)
             {
+                data.newReqViewModel = _adminRepo.newReq();
+                data.pendingReqViewModel = _adminRepo.pendingReq();
+                data.unpaidReqViewModels = _adminRepo.unpaidReq();
+                data.activeReqViewModels = _adminRepo.activeReq();
+                data.concludeReqViewModel = _adminRepo.concludeReq();
+                data.closeReqViewModels = _adminRepo.closeReq();
                 var searchData = _adminRepo.searchPatient(obj, data);
                 if (status == 1)
                 {
@@ -108,35 +116,64 @@ namespace HalloDoc.Controllers
 
             if (status == 1)
             {
-                var parseData = data.newReqViewModel;
+                var parseData = _adminRepo.newReq();
                 return PartialView("_newRequestView", parseData);
             }
             else if (status == 2)
             {
-                var parseData = data.pendingReqViewModel;
+                var parseData = _adminRepo.pendingReq();
                 return PartialView("_PendingRequestView", parseData);
             }
             else if (status == 8)
             {
-                var parseData = data.activeReqViewModels;
+                var parseData = _adminRepo.activeReq();
                 return PartialView("_activeRequestView", parseData);
             }
             else if (status == 4)
             {
-                var parseData = data.concludeReqViewModel;
+                var parseData = _adminRepo.concludeReq();
                 return PartialView("_concludeReqView", parseData);
             }
             else if (status == 5)
             {
-                var parseData = data.closeReqViewModels;
+                var parseData = _adminRepo.closeReq();
                 return PartialView("_closeReqView", parseData);
             }
             else
             {
-                var parseData = data.unpaidReqViewModels;
+                var parseData = _adminRepo.unpaidReq();
                 return PartialView("_unpaidReqView", parseData);
             }
         }
+
+        public IActionResult CreateRequest()
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            ViewBag.Data = fname + " " + lname;
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateRequest(FamilyViewModel obj)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            ViewBag.Data = fname + " " + lname;
+            if (ModelState.IsValid)
+            {
+                 _requestRepo.CreateFamilyfriendRequest(obj);
+
+                return RedirectToAction("Dashboard");
+            }
+            return View();
+        }
+
 
         public IActionResult ViewCase(int reqClientId)
         {
@@ -159,7 +196,7 @@ namespace HalloDoc.Controllers
             if (task)
             {
                 ViewBag.success = "updated successfully";
-                return RedirectToAction("Dashboard", new {status = obj.status});
+                return RedirectToAction("Dashboard", new { status = obj.status });
             }
             else
             {
@@ -242,7 +279,7 @@ namespace HalloDoc.Controllers
         public IActionResult ViewUpload(int reqClientId)
         {
             var token = Request.Cookies["jwt"];
-            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token); 
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
@@ -289,7 +326,7 @@ namespace HalloDoc.Controllers
         }
 
         public void TransferCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
-       {
+        {
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
@@ -320,7 +357,7 @@ namespace HalloDoc.Controllers
 
             _adminRepo.SendOrders(obj, AspId);
 
-            return RedirectToAction("SendOrders", new {reqClientId = obj.reqClientId});
+            return RedirectToAction("SendOrders", new { reqClientId = obj.reqClientId });
         }
 
 
@@ -328,7 +365,7 @@ namespace HalloDoc.Controllers
         {
             return _adminRepo.FilterProfession(ProfessionId);
         }
-   
+
         public object ShowVendorDetail(int selectVendor)
         {
             return _adminRepo.ShowVendorDetail(selectVendor);
@@ -336,16 +373,16 @@ namespace HalloDoc.Controllers
 
         public void ClearCase(int reqClientId)
         {
-            _adminRepo.ClearCase(reqClientId);  
+            _adminRepo.ClearCase(reqClientId);
         }
 
         public void SendAgreement(int reqClientId, string email, string phone)
         {
-            
+
             var callBackUrl = Url.Action("ReviewAgreement", "Home", new { reqClientId }, protocol: HttpContext.Request.Scheme, host: "localhost:44349");
-            
+
             string subject = "Regarding Agreement";
-            string body = "<a href="+ callBackUrl +">Review</a>";
+            string body = "<a href=" + callBackUrl + ">Review</a>";
 
             _loginRepo.SendEmail(email, subject, body);
         }
@@ -368,22 +405,22 @@ namespace HalloDoc.Controllers
         public IActionResult CloseCase(CloseCaseViewModel obj)
         {
             _adminRepo.CloseCase(obj);
-            return RedirectToAction("CloseCase", new {reqClientId = obj.ReqClientId});   
+            return RedirectToAction("CloseCase", new { reqClientId = obj.ReqClientId });
         }
 
         public IActionResult CloseToUnpaidCase(int reqClientId)
         {
             _adminRepo.CloseToUnpaidCase(reqClientId);
-            return RedirectToAction("Dashboard", new { status = 13});
+            return RedirectToAction("Dashboard", new { status = 13 });
         }
 
         public IActionResult Encounter(int reqClientId, string option)
         {
-           
-                var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
-                var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
+
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
             if (option == "Consult")
-            { 
+            {
                 reqRow.Status = 4;
             }
             else
@@ -391,9 +428,9 @@ namespace HalloDoc.Controllers
                 reqRow.Status = 15;
             }
             _db.Requests.Update(reqRow);
-                _db.SaveChanges();
+            _db.SaveChanges();
 
-                return RedirectToAction("Dashboard", new { status = reqRow.Status });
+            return RedirectToAction("Dashboard", new { status = reqRow.Status });
         }
 
         public IActionResult MyProfile()
@@ -405,13 +442,13 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
 
-            Admin adminRow = _db.Admins.Where(x=> x.Aspnetuserid == AspId).FirstOrDefault();
+            Admin adminRow = _db.Admins.Where(x => x.Aspnetuserid == AspId).FirstOrDefault();
             AspNetUser aspRow = _db.AspNetUsers.Where(x => x.Id == AspId).FirstOrDefault();
             var Region = from t1 in _db.Regions select t1;
 
             Profile data = new Profile
             {
-                Adminid = adminRow.Adminid, 
+                Adminid = adminRow.Adminid,
                 Firstname = adminRow.Firstname,
                 Lastname = adminRow.Lastname,
                 Email = adminRow.Email,
@@ -423,7 +460,7 @@ namespace HalloDoc.Controllers
                 Regionid = adminRow.Regionid,
                 Roleid = adminRow.Roleid,
                 Status = adminRow.Status,
-                UserName = aspRow.UserName,     
+                UserName = aspRow.UserName,
                 Region = Region
             };
 
@@ -462,77 +499,17 @@ namespace HalloDoc.Controllers
             return View();
         }
 
-        public IActionResult EncounterForm(int reqClientId){
-
-            Requestclient? requestclient = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
-            Request? request = _db.Requests.Where(x => x.Requestid == requestclient.Requestid).FirstOrDefault();
-            Encounter? encounter = _db.Encounters.Where(x => x.Requestid == request.Requestid).FirstOrDefault();
-
-            if(encounter == null)
-            {
-
-                Encounter obj = new Encounter()
-                {
-                    Firstname = requestclient.Firstname,
-                    LastName = requestclient.Lastname,
-                    Email = requestclient.Email,
-                    Phonenumber = requestclient.Phonenumber,
-                    Strmonth = requestclient.Strmonth,
-                    Location = requestclient.Location,
-                    Requestid = request.Requestid
-                };
-
-                ViewBag.status = request.Status;
-                return View(obj);
-            }
-            else
-            {
-                ViewBag.status = request.Status;
-                return View(encounter);
-            }
-
+        public IActionResult EncounterForm(int reqClientId)
+        {
+            var obj = _adminRepo.Encounter(reqClientId);
+            ViewBag.status = _adminRepo.GetStatus(reqClientId);
+            return View(obj);
         }
         [HttpPost]
         public IActionResult EncounterForm(Encounter obj)
         {
-            
-            Encounter encounter = _db.Encounters.Where(x => x.Requestid == obj.Requestid).FirstOrDefault();
-            if(encounter != null)
-            {
-            encounter.Firstname = obj.Firstname;
-            encounter.LastName = obj.LastName;
-            encounter.Email = obj.Email;
-            encounter.Phonenumber = obj.Phonenumber;
-            encounter.Location = obj.Location;
-            encounter.Strmonth = obj.Strmonth;
-            encounter.Servicedate = obj.Servicedate;
-            encounter.MedicalHistory = obj.MedicalHistory;
-            encounter.PresentIllnessHistory = obj.PresentIllnessHistory;
-            encounter.Medications = obj.Medications;
-            encounter.Allergies = obj.Allergies;
-            encounter.Temperature   = obj.Temperature;
-            encounter.HeartRate = obj.HeartRate;
-            encounter.RespirationRate= obj.RespirationRate;
-            encounter.BloodPressureDiastolic= obj.BloodPressureDiastolic;
-            encounter.BloodPressureSystolic= obj.BloodPressureSystolic;
-            encounter.OxygenLevel= obj.OxygenLevel;
-            encounter.Pain= obj.Pain;
-            encounter.Heent= obj.Heent;
-            encounter.Chest= obj.Chest;
-            encounter.Abdomen= obj.Abdomen;
-            encounter.Extremities= obj.Extremities;
-            encounter.Skin= obj.Skin;
-            encounter.Neuro= obj.Neuro;
-            encounter.Other= obj.Other;
-            encounter.Diagnosis= obj.Diagnosis;
-            encounter.TreatmentPlan= obj.TreatmentPlan;
-            encounter.MedicationsDispensed= obj.MedicationsDispensed;
-            encounter.Procedures= obj.Procedures;
-            encounter.FollowUp= obj.FollowUp;
-                
-            _db.Encounters.Update(encounter);
-            _db.SaveChanges();
-            }
+
+            _adminRepo.Encounter(obj);
             return View(obj);
         }
 

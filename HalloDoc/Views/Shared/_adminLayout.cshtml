@@ -54,7 +54,14 @@
                     <a class="nav-link" href="@Url.Action("MyProfile", "AdminDashboard")">My Profile</a>
                 </li>
                 <li class="nav-item pe-1">
-                    <a class="nav-link" href="@Url.Action("Provider", "AdminDashboard")">Providers</a>
+                    <a class="nav-link dropdown-toggle" @*href="@Url.Action("Provider", "AdminDashboard")"*@ role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Providers
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Providers</a></li>
+                        <li><a class="dropdown-item" href="#">Scheduling</a></li>
+                        <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                    </ul>
                 </li>
                 <li class="nav-item pe-1">
                     <a class="nav-link" href="@Url.Action("Partners", "AdminDashboard")">Partners</a>

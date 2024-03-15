@@ -54,139 +54,85 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 unpaidCount = unpaidCount
             };
 
-            var newReqData =( from req in _db.Requests
-                          join rc in _db.Requestclients on req.Requestid equals rc.Requestid 
-                          where req.Status == 1 
-                          select new newReqViewModel
-                          {
-                              reqClientId = rc.Requestclientid,
-                              Firstname = rc.Firstname,
-                              Lastname = rc.Lastname,
-                              reqFirstname = req.Firstname,
-                              reqLastname = req.Lastname,
-                              Strmonth = rc.Strmonth,
-                              Createddate = req.Createddate,
-                              Phonenumber = rc.Phonenumber,
-                              ConciergePhonenumber = req.Phonenumber,
-                              FamilyPhonenumber = req.Phonenumber,
-                              BusinessPhonenumber = req.Phonenumber,
-                              Street = rc.Street,
-                              City = rc.City,
-                              State = rc.State,
-                              Zipcode = rc.Zipcode,
-                              Notes = rc.Notes,
-                              reqTypeId = req.Requesttypeid,
-                              Regionid = rc.Regionid,
-                              Email = rc.Email,
-                          });
+            
+           
+           
+
+            var CaseTag = from t1 in _db.Casetags select t1;
+            var Region = from t1 in _db.Regions select t1;
+
+            var data = new AdminDashboardViewModel
+            {
+                countRequestViewModel = count,
+                Casetag = CaseTag,
+                Region = Region
+
+            };
+            return data;
+        }
+
+        public IEnumerable<newReqViewModel> newReq()
+        {
+            var newReqData = (from req in _db.Requests
+                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                              where req.Status == 1
+                              select new newReqViewModel
+                              {
+                                  reqClientId = rc.Requestclientid,
+                                  Firstname = rc.Firstname,
+                                  Lastname = rc.Lastname,
+                                  reqFirstname = req.Firstname,
+                                  reqLastname = req.Lastname,
+                                  Strmonth = rc.Strmonth,
+                                  Createddate = req.Createddate,
+                                  Phonenumber = rc.Phonenumber,
+                                  ConciergePhonenumber = req.Phonenumber,
+                                  FamilyPhonenumber = req.Phonenumber,
+                                  BusinessPhonenumber = req.Phonenumber,
+                                  Street = rc.Street,
+                                  City = rc.City,
+                                  State = rc.State,
+                                  Zipcode = rc.Zipcode,
+                                  Notes = rc.Notes,
+                                  reqTypeId = req.Requesttypeid,
+                                  Regionid = rc.Regionid,
+                                  Email = rc.Email,
+                              });
+            return newReqData;
+        }
+        public IEnumerable<pendingReqViewModel> pendingReq()
+        {
             var pendingReqData = from req in _db.Requests
-                             join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                             join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                             where req.Status == 2
-                             select new pendingReqViewModel
-                             {
-                                 reqClientId = rc.Requestclientid,
-                                 Firstname = rc.Firstname,
-                                 Lastname = rc.Lastname,
-                                 reqFirstname = req.Firstname,
-                                 reqLastname = req.Lastname,
-                                 Strmonth = rc.Strmonth,
-                                 Createddate = req.Createddate,
-                                 Phonenumber = rc.Phonenumber,
-                                 ConciergePhonenumber = req.Phonenumber,
-                                 FamilyPhonenumber = req.Phonenumber,
-                                 BusinessPhonenumber = req.Phonenumber,
-                                 Street = rc.Street,
-                                 City = rc.City,
-                                 State = rc.State,
-                                 Zipcode = rc.Zipcode,
-                                 Notes = rc.Notes,
-                                 reqTypeId = req.Requesttypeid,
-                                 physicianName = phy.Firstname + " " + phy.Lastname,
-                                 Regionid = rc.Regionid,
-                                 Email = rc.Email,
-                             };
-            var closeReqData = from req in _db.Requests
-                             join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                             join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                             where req.Status == 5
-                             select new closeReqViewModel
-                             {
-                                 reqClientId = rc.Requestclientid,
-                                 Firstname = rc.Firstname,
-                                 Lastname = rc.Lastname,
-                                 reqFirstname = req.Firstname,
-                                 reqLastname = req.Lastname,
-                                 Strmonth = rc.Strmonth,
-                                 Createddate = req.Createddate,
-                                 Phonenumber = rc.Phonenumber,
-                                 ConciergePhonenumber = req.Phonenumber,
-                                 FamilyPhonenumber = req.Phonenumber,
-                                 BusinessPhonenumber = req.Phonenumber,
-                                 Street = rc.Street,
-                                 City = rc.City,
-                                 State = rc.State,
-                                 Zipcode = rc.Zipcode,
-                                 Notes = rc.Notes,
-                                 reqTypeId = req.Requesttypeid,
-                                 physicianName = phy.Firstname + " " + phy.Lastname,
-                                 Regionid = rc.Regionid,
-                                 Email = rc.Email,
-                             };
-            var concludeReqData = from req in _db.Requests
-                             join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                             join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                             where req.Status == 4
-                             select new concludeReqViewModel
-                             {
-                                 reqClientId = rc.Requestclientid,
-                                 Firstname = rc.Firstname,
-                                 Lastname = rc.Lastname,
-                                 reqFirstname = req.Firstname,
-                                 reqLastname = req.Lastname,
-                                 Strmonth = rc.Strmonth,
-                                 Createddate = req.Createddate,
-                                 Phonenumber = rc.Phonenumber,
-                                 ConciergePhonenumber = req.Phonenumber,
-                                 FamilyPhonenumber = req.Phonenumber,
-                                 BusinessPhonenumber = req.Phonenumber,
-                                 Street = rc.Street,
-                                 City = rc.City,
-                                 State = rc.State,
-                                 Zipcode = rc.Zipcode,
-                                 Notes = rc.Notes,
-                                 reqTypeId = req.Requesttypeid,
-                                 physicianName = phy.Firstname + " " + phy.Lastname,
-                                 Regionid = rc.Regionid,
-                                 Email = rc.Email,
-                             };
-            var unpaidReqData = from req in _db.Requests
-                             join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                             join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                             where req.Status == 13
-                             select new unpaidReqViewModel
-                             {
-                                 reqClientId = rc.Requestclientid,
-                                 Firstname = rc.Firstname,
-                                 Lastname = rc.Lastname,
-                                 reqFirstname = req.Firstname,
-                                 reqLastname = req.Lastname,
-                                 Strmonth = rc.Strmonth,
-                                 Createddate = req.Createddate,
-                                 Phonenumber = rc.Phonenumber,
-                                 ConciergePhonenumber = req.Phonenumber,
-                                 FamilyPhonenumber = req.Phonenumber,
-                                 BusinessPhonenumber = req.Phonenumber,
-                                 Street = rc.Street,
-                                 City = rc.City,
-                                 State = rc.State,
-                                 Zipcode = rc.Zipcode,
-                                 Notes = rc.Notes,
-                                 reqTypeId = req.Requesttypeid,
-                                 physicianName = phy.Firstname + " " + phy.Lastname,
-                                 Regionid = rc.Regionid,
-                                 Email = rc.Email,
-                             };
+                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                                 join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
+                                 where req.Status == 2
+                                 select new pendingReqViewModel
+                                 {
+                                     reqClientId = rc.Requestclientid,
+                                     Firstname = rc.Firstname,
+                                     Lastname = rc.Lastname,
+                                     reqFirstname = req.Firstname,
+                                     reqLastname = req.Lastname,
+                                     Strmonth = rc.Strmonth,
+                                     Createddate = req.Createddate,
+                                     Phonenumber = rc.Phonenumber,
+                                     ConciergePhonenumber = req.Phonenumber,
+                                     FamilyPhonenumber = req.Phonenumber,
+                                     BusinessPhonenumber = req.Phonenumber,
+                                     Street = rc.Street,
+                                     City = rc.City,
+                                     State = rc.State,
+                                     Zipcode = rc.Zipcode,
+                                     Notes = rc.Notes,
+                                     reqTypeId = req.Requesttypeid,
+                                     physicianName = phy.Firstname + " " + phy.Lastname,
+                                     Regionid = rc.Regionid,
+                                     Email = rc.Email,
+                                 };
+            return pendingReqData;
+        }
+        public IEnumerable<activeReqViewModel> activeReq()
+        {
             var activeReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                 join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
@@ -214,24 +160,101 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                     Regionid = rc.Regionid,
                                     Email = rc.Email,
                                 };
+            return activeReqData;
+        }
+        public IEnumerable<concludeReqViewModel> concludeReq()
+        {
+            var concludeReqData = from req in _db.Requests
+                                  join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                                  join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
+                                  where req.Status == 4
+                                  select new concludeReqViewModel
+                                  {
+                                      reqClientId = rc.Requestclientid,
+                                      Firstname = rc.Firstname,
+                                      Lastname = rc.Lastname,
+                                      reqFirstname = req.Firstname,
+                                      reqLastname = req.Lastname,
+                                      Strmonth = rc.Strmonth,
+                                      Createddate = req.Createddate,
+                                      Phonenumber = rc.Phonenumber,
+                                      ConciergePhonenumber = req.Phonenumber,
+                                      FamilyPhonenumber = req.Phonenumber,
+                                      BusinessPhonenumber = req.Phonenumber,
+                                      Street = rc.Street,
+                                      City = rc.City,
+                                      State = rc.State,
+                                      Zipcode = rc.Zipcode,
+                                      Notes = rc.Notes,
+                                      reqTypeId = req.Requesttypeid,
+                                      physicianName = phy.Firstname + " " + phy.Lastname,
+                                      Regionid = rc.Regionid,
+                                      Email = rc.Email,
+                                  };
+            return concludeReqData;
+        }
+        public IEnumerable<closeReqViewModel> closeReq()
+        {
+            var closeReqData = from req in _db.Requests
+                               join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                               join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
+                               where req.Status == 5
+                               select new closeReqViewModel
+                               {
+                                   reqClientId = rc.Requestclientid,
+                                   Firstname = rc.Firstname,
+                                   Lastname = rc.Lastname,
+                                   reqFirstname = req.Firstname,
+                                   reqLastname = req.Lastname,
+                                   Strmonth = rc.Strmonth,
+                                   Createddate = req.Createddate,
+                                   Phonenumber = rc.Phonenumber,
+                                   ConciergePhonenumber = req.Phonenumber,
+                                   FamilyPhonenumber = req.Phonenumber,
+                                   BusinessPhonenumber = req.Phonenumber,
+                                   Street = rc.Street,
+                                   City = rc.City,
+                                   State = rc.State,
+                                   Zipcode = rc.Zipcode,
+                                   Notes = rc.Notes,
+                                   reqTypeId = req.Requesttypeid,
+                                   physicianName = phy.Firstname + " " + phy.Lastname,
+                                   Regionid = rc.Regionid,
+                                   Email = rc.Email,
+                               };
 
-            var CaseTag = from t1 in _db.Casetags select t1;
-            var Region = from t1 in _db.Regions select t1;
-
-            var data = new AdminDashboardViewModel
-            {
-                countRequestViewModel = count,
-                newReqViewModel = newReqData,
-                concludeReqViewModel = concludeReqData,
-                closeReqViewModels = closeReqData,
-                activeReqViewModels = activeReqData,
-                pendingReqViewModel = pendingReqData,
-                unpaidReqViewModels = unpaidReqData,
-                Casetag = CaseTag,
-                Region = Region
-
-            };
-            return data;
+            return closeReqData;
+        }
+        public IEnumerable<unpaidReqViewModel> unpaidReq()
+        {
+            var unpaidReqData = from req in _db.Requests
+                                join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                                join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
+                                where req.Status == 13
+                                select new unpaidReqViewModel
+                                {
+                                    reqClientId = rc.Requestclientid,
+                                    Firstname = rc.Firstname,
+                                    Lastname = rc.Lastname,
+                                    reqFirstname = req.Firstname,
+                                    reqLastname = req.Lastname,
+                                    Strmonth = rc.Strmonth,
+                                    Createddate = req.Createddate,
+                                    Phonenumber = rc.Phonenumber,
+                                    ConciergePhonenumber = req.Phonenumber,
+                                    FamilyPhonenumber = req.Phonenumber,
+                                    BusinessPhonenumber = req.Phonenumber,
+                                    Street = rc.Street,
+                                    City = rc.City,
+                                    State = rc.State,
+                                    Zipcode = rc.Zipcode,
+                                    Notes = rc.Notes,
+                                    reqTypeId = req.Requesttypeid,
+                                    physicianName = phy.Firstname + " " + phy.Lastname,
+                                    Regionid = rc.Regionid,
+                                    Email = rc.Email,
+                                };
+            return unpaidReqData;
         }
 
         public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data)
@@ -750,6 +773,83 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             reqRow.Status = 13;
             _db.Requests.Update(reqRow);
             _db.SaveChanges();
+        }
+
+        public Encounter Encounter(int reqClientId)
+        {
+            Requestclient? requestclient = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            Request? request = _db.Requests.Where(x => x.Requestid == requestclient.Requestid).FirstOrDefault();
+            Encounter? encounter = _db.Encounters.Where(x => x.Requestid == request.Requestid).FirstOrDefault();
+
+            if (encounter == null)
+            {
+
+                Encounter obj = new Encounter()
+                {
+                    Firstname = requestclient.Firstname,
+                    LastName = requestclient.Lastname,
+                    Email = requestclient.Email,
+                    Phonenumber = requestclient.Phonenumber,
+                    Strmonth = requestclient.Strmonth,
+                    Location = requestclient.Location,
+                    Requestid = request.Requestid
+                };
+
+                return obj;
+            }
+            else
+            {
+                return encounter;
+            }
+        }
+
+        public  void Encounter(Encounter obj)
+        {
+            Encounter encounter = _db.Encounters.Where(x => x.Requestid == obj.Requestid).FirstOrDefault();
+            if (encounter != null)
+            {
+                encounter.Firstname = obj.Firstname;
+                encounter.LastName = obj.LastName;
+                encounter.Email = obj.Email;
+                encounter.Phonenumber = obj.Phonenumber;
+                encounter.Location = obj.Location;
+                encounter.Strmonth = obj.Strmonth;
+                encounter.Servicedate = obj.Servicedate;
+                encounter.MedicalHistory = obj.MedicalHistory;
+                encounter.PresentIllnessHistory = obj.PresentIllnessHistory;
+                encounter.Medications = obj.Medications;
+                encounter.Allergies = obj.Allergies;
+                encounter.Temperature = obj.Temperature;
+                encounter.HeartRate = obj.HeartRate;
+                encounter.RespirationRate = obj.RespirationRate;
+                encounter.BloodPressureDiastolic = obj.BloodPressureDiastolic;
+                encounter.BloodPressureSystolic = obj.BloodPressureSystolic;
+                encounter.OxygenLevel = obj.OxygenLevel;
+                encounter.Pain = obj.Pain;
+                encounter.Heent = obj.Heent;
+                encounter.Chest = obj.Chest;
+                encounter.Abdomen = obj.Abdomen;
+                encounter.Extremities = obj.Extremities;
+                encounter.Skin = obj.Skin;
+                encounter.Neuro = obj.Neuro;
+                encounter.Other = obj.Other;
+                encounter.Diagnosis = obj.Diagnosis;
+                encounter.TreatmentPlan = obj.TreatmentPlan;
+                encounter.MedicationsDispensed = obj.MedicationsDispensed;
+                encounter.Procedures = obj.Procedures;
+                encounter.FollowUp = obj.FollowUp;
+
+                _db.Encounters.Update(encounter);
+                _db.SaveChanges();
+            }
+        }
+
+        public int GetStatus(int reqClientId)
+        {
+            Requestclient? requestclient = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            Request? request = _db.Requests.Where(x => x.Requestid == requestclient.Requestid).FirstOrDefault();
+
+            return request.Status;
         }
     }
 }

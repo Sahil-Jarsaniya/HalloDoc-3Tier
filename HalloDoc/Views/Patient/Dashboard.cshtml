@@ -172,7 +172,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating phone-div w-100 h-100 ">
-                                    <input asp-for="ProfileEditViewModel.Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                                    <input asp-for="ProfileEditViewModel.Phonenumber" type="tel" class="Phone form-control w-100 h-100" placeholder="">
                                 <label for=""></label>
                             </div>
                                 <span asp-validation-for="ProfileEditViewModel.Phonenumber"></span>
@@ -231,6 +231,7 @@
 
 @section Scripts {
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     <script>
         function choseMeOrELse(){
             if (document.getElementById('me').checked == true) {

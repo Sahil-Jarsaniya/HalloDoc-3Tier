@@ -297,7 +297,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Requestid = reqRow.Requestid,
                 Notes = obj.CancelNote,
                 Createddate = DateTime.Now,
-                Status = 5
+                Status = 11
             };
             _db.Requeststatuslogs.Add(reqStatusLog);
             _db.SaveChanges();

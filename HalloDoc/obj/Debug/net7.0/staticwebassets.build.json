@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "1t7bqBXSp2izWQoJ137c6g1xcMFOe5ImvwiskYxSGJM=",
+  "Hash": "MEAmkmY6KzxoSE4UkDcufkha0MehA8saxhbUk8wfW3o=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -2038,6 +2038,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\cloud_upload.svg"
+    },
+    {
+      "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\cloud-arrow-down.svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\HalloDoc\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/cloud-arrow-down.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\cloud-arrow-down.svg"
     },
     {
       "Identity": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\dark_mode_black_24dp.svg",

@@ -141,19 +141,19 @@
                 <span class="d-none d-lg-inline ms-1">Send Link</span>
             </button>
 
-            <a href="@Url.Action("createPatientRequest", "Request")"  class="mx-1 px-2 py-1 btn btn-primary">
+            <a href="@Url.Action("CreateRequest", "AdminDashboard")" class="mx-1 px-2 py-1 btn btn-primary">
                 <img src="~/images/journal-text.svg"/>
                 <span class="d-none d-lg-inline ms-1 ">Create Request</span>
             </a>
-
-            @*<a class="mx-1 px-2 py-1 btn btn-primary exportData">
+@*
+            <button class="mx-1 px-2 py-1 btn btn-primary exportData" id="ExportBtn">
                 <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
                 <span class="d-none d-lg-inline ms-1">Export</span>
-            </a>*@
+            </button>*@
             <form method="post" asp-action="Export" asp-controller="AdminDashboard">
                 <input type="hidden" name="GridHtml" />
                     <input value="Export" hidden/>
-                <button type="submit" class="mx-1 px-2 py-1 btn btn-primary exportData" id="btnSubmit">
+                <button type="submit" class="mx-1 px-2 py-1 btn btn-primary exportData" id="ExportBtn">
                     <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
                     <span class="d-none d-lg-inline ms-1">Export</span>
                 </button>
@@ -497,11 +497,24 @@
     <script src="~/js/CasesPopUp.js"></script>
     <script type="text/javascript">
         $(function () {
-            $("#btnSubmit").click(function () {
+            $("#ExportBtn").click(function () {
                 var cloneaTable = $("#PartialTable").clone();
-                cloneaTable.find("th:nth-last-child(-n+2), td:nth-child(-n+2)").remove();
-                $("input[name='GridHtml']").val(cloneaTable.html());
+                cloneaTable.find("td:nth-last-child(2), td:nth-last-child(1), td:nth-child(2)").remove();
+                cloneaTable.find(".mobileView").remove();
+                $("input[name='GridHtml']").val(cloneaTable.html());    
             });
         });
+        //$("#ExportBtn").click(function () {
+        //    var data = $("#PartialTable").html();
+        //    $.ajax({
+        //        url: '/AdminDashboard/Export',
+        //        data: {
+        //            GridHtml: data
+        //        },
+        //        success: function () {
+        //            console.log("ddd");
+        //        }
+        //    })
+        //})
     </script>
 }
