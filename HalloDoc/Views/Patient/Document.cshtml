@@ -44,7 +44,7 @@
                 <span class="">Download All</span>
             </a>
         </div>
-
+        <p class="errorBox text-danger"></p>
         <div class="d-md-none">
             @foreach (var item in Model.PatientDocumentViewModel)
             {
@@ -119,9 +119,19 @@
         $("#DownloadAll").click(function () {
             $(".selectFile").each(function () {
                 var downloadFile = $(this).closest("tr").find(".btn[download]");
+                var count =0;
                 if ($(this).prop("checked")) {
                     downloadFile[0].click();
+                    count++;
                 }
+
+                if(count == 0){
+                    $(".errorBox").text("Select file first")
+                    setInterval(function () {
+                        $('.errorBox').text("");
+
+        }, 1000);
+                }   
             });
         });
     </script>

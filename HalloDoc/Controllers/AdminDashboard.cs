@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using OfficeOpenXml;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace HalloDoc.Controllers
 {
@@ -167,7 +168,7 @@ namespace HalloDoc.Controllers
             ViewBag.Data = fname + " " + lname;
             if (ModelState.IsValid)
             {
-                 _requestRepo.CreateFamilyfriendRequest(obj);
+                _requestRepo.CreateFamilyfriendRequest(obj);
 
                 return RedirectToAction("Dashboard");
             }
@@ -442,27 +443,7 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
 
-            Admin adminRow = _db.Admins.Where(x => x.Aspnetuserid == AspId).FirstOrDefault();
-            AspNetUser aspRow = _db.AspNetUsers.Where(x => x.Id == AspId).FirstOrDefault();
-            var Region = from t1 in _db.Regions select t1;
-
-            Profile data = new Profile
-            {
-                Adminid = adminRow.Adminid,
-                Firstname = adminRow.Firstname,
-                Lastname = adminRow.Lastname,
-                Email = adminRow.Email,
-                Mobile = adminRow.Mobile,
-                Address1 = adminRow.Address1,
-                Address2 = adminRow.Address2,
-                Altphone = adminRow.Altphone,
-                ConfirmEmail = adminRow.Email,
-                Regionid = adminRow.Regionid,
-                Roleid = adminRow.Roleid,
-                Status = adminRow.Status,
-                UserName = aspRow.UserName,
-                Region = Region
-            };
+            var data = _adminRepo.MyProfile(AspId);
 
             return View(data);
         }
@@ -474,29 +455,11 @@ namespace HalloDoc.Controllers
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
-            int adminId = obj.Adminid;
+            _adminRepo.MyProfile(obj, AspId);
 
-            Admin? adminRow = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault();
 
-            adminRow.Firstname = obj.Firstname;
-            adminRow.Lastname = obj.Lastname;
-            adminRow.Email = obj.Email;
-            adminRow.Mobile = obj.Mobile;
-            adminRow.Altphone = obj.Altphone;
-            adminRow.Address1 = obj.Address1;
-            adminRow.Address2 = obj.Address2;
-            adminRow.Regionid = obj.Regionid;
-            adminRow.Roleid = obj.Roleid;
-            adminRow.Status = obj.Status;
-            adminRow.Zip = obj.Zip;
-            adminRow.City = obj.City;
-            adminRow.Modifieddate = DateTime.Now;
-            adminRow.Modifiedby = AspId;
 
-            _db.Admins.Update(adminRow);
-            _db.SaveChanges();
-
-            return View();
+            return RedirectToAction("MyProfile");
         }
 
         public IActionResult EncounterForm(int reqClientId)
@@ -518,6 +481,68 @@ namespace HalloDoc.Controllers
         public FileResult Export(string GridHtml)
         {
             return File(Encoding.ASCII.GetBytes(GridHtml), "application/vnd.ms-excel", "Grid.xls");
+        }
+
+        public FileResult ExportAll(int status)
+        {
+            object data;
+            XmlSerializer serializer;
+            if (status == 8)
+            {
+                 data = _adminRepo.activeReq().ToList();
+             serializer = new XmlSerializer(typeof(List<activeReqViewModel>));
+           
+            }
+            else if (status == 2)
+            {
+                 data = _adminRepo.pendingReq().ToList();
+                serializer = new XmlSerializer(typeof(List<pendingReqViewModel>));
+            }
+            else if (status == 4)
+            {
+                 data = _adminRepo.concludeReq().ToList();
+                serializer = new XmlSerializer(typeof(List<concludeReqViewModel>));
+            }
+            else if (status == 5)
+            {
+                 data = _adminRepo.closeReq().ToList(); 
+                serializer = new XmlSerializer(typeof(List<closeReqViewModel>));
+            }
+            else if (status == 13)
+            {
+                 data = _adminRepo.unpaidReq().ToList();
+                serializer = new XmlSerializer(typeof(List<unpaidReqViewModel>));
+            }
+            else
+            {
+                 data = _adminRepo.newReq().ToList(); 
+                serializer = new XmlSerializer(typeof(List<newReqViewModel>));
+               
+            }
+
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, data);
+                stream.Position = 0;
+
+
+                byte[] xmlBytes = stream.ToArray();
+
+                return File(stream, "application/xml", "Object.xml");
+            }
+        }
+
+        public IActionResult Provider()
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            var provider = _adminRepo.Provider();
+            return View(provider);
         }
     }
 }

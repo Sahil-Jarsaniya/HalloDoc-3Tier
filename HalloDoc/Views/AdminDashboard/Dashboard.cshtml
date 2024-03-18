@@ -1,8 +1,9 @@
-﻿@model HalloDoc.DataAccess.ViewModel.AdminViewModel.AdminDashboardViewModel;
+﻿@model AdminDashboardViewModel;
 @{
     ViewData["Title"] = "Admin Dashboard";
     Layout = "_adminLayout";
 }
+
 <div class="px-2 px-lg-4">
     <input value="@Model.status" id="DashboardStatus" hidden />
     <div class="row mt-3 nav nav-tabs">
@@ -137,41 +138,43 @@
         <div class="d-flex align-items-center">
 
             <button type="submit" class="mx-1 px-2 py-1 btn btn-primary">
-                <img src="~/images/send.svg" style="fill: white"/>
+                <img src="~/images/send.svg" style="fill: white" />
                 <span class="d-none d-lg-inline ms-1">Send Link</span>
             </button>
 
             <a href="@Url.Action("CreateRequest", "AdminDashboard")" class="mx-1 px-2 py-1 btn btn-primary">
-                <img src="~/images/journal-text.svg"/>
+                <img src="~/images/journal-text.svg" />
                 <span class="d-none d-lg-inline ms-1 ">Create Request</span>
             </a>
-@*
+            @*
             <button class="mx-1 px-2 py-1 btn btn-primary exportData" id="ExportBtn">
-                <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
-                <span class="d-none d-lg-inline ms-1">Export</span>
+            <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
+            <span class="d-none d-lg-inline ms-1">Export</span>
             </button>*@
             <form method="post" asp-action="Export" asp-controller="AdminDashboard">
                 <input type="hidden" name="GridHtml" />
-                    <input value="Export" hidden/>
+                <input value="Export" hidden />
                 <button type="submit" class="mx-1 px-2 py-1 btn btn-primary exportData" id="ExportBtn">
                     <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
                     <span class="d-none d-lg-inline ms-1">Export</span>
                 </button>
             </form>
 
-            <button type="submit" class="mx-1 px-2 py-1 btn btn-primary">
+            <a  class="mx-1 px-2 py-1 btn btn-primary " id="ExportBtnAll">
                 <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
                 <span class="d-none d-lg-inline ms-1 ">Export All</span>
-            </button>
+            </a>
 
-            <button type="submit" class="mx-1 px-2 py-1 btn btn-primary">
-                <img src="~/images/person-circle.svg"/>
-
+            <button type="button" class="mx-1 px-2 py-1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReqSupportModal">
+                <img src="~/images/person-circle.svg" />
                 <span class="d-none d-lg-inline ms-1">Request DTY Support</span>
             </button>
         </div>
 
     </div>
+  
+
+    
     <form method="post" asp-action="PartialTable" id="DashboradForm">
 
         <div class="d-block d-lg-flex mt-3 align-items-center justify-content-between">
@@ -201,7 +204,7 @@
                 </div>
             </div>
             <div class="d-flex align-items-center">
-                <input id="filterReqType" value="" hidden/>
+                <input id="filterReqType" value="" hidden />
                 <a class="btn d-none d-lg-flex  align-items-center  px-lg-2 py-1 border rounded filterReqByType">
                     <input value="0" hidden />
                     <h6 class="fs-6 ms-lg-2 m-auto">All</h6>
@@ -242,7 +245,7 @@
                 <circle fill="#9966cd" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
                 </svg>
                 <h6 class="fs-6 ms-lg-2 m-auto">VIP</h6>
-                </a>*@ 
+                </a>*@
             </div>
         </div>
         <div class="tab-content  mt-3 " id="PartialTable" style="overflow-x: scroll">
@@ -458,14 +461,14 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
 
 @*Encounter Case*@
 
 <div class="modal  fade" id="EncounterModal" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <input value="" id="EncounterId" hidden/>
+            <input value="" id="EncounterId" hidden />
             <div class="modal-header" style="background-color: #01bce9; color:white;">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Select Type of Care</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -481,8 +484,38 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" id="EncounerSavebtn" class="btn btn-primary" >Save</button>
+                <button type="button" id="EncounerSavebtn" class="btn btn-primary">Save</button>
                 <button type="button" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*DTY Request*@
+<div class="modal fade" id="ReqSupportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Block</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <form>
+                        <p>
+                            To all unscheduled Physicians: we are short on coverage and needs addtionals support on Call to respond to Requests.
+                        </p>
+                        <div class="form-floating m-1 form-div">
+                            <textarea class="form-control"
+                                      style="height: 100px"></textarea>
+                            <label for=""> Notes</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="ConfirmBlockBtn">Confirm</button>
+                <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -499,22 +532,28 @@
         $(function () {
             $("#ExportBtn").click(function () {
                 var cloneaTable = $("#PartialTable").clone();
-                cloneaTable.find("td:nth-last-child(2), td:nth-last-child(1), td:nth-child(2)").remove();
+                cloneaTable.find(" td:nth-last-child(1), td:nth-child(2)").remove();
                 cloneaTable.find(".mobileView").remove();
-                $("input[name='GridHtml']").val(cloneaTable.html());    
+                $("input[name='GridHtml']").val(cloneaTable.html());
             });
         });
-        //$("#ExportBtn").click(function () {
-        //    var data = $("#PartialTable").html();
-        //    $.ajax({
-        //        url: '/AdminDashboard/Export',
-        //        data: {
-        //            GridHtml: data
-        //        },
-        //        success: function () {
-        //            console.log("ddd");
-        //        }
-        //    })
-        //})
+    </script>
+    <script>
+        $("#ExportBtnAll").click(function () {
+            var dashboardStatus = $("#DashboardStatus").val();
+            console.log("cc")
+            $.ajax({
+                url: "/AdminDashboard/ExportAll",
+                type: 'POST',
+                data: { status: dashboardStatus },
+                success: function (result) {
+                    console.log("s")
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('error fetching details')
+                },
+            });
+        })
     </script>
 }

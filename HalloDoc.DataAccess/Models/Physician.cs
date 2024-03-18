@@ -94,4 +94,9 @@ public partial class Physician
     public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
 
     public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();
+
+    public static implicit operator Physician(List<Physician> v)
+    {
+        throw new NotImplementedException();
+    }
 }

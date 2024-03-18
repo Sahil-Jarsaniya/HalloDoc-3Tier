@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,5 +10,6 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
     public interface ICommonRepository
     {
         public void uploadFile(string fileName, int reqId);
+
     }
 }

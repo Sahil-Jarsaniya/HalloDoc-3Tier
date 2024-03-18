@@ -2,6 +2,7 @@
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using Org.BouncyCastle.Tls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,5 +62,10 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void Encounter(Encounter obj);
 
         public int GetStatus(int reqClientId);
+
+        public Profile MyProfile(string AspId);
+        public void MyProfile(Profile obj, string AspId);
+
+        public IEnumerable<ProviderViewModel> Provider();
     }
 }

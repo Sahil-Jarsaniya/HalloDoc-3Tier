@@ -3,10 +3,11 @@ using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using Org.BouncyCastle.Ocsp;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
-    public class AdminDashboardRepository: IAdminDashboardRepository
+    public class AdminDashboardRepository : IAdminDashboardRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -19,7 +20,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return _db.Admins.Where(x => x.Aspnetuserid == AspId).FirstOrDefault().Adminid;
         }
         public AdminDashboardViewModel adminDashboard()
-        {   
+        {
             var newCount = (from t1 in _db.Requests
                             where t1.Status == 1
                             select t1
@@ -54,9 +55,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 unpaidCount = unpaidCount
             };
 
-            
-           
-           
+
+
+
 
             var CaseTag = from t1 in _db.Casetags select t1;
             var Region = from t1 in _db.Regions select t1;
@@ -66,7 +67,6 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 countRequestViewModel = count,
                 Casetag = CaseTag,
                 Region = Region
-
             };
             return data;
         }
@@ -259,7 +259,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data)
         {
-            if (obj.Name == null && obj.RegionId == 0 && obj.reqType ==0)
+            if (obj.Name == null && obj.RegionId == 0 && obj.reqType == 0)
             {
                 return data;
             }
@@ -299,7 +299,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 data.unpaidReqViewModels = sortedUnpaid;
 
             }
-            if(obj.reqType != 0)
+            if (obj.reqType != 0)
             {
                 var sortedNew = data.newReqViewModel.Where(s => s.reqTypeId == obj.reqType);
                 var sortedConclude = data.concludeReqViewModel.Where(s => s.reqTypeId == obj.reqType);
@@ -315,9 +315,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 data.activeReqViewModels = sortedActive;
                 data.unpaidReqViewModels = sortedUnpaid;
             }
-            
 
-                return data;
+
+            return data;
         }
 
         public viewCaseViewModel viewCase(int reqClientId)
@@ -415,10 +415,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var transferNote = from t1 in _db.Requeststatuslogs
                                where t1.Requestid == ReqId.Requestid
                                select t1;
-            var status= _db.Requests.Where(x => x.Requestid == ReqId.Requestid).FirstOrDefault().Status;    
+            var status = _db.Requests.Where(x => x.Requestid == ReqId.Requestid).FirstOrDefault().Status;
             var data = new viewNoteViewModel
             {
-                status = status, 
+                status = status,
                 reqClientId = reqClientId,
                 Requestnote = reqNotes,
                 Requeststatuslog = transferNote
@@ -551,7 +551,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             var reqNote = _db.Requestnotes.Where(x => x.Requestid == reqRow.Requestid).FirstOrDefault();
 
-            if(reqNote == null)
+            if (reqNote == null)
             {
                 reqNote = new Requestnote
                 {
@@ -565,11 +565,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             else
             {
-            reqNote.Adminnotes = addNote;
-            reqNote.Modifieddate = DateTime.Now;
-            reqNote.Modifiedby = AspId;
-            _db.Requestnotes.Update(reqNote);
-            _db.SaveChanges();
+                reqNote.Adminnotes = addNote;
+                reqNote.Modifieddate = DateTime.Now;
+                reqNote.Modifiedby = AspId;
+                _db.Requestnotes.Update(reqNote);
+                _db.SaveChanges();
             }
 
 
@@ -613,7 +613,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var data = new DocumentViewModel
             {
                 status = _db.Requests.Where(x => x.Requestid == reqId.Requestid).First().Status,
-                PatientName = reqId.Firstname+ " "+reqId.Lastname,
+                PatientName = reqId.Firstname + " " + reqId.Lastname,
                 ConfirmationNo = reqRow.Confirmationnumber,
                 PatientDocumentViewModel = requestData,
                 UploadFileViewModel = uploadData
@@ -621,11 +621,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             return data;
         }
-    
-        public void DeleteFile(int reqClientId, string FileName){
+
+        public void DeleteFile(int reqClientId, string FileName)
+        {
             var requestId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault().Requestid;
             var rwf = _db.Requestwisefiles.Where(x => x.Requestid == requestId && x.Filename == FileName).FirstOrDefault();
-                rwf.Isdeleted = true;
+            rwf.Isdeleted = true;
             _db.Requestwisefiles.Update(rwf);
             _db.SaveChanges();
         }
@@ -803,7 +804,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
         }
 
-        public  void Encounter(Encounter obj)
+        public void Encounter(Encounter obj)
         {
             Encounter encounter = _db.Encounters.Where(x => x.Requestid == obj.Requestid).FirstOrDefault();
             if (encounter != null)
@@ -850,6 +851,86 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             Request? request = _db.Requests.Where(x => x.Requestid == requestclient.Requestid).FirstOrDefault();
 
             return request.Status;
+        }
+
+        public Profile MyProfile(string AspId)
+        {
+            Admin adminRow = _db.Admins.Where(x => x.Aspnetuserid == AspId).FirstOrDefault();
+            AspNetUser aspRow = _db.AspNetUsers.Where(x => x.Id == AspId).FirstOrDefault();
+            var Region = from t1 in _db.Regions select t1;
+
+            Profile data = new Profile
+            {
+                Adminid = adminRow.Adminid,
+                Firstname = adminRow.Firstname,
+                Lastname = adminRow.Lastname,
+                Email = adminRow.Email,
+                Mobile = adminRow.Mobile,
+                Address1 = adminRow.Address1,
+                Address2 = adminRow.Address2,
+                Altphone = adminRow.Altphone,
+                ConfirmEmail = adminRow.Email,
+                Regionid = adminRow.Regionid,
+                Roleid = adminRow.Roleid,
+                Status = adminRow.Status,
+                UserName = aspRow.UserName,
+                Region = Region
+            };
+
+            return data;
+        }
+
+        public void MyProfile(Profile obj, string AspId)
+        {
+            int adminId = obj.Adminid;
+            Admin? adminRow = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault();
+
+
+
+            if (obj.Firstname == null)
+            {
+                adminRow.Altphone = obj.Altphone;
+                adminRow.Address1 = obj.Address1;
+                adminRow.Address2 = obj.Address2;
+                adminRow.Status = obj.Status;
+                adminRow.Zip = obj.Zip;
+                adminRow.City = obj.City;
+                adminRow.Modifieddate = DateTime.Now;
+                adminRow.Modifiedby = AspId;
+            }
+            else
+            {
+                adminRow.Firstname = obj.Firstname;
+                adminRow.Lastname = obj.Lastname;
+                adminRow.Email = obj.Email;
+                adminRow.Mobile = obj.Mobile;
+                adminRow.Regionid = obj.Regionid;
+                adminRow.Roleid = obj.Roleid;
+                adminRow.Status = obj.Status;
+                adminRow.Modifieddate = DateTime.Now;
+                adminRow.Modifiedby = AspId;
+            }
+            _db.Admins.Update(adminRow);
+            _db.SaveChanges();
+        }
+
+        public IEnumerable<ProviderViewModel> Provider()
+        {
+            var region = from t1 in _db.Regions select t1;
+            var provider = from t1 in _db.Physicians
+                           select new ProviderViewModel
+                           {
+                               Firstname = t1.Firstname,
+                               Lastname = t1.Lastname,
+                               Physicianid = t1.Physicianid,
+                               Aspnetuserid = t1.Aspnetuserid,
+                               Email = t1.Email,
+                               Mobile = t1.Mobile,
+                               Status = t1.Status,
+                               Roleid = t1.Roleid,
+                           };
+
+            return provider;
         }
     }
 }

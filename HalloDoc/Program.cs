@@ -3,6 +3,7 @@ using AspNetCoreHero.ToastNotification.Extensions;
 using HalloDoc.BussinessAccess.Repository.Implementation;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
+using HalloDoc.DataAccess.ViewModel;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
