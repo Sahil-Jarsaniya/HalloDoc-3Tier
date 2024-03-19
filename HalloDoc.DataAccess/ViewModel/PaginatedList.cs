@@ -2,7 +2,7 @@
 
 namespace HalloDoc.Services
 {
-    public class PaginatedList<T>
+    public class PaginatedList<T>   
     {
         public List<T> Items { get; set; }
         public int PageIndex { get; set; }

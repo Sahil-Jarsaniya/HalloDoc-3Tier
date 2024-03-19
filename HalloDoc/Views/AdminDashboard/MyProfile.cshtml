@@ -35,11 +35,10 @@
                     <span ></span>
                 </div>
                 <div class="col-md">
-                    <div class="form-floating">
-                        <input asp-for="Password" type="text" class="form-control " id="password" placeholder="" >
-                        <label for="floatingSelectGrid">Password</label>
+                    <div class="input-div form-floating mb-3 d-flex border rounded">
+                        <input asp-for="Password" type="password" class="form-control" id="Password" placeholder="Password" disabled>
+                        <label asp-for="Password" for="floatingPassword">Password</label>
                     </div>
-                    <span></span>
                     
                 </div>
             </div>
@@ -66,8 +65,8 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn btn-outline-primary float-end m-1">Reset Password</button><br />
-
+            <button type="button" id="ResetPassBtn" class="btn btn-outline-primary float-end m-1">Reset Password</button>
+            <button type="button" id="saveBtn0" class="btn btn-outline-primary float-end me-1 d-none">Save</button><br />
             <h5>Administration Information</h5>
             <fieldset id="fieldset1" disabled>
 
@@ -177,6 +176,7 @@
         var editBtn1 = document.getElementById("editBtn1");
         var saveBtn1 = document.getElementById("saveBtn1");
         var cancelBtn1 = document.getElementById("cancelBtn1");
+        var ResetPassBtn = document.getElementById("ResetPassBtn");
 
         $("#editBtn1").click(function(){
             document.getElementById("fieldset1").disabled = false;
@@ -223,5 +223,26 @@
             saveBtn2.classList.add('d-none');
 
         });
+
+        var saveBtn0 = document.getElementById("saveBtn0");
+
+        $("#ResetPassBtn").click(function(){
+            document.getElementById("Password").disabled = false;
+            saveBtn0.classList.remove('d-none');
+            ResetPassBtn.classList.add('d-none');
+        })
+
+        $("#saveBtn0").click(function(){
+            var pass = $("#Password").val();
+            var adminId = $("#adminId").val();
+            
+            $.ajax({
+                url: '/AdminDashboard/ResetPass',
+                type: 'POST',
+                data: {
+                    pass: pass, adminId: adminId
+                },
+            })
+        })
     </script>
 }

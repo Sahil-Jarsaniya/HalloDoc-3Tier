@@ -65,6 +65,9 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(23)]
         public string? Phonenumber { get; set; }
 
+        
+        public string? ConciergeCountryCode { get; set; }
+
         [Column("email")]
         [StringLength(50)]
         public string? Email { get; set; }

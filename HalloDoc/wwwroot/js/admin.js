@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var navLinks = document.querySelectorAll('#adminNav .nav-link');
 
     // Function to remove 'active' class from all links
+   
     function removeAllActive() {
         navLinks.forEach(function (link) {
             link.classList.remove('active');
@@ -39,6 +40,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+//var path = window.location.pathname;
+//var abc = path.split("/");
+//var controller = abc[1];
+//var action = abc[2];
+//console.log(controller);
+//console.log(action);
 
 const patientPhone = document.querySelector(".patientPhone");
 var phoneInput = window.intlTelInput(patientPhone,

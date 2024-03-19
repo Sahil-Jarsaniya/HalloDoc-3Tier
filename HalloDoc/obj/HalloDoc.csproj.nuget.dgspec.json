@@ -63,6 +63,10 @@
             "MimeKit": {
               "target": "Package",
               "version": "[4.3.0, )"
+            },
+            "Twilio": {
+              "target": "Package",
+              "version": "[7.0.2, )"
             }
           },
           "imports": [
@@ -257,6 +261,14 @@
             "RestSharp": {
               "target": "Package",
               "version": "[110.2.0, )"
+            },
+            "System.IO.Packaging": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Twilio": {
+              "target": "Package",
+              "version": "[7.0.2, )"
             }
           },
           "imports": [

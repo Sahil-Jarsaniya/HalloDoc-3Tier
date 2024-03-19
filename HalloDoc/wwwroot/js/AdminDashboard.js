@@ -12,26 +12,32 @@ $(".status-tab").click(function () {
 
     if (id == 'status-new-tab') {
         dashboardStatus = 1;
+        $("#DashboardStatus").val(1);
         $('#status-text').text('(New)');
     }
     else if (id == 'status-pending-tab') {
         dashboardStatus = 2;
+        $("#DashboardStatus").val(2);
         $('#status-text').text('(Pending)');
     }
     else if (id == 'status-active-tab') {
         dashboardStatus = 8;
+        $("#DashboardStatus").val(8);
         $('#status-text').text('(Active)');
     }
     else if (id == 'status-conclude-tab') {
         dashboardStatus = 4;
+        $("#DashboardStatus").val(4);
         $('#status-text').text('(Conclude)');
     }
     else if (id == 'status-to-close-tab') {
         dashboardStatus = 5;
+        $("#DashboardStatus").val(5);
         $('#status-text').text('(To Close)');
     }
     else if (id == 'status-unpaid-tab') {
         dashboardStatus = 13;
+        $("#DashboardStatus").val(13);
         $('#status-text').text('(Unpaid)');
     }
 
@@ -58,7 +64,7 @@ else if (dashboardStatus == 2) {
 else if (dashboardStatus == 4) {
     $("#status-conclude-tab").click();
 }
-else if (dashboardStatus ==5) {
+else if (dashboardStatus == 5) {
     $("#status-to-close-tab").click();
 }
 else if (dashboardStatus == 13) {
@@ -136,3 +142,17 @@ $(".filterReqByType").click(function () {
     });
 })
 
+//Export
+$("#ExportBtn").click(function () {
+    var cloneaTable = $("#PartialTable").clone();
+    cloneaTable.find(" td:nth-last-child(1), td:nth-child(2)").remove();
+    cloneaTable.find(".mobileView").remove();
+    $("input[name='GridHtml']").val(cloneaTable.html());
+});
+
+//Export all
+$("#ExportBtnAll").click(function () {
+    console.log("cc")
+    $("#exportStatus").val(dashboardStatus);
+    $("#exportAllForm").submit();
+})

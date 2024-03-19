@@ -76,7 +76,8 @@ var phoneInput = window.intlTelInput(friendPhone,
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         preferredCountries: ["in"],
         separateDialCode: true,
-        initialCountry: "in"
+        initialCountry: "in",
+       
     });
 
 // alert box 

@@ -377,6 +377,490 @@
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\.eslintignore",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\.eslintignore"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\.eslintrc",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\.eslintrc"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\.gitignore",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\.gitignore"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\.gitmodules",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\.gitmodules"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\.grenrc.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\.grenrc.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\.travis.yml",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\.travis.yml"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\CHANGELOG.md",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\CHANGELOG.md"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\Gruntfile.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\Gruntfile.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\README.md",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\README.md"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\bower.json",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\bower.json"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\css\\demo.css",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\css\\demo.css"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\css\\intlTelInput.css",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\css\\intlTelInput.css"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\css\\intlTelInput.min.css",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\css\\intlTelInput.min.css"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\img\\flags.png",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\img\\flags.png"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\img\\flags@2x.png",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\img\\flags@2x.png"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\img\\globe.png",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\img\\globe.png"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\img\\globe@2x.png",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\img\\globe@2x.png"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\js\\data.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\js\\data.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\js\\data.min.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\js\\data.min.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\js\\intlTelInput-jquery.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\js\\intlTelInput-jquery.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\js\\intlTelInput-jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\js\\intlTelInput-jquery.min.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\js\\intlTelInput.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\js\\intlTelInput.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\js\\intlTelInput.min.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\js\\intlTelInput.min.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\build\\js\\utils.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\build\\js\\utils.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\composer.json",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\composer.json"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\demo.html",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\demo.html"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\demo_rtl.html",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\demo_rtl.html"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\babel.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\babel.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\bump.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\bump.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\closure-compiler.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\closure-compiler.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\concat.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\concat.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\cssmin.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\cssmin.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\eslint.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\eslint.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\exec.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\exec.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\imagemin.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\imagemin.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\jasmine.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\jasmine.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\replace.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\replace.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\responsive_images.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\responsive_images.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\retinafy.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\retinafy.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\sass.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\sass.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\shell.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\shell.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\sprite.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\sprite.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\template.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\template.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\tmpl\\sprite.scss.mustache",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\tmpl\\sprite.scss.mustache"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\uglify.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\uglify.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\grunt\\watch.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\grunt\\watch.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\index.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\index.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\package-lock.json",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\package-lock.json"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\package.json",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\package.json"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\build.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\build.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\build\\IntlTelInput.cjs.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\build\\IntlTelInput.cjs.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\build\\IntlTelInput.cjs.js.map",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\build\\IntlTelInput.cjs.js.map"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\build\\IntlTelInput.esm.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\build\\IntlTelInput.esm.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\build\\IntlTelInput.esm.js.map",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\build\\IntlTelInput.esm.js.map"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\demo\\SimpleApp.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\demo\\SimpleApp.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\demo\\ValidationApp.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\demo\\ValidationApp.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\demo\\simple-bundle.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\demo\\simple-bundle.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\demo\\simple.html",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\demo\\simple.html"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\demo\\validation-bundle.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\demo\\validation-bundle.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\demo\\validation.html",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\demo\\validation.html"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\react\\src\\IntlTelInput.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\react\\src\\IntlTelInput.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\screenshots\\empty-country.png",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\screenshots\\empty-country.png"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\screenshots\\mobile-fullscreen.jpg",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\screenshots\\mobile-fullscreen.jpg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\screenshots\\separateDialCode.png",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\screenshots\\separateDialCode.png"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\screenshots\\twilio.png",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\screenshots\\twilio.png"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\screenshots\\vanilla-search.png",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\screenshots\\vanilla-search.png"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\screenshots\\vanilla.png",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\screenshots\\vanilla.png"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\spec.html",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\spec.html"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\css\\demo.scss",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\css\\demo.scss"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\css\\intlTelInput.scss",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\css\\intlTelInput.scss"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\css\\sprite.scss",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\css\\sprite.scss"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\js\\data.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\js\\data.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\js\\intlTelInput.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\js\\intlTelInput.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\js\\intro-data.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\js\\intro-data.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\js\\intro-jquery.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\js\\intro-jquery.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\js\\intro.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\js\\intro.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\js\\outro-data.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\js\\outro-data.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\js\\outro-jquery.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\js\\outro-jquery.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\js\\outro.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\js\\outro.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\js\\utils.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\js\\utils.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\helpers\\helpers.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\helpers\\helpers.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\closecountrydropdownEvent.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\closecountrydropdownEvent.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\countrychangeEvent.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\countrychangeEvent.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\dropdownShortcuts.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\dropdownShortcuts.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\initialValues.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\initialValues.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\multipleInstances.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\multipleInstances.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\usingDropdown.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\usingDropdown.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\usingInput.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\core\\usingInput.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\destroy.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\destroy.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\getExtension.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\getExtension.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\getNumber.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\getNumber.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\getNumberType.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\getNumberType.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\getSelectedCountryData.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\getSelectedCountryData.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\getValidationError.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\getValidationError.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\isValidNumber.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\isValidNumber.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\isValidNumberPrecise.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\isValidNumberPrecise.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\setCountry.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\setCountry.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\setNumber.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\setNumber.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\setPlaceholderNumberType.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\methods\\setPlaceholderNumberType.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\allowDropdown.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\allowDropdown.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\autoPlaceholder.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\autoPlaceholder.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\containerClass.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\containerClass.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\countrySearch.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\countrySearch.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\customPlaceholder.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\customPlaceholder.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\dropdownContainer.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\dropdownContainer.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\excludeCountries.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\excludeCountries.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\formatOnDisplay.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\formatOnDisplay.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\geoIpLookup.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\geoIpLookup.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\hiddenInput.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\hiddenInput.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\initialCountry.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\initialCountry.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\nationalMode.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\nationalMode.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\onlyCountries.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\onlyCountries.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\placeholderNumberType.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\placeholderNumberType.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\preferredCountries.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\preferredCountries.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\showSelectedDialCode.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\showSelectedDialCode.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\useFullscreenPopup.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\useFullscreenPopup.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\utilsScript.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\options\\utilsScript.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\static\\defaults.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\static\\defaults.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\static\\getCountryData.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\static\\getCountryData.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\intl-tel-input-master\\src\\spec\\tests\\static\\loadUtils.js",
+      "PackagePath": "staticwebassets\\lib\\intl-tel-input-master\\src\\spec\\tests\\static\\loadUtils.js"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },

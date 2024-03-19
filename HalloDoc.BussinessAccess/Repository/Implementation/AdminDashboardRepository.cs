@@ -55,10 +55,6 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 unpaidCount = unpaidCount
             };
 
-
-
-
-
             var CaseTag = from t1 in _db.Casetags select t1;
             var Region = from t1 in _db.Regions select t1;
 

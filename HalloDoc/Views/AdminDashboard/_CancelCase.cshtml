@@ -1,0 +1,35 @@
+﻿<div class="modal fade" id="cancelModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Cancellation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <form>
+                        <h5 id="PatientName" class="mb-2">Patient Name: </h5>
+                        <input id="reqClientId" value="" hidden />
+                        <select class="form-select form-select mb-3 CaseTag" id="CaseTag" aria-label="Large select example">
+                            <option>Reasons for Cancellation</option>
+
+                            @foreach (var item in Model.Casetag)
+                            {
+                                <option value="@item.Casetagid">@item.Name</option>
+                            }
+                        </select>
+                        <div class="form-floating m-1 form-div">
+                            <textarea class="form-control" placeholder="Leave a comment here" id="addNote"
+                                      style="height: 100px"></textarea>
+                            <label for="">Provide Additional Notes</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="ConfirmCancelBtn">Confirm</button>
+                <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

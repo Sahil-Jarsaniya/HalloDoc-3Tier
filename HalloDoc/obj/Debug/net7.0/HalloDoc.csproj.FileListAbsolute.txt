@@ -271,3 +271,6 @@ G:\HalloDoc\HalloDoc\bin\Debug\net7.0\Microsoft.IO.RecyclableMemoryStream.dll
 G:\HalloDoc\HalloDoc\bin\Debug\net7.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
 G:\HalloDoc\HalloDoc\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
 G:\HalloDoc\HalloDoc\bin\Debug\net7.0\PagedList.dll
+G:\HalloDoc\HalloDoc\bin\Debug\net7.0\System.IO.Packaging.dll
+G:\HalloDoc\HalloDoc\bin\Debug\net7.0\libman.json
+G:\HalloDoc\HalloDoc\bin\Debug\net7.0\Twilio.dll

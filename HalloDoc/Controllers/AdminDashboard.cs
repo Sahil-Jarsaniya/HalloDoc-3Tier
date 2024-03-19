@@ -7,11 +7,11 @@ using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OfficeOpenXml;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 using System.Text;
-using System.Xml.Serialization;
 
 namespace HalloDoc.Controllers
 {
@@ -24,8 +24,9 @@ namespace HalloDoc.Controllers
         private readonly ApplicationDbContext _db;
         private readonly IJwtService _jwtService;
         private readonly INotyfService _notyf;
+        private readonly ISMSSender _sms;
 
-        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf, ILoginRepository loginRepo, IRequestRepository requestRepo)
+        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf, ILoginRepository loginRepo, IRequestRepository requestRepo, ISMSSender sms)
         {
             _adminRepo = adminRepo;
             _db = db;
@@ -33,6 +34,7 @@ namespace HalloDoc.Controllers
             _notyf = notyf;
             _loginRepo = loginRepo;
             _requestRepo = requestRepo;
+            _sms = sms;
         }
 
         public IActionResult Dashboard(int? status)
@@ -153,28 +155,34 @@ namespace HalloDoc.Controllers
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
-            ViewBag.Data = fname + " " + lname;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
 
             return View();
         }
 
         [HttpPost]
-        public IActionResult CreateRequest(FamilyViewModel obj)
+        public IActionResult CreateRequest(PatientViewModel obj)
         {
-            var token = Request.Cookies["jwt"];
-            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
-            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
-            ViewBag.Data = fname + " " + lname;
+
             if (ModelState.IsValid)
             {
-                _requestRepo.CreateFamilyfriendRequest(obj);
+                _requestRepo.CreatePatientRequest(obj);
 
                 return RedirectToAction("Dashboard");
             }
             return View();
         }
 
+        public IActionResult SendEmailToPatient(string FirstName, string LastName, string Email, string PhoneNumber)
+        {
+            var subject = "Send your request";
+            var body = "<a href='/HomeController/Index+'>HalloDoc</a>";
+            _loginRepo.SendEmail(Email, subject, body);
+            Task<bool> val = _sms.SendSmsAsync("+91"+PhoneNumber,body);
+
+            return RedirectToAction("Dashboard");
+        }
 
         public IActionResult ViewCase(int reqClientId)
         {
@@ -462,6 +470,29 @@ namespace HalloDoc.Controllers
             return RedirectToAction("MyProfile");
         }
 
+        public IActionResult ResetPass(string pass, int adminId)
+        {
+            if(pass == null)
+            {
+                _notyf.Warning(" Password can not be null");
+
+                return RedirectToAction("MyProfile");
+            }
+
+            string hashPass = _loginRepo.GetHash(pass);
+
+            var adminRow = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault();
+            var aspnetRow = _db.AspNetUsers.Where(x => x.Id == adminRow.Aspnetuserid).FirstOrDefault();
+
+            aspnetRow.PasswordHash = hashPass;
+            _db.AspNetUsers.Update(aspnetRow);
+            _db.SaveChanges();
+
+            _notyf.Success("Successful Password Changed");
+
+            return RedirectToAction("MyProfile", "AdminDashboard"); 
+        }
+
         public IActionResult EncounterForm(int reqClientId)
         {
             var obj = _adminRepo.Encounter(reqClientId);
@@ -485,52 +516,71 @@ namespace HalloDoc.Controllers
 
         public FileResult ExportAll(int status)
         {
-            object data;
-            XmlSerializer serializer;
+            byte[] excelBytes;
+
             if (status == 8)
             {
-                 data = _adminRepo.activeReq().ToList();
-             serializer = new XmlSerializer(typeof(List<activeReqViewModel>));
-           
+                IEnumerable<activeReqViewModel> data = _adminRepo.activeReq().ToList();
+                 excelBytes=fileToExcel(data);
             }
             else if (status == 2)
             {
-                 data = _adminRepo.pendingReq().ToList();
-                serializer = new XmlSerializer(typeof(List<pendingReqViewModel>));
+                IEnumerable<pendingReqViewModel> data = _adminRepo.pendingReq().ToList();
+                excelBytes = fileToExcel(data);
             }
             else if (status == 4)
             {
-                 data = _adminRepo.concludeReq().ToList();
-                serializer = new XmlSerializer(typeof(List<concludeReqViewModel>));
+                IEnumerable<concludeReqViewModel> data = _adminRepo.concludeReq().ToList();
+                 excelBytes = fileToExcel(data);
             }
             else if (status == 5)
             {
-                 data = _adminRepo.closeReq().ToList(); 
-                serializer = new XmlSerializer(typeof(List<closeReqViewModel>));
+                IEnumerable<closeReqViewModel> data = _adminRepo.closeReq().ToList();
+                excelBytes = fileToExcel(data);
             }
             else if (status == 13)
             {
-                 data = _adminRepo.unpaidReq().ToList();
-                serializer = new XmlSerializer(typeof(List<unpaidReqViewModel>));
+                IEnumerable<unpaidReqViewModel> data = _adminRepo.unpaidReq().ToList();
+                excelBytes = fileToExcel(data);
             }
             else
             {
-                 data = _adminRepo.newReq().ToList(); 
-                serializer = new XmlSerializer(typeof(List<newReqViewModel>));
-               
+                IEnumerable<newReqViewModel> data = _adminRepo.newReq().ToList();
+                excelBytes = fileToExcel(data);
             }
 
 
-            using (MemoryStream stream = new MemoryStream())
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sheet.xlsx");
+        }
+
+        public byte[] fileToExcel<T>(IEnumerable<T> data)
+        {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (ExcelPackage package = new ExcelPackage())
             {
-                serializer.Serialize(stream, data);
-                stream.Position = 0;
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Data");
 
+                PropertyInfo[] properties = typeof(T).GetProperties();
+                for (int i = 0; i < properties.Length; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = properties[i].Name;
+                }
+                int row = 2;
 
-                byte[] xmlBytes = stream.ToArray();
+                foreach (var item in data)
+                {
+                    for (int i = 0; i < properties.Length; i++)
+                    {
+                        worksheet.Cells[row, i+1].Value = properties[i].GetValue(item);
+                    }
+                    row++;
+                }
 
-                return File(stream, "application/xml", "Object.xml");
+                byte[] excelBytes = package.GetAsByteArray();
+
+                return excelBytes;
             }
+
         }
 
         public IActionResult Provider()
@@ -544,5 +594,6 @@ namespace HalloDoc.Controllers
             var provider = _adminRepo.Provider();
             return View(provider);
         }
+
     }
 }

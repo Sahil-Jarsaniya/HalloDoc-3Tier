@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
-    public class RequestRepository : IRequestRepository
+    public class RequestRepository : IRequestRepository 
     {
         private readonly ApplicationDbContext _db;
         private readonly ILoginRepository _loginRepo;
@@ -36,8 +36,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             if (existUser == null)
             {
+                if(obj.Password != null)
+                {
                 var hashPass = _loginRepo.GetHash(obj.Password);
-
                 AspNetUser aspNetUser = new AspNetUser
                 {
 
@@ -50,6 +51,25 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 };
                 _db.AspNetUsers.Add(aspNetUser);
                 _db.SaveChanges();
+                }
+                else
+                {
+                    AspNetUser aspNetUser = new AspNetUser
+                    {
+
+                        Id = guid.ToString(),
+                        UserName = obj.Email,
+                        CreatedDate = DateTime.UtcNow,
+                        PhoneNumber = obj.Phonenumber,
+                        Email = obj.Email,
+                    };
+                    _db.AspNetUsers.Add(aspNetUser);
+                    _db.SaveChanges();
+                    string subject = "Registration Link";
+                    string body = "link";
+                    _loginRepo.SendEmail(obj.Email, subject, body);
+                }
+
 
                 User user = new User
                 {

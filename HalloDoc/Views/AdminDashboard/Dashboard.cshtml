@@ -137,7 +137,7 @@
 
         <div class="d-flex align-items-center">
 
-            <button type="submit" class="mx-1 px-2 py-1 btn btn-primary">
+            <button type="button" class="mx-1 px-2 py-1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#SendLinkModal">
                 <img src="~/images/send.svg" style="fill: white" />
                 <span class="d-none d-lg-inline ms-1">Send Link</span>
             </button>
@@ -146,11 +146,7 @@
                 <img src="~/images/journal-text.svg" />
                 <span class="d-none d-lg-inline ms-1 ">Create Request</span>
             </a>
-            @*
-            <button class="mx-1 px-2 py-1 btn btn-primary exportData" id="ExportBtn">
-            <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
-            <span class="d-none d-lg-inline ms-1">Export</span>
-            </button>*@
+
             <form method="post" asp-action="Export" asp-controller="AdminDashboard">
                 <input type="hidden" name="GridHtml" />
                 <input value="Export" hidden />
@@ -159,22 +155,23 @@
                     <span class="d-none d-lg-inline ms-1">Export</span>
                 </button>
             </form>
-
-            <a  class="mx-1 px-2 py-1 btn btn-primary " id="ExportBtnAll">
-                <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
-                <span class="d-none d-lg-inline ms-1 ">Export All</span>
-            </a>
-
-            <button type="button" class="mx-1 px-2 py-1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReqSupportModal">
-                <img src="~/images/person-circle.svg" />
-                <span class="d-none d-lg-inline ms-1">Request DTY Support</span>
-            </button>
+            <form id="exportAllForm" method="post" asp-action="ExportAll" asp-controller="AdminDashboard">
+                <input id="exportStatus" value="" name="status" hidden />
+                <button type="button" id="ExportBtnAll" class="mx-1 px-2 py-1 btn btn-primary ">
+                    <img src="~/images/reply.svg" style="transform: rotateY(180deg);" />
+                    <span class="d-none d-lg-inline ms-1 ">Export All</span>
+                </button>
+            </form>
+            @*   <button type="button" class="mx-1 px-2 py-1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReqSupportModal">
+            <img src="~/images/person-circle.svg" />
+            <span class="d-none d-lg-inline ms-1">Request DTY Support</span>
+            </button>*@
         </div>
 
     </div>
-  
 
-    
+
+
     <form method="post" asp-action="PartialTable" id="DashboradForm">
 
         <div class="d-block d-lg-flex mt-3 align-items-center justify-content-between">
@@ -253,7 +250,6 @@
     </form>
 
 </div>
-
 
 @*Cancel Case Modal*@
 
@@ -521,6 +517,54 @@
     </div>
 </div>
 
+@*Send Link*@
+<div class="modal fade" id="SendLinkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+            <form class="form-floating patient-request-form p-2" asp-action="SendEmailToPatient" asp-controller="AdminDashboard">
+        <div class="modal-content">
+                <div class="modal-header" style="background-color: #01bce9; color:white;">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Send mail to patient for submitting request</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="dropdown">
+                        <div class="row g-2 m-1">
+
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input type="text" name="FirstName" class="form-control" placeholder="">
+                                    <label for="">First Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text" name="LastName" class="form-control" placeholder="">
+                                    <label for="floatingSelectGrid">Last Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input id="checkEmail" name="Email" type="email" class="form-control" placeholder="name@example.com">
+                                    <label for="">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating phone-div w-100 h-100 ">
+                                    <input type="tel" name="PhoneNumber" class="patientPhone form-control w-100 h-100" placeholder="">
+                                    <label for="">Phone</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="SendEmailBtn">Send</button>
+                    <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
+                </div>
+        </div>
+            </form>
+    </div>
+</div>
 
 @section AdminScript {
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
@@ -528,7 +572,7 @@
     </script>
     <script type="text/javascript" src="~/js/AdminDashboard.js"></script>
     <script src="~/js/CasesPopUp.js"></script>
-    <script type="text/javascript">
+    @*   <script type="text/javascript">
         $(function () {
             $("#ExportBtn").click(function () {
                 var cloneaTable = $("#PartialTable").clone();
@@ -537,23 +581,5 @@
                 $("input[name='GridHtml']").val(cloneaTable.html());
             });
         });
-    </script>
-    <script>
-        $("#ExportBtnAll").click(function () {
-            var dashboardStatus = $("#DashboardStatus").val();
-            console.log("cc")
-            $.ajax({
-                url: "/AdminDashboard/ExportAll",
-                type: 'POST',
-                data: { status: dashboardStatus },
-                success: function (result) {
-                    console.log("s")
-                },
-                error: function (error) {
-                    console.log(error);
-                    alert('error fetching details')
-                },
-            });
-        })
-    </script>
+    </script>*@
 }
