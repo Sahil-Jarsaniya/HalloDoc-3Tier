@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Title"] = "Admin Profile";
+    Layout = "_adminLayout";
+}
+
+<div>
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Create Role
+        </h4>
+        <a href="@Url.Action("Access", "AdminDashboard")" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="container shadow mt-4 " style="max-width:1000px" id="ProviderTable">
+        <form class="viewCaseForm form-floating patient-request-form p-3">
+            <h5>
+                Details
+            </h5>
+            <div class="row g-2 m-1">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input  type="text" class="form-control" placeholder="">
+                        <label for="">Role Name</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <select class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
+                                <option value="">All</option>
+                                <option value="">Admin</option>
+                                <option value="">Patient</option>
+                                <option value="">Physicians</option>
+                        </select>
+                        <label>Account Type</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+
+            </div>
+            <button type="reset" id="" class="btn btn-outline-primary float-end " >Cancel</button>
+            <button type="submit" class="btn btn-primary float-end me-1" >Save</button><br /><br />
+        </form>
+    </div>
+</div>
+
+@section AdminScript {
+
+}

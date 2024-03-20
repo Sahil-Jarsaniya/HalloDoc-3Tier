@@ -1,4 +1,5 @@
-﻿@{
+﻿@model ProviderViewModel;
+@{
     ViewData["Title"] = "Admin Profile";
     Layout = "_adminLayout";
 }
@@ -9,63 +10,87 @@
             Provider Information
         </h4>
     </div>
-    <div class="container d-flex justify-content-between mt-4" style="max-width:1500px">
+    <div class="container d-sm-flex justify-content-between mt-4" style="max-width:1500px">
         <form method="post" id="DashboradForm">
             <div class="d-flex normal-input rounded align-items-center ms-lg-2 ps-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
                     <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
                     </path>
                 </svg>
-                <select class="form-select border-0" id="RegionFilter" name="RegionFilter" aria-label="Default select example">
+                <select class="form-select border-0" id="RegionFilter2" name="RegionFilter2" aria-label="Default select example">
                     <option selected value="null">All Regions</option>
-                    @*@foreach (var item in Model.Region)
+                    @foreach (var item in Model.Region)
                     {
                     <option value="@item.Regionid">@item.Name</option>
-                    }*@
+                    }
                 </select>
             </div>
         </form>
-        <a href="#" class="btn btn-primary m-2  float-end">
+        <a href="#" class="btn btn-primary m-2 mt-sm-0 float-sm-end ">
             Create Provider Account
         </a>
     </div>
-    <div class="container d-flex justify-content-between mt-4" style="max-width:1500px">
-        <table class="table table-responsive d-none d-md-table">
-            <thead>
-                <tr class="table-secondary">
-                    <td>Stop Notification</td>
-                    <td>Provider Name</td>
-                    <td>Role</td>
-                    <td>On Call Status</td>
-                    <td>Status</td>
-                    <td>Action</td>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in   Model)
-                {
-                    <tr>
-                        <td>
-                            <input type="checkbox" />
-                        </td>
-                        <td>@item.Firstname @item.Lastname</td>
-                        <td>@item.Roleid</td>
-                        <td>active</td>
-                        <td>@item.Status</td>
-                        <td>
-                            <a class="btn btn-outline-primary">Contact</a>
-                            <a class="btn btn-outline-primary">Edit</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1500px" id="ProviderTable">
+        <partial name="ProviderTable">
     </div>
 </div>
+
+<div class="modal fade" id="ContactProviderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="form-floating patient-request-form p-2" asp-action="ContactProvider" asp-controller="AdminDashboard">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #01bce9; color:white;">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Contact Your Provider</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Choose communication to send message</p>
+                    <input name="Email" id="Email" value="" hidden/>
+                    <input name="Mobile" id="PhoneNumber" value="" hidden/>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="contactType" value="1" id="flexRadioDefault1">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            SMS
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="contactType" value="2" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Email
+                        </label>
+                    </div> 
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="contactType" value="3" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                            Both
+                        </label>
+                    </div>
+
+                    <div class="form-floating m-1 form-div">
+                        <textarea name="note" class="form-control h-100" rows="3" id="addTransferNote"></textarea>
+                        <label for="">Description</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Send</button>
+                    <button type="button" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 @section AdminScript {
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
-
+    <script>
+        $(".ContactProvider").click(function () {
+            $("#Email").val($(this).data('email'));
+            $("#PhoneNumber").val($(this).data('mobile'));
+            $("#ContactProviderModal").modal('show');
+        });
+    </script>
+    <script type="text/javascript" src="~/js/Provider.js"></script>
 }

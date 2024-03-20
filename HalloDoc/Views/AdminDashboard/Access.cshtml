@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Admin Profile";
+    Layout = "_adminLayout";
+}
+
+<div>
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Account Access
+        </h4>
+    </div>
+    <div class="container mt-4 w-100" style="max-width:1000px">
+        <a asp-action="CreateRole" class="btn btn-outline-primary mb-1 float-end ">
+            Create Access
+        </a><br/>
+    </div>
+    <div class="container d-flex justify-content-center mt-4" style="max-width:1000px" id="ProviderTable">
+        <table class="table table-responsive d-none d-md-table justify-content-between">
+            <thead>
+                <tr class="table-secondary">
+                    <td>Name</td>
+                    <td>Account Type</td>
+                    <td >Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr>
+                        <td>Admin</td>
+                        <td>Admin</td>
+                        <td>
+                            <a class="btn btn-outline-primary">Edit</a>
+                            <button type="button" class="btn btn-outline-primary ContactProvider" >Delete</button>
+                        </td>
+                    </tr>
+                
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@section AdminScript {
+    
+}

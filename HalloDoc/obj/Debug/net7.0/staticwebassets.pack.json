@@ -49,6 +49,10 @@
       "PackagePath": "staticwebassets\\images\\7774236_3736765.jpg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\ActiveIcon.svg",
+      "PackagePath": "staticwebassets\\images\\ActiveIcon.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\Fig1. Platform login page.jpg",
       "PackagePath": "staticwebassets\\images\\Fig1. Platform login page.jpg"
     },
@@ -89,6 +93,10 @@
       "PackagePath": "staticwebassets\\images\\doctor-svgrepo-com.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\doctor.svg",
+      "PackagePath": "staticwebassets\\images\\doctor.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\envelope.svg",
       "PackagePath": "staticwebassets\\images\\envelope.svg"
     },
@@ -117,12 +125,20 @@
       "PackagePath": "staticwebassets\\images\\map.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\new.png",
+      "PackagePath": "staticwebassets\\images\\new.png"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\password_visibility_off.svg",
       "PackagePath": "staticwebassets\\images\\password_visibility_off.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\password_visibility_on.svg",
       "PackagePath": "staticwebassets\\images\\password_visibility_on.svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\patch-check.svg",
+      "PackagePath": "staticwebassets\\images\\patch-check.svg"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\person-circle.svg",
@@ -153,6 +169,10 @@
       "PackagePath": "staticwebassets\\images\\telephone.svg"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\toClose.svg",
+      "PackagePath": "staticwebassets\\images\\toClose.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\images\\trash3.svg",
       "PackagePath": "staticwebassets\\images\\trash3.svg"
     },
@@ -167,6 +187,10 @@
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\CasesPopUp.js",
       "PackagePath": "staticwebassets\\js\\CasesPopUp.js"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\Provider.js",
+      "PackagePath": "staticwebassets\\js\\Provider.js"
     },
     {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\js\\ViewUploadJs.js",

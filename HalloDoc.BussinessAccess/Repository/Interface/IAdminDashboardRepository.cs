@@ -66,6 +66,9 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public Profile MyProfile(string AspId);
         public void MyProfile(Profile obj, string AspId);
 
-        public IEnumerable<ProviderViewModel> Provider();
+        public ProviderViewModel Provider();
+
+        public void StopNoty(int Physicianid);
+        public ProviderViewModel FilterProvider(int RegionId);
     }
 }

@@ -9,9 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OfficeOpenXml;
+using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.Controllers
 {
@@ -179,7 +181,7 @@ namespace HalloDoc.Controllers
             var subject = "Send your request";
             var body = "<a href='/HomeController/Index+'>HalloDoc</a>";
             _loginRepo.SendEmail(Email, subject, body);
-            Task<bool> val = _sms.SendSmsAsync("+91"+PhoneNumber,body);
+            Task<bool> val = _sms.SendSmsAsync("+91" + PhoneNumber, body);
 
             return RedirectToAction("Dashboard");
         }
@@ -472,7 +474,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult ResetPass(string pass, int adminId)
         {
-            if(pass == null)
+            if (pass == null)
             {
                 _notyf.Warning(" Password can not be null");
 
@@ -490,7 +492,7 @@ namespace HalloDoc.Controllers
 
             _notyf.Success("Successful Password Changed");
 
-            return RedirectToAction("MyProfile", "AdminDashboard"); 
+            return RedirectToAction("MyProfile", "AdminDashboard");
         }
 
         public IActionResult EncounterForm(int reqClientId)
@@ -521,7 +523,7 @@ namespace HalloDoc.Controllers
             if (status == 8)
             {
                 IEnumerable<activeReqViewModel> data = _adminRepo.activeReq().ToList();
-                 excelBytes=fileToExcel(data);
+                excelBytes = fileToExcel(data);
             }
             else if (status == 2)
             {
@@ -531,7 +533,7 @@ namespace HalloDoc.Controllers
             else if (status == 4)
             {
                 IEnumerable<concludeReqViewModel> data = _adminRepo.concludeReq().ToList();
-                 excelBytes = fileToExcel(data);
+                excelBytes = fileToExcel(data);
             }
             else if (status == 5)
             {
@@ -571,7 +573,7 @@ namespace HalloDoc.Controllers
                 {
                     for (int i = 0; i < properties.Length; i++)
                     {
-                        worksheet.Cells[row, i+1].Value = properties[i].GetValue(item);
+                        worksheet.Cells[row, i + 1].Value = properties[i].GetValue(item);
                     }
                     row++;
                 }
@@ -591,9 +593,67 @@ namespace HalloDoc.Controllers
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
+
+
             var provider = _adminRepo.Provider();
             return View(provider);
         }
 
+        public void StopNoty(int Physicianid)
+        {
+            _adminRepo.StopNoty(Physicianid);
+        }
+
+        public IActionResult ProviderFilter(int RegionId)
+        {
+            ProviderViewModel data = _adminRepo.FilterProvider((int)RegionId);
+            return PartialView("ProviderTable", data);
+        }
+
+        public IActionResult ContactProvider(string Email, string note, string Mobile, int contactType)
+        {
+            var sub = "hey there";
+
+            switch (contactType)
+            {
+                case 2:
+                    _loginRepo.SendEmail(Email, sub, note);
+                    break;
+                case 1:
+                    _sms.SendSmsAsync(Mobile, note);
+                    break;
+                case 3:
+                    _loginRepo.SendEmail(Email, sub, note);
+                    _sms.SendSmsAsync(Mobile, note);
+                    break;
+            }
+
+
+            return RedirectToAction("Provider");
+        }
+
+        public IActionResult Access()
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+
+
+            return View();
+        }
+
+        public IActionResult CreateRole()
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            return View();
+        }
     }
 }

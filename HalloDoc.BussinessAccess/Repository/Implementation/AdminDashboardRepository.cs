@@ -910,23 +910,115 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.SaveChanges();
         }
 
-        public IEnumerable<ProviderViewModel> Provider()
+        public ProviderViewModel Provider()
         {
             var region = from t1 in _db.Regions select t1;
-            var provider = from t1 in _db.Physicians
-                           select new ProviderViewModel
+            var phy = from t1 in _db.Physicians
+                      join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
+                      select new ProviderTableViewModel
+                      {
+                          Firstname = t1.Firstname,
+                          Lastname = t1.Lastname,
+                          Email = t1.Email,
+                          Mobile = t1.Mobile,
+                          isNotiOff = t2.Isnotificationstopped,
+                          Status = t1.Status,
+                          Roleid = t1.Roleid,
+                          Physicianid = t1.Physicianid
+                      };
+
+            var provider = new ProviderViewModel
                            {
-                               Firstname = t1.Firstname,
-                               Lastname = t1.Lastname,
-                               Physicianid = t1.Physicianid,
-                               Aspnetuserid = t1.Aspnetuserid,
-                               Email = t1.Email,
-                               Mobile = t1.Mobile,
-                               Status = t1.Status,
-                               Roleid = t1.Roleid,
+                                providerTableViewModels = phy,
+                               Region = region
                            };
 
             return provider;
+        }
+
+        public ProviderViewModel FilterProvider(int RegionId)
+        {
+            if(RegionId == 0)
+            {
+                var region = from t1 in _db.Regions select t1;
+                var phy = from t1 in _db.Physicians
+                          join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
+                          select new ProviderTableViewModel
+                          {
+                              Firstname = t1.Firstname,
+                              Lastname = t1.Lastname,
+                              Email = t1.Email,
+                              Mobile = t1.Mobile,
+                              isNotiOff = t2.Isnotificationstopped,
+                              Status = t1.Status,
+                              Roleid = t1.Roleid,
+                              Physicianid = t1.Physicianid
+                          };
+                var provider = new ProviderViewModel
+                {
+                    providerTableViewModels = phy,
+                    Region = region
+                };
+
+                return provider;
+            }
+            else
+            {
+            var region = from t1 in _db.Regions select t1;
+            var phy = from t1 in _db.Physicians
+                      join t3 in _db.Physiciannotifications on t1.Physicianid equals t3.Physicianid
+                      join t2 in _db.Physicianregions on t1.Physicianid equals t2.Physicianid
+                      where t2.Regionid == RegionId
+                      select new ProviderTableViewModel
+                      {
+                          Firstname = t1.Firstname,
+                          Lastname = t1.Lastname,
+                          Email = t1.Email,
+                          Mobile = t1.Mobile,
+                          isNotiOff = t3.Isnotificationstopped,
+                          Status = t1.Status,
+                          Roleid = t1.Roleid,
+                          Physicianid = t1.Physicianid
+                      };
+                var provider = new ProviderViewModel
+            {
+                providerTableViewModels = phy,
+                Region = region
+            };
+
+            return provider;
+            }
+        }
+
+        public void StopNoty(int Physicianid)
+        {
+            var phy = _db.Physiciannotifications.Where(x =>x.Physicianid == Physicianid).FirstOrDefault();
+            if(phy != null)
+            {
+                if(phy.Isnotificationstopped == true)
+                {
+                    phy.Isnotificationstopped = false;
+                }
+                else
+                {
+                    phy.Isnotificationstopped = true;
+                }
+
+                _db.Physiciannotifications.Update(phy);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var phynoty = new Physiciannotification
+                {
+                    Physicianid = Physicianid,
+                    Isnotificationstopped = true
+                };
+
+                _db.Physiciannotifications.Update(phynoty);
+                _db.SaveChanges();
+            }
+            return;
         }
     }
 }
