@@ -2,6 +2,7 @@
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using Microsoft.AspNetCore.Http;
 using Org.BouncyCastle.Tls;
 using System;
 using System.Collections.Generic;
@@ -66,9 +67,25 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public Profile MyProfile(string AspId);
         public void MyProfile(Profile obj, string AspId);
 
+        public void ResetAdminPass(string pass, int adminId);
+
+        public void AdminRegionUpdate(List<CheckBoxData> selectedRegion, int adminId);
+
         public ProviderViewModel Provider();
 
         public void StopNoty(int Physicianid);
         public ProviderViewModel FilterProvider(int RegionId);
+
+        public EditProvider EditProvider(int Physicianid);
+
+        public void ProviderAccountEdit(EditProvider obj);
+
+        public void ProviderInfoEdit(EditProvider obj);
+        public void ProviderMailingInfoEdit(EditProvider obj);
+        public void ProviderProfileEdit(EditProvider obj);
+
+        public void PhysicianRegionUpdate(List<CheckBoxData> selectedRegion, int Physicianid);
+
+        public void ResetPhysicianPass(string pass, int Physicianid);
     }
 }

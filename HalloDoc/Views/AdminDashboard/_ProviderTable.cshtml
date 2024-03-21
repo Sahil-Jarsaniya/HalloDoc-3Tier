@@ -1,0 +1,91 @@
+﻿<table class="table table-responsive d-none d-md-table">
+    <thead>
+        <tr class="table-secondary">
+            <td>Stop Notification</td>
+            <td>Provider Name</td>
+            <td>Role</td>
+            <td>On Call Status</td>
+            <td>Status</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.providerTableViewModels)
+        {
+            <tr>
+                <td>
+
+                    @if (item.isNotiOff)
+                    {
+                        <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" />
+                    }
+                    else
+                    {
+                        <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" checked />
+                    }
+                </td>
+                <td>@item.Firstname @item.Lastname</td>
+                <td>@item.Roleid</td>
+                <td>active</td>
+                <td>@item.Status</td>
+                <td>
+                    <button type="button" class="btn btn-outline-primary ContactProvider" data-email="@item.Email" data-mobile="@item.Mobile">Contact</button>
+                    <a asp-action="EditProvider" asp-controller="AdminDashboard" asp-route-Physicianid="@item.Physicianid" class="btn btn-outline-primary">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*MobileView*@
+
+<div class="d-md-none mobileView w-100">
+    @foreach (var item in Model.providerTableViewModels)
+    {
+        var name = item.Firstname + "," + item.Lastname;
+        <div class="shadow m-1 p-2 w-100" data-bs-toggle="collapse" href="#@item.Physicianid" role="button" aria-expanded="false">
+
+            <div class="d-flex mb-2">
+                @if (item.isNotiOff)
+                {
+                    <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" />
+                }
+                else
+                {
+                    <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" checked />
+                }
+                <span class="ms-1">@item.Firstname @item.Lastname</span>
+            </div>
+            <div class="d-flex justify-content-between">
+                <span class="w-50">
+                    On Call Status: Active
+                </span>
+            </div>
+        </div>
+        <div class="collapse shadow m-1 p-2" id="@item.Physicianid">
+            <p>Role: </p>
+            <p>Status: </p>
+            <div class="float-end">
+                <button type="button" class="btn btn-outline-primary ContactProvider" data-email="@item.Email" data-mobile="@item.Mobile">Contact</button>
+                <a class="btn btn-outline-primary">Edit</a>
+            </div><br /> <br />
+        </div>
+    }
+</div>
+
+<script>
+    $(".ContactProvider").click(function () {
+        $("#Email").val($(this).data('email'));
+        $("#PhoneNumber").val($(this).data('mobile'));
+        $("#ContactProviderModal").modal('show');
+    });
+</script>
+<script>
+    function stopNoty(Physicianid) {
+        $.ajax({
+            url: '/AdminDashboard/StopNoty',
+            type: 'POST',
+            data: { Physicianid: Physicianid },
+        })
+    }
+</script>

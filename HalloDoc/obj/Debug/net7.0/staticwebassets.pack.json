@@ -949,6 +949,22 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\HalloDoc - DB (1).xlsx"
     },
     {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\Microsoft.AspNetCore.Http.FormFile",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\Microsoft.AspNetCore.Http.FormFile"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\clock (4).svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\clock (4).svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\clock (6).svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\clock (6).svg"
+    },
+    {
+      "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\list.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\list.svg"
+    },
+    {
       "Id": "G:\\HalloDoc\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees-21Feb24.pdf",
       "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees-21Feb24.pdf"
     },

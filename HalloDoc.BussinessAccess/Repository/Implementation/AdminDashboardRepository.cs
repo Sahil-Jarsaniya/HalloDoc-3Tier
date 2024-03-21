@@ -3,7 +3,10 @@ using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using Microsoft.AspNetCore.Http;
 using Org.BouncyCastle.Ocsp;
+using System.Linq;
+using Twilio.TwiML.Voice;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
@@ -855,6 +858,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             AspNetUser aspRow = _db.AspNetUsers.Where(x => x.Id == AspId).FirstOrDefault();
             var Region = from t1 in _db.Regions select t1;
 
+            var regionData = from t1 in _db.Regions
+                             select new CheckBoxData
+                             {
+                                 Id = t1.Regionid,
+                                 value = t1.Abbreviation,
+                                 Checked = _db.Adminregions.Any(x => x.Adminid == adminRow.Adminid && x.Regionid == t1.Regionid)
+                             };
+
             Profile data = new Profile
             {
                 Adminid = adminRow.Adminid,
@@ -870,7 +881,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Roleid = adminRow.Roleid,
                 Status = adminRow.Status,
                 UserName = aspRow.UserName,
-                Region = Region
+                Region = regionData,
             };
 
             return data;
@@ -908,6 +919,46 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             _db.Admins.Update(adminRow);
             _db.SaveChanges();
+        }
+
+        public void ResetAdminPass(string pass, int adminId)
+        {
+            var adminRow = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault();
+            var aspnetRow = _db.AspNetUsers.Where(x => x.Id == adminRow.Aspnetuserid).FirstOrDefault();
+
+            aspnetRow.PasswordHash = pass;
+            _db.AspNetUsers.Update(aspnetRow);
+            _db.SaveChanges();
+        }
+
+        public void AdminRegionUpdate(List<CheckBoxData> selectedRegion, int adminId)
+        {
+            foreach (var item in selectedRegion)
+            {
+                var data = _db.Adminregions.FirstOrDefault(x => x.Adminid == adminId && x.Regionid == item.Id);
+
+                if (data == null)
+                {
+                    if (item.Checked)
+                    {
+                        var adminRegion = new Adminregion
+                        {
+                            Adminid = adminId,
+                            Regionid = item.Id,
+                        };
+                        _db.Adminregions.Add(adminRegion);
+                        _db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    if (!item.Checked)
+                    {
+                        _db.Adminregions.Remove(data);
+                        _db.SaveChanges();
+                    }
+                }
+            }
         }
 
         public ProviderViewModel Provider()
@@ -1019,6 +1070,151 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 _db.SaveChanges();
             }
             return;
+        }
+
+        public EditProvider EditProvider(int Physicianid)
+        {
+            var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == Physicianid);
+            var aspRow = _db.AspNetUsers.FirstOrDefault(x => x.Id == phy.Aspnetuserid);
+            var regionData = from t1 in _db.Regions
+                             select new CheckBoxData
+                             {
+                                 Id = t1.Regionid,
+                                 value = t1.Abbreviation,
+                                 Checked = _db.Physicianregions.Any(x => x.Physicianid == phy.Physicianid && x.Regionid==t1.Regionid)
+                             };
+            var data = new EditProvider
+                {
+                    UserName = aspRow.UserName,
+                    Physicianid = Physicianid,
+                    Firstname = phy.Firstname,
+                    Lastname = phy.Lastname,
+                    Email = phy.Email,
+                    Status = phy.Status,
+                    Roleid = phy.Roleid,
+                    Mobile = phy.Mobile,
+                    Medicallicense = phy.Medicallicense,
+                    Npinumber = phy.Npinumber,
+                    Syncemailaddress = phy.Syncemailaddress,
+                    Address1 = phy.Address1,
+                    Address2 = phy.Address2,
+                    City = phy.City,
+                    Zip = phy.Zip,
+                    Altphone = phy.Altphone,
+                    Businessname = phy.Businessname,
+                    Businesswebsite = phy.Businesswebsite,
+                    Signature = phy.Signature,
+                    Photo = phy.Photo,
+                    Adminnotes = phy.Adminnotes,
+                    Region = regionData
+                };
+
+            return data;
+        }
+
+        public void ProviderAccountEdit(EditProvider obj)
+        {
+            var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == obj.Physicianid);
+            var aspRow = _db.AspNetUsers.FirstOrDefault(x => x.Id == phy.Aspnetuserid);
+
+            if(aspRow != null)
+            {
+                aspRow.UserName = obj.UserName;
+                _db.AspNetUsers.Update(aspRow);
+                _db.SaveChanges();
+            }
+
+        }
+
+        public void ProviderInfoEdit(EditProvider obj)
+        {
+            var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == obj.Physicianid);
+
+            phy.Firstname = obj.Firstname;
+            phy.Lastname = obj.Lastname;
+            phy.Email = obj.Email;
+            phy.Mobile = obj.Mobile;
+            phy.Medicallicense = obj.Medicallicense;
+            phy.Npinumber = obj.Npinumber;
+            phy.Syncemailaddress = obj.Syncemailaddress;
+
+            _db.Physicians.Update(phy);
+            _db.SaveChanges();
+
+        }
+        public void ProviderMailingInfoEdit(EditProvider obj)
+        {
+            var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == obj.Physicianid);
+
+            phy.Address1 = obj.Address1;
+            phy.Address2 = obj.Address2;
+            phy.City = obj.City;
+            phy.Zip = obj.Zip;
+            phy.Altphone = obj.Altphone;
+
+
+            _db.Physicians.Update(phy);
+            _db.SaveChanges();
+        }
+        public void ProviderProfileEdit(EditProvider obj)
+        {
+            var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == obj.Physicianid);
+
+            phy.Businessname = obj.Businessname;
+            phy.Businesswebsite = obj.Businesswebsite;
+            if (obj.PhySign != null)
+            {
+            phy.Signature  = obj.PhySign.FileName;
+            }
+            if (obj.PhyPhoto!= null)
+            {
+            phy.Photo = obj.PhyPhoto.FileName;
+            }
+            phy.Adminnotes = obj.Adminnotes;
+
+            _db.Physicians.Update(phy);
+            _db.SaveChanges();
+
+        }
+
+        public void PhysicianRegionUpdate(List<CheckBoxData> selectedRegion, int Physicianid)
+        {
+            foreach (var item in selectedRegion)
+            {
+                var data = _db.Physicianregions.FirstOrDefault(x => x.Physicianid == Physicianid && x.Regionid == item.Id);
+
+                if (data == null)
+                {
+                    if (item.Checked)
+                    {
+                        var phyRegion = new Physicianregion
+                        {
+                            Physicianid = Physicianid,
+                            Regionid = item.Id,
+                        };
+                        _db.Physicianregions.Add(phyRegion);
+                        _db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    if (!item.Checked)
+                    {
+                        _db.Physicianregions.Remove(data);
+                        _db.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public void ResetPhysicianPass(string pass, int Physicianid)
+        {
+            var adminRow = _db.Physicians.Where(x => x.Physicianid == Physicianid).FirstOrDefault();
+            var aspnetRow = _db.AspNetUsers.Where(x => x.Id == adminRow.Aspnetuserid).FirstOrDefault();
+
+            aspnetRow.PasswordHash = pass;
+            _db.AspNetUsers.Update(aspnetRow);
+            _db.SaveChanges();
         }
     }
 }

@@ -78,5 +78,24 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 emailClient.Disconnect(true);
             }
         }
+
+        public void uploadFile(IFormFile? file,string folder, string path)
+        {
+            //uploading files
+            if (file != null && file.Length > 0)
+            {
+                //get file name
+                var fileName = Path.GetFileName(file.FileName);
+
+                //define path
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles",folder, path);
+
+                // Copy the file to the desired location
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+            }
+        }
     }
 }

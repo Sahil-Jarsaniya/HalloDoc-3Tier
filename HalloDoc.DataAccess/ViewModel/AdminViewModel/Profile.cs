@@ -42,6 +42,6 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public string? Altphone { get; set; }
 
-        public IEnumerable<Region> Region { get; set; }
+        public IEnumerable<CheckBoxData> Region { get; set; }
     }
 }

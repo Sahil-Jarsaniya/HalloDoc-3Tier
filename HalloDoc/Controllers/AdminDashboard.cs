@@ -472,6 +472,11 @@ namespace HalloDoc.Controllers
             return RedirectToAction("MyProfile");
         }
 
+        public void AdminRegionUpdate(List<CheckBoxData> selectedRegion, int adminId)
+        {
+            _adminRepo.AdminRegionUpdate(selectedRegion, adminId);
+        }
+
         public IActionResult ResetPass(string pass, int adminId)
         {
             if (pass == null)
@@ -483,12 +488,7 @@ namespace HalloDoc.Controllers
 
             string hashPass = _loginRepo.GetHash(pass);
 
-            var adminRow = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault();
-            var aspnetRow = _db.AspNetUsers.Where(x => x.Id == adminRow.Aspnetuserid).FirstOrDefault();
-
-            aspnetRow.PasswordHash = hashPass;
-            _db.AspNetUsers.Update(aspnetRow);
-            _db.SaveChanges();
+            _adminRepo.ResetAdminPass(hashPass, adminId);
 
             _notyf.Success("Successful Password Changed");
 
@@ -607,7 +607,7 @@ namespace HalloDoc.Controllers
         public IActionResult ProviderFilter(int RegionId)
         {
             ProviderViewModel data = _adminRepo.FilterProvider((int)RegionId);
-            return PartialView("ProviderTable", data);
+            return PartialView("_ProviderTable", data);
         }
 
         public IActionResult ContactProvider(string Email, string note, string Mobile, int contactType)
@@ -631,6 +631,73 @@ namespace HalloDoc.Controllers
 
             return RedirectToAction("Provider");
         }
+
+        public IActionResult EditProvider(int Physicianid)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            var data = _adminRepo.EditProvider(Physicianid);
+            return View(data);
+        }
+        [HttpPost]
+        public IActionResult EditProvider(EditProvider obj, int formid)
+        {
+            switch (formid)
+            {
+                case 1:
+                    _adminRepo.ProviderAccountEdit(obj);
+                    break;
+                case 2:
+                    _adminRepo.ProviderInfoEdit(obj);
+                    break;
+                case 3:
+                    _adminRepo.ProviderMailingInfoEdit(obj);
+                    break;
+                case 4:
+                    _adminRepo.ProviderProfileEdit(obj);
+                    if (obj.PhySign != null)
+                    {
+                        _loginRepo.uploadFile(obj.PhySign, "ProviderData", obj.PhySign.FileName.ToString());
+                    }
+                    if (obj.PhyPhoto != null)
+                    {
+                        _loginRepo.uploadFile(obj.PhyPhoto, "ProviderData", obj.PhyPhoto.FileName.ToString());
+                    }
+                    break;
+                case 5:
+                    break;
+            }
+
+            return RedirectToAction("EditProvider", new { Physicianid = obj.Physicianid });
+        }
+
+        public void PhysicianRegionUpdate(List<CheckBoxData> selectedRegion, int Physicianid)
+        {
+            _adminRepo.PhysicianRegionUpdate(selectedRegion, Physicianid);
+        }
+
+        public IActionResult ResetPhysicianPass(string pass, int Physicianid)
+        {
+            if (pass == null)
+            {
+                _notyf.Warning(" Password can not be null");
+
+                return RedirectToAction("MyProfile");
+            }
+
+            string hashPass = _loginRepo.GetHash(pass);
+
+
+            _adminRepo.ResetPhysicianPass(hashPass, Physicianid);
+            _notyf.Success("Successful Password Changed");
+
+            return RedirectToAction("EditProvider", new { Physicianid = Physicianid });
+        }
+
 
         public IActionResult Access()
         {

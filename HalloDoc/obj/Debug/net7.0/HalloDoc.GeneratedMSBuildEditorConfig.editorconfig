@@ -36,6 +36,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcRGFzaGJvYXJkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/HalloDoc/HalloDoc/Views/AdminDashboard/EditProvider.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcRWRpdFByb3ZpZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/HalloDoc/HalloDoc/Views/AdminDashboard/EncounterForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcRW5jb3VudGVyRm9ybS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -46,10 +50,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/HalloDoc/HalloDoc/Views/AdminDashboard/Provider.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcUHJvdmlkZXIuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[G:/HalloDoc/HalloDoc/Views/AdminDashboard/ProviderTable.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcUHJvdmlkZXJUYWJsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/HalloDoc/HalloDoc/Views/AdminDashboard/SendOrders.cshtml]
@@ -90,6 +90,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/HalloDoc/HalloDoc/Views/AdminDashboard/_pendingRequestView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcX3BlbmRpbmdSZXF1ZXN0Vmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/HalloDoc/HalloDoc/Views/AdminDashboard/_ProviderTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcX1Byb3ZpZGVyVGFibGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/HalloDoc/HalloDoc/Views/AdminDashboard/_unpaidReqView.cshtml]
