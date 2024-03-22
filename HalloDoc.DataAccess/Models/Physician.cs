@@ -73,7 +73,7 @@ public partial class Physician
 
     public string? Syncemailaddress { get; set; }
 
-    public virtual Aspnetuser1? Aspnetuser { get; set; }
+    public virtual AspNetUser? Aspnetuser { get; set; }
 
     public virtual AspNetUser CreatedbyNavigation { get; set; } = null!;
 
@@ -94,9 +94,4 @@ public partial class Physician
     public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
 
     public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();
-
-    public static implicit operator Physician(List<Physician> v)
-    {
-        throw new NotImplementedException();
-    }
 }

@@ -6,14 +6,11 @@ using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using OfficeOpenXml;
-using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Text.Json;
 
 namespace HalloDoc.Controllers
 {
@@ -698,6 +695,49 @@ namespace HalloDoc.Controllers
             return RedirectToAction("EditProvider", new { Physicianid = Physicianid });
         }
 
+        public IActionResult DeletePhysician(int Physicianid)
+        {
+            _adminRepo.DeletePhysician(Physicianid);
+
+            return RedirectToAction("Provider", "AdminDashboard");
+        }
+
+        public IActionResult CreateProvider()
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+
+            var region = from t1 in _db.Regions
+                         select new CheckBoxData
+                         {
+                             Id = t1.Regionid,
+                             value = t1.Name,
+                         };
+            var data = new EditProvider
+            {
+                Region = region
+            };
+            return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult CreateProvider(string selectedRegion, EditProvider obj)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+
+            var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
+
+            var pass = _loginRepo.GetHash(obj.Password);
+            _adminRepo.CreateProvider(obj, pass, AspId, Region);
+
+            return RedirectToAction("CreateProvider");
+        }
 
         public IActionResult Access()
         {
@@ -720,7 +760,27 @@ namespace HalloDoc.Controllers
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
-            return View();
+
+            var data = new CreateRole
+            {
+                Menu = _db.Menus,
+                accountTypes = _db.AccountTypes
+            };
+
+            return View(data);
+        }
+
+        public IEnumerable<Menu> PageListFilter(int id)
+        {
+            var data = from t1 in _db.Menus
+                       where t1.Accounttype == id
+                       select new Menu
+                       {
+                           Menuid =  t1.Menuid,
+                          Name = t1.Name,
+                       };
+
+            return data;
         }
     }
 }

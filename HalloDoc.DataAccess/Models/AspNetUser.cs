@@ -25,7 +25,9 @@ public partial class AspNetUser
 
     public virtual ICollection<Admin> AdminModifiedbyNavigations { get; set; } = new List<Admin>();
 
-    public virtual ICollection<Physician> Physicians { get; set; } = new List<Physician>();
+    public virtual ICollection<Physician> PhysicianAspnetusers { get; set; } = new List<Physician>();
+
+    public virtual ICollection<Physician> PhysicianCreatedbyNavigations { get; set; } = new List<Physician>();
 
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 

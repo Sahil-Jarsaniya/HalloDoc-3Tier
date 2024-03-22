@@ -23,5 +23,7 @@ public partial class Role
 
     public string? Ip { get; set; }
 
+    public virtual AccountType? AccounttypeNavigation { get; set; }
+
     public virtual ICollection<Rolemenu> Rolemenus { get; set; } = new List<Rolemenu>();
 }

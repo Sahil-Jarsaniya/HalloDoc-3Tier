@@ -87,5 +87,9 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void PhysicianRegionUpdate(List<CheckBoxData> selectedRegion, int Physicianid);
 
         public void ResetPhysicianPass(string pass, int Physicianid);
+
+        public void DeletePhysician(int Physicianid);
+
+        public void CreateProvider(EditProvider obj, string pass, string AspId, IEnumerable<CheckBoxData> selectedRegion);
     }
 }

@@ -16,6 +16,8 @@ public partial class ApplicationDbContext : DbContext
     {
     }
 
+    public virtual DbSet<AccountType> AccountTypes { get; set; }
+
     public virtual DbSet<Admin> Admins { get; set; }
 
     public virtual DbSet<Adminregion> Adminregions { get; set; }
@@ -100,6 +102,16 @@ public partial class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AccountType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("AccountType_pkey");
+
+            entity.ToTable("AccountType");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+            entity.Property(e => e.Name).HasColumnType("character varying");
+        });
+
         modelBuilder.Entity<Admin>(entity =>
         {
             entity.HasKey(e => e.Adminid).HasName("admin_pkey");
@@ -673,6 +685,11 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("name");
             entity.Property(e => e.Sortorder).HasColumnName("sortorder");
+
+            entity.HasOne(d => d.AccounttypeNavigation).WithMany(p => p.Menus)
+                .HasForeignKey(d => d.Accounttype)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("account_type");
         });
 
         modelBuilder.Entity<Orderdetail>(entity =>
@@ -792,14 +809,14 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.Aspnetuser).WithMany(p => p.PhysicianAspnetusers)
                 .HasForeignKey(d => d.Aspnetuserid)
-                .HasConstraintName("physician_aspnetuserid_fkey");
+                .HasConstraintName("AspId");
 
-            entity.HasOne(d => d.CreatedbyNavigation).WithMany(p => p.Physicians)
+            entity.HasOne(d => d.CreatedbyNavigation).WithMany(p => p.PhysicianCreatedbyNavigations)
                 .HasForeignKey(d => d.Createdby)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("cretedBy");
 
-            entity.HasOne(d => d.ModifiedbyNavigation).WithMany(p => p.PhysicianModifiedbyNavigations)
+            entity.HasOne(d => d.ModifiedbyNavigation).WithMany(p => p.Physicians)
                 .HasForeignKey(d => d.Modifiedby)
                 .HasConstraintName("physician_modifiedby_fkey");
         });
@@ -1274,6 +1291,8 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("Role");
 
+            entity.HasIndex(e => e.Accounttype, "fki_account_type");
+
             entity.Property(e => e.Roleid).HasColumnName("roleid");
             entity.Property(e => e.Accounttype).HasColumnName("accounttype");
             entity.Property(e => e.Createdby)
@@ -1295,6 +1314,10 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
+
+            entity.HasOne(d => d.AccounttypeNavigation).WithMany(p => p.Roles)
+                .HasForeignKey(d => d.Accounttype)
+                .HasConstraintName("account_type");
         });
 
         modelBuilder.Entity<Rolemenu>(entity =>

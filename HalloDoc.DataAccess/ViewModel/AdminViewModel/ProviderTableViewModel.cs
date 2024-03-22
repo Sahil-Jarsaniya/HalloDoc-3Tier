@@ -26,5 +26,8 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public int? Roleid { get; set; }
 
         public bool isNotiOff { get; set; }
+        public bool? isDeleted { get; set; }
+
+        
     }
 }

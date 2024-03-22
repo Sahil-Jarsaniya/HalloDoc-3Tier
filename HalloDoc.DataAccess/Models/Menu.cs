@@ -13,5 +13,7 @@ public partial class Menu
 
     public int? Sortorder { get; set; }
 
+    public virtual AccountType AccounttypeNavigation { get; set; } = null!;
+
     public virtual ICollection<Rolemenu> Rolemenus { get; set; } = new List<Rolemenu>();
 }

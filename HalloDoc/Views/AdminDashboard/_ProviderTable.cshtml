@@ -12,6 +12,8 @@
     <tbody>
         @foreach (var item in Model.providerTableViewModels)
         {
+            if (item.isDeleted == false || item.isDeleted == null)
+            {   
             <tr>
                 <td>
 
@@ -33,6 +35,7 @@
                     <a asp-action="EditProvider" asp-controller="AdminDashboard" asp-route-Physicianid="@item.Physicianid" class="btn btn-outline-primary">Edit</a>
                 </td>
             </tr>
+            }
         }
     </tbody>
 </table>

@@ -27,9 +27,7 @@ public partial class Aspnetuser1
 
     public virtual ICollection<Business> BusinessModifiedbyNavigations { get; set; } = new List<Business>();
 
-    public virtual ICollection<Physician> PhysicianAspnetusers { get; set; } = new List<Physician>();
-
-    public virtual ICollection<Physician> PhysicianModifiedbyNavigations { get; set; } = new List<Physician>();
+    public virtual ICollection<Physician> Physicians { get; set; } = new List<Physician>();
 
     public virtual ICollection<Shiftdetail> Shiftdetails { get; set; } = new List<Shiftdetail>();
 

@@ -975,21 +975,22 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                           isNotiOff = t2.Isnotificationstopped,
                           Status = t1.Status,
                           Roleid = t1.Roleid,
-                          Physicianid = t1.Physicianid
+                          Physicianid = t1.Physicianid,
+                          isDeleted = t1.Isdeleted
                       };
 
             var provider = new ProviderViewModel
-                           {
-                                providerTableViewModels = phy,
-                               Region = region
-                           };
+            {
+                providerTableViewModels = phy,
+                Region = region
+            };
 
             return provider;
         }
 
         public ProviderViewModel FilterProvider(int RegionId)
         {
-            if(RegionId == 0)
+            if (RegionId == 0)
             {
                 var region = from t1 in _db.Regions select t1;
                 var phy = from t1 in _db.Physicians
@@ -1015,38 +1016,38 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             else
             {
-            var region = from t1 in _db.Regions select t1;
-            var phy = from t1 in _db.Physicians
-                      join t3 in _db.Physiciannotifications on t1.Physicianid equals t3.Physicianid
-                      join t2 in _db.Physicianregions on t1.Physicianid equals t2.Physicianid
-                      where t2.Regionid == RegionId
-                      select new ProviderTableViewModel
-                      {
-                          Firstname = t1.Firstname,
-                          Lastname = t1.Lastname,
-                          Email = t1.Email,
-                          Mobile = t1.Mobile,
-                          isNotiOff = t3.Isnotificationstopped,
-                          Status = t1.Status,
-                          Roleid = t1.Roleid,
-                          Physicianid = t1.Physicianid
-                      };
+                var region = from t1 in _db.Regions select t1;
+                var phy = from t1 in _db.Physicians
+                          join t3 in _db.Physiciannotifications on t1.Physicianid equals t3.Physicianid
+                          join t2 in _db.Physicianregions on t1.Physicianid equals t2.Physicianid
+                          where t2.Regionid == RegionId
+                          select new ProviderTableViewModel
+                          {
+                              Firstname = t1.Firstname,
+                              Lastname = t1.Lastname,
+                              Email = t1.Email,
+                              Mobile = t1.Mobile,
+                              isNotiOff = t3.Isnotificationstopped,
+                              Status = t1.Status,
+                              Roleid = t1.Roleid,
+                              Physicianid = t1.Physicianid
+                          };
                 var provider = new ProviderViewModel
-            {
-                providerTableViewModels = phy,
-                Region = region
-            };
+                {
+                    providerTableViewModels = phy,
+                    Region = region
+                };
 
-            return provider;
+                return provider;
             }
         }
 
         public void StopNoty(int Physicianid)
         {
-            var phy = _db.Physiciannotifications.Where(x =>x.Physicianid == Physicianid).FirstOrDefault();
-            if(phy != null)
+            var phy = _db.Physiciannotifications.Where(x => x.Physicianid == Physicianid).FirstOrDefault();
+            if (phy != null)
             {
-                if(phy.Isnotificationstopped == true)
+                if (phy.Isnotificationstopped == true)
                 {
                     phy.Isnotificationstopped = false;
                 }
@@ -1081,33 +1082,33 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                              {
                                  Id = t1.Regionid,
                                  value = t1.Abbreviation,
-                                 Checked = _db.Physicianregions.Any(x => x.Physicianid == phy.Physicianid && x.Regionid==t1.Regionid)
+                                 Checked = _db.Physicianregions.Any(x => x.Physicianid == phy.Physicianid && x.Regionid == t1.Regionid)
                              };
             var data = new EditProvider
-                {
-                    UserName = aspRow.UserName,
-                    Physicianid = Physicianid,
-                    Firstname = phy.Firstname,
-                    Lastname = phy.Lastname,
-                    Email = phy.Email,
-                    Status = phy.Status,
-                    Roleid = phy.Roleid,
-                    Mobile = phy.Mobile,
-                    Medicallicense = phy.Medicallicense,
-                    Npinumber = phy.Npinumber,
-                    Syncemailaddress = phy.Syncemailaddress,
-                    Address1 = phy.Address1,
-                    Address2 = phy.Address2,
-                    City = phy.City,
-                    Zip = phy.Zip,
-                    Altphone = phy.Altphone,
-                    Businessname = phy.Businessname,
-                    Businesswebsite = phy.Businesswebsite,
-                    Signature = phy.Signature,
-                    Photo = phy.Photo,
-                    Adminnotes = phy.Adminnotes,
-                    Region = regionData
-                };
+            {
+                UserName = aspRow.UserName,
+                Physicianid = Physicianid,
+                Firstname = phy.Firstname,
+                Lastname = phy.Lastname,
+                Email = phy.Email,
+                Status = phy.Status,
+                Roleid = phy.Roleid,
+                Mobile = phy.Mobile,
+                Medicallicense = phy.Medicallicense,
+                Npinumber = phy.Npinumber,
+                Syncemailaddress = phy.Syncemailaddress,
+                Address1 = phy.Address1,
+                Address2 = phy.Address2,
+                City = phy.City,
+                Zip = phy.Zip,
+                Altphone = phy.Altphone,
+                Businessname = phy.Businessname,
+                Businesswebsite = phy.Businesswebsite,
+                Signature = phy.Signature,
+                Photo = phy.Photo,
+                Adminnotes = phy.Adminnotes,
+                Region = regionData
+            };
 
             return data;
         }
@@ -1117,7 +1118,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == obj.Physicianid);
             var aspRow = _db.AspNetUsers.FirstOrDefault(x => x.Id == phy.Aspnetuserid);
 
-            if(aspRow != null)
+            if (aspRow != null)
             {
                 aspRow.UserName = obj.UserName;
                 _db.AspNetUsers.Update(aspRow);
@@ -1164,11 +1165,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             phy.Businesswebsite = obj.Businesswebsite;
             if (obj.PhySign != null)
             {
-            phy.Signature  = obj.PhySign.FileName;
+                phy.Signature = obj.PhySign.FileName;
             }
-            if (obj.PhyPhoto!= null)
+            if (obj.PhyPhoto != null)
             {
-            phy.Photo = obj.PhyPhoto.FileName;
+                phy.Photo = obj.PhyPhoto.FileName;
             }
             phy.Adminnotes = obj.Adminnotes;
 
@@ -1215,6 +1216,75 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             aspnetRow.PasswordHash = pass;
             _db.AspNetUsers.Update(aspnetRow);
             _db.SaveChanges();
+        }
+        public void DeletePhysician(int Physicianid)
+        {
+            var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == Physicianid);
+            phy.Isdeleted = true;
+            _db.Physicians.Update(phy);
+            _db.SaveChanges();
+        }
+
+        public void CreateProvider(EditProvider obj, string pass, string AspId, IEnumerable<CheckBoxData> selectedRegion)
+        {
+            Guid guid = Guid.NewGuid();
+
+            var asp = new AspNetUser
+            {
+                Id = guid.ToString(),
+                UserName = obj.UserName,
+                Email = obj.Email,
+                PasswordHash = pass,
+                CreatedDate = DateTime.UtcNow,
+            };
+            _db.AspNetUsers.Add(asp);
+            _db.SaveChanges();
+
+            var provider = new Physician()
+            {
+                Aspnetuserid = guid.ToString(),
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Mobile = obj.Mobile,
+                Medicallicense = obj.Medicallicense,
+                Npinumber = obj.Npinumber,
+                Address1 = obj.Address1,
+                Address2 = obj.Address2,
+                City = obj.City,
+                Zip = obj.Zip,
+                Altphone = obj.Altphone,
+                Businessname = obj.Businessname,
+                Businesswebsite = obj.Businesswebsite,
+                Photo = obj.Photo,
+                Adminnotes = obj.Adminnotes,
+                Createddate = obj.Createddate,
+                Createdby = AspId
+            };
+            _db.Physicians.Add(provider);
+            _db.SaveChanges();
+
+            var phyNoty = new Physiciannotification()
+            {
+                Physicianid = provider.Physicianid,
+                Isnotificationstopped = false
+            };
+            _db.Physiciannotifications.Add(phyNoty);
+            _db.SaveChanges();
+
+            foreach (var item in selectedRegion)
+            {
+                if (item.Checked)
+                {
+                    var phyRegion = new Physicianregion
+                    {
+                        Physicianid = provider.Physicianid,
+                        Regionid = item.Id,
+                    };
+                    _db.Physicianregions.Add(phyRegion);
+                    _db.SaveChanges();
+                }
+            }
         }
     }
 }

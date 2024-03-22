@@ -1,4 +1,5 @@
-﻿@{
+﻿@model CreateRole;
+@{
     ViewData["Title"] = "Admin Profile";
     Layout = "_adminLayout";
 }
@@ -8,7 +9,7 @@
         <h4>
             Create Role
         </h4>
-        <a href="@Url.Action("Access", "AdminDashboard")" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+        <a onclick="history.go(-1)" class="btn btn-outline-primary m-2 text-decoration-none float-end"
            id="back-btn">
             <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
             Back
@@ -28,18 +29,23 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <select class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
-                                <option value="">All</option>
-                                <option value="">Admin</option>
-                                <option value="">Patient</option>
-                                <option value="">Physicians</option>
+                        <select id="AccountType" class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
+                                <option value="0">All</option>
+                            @foreach(var item in Model.accountTypes)
+                            {   
+                            <option value="@item.Id">@item.Name</option>
+                            }
                         </select>
                         <label>Account Type</label>
                     </div>
                 </div>
             </div>
-            <div>
-
+            <div id="PageList">
+                @foreach(var item in Model.Menu)
+                {
+                    <input type="checkbox" id="@item.Menuid" name="@item.Menuid" value="@item.Menuid" class="me-1" />
+                    <label class="me-3" for="@item.Menuid">@item.Name</label>
+                }
             </div>
             <button type="reset" id="" class="btn btn-outline-primary float-end " >Cancel</button>
             <button type="submit" class="btn btn-primary float-end me-1" >Save</button><br /><br />
@@ -48,5 +54,30 @@
 </div>
 
 @section AdminScript {
+    <script>
+        $("#AccountType").change(function(){
+            $("#PageList").empty();
+            var val = $(this).val();
+            
+            $.ajax({
+                url:'/AdminDashboard/PageListFilter',
+                type: 'POST',
+                data: {id: val},
+                success: function(data){
 
+                    $.each(data, function(index, item){
+                        var checkbox = $('<input>').attr({
+                            type: 'checkbox',
+                            value: item.Menuid,
+                            id: item.Menuid
+                        })
+
+                        var label = $('<label>').attr('for', item.Menuid).text(item.Name);
+
+                        $("#PageList").append(checkbox).append(label);
+                    })
+                }
+            })
+        })
+    </script>
 }
