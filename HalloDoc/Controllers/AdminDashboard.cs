@@ -772,6 +772,18 @@ namespace HalloDoc.Controllers
 
         public IEnumerable<Menu> PageListFilter(int id)
         {
+            if(id== 0)
+            {
+                var data0 = from t1 in _db.Menus
+                           select new Menu
+                           {
+                               Menuid = t1.Menuid,
+                               Name = t1.Name,
+                           };
+
+                return data0;
+            }
+
             var data = from t1 in _db.Menus
                        where t1.Accounttype == id
                        select new Menu

@@ -64,16 +64,13 @@
                 type: 'POST',
                 data: {id: val},
                 success: function(data){
-
                     $.each(data, function(index, item){
                         var checkbox = $('<input>').attr({
                             type: 'checkbox',
-                            value: item.Menuid,
-                            id: item.Menuid
-                        })
-
-                        var label = $('<label>').attr('for', item.Menuid).text(item.Name);
-
+                            value: item.menuid,
+                            id: item.menuid
+                        }).addClass('me-1')
+                        var label = $('<label>').attr('for', item.menuid).text(item.name).addClass('me-4');
                         $("#PageList").append(checkbox).append(label);
                     })
                 }

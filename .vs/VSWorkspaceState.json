@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\HalloDoc",
-    "\\HalloDoc\\Controllers"
+    "\\HalloDoc\\Controllers",
+    "\\HalloDoc\\Views",
+    "\\HalloDoc\\Views\\AdminDashboard"
   ],
-  "SelectedNode": "\\HalloDoc.sln",
+  "SelectedNode": "\\HalloDoc\\Views\\AdminDashboard\\CreateRole.cshtml",
   "PreviewInSolutionExplorer": false
 }
