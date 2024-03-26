@@ -1,0 +1,129 @@
+﻿@model CreateRole;
+@{
+    ViewData["Title"] = "Admin Profile";
+    Layout = "_adminLayout";
+}
+
+<div>
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Edit Role
+        </h4>
+        <a onclick="history.go(-1)" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="container shadow mt-4 " style="max-width:1000px">
+        <form id="CreateRoleForm" class="viewCaseForm form-floating patient-request-form p-3">
+            <h5>
+                Details
+            </h5>
+            <div class="row g-2 m-1">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input asp-for="Roleid" value="@Model.Roleid" hidden />
+                        <input asp-for="Name" type="text" class="form-control" placeholder="">
+                        <label for="">Role Name</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <select id="AccountType" class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
+                            @foreach (var item in Model.accountTypes)
+                            {
+                                if (item.Name == Model.AccountType)
+                                {
+                                    <option value="@item.Id" selected>@item.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+                        </select>
+                        <label>Account Type</label>
+                    </div>
+                </div>
+            </div>
+            <div id="PageList" class="row">
+                @foreach (var item in Model.SelectedPage)
+                {
+                    <div class="col-3">
+
+                        @if (item.Checked)
+                        {
+                        <input class="PageListCheckBox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.value" class="me-1" checked />
+                        <label class="me-3" for="@item.Id">@item.value</label>
+                        }
+                        else
+                        {
+                        <input class="PageListCheckBox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.value" class="me-1" />
+                        <label class="me-3" for="@item.Id">@item.value</label>
+                        }
+                    </div>
+                }
+            </div>
+            <a type="reset" id="" class="btn btn-outline-primary float-end" asp-action="EditRole" asp-route-id="@Model.Roleid">Cancel</a>
+            <button type="button" id="SaveRoleBtn" class="btn btn-primary float-end me-1">Save</button><br /><br />
+        </form>
+    </div>
+</div>
+
+@section AdminScript {
+    <script>
+        $("#AccountType").change(function () {
+            $("#PageList").empty();
+            var val = $(this).val();
+
+            $.ajax({
+                url: '/AdminDashboard/PageListFilter',
+                type: 'POST',
+                data: { id: val },
+                success: function (data) {
+                    $.each(data, function (index, item) {
+                        var checkbox = $('<input>').attr({
+                            type: 'checkbox',
+                            value: item.name,
+                            id: item.menuid,
+                        }).addClass('me-1').addClass('PageListCheckBox')
+                        var label = $('<label>').attr('for', item.menuid).text(item.name).addClass('me-4');
+                        var div = $('<div>').addClass('col-3');
+                        div.append(checkbox).append(label);
+                        $("#PageList").append(div);
+                    })
+                }
+            })
+        })
+
+        $("#SaveRoleBtn").click(function () {
+            var selectedPage = [];
+            $(".PageListCheckBox").each(function () {
+
+                var checkboxdata = {
+                    Id: parseInt($(this).attr('id')),
+                    value: $(this).val(),
+                    Checked: $(this).is(':checked')
+                };
+                selectedPage.push(checkboxdata);
+            })
+            var AccountType = $("#AccountType").val();
+            var formdata = new FormData($("#CreateRoleForm")[0]);
+            console.log(selectedPage);
+            formdata.append('selectedPage', JSON.stringify(selectedPage));
+            formdata.append('AccountType', AccountType)
+
+            $.ajax({
+                url: '/AdminDashboard/EditRole',
+                type: 'POST',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function () {
+
+                }
+            })
+        })
+    </script>
+}

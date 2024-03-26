@@ -9,9 +9,16 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 {
     public  class CreateRole
     {
-        public string Name { get; set; }
-        public IEnumerable<Menu> Menu { get; set; }
+        public  int Roleid { get; set; }
+        public string? Name { get; set; }
+        public string? AccountType { get; set; }
 
-        public IEnumerable<AccountType> accountTypes { get; set; }
+        public bool? isdeleted { get; set; }
+        public IEnumerable<Menu>? Menu { get; set; }
+        //public IEnumerable<Menu>? SelectedMenu { get; set; }
+
+        public IEnumerable<AccountType>? accountTypes { get; set; }
+
+        public IEnumerable<CheckBoxData>? SelectedPage { get; set; }
     }
 }

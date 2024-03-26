@@ -6,6 +6,8 @@ using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using OfficeOpenXml;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
@@ -711,16 +713,7 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
 
-            var region = from t1 in _db.Regions
-                         select new CheckBoxData
-                         {
-                             Id = t1.Regionid,
-                             value = t1.Name,
-                         };
-            var data = new EditProvider
-            {
-                Region = region
-            };
+            var data = _adminRepo.CreateProvider();
             return View(data);
         }
 
@@ -748,8 +741,8 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
 
-
-            return View();
+            var data = _adminRepo.CreateRole();
+            return View(data);
         }
 
         public IActionResult CreateRole()
@@ -772,27 +765,60 @@ namespace HalloDoc.Controllers
 
         public IEnumerable<Menu> PageListFilter(int id)
         {
-            if(id== 0)
-            {
-                var data0 = from t1 in _db.Menus
-                           select new Menu
-                           {
-                               Menuid = t1.Menuid,
-                               Name = t1.Name,
-                           };
+            return _adminRepo.PageListFilter(id);
+        }
 
-                return data0;
-            }
+        [HttpPost]
+        public IActionResult CreateRole(string selectedPage, CreateRole obj, int AccountType)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
-            var data = from t1 in _db.Menus
-                       where t1.Accounttype == id
-                       select new Menu
-                       {
-                           Menuid =  t1.Menuid,
-                          Name = t1.Name,
-                       };
+            var PageList = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedPage);
 
-            return data;
+            _adminRepo.CreateRole(PageList, AspId, AccountType, obj.Name);
+
+            return RedirectToAction("Access");
+        }
+
+        public IActionResult EditRole(int id)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+
+            var data = _adminRepo.EditRole(id);
+            return View(data);
+        }
+        [HttpPost]
+        public IActionResult EditRole(string selectedPage, CreateRole obj, int AccountType)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+
+            var PageList = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedPage);
+
+            _adminRepo.EditRole(PageList, AspId, AccountType, obj);
+
+            return RedirectToAction("Access");
+        }
+
+        public IActionResult DeleteRole(int id)
+        {
+            _adminRepo.DeleteRole(id);
+            return RedirectToAction("Access");
+        }
+
+        public IActionResult CreateAdmin()
+        {
+            var admin = _db.Admins.Include(z => z.Adminregions).ThenInclude(a => a.Region).Include(c=> c.Aspnetuser).ThenInclude(r => r.Roles).First();
+
+            return View(admin);
         }
     }
 }

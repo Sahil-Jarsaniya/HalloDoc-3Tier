@@ -90,6 +90,19 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public void DeletePhysician(int Physicianid);
 
+        public EditProvider CreateProvider();
+
         public void CreateProvider(EditProvider obj, string pass, string AspId, IEnumerable<CheckBoxData> selectedRegion);
+
+        public IEnumerable<Menu> PageListFilter(int id);
+
+        public IEnumerable<CreateRole> CreateRole();
+
+        public void CreateRole(IEnumerable<CheckBoxData> PageList, string AspId, int AccountType, string Name);
+
+        public CreateRole EditRole(int id);
+        public void EditRole(IEnumerable<CheckBoxData> PageList, string AspId, int AccountType, CreateRole obj);
+
+        public void DeleteRole(int RoleId);
     }
 }

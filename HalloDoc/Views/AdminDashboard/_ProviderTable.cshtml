@@ -70,7 +70,7 @@
             <p>Status: </p>
             <div class="float-end">
                 <button type="button" class="btn btn-outline-primary ContactProvider" data-email="@item.Email" data-mobile="@item.Mobile">Contact</button>
-                <a class="btn btn-outline-primary">Edit</a>
+                <a asp-action="EditProvider" asp-controller="AdminDashboard" asp-route-Physicianid="@item.Physicianid" class="btn btn-outline-primary">Edit</a>
             </div><br /> <br />
         </div>
     }

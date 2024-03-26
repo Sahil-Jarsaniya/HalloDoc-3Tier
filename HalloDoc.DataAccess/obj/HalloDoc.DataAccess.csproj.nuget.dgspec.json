@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj": {}
+    "G:\\Halldoc\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj": {
+    "G:\\Halldoc\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj",
+        "projectUniqueName": "G:\\Halldoc\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj",
         "projectName": "HalloDoc.DataAccess",
-        "projectPath": "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj",
-        "packagesPath": "C:\\Users\\Sahil\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc.DataAccess\\obj\\",
+        "projectPath": "G:\\Halldoc\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj",
+        "packagesPath": "C:\\Users\\pca17\\.nuget\\packages\\",
+        "outputPath": "G:\\Halldoc\\HalloDoc-3Tier\\HalloDoc.DataAccess\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Sahil\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\pca17\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -82,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

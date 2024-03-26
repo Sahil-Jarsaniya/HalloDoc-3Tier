@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<CreateRole>;
+@{
     ViewData["Title"] = "Admin Profile";
     Layout = "_adminLayout";
 }
@@ -12,27 +13,47 @@
     <div class="container mt-4 w-100" style="max-width:1000px">
         <a asp-action="CreateRole" class="btn btn-outline-primary mb-1 float-end ">
             Create Access
-        </a><br/>
+        </a><br />
     </div>
     <div class="container d-flex justify-content-center mt-4" style="max-width:1000px" id="ProviderTable">
-        <table class="table table-responsive d-none d-md-table justify-content-between">
+        <table class="table table-responsive d-none d-md-table justify-content-between shadow">
             <thead>
                 <tr class="table-secondary">
                     <td>Name</td>
-                    <td>Account Type</td>
-                    <td >Action</td>
+                    <td>
+                        <span class="float-end pe-3">
+                            AccountType
+                        </span>
+                    </td>
+                    <td>
+                        <span class="float-end">
+                            Action
+                        </span>
+                    </td>
                 </tr>
             </thead>
             <tbody>
-                    <tr>
-                        <td>Admin</td>
-                        <td>Admin</td>
-                        <td>
-                            <a class="btn btn-outline-primary">Edit</a>
-                            <button type="button" class="btn btn-outline-primary ContactProvider" >Delete</button>
-                        </td>
-                    </tr>
-                
+                @foreach (var item in Model)
+                {
+                    if (item.isdeleted != true)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td> 
+                                <span class="float-end pe-3">
+                                    @item.AccountType
+                                </span>
+                            </td>
+                            <td>
+                                <div class="float-end">
+                                <a class="btn btn-outline-primary" asp-action="EditRole" asp-route-id="@item.Roleid">Edit</a>
+                                <a class="btn btn-outline-primary" asp-action="DeleteRole" asp-controller="AdminDashboard" asp-route-id="@item.Roleid">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+
             </tbody>
         </table>
 
@@ -40,5 +61,5 @@
 </div>
 
 @section AdminScript {
-    
+
 }

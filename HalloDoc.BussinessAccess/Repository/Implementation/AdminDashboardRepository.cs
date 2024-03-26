@@ -4,8 +4,10 @@ using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using Microsoft.AspNetCore.Http;
+using Microsoft.JSInterop.Implementation;
 using Org.BouncyCastle.Ocsp;
 using System.Linq;
+using Twilio.Rest.Chat.V1.Service;
 using Twilio.TwiML.Voice;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
@@ -1107,7 +1109,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Signature = phy.Signature,
                 Photo = phy.Photo,
                 Adminnotes = phy.Adminnotes,
-                Region = regionData
+                Region = regionData,
+                Isagreementdoc = phy.Isagreementdoc,
+                Isnondisclosuredoc = phy.Isnondisclosuredoc,
+                Isbackgrounddoc = phy.Isbackgrounddoc,
+                Islicensedoc = phy.Islicensedoc,
+                Istrainingdoc = phy.Istrainingdoc,
             };
 
             return data;
@@ -1225,6 +1232,22 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.SaveChanges();
         }
 
+        public EditProvider CreateProvider()
+        {
+            var region = from t1 in _db.Regions
+                         select new CheckBoxData
+                         {
+                             Id = t1.Regionid,
+                             value = t1.Name,
+                         };
+            var data = new EditProvider
+            {
+                Region = region
+            };
+
+            return data;
+        }
+
         public void CreateProvider(EditProvider obj, string pass, string AspId, IEnumerable<CheckBoxData> selectedRegion)
         {
             Guid guid = Guid.NewGuid();
@@ -1286,5 +1309,148 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 }
             }
         }
+
+        public IEnumerable<Menu> PageListFilter(int id)
+        {
+            if (id == 0)
+            {
+                var data0 = from t1 in _db.Menus
+                            select new Menu
+                            {
+                                Menuid = t1.Menuid,
+                                Name = t1.Name,
+                            };
+
+                return data0;
+            }
+
+            var data = from t1 in _db.Menus
+                       where t1.Accounttype == id
+                       select new Menu
+                       {
+                           Menuid = t1.Menuid,
+                           Name = t1.Name,
+                       };
+
+            return data;
+        }
+
+        public IEnumerable<CreateRole> CreateRole()
+        {
+            var data = from t1 in _db.Roles
+                       join t2 in _db.AccountTypes on t1.Accounttype equals t2.Id
+                       select new CreateRole
+                       {
+                           Roleid = t1.Roleid,
+                           Name = t1.Name,
+                           AccountType = t2.Name,
+                           isdeleted = t1.Isdeleted
+                       };
+
+            return data;
+        }
+        public void CreateRole(IEnumerable<CheckBoxData> PageList, string AspId, int AccountType, string Name)
+        {
+            var role = new Role()
+            {
+                Name = Name,
+                Accounttype = (short?)AccountType,
+                Createdby = AspId,
+                Createddate = DateTime.Now,
+            };
+
+            _db.Roles.Add(role);
+            _db.SaveChanges();
+
+            foreach (var item in PageList)
+            {
+                if (item.Checked)
+                {
+                    var rolemenu = new Rolemenu()
+                    {
+                        Roleid = role.Roleid,
+                        Menuid = item.Id
+                    };
+                    _db.Rolemenus.Add(rolemenu);
+                    _db.SaveChanges();
+                }
+            }
+        }
+
+        public CreateRole EditRole(int id)
+        {
+            var rolerow = _db.Roles.Where(x => x.Roleid == id).FirstOrDefault();
+            var accType = _db.AccountTypes.Where(x => x.Id == rolerow.Accounttype).FirstOrDefault().Name;
+
+            var select = from t1 in _db.Menus
+                         where t1.Accounttype == rolerow.Accounttype
+                         select new CheckBoxData
+                         {
+                             Id = (int)t1.Menuid,
+                             value = t1.Name,
+                             Checked = _db.Rolemenus.Where(x => x.Roleid == id && x.Menuid == t1.Menuid).Any()
+                         };
+
+            var data = new CreateRole()
+            {
+                Roleid = rolerow.Roleid,
+                Name = rolerow.Name,
+                AccountType = accType,
+                accountTypes = _db.AccountTypes,
+                Menu = _db.Menus,
+                SelectedPage = select
+
+            };
+
+            return data;
+        }
+
+        public void EditRole(IEnumerable<CheckBoxData> PageList, string AspId, int AccountType, CreateRole obj)
+        {
+            var roleRow = _db.Roles.Where(x => x.Roleid == obj.Roleid).First();
+
+            roleRow.Name = obj.Name;
+            roleRow.Accounttype = (short?)AccountType;
+            roleRow.Modifiedby = AspId;
+            roleRow.Modifieddate = DateTime.Now;
+
+            _db.Roles.Update(roleRow);
+
+            foreach(var item in PageList)
+            {
+                var data = _db.Rolemenus.Where(x => x.Roleid == obj.Roleid && x.Menuid == item.Id).FirstOrDefault();
+                if (data == null)
+                {
+                    if (item.Checked)
+                    {
+                        var roleMenu = new Rolemenu()
+                        {
+                            Menuid = item.Id,
+                            Roleid = obj.Roleid
+                        };
+                        _db.Rolemenus.Add(roleMenu);
+                        _db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    if (!item.Checked)
+                    {
+                        _db.Rolemenus.Remove(data);
+                        _db.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public void DeleteRole(int RoleId)
+        {
+            var roleRow = _db.Roles.Where(x => x.Roleid == RoleId).FirstOrDefault();
+            roleRow.Isdeleted = true;
+            _db.Roles.Update(roleRow);
+            _db.SaveChanges();
+        }
+
+
     }
 }

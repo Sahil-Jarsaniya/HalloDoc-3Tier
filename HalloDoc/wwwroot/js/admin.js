@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
             setActiveLink(this); // Set 'active' class to the clicked link
         });
     });
+
 });
 
 //var path = window.location.pathname;

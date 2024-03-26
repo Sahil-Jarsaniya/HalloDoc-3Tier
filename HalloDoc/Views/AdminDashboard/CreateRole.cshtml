@@ -15,65 +15,95 @@
             Back
         </a>
     </div>
-    <div class="container shadow mt-4 " style="max-width:1000px" id="ProviderTable">
-        <form class="viewCaseForm form-floating patient-request-form p-3">
+    <div class="container shadow mt-4 " style="max-width:1000px">
+        <form id="CreateRoleForm" class="viewCaseForm form-floating patient-request-form p-3">
             <h5>
                 Details
             </h5>
             <div class="row g-2 m-1">
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <input  type="text" class="form-control" placeholder="">
+                        <input asp-for="Name" type="text" class="form-control" placeholder="">
                         <label for="">Role Name</label>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
                         <select id="AccountType" class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
-                                <option value="0">All</option>
-                            @foreach(var item in Model.accountTypes)
-                            {   
-                            <option value="@item.Id">@item.Name</option>
+                            <option value="0">All</option>
+                            @foreach (var item in Model.accountTypes)
+                            {
+                                <option value="@item.Id">@item.Name</option>
                             }
                         </select>
                         <label>Account Type</label>
                     </div>
                 </div>
             </div>
-            <div id="PageList">
-                @foreach(var item in Model.Menu)
+            <div id="PageList" class="row ">
+                @foreach (var item in Model.Menu)
                 {
-                    <input type="checkbox" id="@item.Menuid" name="@item.Menuid" value="@item.Menuid" class="me-1" />
-                    <label class="me-3" for="@item.Menuid">@item.Name</label>
+                    <div class="col-3">
+                        <input class="PageListCheckBox" type="checkbox" id="@item.Menuid" name="@item.Menuid" value="@item.Name" class="me-1" />
+                        <label class="me-3" for="@item.Menuid">@item.Name</label>
+                    </div>
                 }
             </div>
-            <button type="reset" id="" class="btn btn-outline-primary float-end " >Cancel</button>
-            <button type="submit" class="btn btn-primary float-end me-1" >Save</button><br /><br />
+            <button type="reset" id="" class="btn btn-outline-primary float-end ">Cancel</button>
+            <button type="button" id="SaveRoleBtn" class="btn btn-primary float-end me-1">Save</button><br /><br />
         </form>
     </div>
 </div>
 
 @section AdminScript {
     <script>
-        $("#AccountType").change(function(){
+        $("#AccountType").change(function () {
             $("#PageList").empty();
             var val = $(this).val();
-            
+
             $.ajax({
-                url:'/AdminDashboard/PageListFilter',
+                url: '/AdminDashboard/PageListFilter',
                 type: 'POST',
-                data: {id: val},
-                success: function(data){
-                    $.each(data, function(index, item){
+                data: { id: val },
+                success: function (data) {
+                    $.each(data, function (index, item) {
                         var checkbox = $('<input>').attr({
                             type: 'checkbox',
-                            value: item.menuid,
-                            id: item.menuid
-                        }).addClass('me-1')
+                            value: item.name,
+                            id: item.menuid,
+                        }).addClass('me-1').addClass('PageListCheckBox')
                         var label = $('<label>').attr('for', item.menuid).text(item.name).addClass('me-4');
-                        $("#PageList").append(checkbox).append(label);
+                        var div = $('<div>').addClass('col-3');
+                        div.append(checkbox).append(label);
+                        $("#PageList").append(div);
                     })
                 }
+            })
+        })
+
+        $("#SaveRoleBtn").click(function () {
+            var selectedPage = [];
+            $(".PageListCheckBox").each(function () {
+
+                var checkboxdata = {
+                    Id: parseInt($(this).attr('id')),
+                    value: $(this).val(),
+                    Checked: $(this).is(':checked')
+                };
+                selectedPage.push(checkboxdata);
+            })
+            var AccountType = $("#AccountType").val();
+            var formdata = new FormData($("#CreateRoleForm")[0]);
+            console.log(selectedPage);
+            formdata.append('selectedPage', JSON.stringify(selectedPage));
+            formdata.append('AccountType', AccountType)
+
+            $.ajax({
+                url: '/AdminDashboard/CreateRole',
+                type: 'POST',
+                data: formdata,
+                processData: false,
+                contentType: false
             })
         })
     </script>

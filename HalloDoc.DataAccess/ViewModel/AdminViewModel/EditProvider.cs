@@ -31,13 +31,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public string? Adminnotes { get; set; }
 
-        public bool? Isagreementdoc { get; set; }
 
-        public bool? Isbackgrounddoc { get; set; }
-
-        public bool? Istrainingdoc { get; set; }
-
-        public bool? Isnondisclosuredoc { get; set; }
 
         public string? Address1 { get; set; }
 
@@ -75,6 +69,26 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public string? Signature { get; set; }
 
         public string? Syncemailaddress { get; set; }
+
+        public bool? Isagreementdoc { get; set; }
+
+        public bool? Isbackgrounddoc { get; set; }
+
+        public bool? Istrainingdoc { get; set; }
+
+        public bool? Islicensedoc { get; set; }
+
+        public bool? Isnondisclosuredoc { get; set; }
+
+        public IFormFile? agreementdoc { get; set; }
+
+        public IFormFile? backgrounddoc { get; set; }
+
+        public IFormFile? trainingdoc { get; set; }
+
+        public IFormFile? licensedoc { get; set; }
+
+        public IFormFile? nondisclosuredoc { get; set; }
 
         public IFormFile? PhySign { get; set; }
         public IFormFile? PhyPhoto { get; set; }

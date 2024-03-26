@@ -1,0 +1,143 @@
+﻿@model Admin;
+@{
+    ViewData["Title"] = "Create Provider";
+    Layout = "_adminLayout";
+}
+<div class="">
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Create Admin Account
+        </h4>
+        <a onclick="history.go(-1)" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="d-grid justify-content-center mt-4">
+        <div class="shadow">
+            <form method="post" asp-action="CreateProvider" asp-controller="AdminDashboard" id="CreateProviderForm" class="viewCaseForm form-floating  patient-request-form p-3">
+                <h5>Account Information</h5>
+                <div class="row g-2 m-1">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input asp-for="Aspnetuser.UserName" type="text" class="form-control" id="userName" placeholder="">
+                            <label for="">User Name</label>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div class="col-md">
+                        <div class="input-div form-floating mb-3 d-flex border rounded">
+                            <input asp-for="Aspnetuser.PasswordHash" type="password" class="form-control" id="Password" placeholder="Password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <select asp-for="Roleid" class="form-select mb-3" id="role">
+                                @foreach (var item in Model.Aspnetuser.Roles)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                            <label for="">Role</label>
+                        </div>
+                    </div>
+                </div>
+
+                <h5>Administrator Information</h5>
+
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Firstname" type="text" class="form-control" placeholder="">
+                            <label for="">First Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Lastname" type="text" class="form-control" placeholder="">
+                            <label for="">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+                            <label for="">Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+                            <label for="">Confirm Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                            <label for="">Phone</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @foreach (var item in Model.Adminregions)
+                        {
+                                <input class="regionCheckbox" type="checkbox" id="@item.Regionid" name="@item.Regionid" value="@item.Region.Regionid" />
+                                <label for="@item.Regionid">@item.Region.Abbreviation</label>
+                        }
+                    </div>
+                </div>
+                <h5>Mailing & Billing Information</h5>
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Address1" type="text" class="form-control" placeholder="">
+                            <label for="">Address1</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Address2" type="text" class="form-control" placeholder="">
+                            <label for="floatingSelectGrid">Address2</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="City" type="text" class="form-control" placeholder="">
+                            <label for="">City</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <select class="form-select">
+                                <option>guj</option>
+                                <option>raj</option>
+                                <option>md</option>
+                            </select>
+                            <label for="">State</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Zip" type="text" class="form-control" placeholder="">
+                            <label for="">Zip</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                            <label for="">Phone</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="CreateAccountBtn" class="btn btn-success float-end">Create Account</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section AdminScript {
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+}
