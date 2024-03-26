@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HalloDoc.DataAccess.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,5 +95,6 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public IFormFile? PhyPhoto { get; set; }
 
         public IEnumerable<CheckBoxData>? Region { get; set; }
+        public IEnumerable<Role>? Role { get; set; }
     }
 }

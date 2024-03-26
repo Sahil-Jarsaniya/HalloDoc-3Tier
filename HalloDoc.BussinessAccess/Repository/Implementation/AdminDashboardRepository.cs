@@ -1242,7 +1242,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                          };
             var data = new EditProvider
             {
-                Region = region
+                Region = region,
+                Role = _db.Roles.Where(x => x.Accounttype == 2)
             };
 
             return data;

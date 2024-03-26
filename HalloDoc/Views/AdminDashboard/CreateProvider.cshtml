@@ -35,9 +35,13 @@
                     <div class="col-md">
                         <div class="form-floating phone-div w-100 h-100 ">
                             <select asp-for="Roleid" class="form-select mb-3" id="role">
-                                <option>Active</option>
-                                <option>Out</option>
-                                <option>Died</option>
+                                @foreach(var item in Model.Role)
+                                {
+                                    if(item.Isdeleted != true)
+                                    {   
+                                    <option value="@item.Roleid">@item.Name</option>
+                                    }
+                                }
                             </select>
                             <label for="">Role</label>
                         </div>
