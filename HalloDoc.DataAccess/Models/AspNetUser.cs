@@ -25,11 +25,21 @@ public partial class AspNetUser
 
     public virtual ICollection<Admin> AdminModifiedbyNavigations { get; set; } = new List<Admin>();
 
+    public virtual ICollection<Business> BusinessCreatedbyNavigations { get; set; } = new List<Business>();
+
+    public virtual ICollection<Business> BusinessModifiedbyNavigations { get; set; } = new List<Business>();
+
     public virtual ICollection<Physician> PhysicianAspnetusers { get; set; } = new List<Physician>();
 
     public virtual ICollection<Physician> PhysicianCreatedbyNavigations { get; set; } = new List<Physician>();
 
+    public virtual ICollection<Physician> PhysicianModifiedbyNavigations { get; set; } = new List<Physician>();
+
+    public virtual ICollection<Shiftdetail> Shiftdetails { get; set; } = new List<Shiftdetail>();
+
+    public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();
+
     public virtual ICollection<User> Users { get; set; } = new List<User>();
 
-    public virtual ICollection<AspNetRole1> Roles { get; set; } = new List<AspNetRole1>();
+    public virtual ICollection<AspNetRole> Roles { get; set; } = new List<AspNetRole>();
 }

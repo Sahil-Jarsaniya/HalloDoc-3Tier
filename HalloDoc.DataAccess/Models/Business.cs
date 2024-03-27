@@ -39,9 +39,9 @@ public partial class Business
 
     public string? Ip { get; set; }
 
-    public virtual Aspnetuser1? CreatedbyNavigation { get; set; }
+    public virtual AspNetUser? CreatedbyNavigation { get; set; }
 
-    public virtual Aspnetuser1? ModifiedbyNavigation { get; set; }
+    public virtual AspNetUser? ModifiedbyNavigation { get; set; }
 
     public virtual Region? Region { get; set; }
 

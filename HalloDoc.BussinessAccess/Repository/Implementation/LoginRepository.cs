@@ -88,10 +88,18 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var fileName = Path.GetFileName(file.FileName);
 
                 //define path
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles",folder, path);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles",folder);
+
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                    Console.WriteLine("Folder created successfully.");
+                }
+
+                var fileaaaa = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", folder, fileName);
 
                 // Copy the file to the desired location
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var stream = new FileStream(fileaaaa, FileMode.Create))
                 {
                     file.CopyTo(stream);
                 }

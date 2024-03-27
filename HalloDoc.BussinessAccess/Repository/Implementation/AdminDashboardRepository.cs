@@ -968,6 +968,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var region = from t1 in _db.Regions select t1;
             var phy = from t1 in _db.Physicians
                       join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
+                      join t3 in _db.Roles on t1.Roleid equals t3.Roleid
+                      join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId
                       select new ProviderTableViewModel
                       {
                           Firstname = t1.Firstname,
@@ -975,14 +977,15 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                           Email = t1.Email,
                           Mobile = t1.Mobile,
                           isNotiOff = t2.Isnotificationstopped,
-                          Status = t1.Status,
-                          Roleid = t1.Roleid,
+                          Status = t4.StatusName,
+                          Roleid = t3.Name,
                           Physicianid = t1.Physicianid,
                           isDeleted = t1.Isdeleted
                       };
 
             var provider = new ProviderViewModel
             {
+                
                 providerTableViewModels = phy,
                 Region = region
             };
@@ -997,6 +1000,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var region = from t1 in _db.Regions select t1;
                 var phy = from t1 in _db.Physicians
                           join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
+                          join t3 in _db.Roles on t1.Roleid equals t3.Roleid
+                          join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId
                           select new ProviderTableViewModel
                           {
                               Firstname = t1.Firstname,
@@ -1004,8 +1009,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                               Email = t1.Email,
                               Mobile = t1.Mobile,
                               isNotiOff = t2.Isnotificationstopped,
-                              Status = t1.Status,
-                              Roleid = t1.Roleid,
+                              Status = t4.StatusName,
+                              Roleid = t3.Name,
                               Physicianid = t1.Physicianid
                           };
                 var provider = new ProviderViewModel
@@ -1022,6 +1027,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var phy = from t1 in _db.Physicians
                           join t3 in _db.Physiciannotifications on t1.Physicianid equals t3.Physicianid
                           join t2 in _db.Physicianregions on t1.Physicianid equals t2.Physicianid
+                          join t4 in _db.Roles on t1.Roleid equals t4.Roleid
+                          join t5 in _db.PhysicianStatuses on t1.Status equals t5.StatusId
                           where t2.Regionid == RegionId
                           select new ProviderTableViewModel
                           {
@@ -1030,8 +1037,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                               Email = t1.Email,
                               Mobile = t1.Mobile,
                               isNotiOff = t3.Isnotificationstopped,
-                              Status = t1.Status,
-                              Roleid = t1.Roleid,
+                              Status = t5.StatusName,
+                              Roleid = t4.Name,
                               Physicianid = t1.Physicianid
                           };
                 var provider = new ProviderViewModel
@@ -1086,6 +1093,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  value = t1.Abbreviation,
                                  Checked = _db.Physicianregions.Any(x => x.Physicianid == phy.Physicianid && x.Regionid == t1.Regionid)
                              };
+            var Role = from t1 in _db.Roles select t1;
+            var status = from t1 in _db.PhysicianStatuses select t1;
             var data = new EditProvider
             {
                 UserName = aspRow.UserName,
@@ -1110,12 +1119,57 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Photo = phy.Photo,
                 Adminnotes = phy.Adminnotes,
                 Region = regionData,
-                Isagreementdoc = phy.Isagreementdoc,
-                Isnondisclosuredoc = phy.Isnondisclosuredoc,
-                Isbackgrounddoc = phy.Isbackgrounddoc,
-                Islicensedoc = phy.Islicensedoc,
-                Istrainingdoc = phy.Istrainingdoc,
+                Role = Role,
+                Statuses = status
             };
+
+            if (phy.Isagreementdoc==true)
+            {
+                data.Isagreementdoc = true;
+                data.agreementdoc = (IFormFile?)_db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == phy.Physicianid && x.FileType ==1);
+                String? fileName = (from t1 in _db.ProviderFiles
+                                    where t1.PhysicianId == phy.Physicianid && t1.FileType == 1
+                                    select t1.FileName).FirstOrDefault();
+                IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "agreementdoc", fileName);
+                data.agreementdoc = formFile;
+            }
+            if (phy.Isbackgrounddoc == true)
+            {
+                data.Isbackgrounddoc = true;
+                data.backgrounddoc = (IFormFile?)_db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == phy.Physicianid && x.FileType == 2);
+                String? fileName = (from t1 in _db.ProviderFiles
+                                    where t1.PhysicianId == phy.Physicianid && t1.FileType == 2
+                                    select t1.FileName).FirstOrDefault();
+                IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "backgrounddoc", fileName);
+                data.backgrounddoc = formFile;
+            }
+            if (phy.Islicensedoc == true)
+            {
+                data.Islicensedoc = true;
+                String? fileName = (from t1 in _db.ProviderFiles
+                                    where t1.PhysicianId == phy.Physicianid && t1.FileType == 3
+                                    select t1.FileName).FirstOrDefault();
+                IFormFile formFile = new FormFile(System.IO.Stream.Null, 0,0, "licensedoc", fileName);
+                data.licensedoc = formFile;
+            }
+            if (phy.Isnondisclosuredoc == true)
+            {
+                data.Isnondisclosuredoc = true;
+                String? fileName = (from t1 in _db.ProviderFiles
+                                    where t1.PhysicianId == phy.Physicianid && t1.FileType == 4
+                                    select t1.FileName).FirstOrDefault();
+                IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "nondisclosuredoc", fileName);
+                data.nondisclosuredoc = formFile;
+            }
+            if (phy.Istrainingdoc == true)
+            {
+                data.Istrainingdoc = true;
+                String? fileName = (from t1 in _db.ProviderFiles
+                                    where t1.PhysicianId == phy.Physicianid && t1.FileType == 5
+                                    select t1.FileName).FirstOrDefault();
+                IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "trainingdoc", fileName);
+                data.trainingdoc = formFile;
+            }
 
             return data;
         }
@@ -1131,6 +1185,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 _db.AspNetUsers.Update(aspRow);
                 _db.SaveChanges();
             }
+
+            phy.Status = obj.Status;
+            phy.Roleid  = obj.Roleid;
+            _db.Physicians.Update(phy);
+            _db.SaveChanges();
 
         }
 
@@ -1249,7 +1308,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return data;
         }
 
-        public void CreateProvider(EditProvider obj, string pass, string AspId, IEnumerable<CheckBoxData> selectedRegion)
+        public int CreateProvider(EditProvider obj, string pass, string AspId, IEnumerable<CheckBoxData> selectedRegion)
         {
             Guid guid = Guid.NewGuid();
 
@@ -1283,7 +1342,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Photo = obj.Photo,
                 Adminnotes = obj.Adminnotes,
                 Createddate = obj.Createddate,
-                Createdby = AspId
+                Createdby = AspId,
+                Isagreementdoc = obj.Isagreementdoc,
+                Isbackgrounddoc = obj.Isbackgrounddoc,
+                Islicensedoc = obj.Islicensedoc,
+                Isnondisclosuredoc = obj.Isnondisclosuredoc,
+                Istrainingdoc = obj.Istrainingdoc
             };
             _db.Physicians.Add(provider);
             _db.SaveChanges();
@@ -1309,6 +1373,28 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     _db.SaveChanges();
                 }
             }
+
+            return provider.Physicianid;
+        }
+        public void UploadProviderFile(int physicianId, string filename, int fileType)
+        {
+            var data = _db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == physicianId && x.FileType == fileType);
+            if(data != null)
+            {
+                data.IsDeleted = true;
+            _db.ProviderFiles.Update(data);
+            _db.SaveChanges();
+            }
+
+            var providerFile = new ProviderFile
+            {
+                PhysicianId = physicianId,
+                FileName = filename,
+                FileType = fileType
+            };
+            _db.ProviderFiles.Add(providerFile);
+            _db.SaveChanges();
+
         }
 
         public IEnumerable<Menu> PageListFilter(int id)
@@ -1417,7 +1503,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             _db.Roles.Update(roleRow);
 
-            foreach(var item in PageList)
+            foreach (var item in PageList)
             {
                 var data = _db.Rolemenus.Where(x => x.Roleid == obj.Roleid && x.Menuid == item.Id).FirstOrDefault();
                 if (data == null)
@@ -1452,6 +1538,66 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.SaveChanges();
         }
 
+        public CreateAdminViewModel CreateAdmin()
+        {
+            var role = (from t1 in _db.Roles where t1.Accounttype == 1 select t1);
 
+            var data = new CreateAdminViewModel()
+            {
+                Regions = _db.Regions,
+                Rolemenus = role
+            };
+
+            return data;
+        }
+
+        public void CreateAdmin(CreateAdminViewModel obj, string password, string AspId, IEnumerable<CheckBoxData> selectedRegion)
+        {
+            Guid guid = Guid.NewGuid();
+            var asp = new AspNetUser()
+            {
+                UserName = obj.Username,
+                PasswordHash = password,
+                CreatedDate = DateTime.UtcNow,
+                Email = obj.Email,
+                Id = guid.ToString(),
+                PhoneNumber = obj.Mobile,
+            };
+            _db.AspNetUsers.Add(asp);
+            _db.SaveChanges();
+
+            var admin = new Admin()
+            {
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Address1 = obj.Address1,
+                Address2 = obj.Address2,
+                Mobile = obj.Mobile,
+                Altphone = obj.Altphone,
+                City = obj.City,
+                Aspnetuserid = guid.ToString(),
+                Createdby = AspId,
+                Createddate = DateTime.Now,
+                Status = obj.Status,
+                Zip = obj.Zip,
+            };
+            _db.Admins.Add(admin);
+            _db.SaveChanges();
+
+            foreach (var item in selectedRegion)
+            {
+                if (item.Checked == true)
+                {
+                    var region = new Adminregion()
+                    {
+                        Adminid = admin.Adminid,
+                        Regionid = item.Id
+                    };
+                    _db.Adminregions.Add(region);
+                    _db.SaveChanges();
+                }
+            }
+        }
     }
 }

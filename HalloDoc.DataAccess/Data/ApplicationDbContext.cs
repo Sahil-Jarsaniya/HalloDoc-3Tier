@@ -22,15 +22,9 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Adminregion> Adminregions { get; set; }
 
-    public virtual DbSet<AspNetRole1> AspNetRoles1 { get; set; }
+    public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
 
     public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-
-    public virtual DbSet<Aspnetrole> Aspnetroles { get; set; }
-
-    public virtual DbSet<Aspnetuser1> Aspnetusers1 { get; set; }
-
-    public virtual DbSet<Aspnetuserrole1> Aspnetuserroles1 { get; set; }
 
     public virtual DbSet<Blockrequest> Blockrequests { get; set; }
 
@@ -54,11 +48,17 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Physician> Physicians { get; set; }
 
+    public virtual DbSet<PhysicianStatus> PhysicianStatuses { get; set; }
+
     public virtual DbSet<Physicianlocation> Physicianlocations { get; set; }
 
     public virtual DbSet<Physiciannotification> Physiciannotifications { get; set; }
 
     public virtual DbSet<Physicianregion> Physicianregions { get; set; }
+
+    public virtual DbSet<ProviderFile> ProviderFiles { get; set; }
+
+    public virtual DbSet<ProviderFileType> ProviderFileTypes { get; set; }
 
     public virtual DbSet<Region> Regions { get; set; }
 
@@ -122,7 +122,9 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasIndex(e => e.Modifiedby, "fki_MODIFIED BY");
 
-            entity.Property(e => e.Adminid).HasColumnName("adminid");
+            entity.Property(e => e.Adminid)
+                .HasIdentityOptions(2L, null, null, null, null, null)
+                .HasColumnName("adminid");
             entity.Property(e => e.Address1)
                 .HasMaxLength(500)
                 .HasColumnName("address1");
@@ -198,11 +200,9 @@ public partial class ApplicationDbContext : DbContext
                 .HasConstraintName("adminregion_regionid_fkey");
         });
 
-        modelBuilder.Entity<AspNetRole1>(entity =>
+        modelBuilder.Entity<AspNetRole>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("AspNetRoles_pkey");
-
-            entity.ToTable("AspNetRoles");
 
             entity.Property(e => e.Id).HasMaxLength(128);
             entity.Property(e => e.Name).HasMaxLength(256);
@@ -224,7 +224,7 @@ public partial class ApplicationDbContext : DbContext
             entity.HasMany(d => d.Roles).WithMany(p => p.Users)
                 .UsingEntity<Dictionary<string, object>>(
                     "AspNetUserRole",
-                    r => r.HasOne<AspNetRole1>().WithMany()
+                    r => r.HasOne<AspNetRole>().WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.ClientSetNull)
                         .HasConstraintName("AspNetUserRoles_RoleId_fkey"),
@@ -239,67 +239,6 @@ public partial class ApplicationDbContext : DbContext
                         j.IndexerProperty<string>("UserId").HasMaxLength(128);
                         j.IndexerProperty<string>("RoleId").HasMaxLength(128);
                     });
-        });
-
-        modelBuilder.Entity<Aspnetrole>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("aspnetroles_pkey");
-
-            entity.ToTable("aspnetroles");
-
-            entity.Property(e => e.Id)
-                .HasMaxLength(128)
-                .HasColumnName("id");
-            entity.Property(e => e.Name)
-                .HasMaxLength(256)
-                .HasColumnName("name");
-        });
-
-        modelBuilder.Entity<Aspnetuser1>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("aspnetusers_pkey");
-
-            entity.ToTable("aspnetusers");
-
-            entity.Property(e => e.Id)
-                .HasMaxLength(128)
-                .HasColumnName("id");
-            entity.Property(e => e.Createddate)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("createddate");
-            entity.Property(e => e.Email)
-                .HasMaxLength(256)
-                .HasColumnName("email");
-            entity.Property(e => e.Ip)
-                .HasMaxLength(20)
-                .HasColumnName("ip");
-            entity.Property(e => e.Modifieddate)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("modifieddate");
-            entity.Property(e => e.Passwordhash).HasColumnName("passwordhash");
-            entity.Property(e => e.Phonenumber).HasColumnName("phonenumber");
-            entity.Property(e => e.Username)
-                .HasMaxLength(256)
-                .HasColumnName("username");
-        });
-
-        modelBuilder.Entity<Aspnetuserrole1>(entity =>
-        {
-            entity.HasKey(e => new { e.Userid, e.Name }).HasName("aspnetuserroles_pkey");
-
-            entity.ToTable("aspnetuserroles");
-
-            entity.Property(e => e.Userid)
-                .HasMaxLength(128)
-                .HasColumnName("userid");
-            entity.Property(e => e.Name)
-                .HasMaxLength(256)
-                .HasColumnName("name");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Aspnetuserrole1s)
-                .HasForeignKey(d => d.Userid)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("aspnetuserroles_userid_fkey");
         });
 
         modelBuilder.Entity<Blockrequest>(entity =>
@@ -336,6 +275,10 @@ public partial class ApplicationDbContext : DbContext
             entity.HasKey(e => e.Id).HasName("business_pkey");
 
             entity.ToTable("business");
+
+            entity.HasIndex(e => e.Modifiedby, "fki_,");
+
+            entity.HasIndex(e => e.Createdby, "fki_createdBy");
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Address1)
@@ -381,11 +324,11 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.CreatedbyNavigation).WithMany(p => p.BusinessCreatedbyNavigations)
                 .HasForeignKey(d => d.Createdby)
-                .HasConstraintName("business_createdby_fkey");
+                .HasConstraintName("createdBy");
 
             entity.HasOne(d => d.ModifiedbyNavigation).WithMany(p => p.BusinessModifiedbyNavigations)
                 .HasForeignKey(d => d.Modifiedby)
-                .HasConstraintName("business_modifiedby_fkey");
+                .HasConstraintName("MODIFIED BY");
 
             entity.HasOne(d => d.Region).WithMany(p => p.Businesses)
                 .HasForeignKey(d => d.Regionid)
@@ -728,7 +671,9 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasIndex(e => e.Createdby, "fki_a");
 
-            entity.Property(e => e.Physicianid).HasColumnName("physicianid");
+            entity.Property(e => e.Physicianid)
+                .HasIdentityOptions(3L, null, null, null, null, null)
+                .HasColumnName("physicianid");
             entity.Property(e => e.Address1)
                 .HasMaxLength(500)
                 .HasColumnName("address1");
@@ -816,9 +761,21 @@ public partial class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("cretedBy");
 
-            entity.HasOne(d => d.ModifiedbyNavigation).WithMany(p => p.Physicians)
+            entity.HasOne(d => d.ModifiedbyNavigation).WithMany(p => p.PhysicianModifiedbyNavigations)
                 .HasForeignKey(d => d.Modifiedby)
-                .HasConstraintName("physician_modifiedby_fkey");
+                .HasConstraintName("MODIFIED BY");
+        });
+
+        modelBuilder.Entity<PhysicianStatus>(entity =>
+        {
+            entity.HasKey(e => e.StatusId).HasName("PhysicianStatus_pkey");
+
+            entity.ToTable("PhysicianStatus");
+
+            entity.Property(e => e.StatusId).HasColumnName("statusId");
+            entity.Property(e => e.StatusName)
+                .HasColumnType("character varying")
+                .HasColumnName("statusName");
         });
 
         modelBuilder.Entity<Physicianlocation>(entity =>
@@ -856,7 +813,9 @@ public partial class ApplicationDbContext : DbContext
 
             entity.ToTable("physiciannotification");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id)
+                .HasIdentityOptions(4L, null, null, null, null, null)
+                .HasColumnName("id");
             entity.Property(e => e.Isnotificationstopped).HasColumnName("isnotificationstopped");
             entity.Property(e => e.Physicianid).HasColumnName("physicianid");
 
@@ -885,6 +844,42 @@ public partial class ApplicationDbContext : DbContext
                 .HasForeignKey(d => d.Regionid)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("physicianregion_regionid_fkey");
+        });
+
+        modelBuilder.Entity<ProviderFile>(entity =>
+        {
+            entity.HasKey(e => e.FileId).HasName("ProviderFile_pkey");
+
+            entity.ToTable("ProviderFile");
+
+            entity.HasIndex(e => e.FileType, "fki_p");
+
+            entity.HasIndex(e => e.PhysicianId, "fki_physicianId_fkey");
+
+            entity.Property(e => e.FileId).HasColumnName("fileId");
+            entity.Property(e => e.FileName).HasColumnType("character varying");
+            entity.Property(e => e.IsDeleted).HasColumnName("isDeleted");
+            entity.Property(e => e.PhysicianId).HasColumnName("physicianId");
+
+            entity.HasOne(d => d.FileTypeNavigation).WithMany(p => p.ProviderFiles)
+                .HasForeignKey(d => d.FileType)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("fileType_fkey");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.ProviderFiles)
+                .HasForeignKey(d => d.PhysicianId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("physicianId_fkey");
+        });
+
+        modelBuilder.Entity<ProviderFileType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("ProviderFileType_pkey");
+
+            entity.ToTable("ProviderFileType");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Name).HasColumnType("character varying");
         });
 
         modelBuilder.Entity<Region>(entity =>
@@ -1367,7 +1362,7 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.CreatedbyNavigation).WithMany(p => p.Shifts)
                 .HasForeignKey(d => d.Createdby)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("shift_createdby_fkey");
+                .HasConstraintName("createdBy");
 
             entity.HasOne(d => d.Physician).WithMany(p => p.Shifts)
                 .HasForeignKey(d => d.Physicianid)
@@ -1407,7 +1402,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.ModifiedbyNavigation).WithMany(p => p.Shiftdetails)
                 .HasForeignKey(d => d.Modifiedby)
-                .HasConstraintName("shiftdetail_modifiedby_fkey");
+                .HasConstraintName("MODIFIED BY");
 
             entity.HasOne(d => d.Region).WithMany(p => p.Shiftdetails)
                 .HasForeignKey(d => d.Regionid)

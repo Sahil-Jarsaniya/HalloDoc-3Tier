@@ -92,7 +92,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public EditProvider CreateProvider();
 
-        public void CreateProvider(EditProvider obj, string pass, string AspId, IEnumerable<CheckBoxData> selectedRegion);
+        public int CreateProvider(EditProvider obj, string pass, string AspId, IEnumerable<CheckBoxData> selectedRegion);
+        public void UploadProviderFile(int physicianId, string filename, int fileType);
 
         public IEnumerable<Menu> PageListFilter(int id);
 
@@ -104,5 +105,9 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void EditRole(IEnumerable<CheckBoxData> PageList, string AspId, int AccountType, CreateRole obj);
 
         public void DeleteRole(int RoleId);
+
+        public CreateAdminViewModel CreateAdmin();
+
+        public void CreateAdmin(CreateAdminViewModel obj, string password, string AspId, IEnumerable<CheckBoxData> selectedRegion);
     }
 }

@@ -639,7 +639,7 @@ namespace HalloDoc.Controllers
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
-            var data = _adminRepo.EditProvider(Physicianid);
+           var data = _adminRepo.EditProvider(Physicianid);
             return View(data);
         }
         [HttpPost]
@@ -660,14 +660,39 @@ namespace HalloDoc.Controllers
                     _adminRepo.ProviderProfileEdit(obj);
                     if (obj.PhySign != null)
                     {
-                        _loginRepo.uploadFile(obj.PhySign, "ProviderData", obj.PhySign.FileName.ToString());
+                        _loginRepo.uploadFile(obj.PhySign, "ProviderData\\"+ obj.Physicianid, obj.PhySign.FileName.ToString());
                     }
                     if (obj.PhyPhoto != null)
                     {
-                        _loginRepo.uploadFile(obj.PhyPhoto, "ProviderData", obj.PhyPhoto.FileName.ToString());
+                        _loginRepo.uploadFile(obj.PhyPhoto, "ProviderData\\"+ obj.Physicianid, obj.PhyPhoto.FileName.ToString());
                     }
                     break;
                 case 5:
+                    if (obj.Isagreementdoc)
+                    {
+                        _loginRepo.uploadFile(obj.agreementdoc, "ProviderData\\" + obj.Physicianid, obj.agreementdoc.FileName.ToString());
+                        _adminRepo.UploadProviderFile(obj.Physicianid, obj.agreementdoc.FileName.ToString(), 1);
+                    }
+                    if (obj.Isbackgrounddoc)
+                    {
+                        _loginRepo.uploadFile(obj.backgrounddoc, "ProviderData\\" + obj.Physicianid, obj.backgrounddoc.FileName.ToString());
+                        _adminRepo.UploadProviderFile(obj.Physicianid, obj.backgrounddoc.FileName.ToString(), 2);
+                    }
+                    if (obj.Islicensedoc)
+                    {
+                        _loginRepo.uploadFile(obj.licensedoc, "ProviderData\\" + obj.Physicianid, obj.licensedoc.FileName.ToString());
+                        _adminRepo.UploadProviderFile(obj.Physicianid, obj.licensedoc.FileName.ToString(), 3);
+                    }
+                    if (obj.Isnondisclosuredoc)
+                    {
+                        _loginRepo.uploadFile(obj.nondisclosuredoc, "ProviderData\\" + obj.Physicianid, obj.nondisclosuredoc.FileName.ToString());
+                        _adminRepo.UploadProviderFile(obj.Physicianid, obj.nondisclosuredoc.FileName.ToString(), 4);
+                    }
+                    if (obj.Istrainingdoc)
+                    {
+                        _loginRepo.uploadFile(obj.trainingdoc, "ProviderData\\" + obj.Physicianid, obj.trainingdoc.FileName.ToString());
+                        _adminRepo.UploadProviderFile(obj.Physicianid, obj.trainingdoc.FileName.ToString(), 5);
+                    }
                     break;
             }
 
@@ -727,7 +752,41 @@ namespace HalloDoc.Controllers
             var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
 
             var pass = _loginRepo.GetHash(obj.Password);
-            _adminRepo.CreateProvider(obj, pass, AspId, Region);
+            var phyId = _adminRepo.CreateProvider(obj, pass, AspId, Region);
+
+            if (obj.PhySign != null)
+            {
+                _loginRepo.uploadFile(obj.PhySign, "ProviderData\\"+phyId, obj.PhySign.FileName.ToString());
+            }
+            if (obj.PhyPhoto != null)
+            {
+                _loginRepo.uploadFile(obj.PhyPhoto, "ProviderData\\" + phyId, obj.PhyPhoto.FileName.ToString());
+            }
+            if (obj.Isagreementdoc)
+            {
+                _loginRepo.uploadFile(obj.agreementdoc, "ProviderData\\" + phyId, obj.agreementdoc.FileName.ToString());
+                _adminRepo.UploadProviderFile(phyId, obj.agreementdoc.FileName.ToString(), 1);
+            }
+            if (obj.Isbackgrounddoc)
+            {
+                _loginRepo.uploadFile(obj.backgrounddoc, "ProviderData\\" + phyId, obj.backgrounddoc.FileName.ToString());
+                _adminRepo.UploadProviderFile(phyId, obj.backgrounddoc.FileName.ToString(), 2);
+            }
+            if (obj.Islicensedoc)
+            {
+                _loginRepo.uploadFile(obj.licensedoc, "ProviderData\\" + phyId, obj.licensedoc.FileName.ToString());
+                _adminRepo.UploadProviderFile(phyId, obj.licensedoc.FileName.ToString(), 3);
+            }
+            if (obj.Isnondisclosuredoc)
+            {
+                _loginRepo.uploadFile(obj.nondisclosuredoc, "ProviderData\\" + phyId, obj.nondisclosuredoc.FileName.ToString());
+                _adminRepo.UploadProviderFile(phyId, obj.nondisclosuredoc.FileName.ToString(), 4);
+            }
+            if (obj.Istrainingdoc)
+            {
+                _loginRepo.uploadFile(obj.trainingdoc, "ProviderData\\" + phyId, obj.trainingdoc.FileName.ToString());
+                _adminRepo.UploadProviderFile(phyId, obj.trainingdoc.FileName.ToString(), 5);
+            }
 
             return RedirectToAction("CreateProvider");
         }
@@ -816,9 +875,22 @@ namespace HalloDoc.Controllers
 
         public IActionResult CreateAdmin()
         {
-            var admin = _db.Admins.Include(z => z.Adminregions).ThenInclude(a => a.Region).Include(c=> c.Aspnetuser).ThenInclude(r => r.Roles).First();
+            var data = _adminRepo.CreateAdmin();
 
-            return View(admin);
+            return View(data);
+        }
+        [HttpPost]
+        public IActionResult CreateAdmin(string selectedRegion, CreateAdminViewModel obj)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+
+            var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
+
+            var pass = _loginRepo.GetHash(obj.Password);
+            _adminRepo.CreateAdmin(obj, pass, AspId, Region);
+            return RedirectToAction("CreateAdmin");
         }
     }
 }

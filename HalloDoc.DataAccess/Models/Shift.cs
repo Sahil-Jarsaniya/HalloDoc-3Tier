@@ -23,7 +23,7 @@ public partial class Shift
 
     public string? Ip { get; set; }
 
-    public virtual Aspnetuser1 CreatedbyNavigation { get; set; } = null!;
+    public virtual AspNetUser CreatedbyNavigation { get; set; } = null!;
 
     public virtual Physician Physician { get; set; } = null!;
 

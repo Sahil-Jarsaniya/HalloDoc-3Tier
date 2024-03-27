@@ -20,10 +20,10 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public string? Mobile { get; set; }
 
-        public short? Status { get; set; }
+        public string? Status { get; set; }
 
 
-        public int? Roleid { get; set; }
+        public string? Roleid { get; set; }
 
         public bool isNotiOff { get; set; }
         public bool? isDeleted { get; set; }

@@ -77,13 +77,15 @@ public partial class Physician
 
     public virtual AspNetUser CreatedbyNavigation { get; set; } = null!;
 
-    public virtual Aspnetuser1? ModifiedbyNavigation { get; set; }
+    public virtual AspNetUser? ModifiedbyNavigation { get; set; }
 
     public virtual ICollection<Physicianlocation> Physicianlocations { get; set; } = new List<Physicianlocation>();
 
     public virtual ICollection<Physiciannotification> Physiciannotifications { get; set; } = new List<Physiciannotification>();
 
     public virtual ICollection<Physicianregion> Physicianregions { get; set; } = new List<Physicianregion>();
+
+    public virtual ICollection<ProviderFile> ProviderFiles { get; set; } = new List<ProviderFile>();
 
     public virtual ICollection<Request> Requests { get; set; } = new List<Request>();
 

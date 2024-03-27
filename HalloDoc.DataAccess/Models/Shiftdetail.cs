@@ -31,7 +31,7 @@ public partial class Shiftdetail
 
     public bool? Issync { get; set; }
 
-    public virtual Aspnetuser1? ModifiedbyNavigation { get; set; }
+    public virtual AspNetUser? ModifiedbyNavigation { get; set; }
 
     public virtual Region? Region { get; set; }
 

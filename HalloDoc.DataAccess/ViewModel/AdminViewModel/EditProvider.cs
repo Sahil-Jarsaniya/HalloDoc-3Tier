@@ -71,15 +71,15 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public string? Syncemailaddress { get; set; }
 
-        public bool? Isagreementdoc { get; set; }
+        public bool Isagreementdoc { get; set; }
 
-        public bool? Isbackgrounddoc { get; set; }
+        public bool Isbackgrounddoc { get; set; }
 
-        public bool? Istrainingdoc { get; set; }
+        public bool Istrainingdoc { get; set; }
 
-        public bool? Islicensedoc { get; set; }
+        public bool Islicensedoc { get; set; }
 
-        public bool? Isnondisclosuredoc { get; set; }
+        public bool Isnondisclosuredoc { get; set; }
 
         public IFormFile? agreementdoc { get; set; }
 
@@ -96,5 +96,6 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public IEnumerable<CheckBoxData>? Region { get; set; }
         public IEnumerable<Role>? Role { get; set; }
+        public IEnumerable<PhysicianStatus>? Statuses { get; set; }
     }
 }

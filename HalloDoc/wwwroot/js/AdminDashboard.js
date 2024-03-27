@@ -1,5 +1,5 @@
-var dashboardStatus = $("#DashboardStatus").val();
-
+/*var dashboardStatus = $("#DashboardStatus").val();*/
+var status = localStorage.getItem("status");
 $(".status-tab").click(function () {
     $(this).addClass("active");
     $(this).children("svg").removeClass("d-none");
@@ -11,40 +11,47 @@ $(".status-tab").click(function () {
 
 
     if (id == 'status-new-tab') {
-        dashboardStatus = 1;
-        $("#DashboardStatus").val(1);
+      /*  dashboardStatus = 1;*/
+        localStorage.setItem("status", 1);
+        //$("#DashboardStatus").val(1);
         $('#status-text').text('(New)');
     }
     else if (id == 'status-pending-tab') {
-        dashboardStatus = 2;
-        $("#DashboardStatus").val(2);
+        //dashboardStatus = 2;
+        localStorage.setItem("status", 2);
+        //$("#DashboardStatus").val(2);
         $('#status-text').text('(Pending)');
     }
     else if (id == 'status-active-tab') {
-        dashboardStatus = 8;
-        $("#DashboardStatus").val(8);
+        //dashboardStatus = 8;
+        localStorage.setItem("status", 8);
+        //$("#DashboardStatus").val(8);
         $('#status-text').text('(Active)');
     }
     else if (id == 'status-conclude-tab') {
-        dashboardStatus = 4;
-        $("#DashboardStatus").val(4);
+        //dashboardStatus = 4;
+        localStorage.setItem("status", 4);
+        //$("#DashboardStatus").val(4);
         $('#status-text').text('(Conclude)');
     }
     else if (id == 'status-to-close-tab') {
-        dashboardStatus = 5;
-        $("#DashboardStatus").val(5);
+        //dashboardStatus = 5;
+        localStorage.setItem("status", 5);
+        //$("#DashboardStatus").val(5);
         $('#status-text').text('(To Close)');
     }
     else if (id == 'status-unpaid-tab') {
-        dashboardStatus = 13;
-        $("#DashboardStatus").val(13);
+        //dashboardStatus = 13;
+        localStorage.setItem("status", 13);
+        //$("#DashboardStatus").val(13);
         $('#status-text').text('(Unpaid)');
     }
 
+    var status = localStorage.getItem("status");
     $.ajax({
         url: "/AdminDashboard/PartialTable",
         type: 'POST',
-        data: { status: dashboardStatus },
+        data: { status: status },
         success: function (result) {
             $('#PartialTable').html(result);
         },
@@ -55,19 +62,19 @@ $(".status-tab").click(function () {
     });
 
 });
-if (dashboardStatus == 8) {
+if (status == 8) {
     $("#status-active-tab").click();
 }
-else if (dashboardStatus == 2) {
+else if (status == 2) {
     $("#status-pending-tab").click();
 }
-else if (dashboardStatus == 4) {
+else if (status == 4) {
     $("#status-conclude-tab").click();
 }
-else if (dashboardStatus == 5) {
+else if (status == 5) {
     $("#status-to-close-tab").click();
 }
-else if (dashboardStatus == 13) {
+else if (status == 13) {
     $("#status-unpaid-tab").click();
 }
 else {
@@ -80,10 +87,11 @@ $("#RegionFilter").change(function () {
     var RegionId = $(this).val();
     var Name = $("#search").val();
     var reqType = $("#filterReqType").val();
+    var status = localStorage.getItem("status");
     $.ajax({
         url: '/AdminDashboard/PartialTable',
         type: 'POST',
-        data: { RegionId: RegionId, Name: Name, status: dashboardStatus, reqType: reqType },
+        data: { RegionId: RegionId, Name: Name, status: status, reqType: reqType },
         success: function (result) {
             $('#PartialTable').html(result);
         },
@@ -100,12 +108,13 @@ $("#search").keyup(function (e) {
     var ReginoId = $("#RegionFilter").val();
     var Name = $(this).val();
     var reqType = $("#filterReqType").val();
+    var status = localStorage.getItem("status");
     $.ajax({
 
         url: '/AdminDashboard/PartialTable',
         type: 'POST',
         data: {
-            status: dashboardStatus, Name: Name, ReginoId: ReginoId, reqType: reqType
+            status: status, Name: Name, ReginoId: ReginoId, reqType: reqType
         },
         success: function (result) {
             $('#PartialTable').html(result);
@@ -124,13 +133,14 @@ $(".filterReqByType").click(function () {
     $("#filterReqType").val(reqType);
     var RegionId = $("#RegionFilter").val();
     var Name = $("#search").val();
+    var status = localStorage.getItem("status");
     console.log(reqType + " " + RegionId + " " + Name)
     $.ajax({
 
         url: '/AdminDashboard/PartialTable',
         type: 'POST',
         data: {
-            status: dashboardStatus, Name: Name, RegionId: RegionId, reqType: reqType
+            status: status, Name: Name, RegionId: RegionId, reqType: reqType
         },
         success: function (result) {
             $('#PartialTable').html(result);
