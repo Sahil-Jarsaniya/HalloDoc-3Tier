@@ -8,7 +8,7 @@
         <h4>New Request 
             <span class="border bg-success rounded-pill h-50 fs-6 p-1 text-white">Patient</span>
         </h4>
-        <a href="@Url.Action("Dashboard", "AdminDashboard", new{status = Model.status})" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+        <a onclick="history.go(-1)" class="btn btn-outline-primary m-2 text-decoration-none float-end"
            id="back-btn">
             <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
             Back

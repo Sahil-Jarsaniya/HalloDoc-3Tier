@@ -17,14 +17,21 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public int GetAdminId(string AspId);
         public AdminDashboardViewModel adminDashboard();
 
-        public IEnumerable<newReqViewModel> newReq();
-        public IEnumerable<pendingReqViewModel> pendingReq();
-        public IEnumerable<activeReqViewModel> activeReq();
-        public IEnumerable<concludeReqViewModel> concludeReq();
-        public IEnumerable<closeReqViewModel> closeReq();
-        public IEnumerable<unpaidReqViewModel> unpaidReq();
+        public IQueryable<newReqViewModel> newReq();
+        public IQueryable<pendingReqViewModel> pendingReq();
+        public IQueryable<activeReqViewModel> activeReq();
+        public IQueryable<concludeReqViewModel> concludeReq();
+        public IQueryable<closeReqViewModel> closeReq();
+        public IQueryable<unpaidReqViewModel> unpaidReq();
 
-        public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data);
+        public IQueryable<newReqViewModel> newReq(searchViewModel obj);
+        public IQueryable<pendingReqViewModel> pendingReq(searchViewModel obj);
+        public IQueryable<activeReqViewModel> activeReq(searchViewModel obj);
+        public IQueryable<concludeReqViewModel> concludeReq(searchViewModel obj);
+        public IQueryable<closeReqViewModel> closeReq(searchViewModel obj);
+        public IQueryable<unpaidReqViewModel> unpaidReq(searchViewModel obj);
+
+        //public AdminDashboardViewModel searchPatient(searchViewModel obj);
 
         public viewCaseViewModel viewCase(int reqClientId);
 

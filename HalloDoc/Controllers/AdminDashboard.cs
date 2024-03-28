@@ -61,11 +61,9 @@ namespace HalloDoc.Controllers
         {
             var data = _adminRepo.adminDashboard();
 
-            var searchedData = _adminRepo.searchPatient(obj, data);
-
             var dashData = new AdminDashboardViewModel
             {
-                countRequestViewModel = searchedData.countRequestViewModel,
+                countRequestViewModel = data.countRequestViewModel,
             };
 
             return View(dashData);
@@ -73,80 +71,86 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
-        public IActionResult PartialTable(int status, searchViewModel? obj)
+        public async Task<IActionResult> PartialTable(int status, searchViewModel? obj, int pageNumber)
         {
             var data = _adminRepo.adminDashboard();
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            int pageSize = 1;
 
             if (obj.Name != null || obj.reqType != 0 || obj.RegionId != 0)
             {
-                data.newReqViewModel = _adminRepo.newReq();
-                data.pendingReqViewModel = _adminRepo.pendingReq();
-                data.unpaidReqViewModels = _adminRepo.unpaidReq();
-                data.activeReqViewModels = _adminRepo.activeReq();
-                data.concludeReqViewModel = _adminRepo.concludeReq();
-                data.closeReqViewModels = _adminRepo.closeReq();
-                var searchData = _adminRepo.searchPatient(obj, data);
+               
                 if (status == 1)
                 {
-                    var parseData = searchData.newReqViewModel;
-                    return PartialView("_newRequestView", parseData);
+                    var parseData = _adminRepo.newReq(obj);
+                    //return PartialView("_newRequestView", parseData);
+                    return PartialView("_newRequestView", await PaginatedList<newReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
                 else if (status == 2)
                 {
-                    var parseData = searchData.pendingReqViewModel;
-                    return PartialView("_PendingRequestView", parseData);
+                    var parseData = _adminRepo.pendingReq(obj);
+                    //return PartialView("_PendingRequestView", parseData);
+                    return PartialView("_PendingRequestView", await PaginatedList<pendingReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
                 else if (status == 8)
                 {
-                    var parseData = searchData.activeReqViewModels;
-                    return PartialView("_activeRequestView", parseData);
+                    var parseData = _adminRepo.activeReq(obj);
+                    //return PartialView("_activeRequestView", parseData);
+                    return PartialView("_activeRequestView", await PaginatedList<activeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
                 else if (status == 4)
                 {
-                    var parseData = searchData.concludeReqViewModel;
-                    return PartialView("_concludeReqView", parseData);
+                    var parseData = _adminRepo.concludeReq(obj);
+                    //return PartialView("_concludeReqView", parseData);
+                    return PartialView("_concludeReqView", await PaginatedList<concludeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
                 else if (status == 5)
                 {
-                    var parseData = searchData.closeReqViewModels;
-                    return PartialView("_closeReqView", parseData);
+                    var parseData = _adminRepo.closeReq(obj);
+                    //return PartialView("_closeReqView", parseData);
+                    return PartialView("_closeReqView", await PaginatedList<closeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
                 else
                 {
-                    var parseData = searchData.unpaidReqViewModels;
-                    return PartialView("_unpaidReqView", parseData);
+                    var parseData = _adminRepo.unpaidReq(obj);
+                    //return PartialView("_unpaidReqView", parseData);
+                    return PartialView("_unpaidReqView", await PaginatedList<unpaidReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
             }
 
             if (status == 1)
             {
                 var parseData = _adminRepo.newReq();
-                return PartialView("_newRequestView", parseData);
+                //return PartialView("_newRequestView", parseData);
+                return PartialView("_newRequestView", await PaginatedList<newReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
             else if (status == 2)
             {
                 var parseData = _adminRepo.pendingReq();
-                return PartialView("_PendingRequestView", parseData);
+                return PartialView("_PendingRequestView", await PaginatedList<pendingReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
             else if (status == 8)
             {
                 var parseData = _adminRepo.activeReq();
-                return PartialView("_activeRequestView", parseData);
+                return PartialView("_activeRequestView", await PaginatedList<activeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
             else if (status == 4)
             {
                 var parseData = _adminRepo.concludeReq();
-                return PartialView("_concludeReqView", parseData);
+                return PartialView("_concludeReqView", await PaginatedList<concludeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
             else if (status == 5)
             {
                 var parseData = _adminRepo.closeReq();
-                return PartialView("_closeReqView", parseData);
+                return PartialView("_closeReqView", await PaginatedList<closeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
             else
             {
                 var parseData = _adminRepo.unpaidReq();
-                return PartialView("_unpaidReqView", parseData);
+                return PartialView("_unpaidReqView", await PaginatedList<unpaidReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
         }
 
@@ -465,8 +469,6 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
             _adminRepo.MyProfile(obj, AspId);
-
-
 
             return RedirectToAction("MyProfile");
         }
@@ -892,5 +894,6 @@ namespace HalloDoc.Controllers
             _adminRepo.CreateAdmin(obj, pass, AspId, Region);
             return RedirectToAction("CreateAdmin");
         }
+
     }
 }

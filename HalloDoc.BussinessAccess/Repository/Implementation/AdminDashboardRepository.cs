@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.JSInterop.Implementation;
 using Org.BouncyCastle.Ocsp;
 using System.Linq;
+using System.Xml.Linq;
 using Twilio.Rest.Chat.V1.Service;
 using Twilio.TwiML.Voice;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
@@ -72,7 +74,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return data;
         }
 
-        public IEnumerable<newReqViewModel> newReq()
+        public IQueryable<newReqViewModel> newReq()
         {
             var newReqData = (from req in _db.Requests
                               join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -101,7 +103,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                               });
             return newReqData;
         }
-        public IEnumerable<pendingReqViewModel> pendingReq()
+        public IQueryable<pendingReqViewModel> pendingReq()
         {
             var pendingReqData = from req in _db.Requests
                                  join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -132,7 +134,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  };
             return pendingReqData;
         }
-        public IEnumerable<activeReqViewModel> activeReq()
+        public IQueryable<activeReqViewModel> activeReq()
         {
             var activeReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -163,7 +165,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                 };
             return activeReqData;
         }
-        public IEnumerable<concludeReqViewModel> concludeReq()
+        public IQueryable<concludeReqViewModel> concludeReq()
         {
             var concludeReqData = from req in _db.Requests
                                   join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -194,7 +196,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                   };
             return concludeReqData;
         }
-        public IEnumerable<closeReqViewModel> closeReq()
+        public IQueryable<closeReqViewModel> closeReq()
         {
             var closeReqData = from req in _db.Requests
                                join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -226,7 +228,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             return closeReqData;
         }
-        public IEnumerable<unpaidReqViewModel> unpaidReq()
+        public IQueryable<unpaidReqViewModel> unpaidReq()
         {
             var unpaidReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
@@ -258,68 +260,336 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return unpaidReqData;
         }
 
-        public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data)
+        public IQueryable<newReqViewModel> newReq(searchViewModel obj)
         {
-            if (obj.Name == null && obj.RegionId == 0 && obj.reqType == 0)
-            {
-                return data;
-            }
+            var newReqData = (from req in _db.Requests
+                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                              where req.Status == 1
+                              select new newReqViewModel
+                              {
+                                  reqClientId = rc.Requestclientid,
+                                  Firstname = rc.Firstname,
+                                  Lastname = rc.Lastname,
+                                  reqFirstname = req.Firstname,
+                                  reqLastname = req.Lastname,
+                                  Strmonth = rc.Strmonth,
+                                  Createddate = req.Createddate,
+                                  Phonenumber = rc.Phonenumber,
+                                  ConciergePhonenumber = req.Phonenumber,
+                                  FamilyPhonenumber = req.Phonenumber,
+                                  BusinessPhonenumber = req.Phonenumber,
+                                  Street = rc.Street,
+                                  City = rc.City,
+                                  State = rc.State,
+                                  Zipcode = rc.Zipcode,
+                                  Notes = rc.Notes,
+                                  reqTypeId = req.Requesttypeid,
+                                  Regionid = rc.Regionid,
+                                  Email = rc.Email,
+                              });
+
             if (obj.Name != null)
             {
                 var name = obj.Name.ToUpper();
-                var sortedNew = data.newReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-                var sortedConclude = data.concludeReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-                var sortedClose = data.closeReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-                var sortedPending = data.pendingReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-                var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-                var sortedActive = data.activeReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-
-                data.newReqViewModel = sortedNew;
-                data.concludeReqViewModel = sortedConclude;
-                data.closeReqViewModels = sortedClose;
-                data.pendingReqViewModel = sortedPending;
-                data.activeReqViewModels = sortedActive;
-                data.unpaidReqViewModels = sortedUnpaid;
-
+                newReqData = newReqData.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+            }
+            if(obj.RegionId != 0)
+            {
+                newReqData = newReqData.Where(s => s.Regionid == obj.RegionId);
+            }
+            if(obj.reqType != 0)
+            {
+                newReqData = newReqData.Where(s => s.reqTypeId == obj.reqType);
             }
 
+            return newReqData;
+        }
+        public IQueryable<pendingReqViewModel> pendingReq(searchViewModel obj)
+        {
+            var pendingReqData = from req in _db.Requests
+                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                                 join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
+                                 where req.Status == 2
+                                 select new pendingReqViewModel
+                                 {
+                                     reqClientId = rc.Requestclientid,
+                                     Firstname = rc.Firstname,
+                                     Lastname = rc.Lastname,
+                                     reqFirstname = req.Firstname,
+                                     reqLastname = req.Lastname,
+                                     Strmonth = rc.Strmonth,
+                                     Createddate = req.Createddate,
+                                     Phonenumber = rc.Phonenumber,
+                                     ConciergePhonenumber = req.Phonenumber,
+                                     FamilyPhonenumber = req.Phonenumber,
+                                     BusinessPhonenumber = req.Phonenumber,
+                                     Street = rc.Street,
+                                     City = rc.City,
+                                     State = rc.State,
+                                     Zipcode = rc.Zipcode,
+                                     Notes = rc.Notes,
+                                     reqTypeId = req.Requesttypeid,
+                                     physicianName = phy.Firstname + " " + phy.Lastname,
+                                     Regionid = rc.Regionid,
+                                     Email = rc.Email,
+                                 };
+            if (obj.Name != null)
+            {
+                var name = obj.Name.ToUpper();
+                pendingReqData = pendingReqData.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+            }
             if (obj.RegionId != 0)
             {
-                var sortedNew = data.newReqViewModel.Where(s => s.Regionid == obj.RegionId);
-                var sortedConclude = data.concludeReqViewModel.Where(s => s.Regionid == obj.RegionId);
-                var sortedClose = data.closeReqViewModels.Where(s => s.Regionid == obj.RegionId);
-                var sortedPending = data.pendingReqViewModel.Where(s => s.Regionid == obj.RegionId);
-                var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.Regionid == obj.RegionId);
-                var sortedActive = data.activeReqViewModels.Where(s => s.Regionid == obj.RegionId);
-
-                data.newReqViewModel = sortedNew;
-                data.concludeReqViewModel = sortedConclude;
-                data.closeReqViewModels = sortedClose;
-                data.pendingReqViewModel = sortedPending;
-                data.activeReqViewModels = sortedActive;
-                data.unpaidReqViewModels = sortedUnpaid;
-
+                pendingReqData = pendingReqData.Where(s => s.Regionid == obj.RegionId);
             }
             if (obj.reqType != 0)
             {
-                var sortedNew = data.newReqViewModel.Where(s => s.reqTypeId == obj.reqType);
-                var sortedConclude = data.concludeReqViewModel.Where(s => s.reqTypeId == obj.reqType);
-                var sortedClose = data.closeReqViewModels.Where(s => s.reqTypeId == obj.reqType);
-                var sortedPending = data.pendingReqViewModel.Where(s => s.reqTypeId == obj.reqType);
-                var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.reqTypeId == obj.reqType);
-                var sortedActive = data.activeReqViewModels.Where(s => s.reqTypeId == obj.reqType);
-
-                data.newReqViewModel = sortedNew;
-                data.concludeReqViewModel = sortedConclude;
-                data.closeReqViewModels = sortedClose;
-                data.pendingReqViewModel = sortedPending;
-                data.activeReqViewModels = sortedActive;
-                data.unpaidReqViewModels = sortedUnpaid;
+                pendingReqData = pendingReqData.Where(s => s.reqTypeId == obj.reqType);
             }
 
-
-            return data;
+            return pendingReqData;
         }
+        public IQueryable<activeReqViewModel> activeReq(searchViewModel obj)
+        {
+            var activeReqData = from req in _db.Requests
+                                join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                                join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
+                                where req.Status == 8 || req.Status == 15
+                                select new activeReqViewModel
+                                {
+                                    reqClientId = rc.Requestclientid,
+                                    Firstname = rc.Firstname,
+                                    Lastname = rc.Lastname,
+                                    reqFirstname = req.Firstname,
+                                    reqLastname = req.Lastname,
+                                    Strmonth = rc.Strmonth,
+                                    Createddate = req.Createddate,
+                                    Phonenumber = rc.Phonenumber,
+                                    ConciergePhonenumber = req.Phonenumber,
+                                    FamilyPhonenumber = req.Phonenumber,
+                                    BusinessPhonenumber = req.Phonenumber,
+                                    Street = rc.Street,
+                                    City = rc.City,
+                                    State = rc.State,
+                                    Zipcode = rc.Zipcode,
+                                    Notes = rc.Notes,
+                                    reqTypeId = req.Requesttypeid,
+                                    physicianName = phy.Firstname + " " + phy.Lastname,
+                                    Regionid = rc.Regionid,
+                                    Email = rc.Email,
+                                };
+
+            if (obj.Name != null)
+            {
+                var name = obj.Name.ToUpper();
+                activeReqData = activeReqData.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+            }
+            if (obj.RegionId != 0)
+            {
+                activeReqData = activeReqData.Where(s => s.Regionid == obj.RegionId);
+            }
+            if (obj.reqType != 0)
+            {
+                activeReqData = activeReqData.Where(s => s.reqTypeId == obj.reqType);
+            }
+            return activeReqData;
+        }
+        public IQueryable<concludeReqViewModel> concludeReq(searchViewModel obj)
+        {
+            var concludeReqData = from req in _db.Requests
+                                  join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                                  join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
+                                  where req.Status == 4
+                                  select new concludeReqViewModel
+                                  {
+                                      reqClientId = rc.Requestclientid,
+                                      Firstname = rc.Firstname,
+                                      Lastname = rc.Lastname,
+                                      reqFirstname = req.Firstname,
+                                      reqLastname = req.Lastname,
+                                      Strmonth = rc.Strmonth,
+                                      Createddate = req.Createddate,
+                                      Phonenumber = rc.Phonenumber,
+                                      ConciergePhonenumber = req.Phonenumber,
+                                      FamilyPhonenumber = req.Phonenumber,
+                                      BusinessPhonenumber = req.Phonenumber,
+                                      Street = rc.Street,
+                                      City = rc.City,
+                                      State = rc.State,
+                                      Zipcode = rc.Zipcode,
+                                      Notes = rc.Notes,
+                                      reqTypeId = req.Requesttypeid,
+                                      physicianName = phy.Firstname + " " + phy.Lastname,
+                                      Regionid = rc.Regionid,
+                                      Email = rc.Email,
+                                  };
+            if (obj.Name != null)
+            {
+                var name = obj.Name.ToUpper();
+                concludeReqData = concludeReqData.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+            }
+            if (obj.RegionId != 0)
+            {
+                concludeReqData = concludeReqData.Where(s => s.Regionid == obj.RegionId);
+            }
+            if (obj.reqType != 0)
+            {
+                concludeReqData = concludeReqData.Where(s => s.reqTypeId == obj.reqType);
+            }
+            return concludeReqData;
+        }
+        public IQueryable<closeReqViewModel> closeReq(searchViewModel obj)
+        {
+            var closeReqData = from req in _db.Requests
+                               join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                               join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
+                               where req.Status == 5
+                               select new closeReqViewModel
+                               {
+                                   reqClientId = rc.Requestclientid,
+                                   Firstname = rc.Firstname,
+                                   Lastname = rc.Lastname,
+                                   reqFirstname = req.Firstname,
+                                   reqLastname = req.Lastname,
+                                   Strmonth = rc.Strmonth,
+                                   Createddate = req.Createddate,
+                                   Phonenumber = rc.Phonenumber,
+                                   ConciergePhonenumber = req.Phonenumber,
+                                   FamilyPhonenumber = req.Phonenumber,
+                                   BusinessPhonenumber = req.Phonenumber,
+                                   Street = rc.Street,
+                                   City = rc.City,
+                                   State = rc.State,
+                                   Zipcode = rc.Zipcode,
+                                   Notes = rc.Notes,
+                                   reqTypeId = req.Requesttypeid,
+                                   physicianName = phy.Firstname + " " + phy.Lastname,
+                                   Regionid = rc.Regionid,
+                                   Email = rc.Email,
+                               };
+
+            if (obj.Name != null)
+            {
+                var name = obj.Name.ToUpper();
+                closeReqData = closeReqData.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+            }
+            if (obj.RegionId != 0)
+            {
+                closeReqData = closeReqData.Where(s => s.Regionid == obj.RegionId);
+            }
+            if (obj.reqType != 0)
+            {
+                closeReqData = closeReqData.Where(s => s.reqTypeId == obj.reqType);
+            }
+            return closeReqData;
+        }
+        public IQueryable<unpaidReqViewModel> unpaidReq(searchViewModel obj)
+        {
+            var unpaidReqData = from req in _db.Requests
+                                join rc in _db.Requestclients on req.Requestid equals rc.Requestid
+                                join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
+                                where req.Status == 13
+                                select new unpaidReqViewModel
+                                {
+                                    reqClientId = rc.Requestclientid,
+                                    Firstname = rc.Firstname,
+                                    Lastname = rc.Lastname,
+                                    reqFirstname = req.Firstname,
+                                    reqLastname = req.Lastname,
+                                    Strmonth = rc.Strmonth,
+                                    Createddate = req.Createddate,
+                                    Phonenumber = rc.Phonenumber,
+                                    ConciergePhonenumber = req.Phonenumber,
+                                    FamilyPhonenumber = req.Phonenumber,
+                                    BusinessPhonenumber = req.Phonenumber,
+                                    Street = rc.Street,
+                                    City = rc.City,
+                                    State = rc.State,
+                                    Zipcode = rc.Zipcode,
+                                    Notes = rc.Notes,
+                                    reqTypeId = req.Requesttypeid,
+                                    physicianName = phy.Firstname + " " + phy.Lastname,
+                                    Regionid = rc.Regionid,
+                                    Email = rc.Email,
+                                };
+            if (obj.Name != null)
+            {
+                var name = obj.Name.ToUpper();
+                unpaidReqData = unpaidReqData.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+            }
+            if (obj.RegionId != 0)
+            {
+                unpaidReqData = unpaidReqData.Where(s => s.Regionid == obj.RegionId);
+            }
+            if (obj.reqType != 0)
+            {
+                unpaidReqData = unpaidReqData.Where(s => s.reqTypeId == obj.reqType);
+            }
+            return unpaidReqData;
+        }
+
+        //public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data)
+        //{
+        //    if (obj.Name == null && obj.RegionId == 0 && obj.reqType == 0)
+        //    {
+        //        return data;
+        //    }
+        //    if (obj.Name != null)
+        //    {
+        //        var name = obj.Name.ToUpper();
+        //        var sortedNew = data.newReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+        //        var sortedConclude = data.concludeReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+        //        var sortedClose = data.closeReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+        //        var sortedPending = data.pendingReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+        //        var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+        //        var sortedActive = data.activeReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
+
+        //        //data.newReqViewModel = sortedNew;
+        //        data.concludeReqViewModel = sortedConclude;
+        //        data.closeReqViewModels = sortedClose;
+        //        data.pendingReqViewModel = sortedPending;
+        //        data.activeReqViewModels = sortedActive;
+        //        data.unpaidReqViewModels = sortedUnpaid;
+
+        //    }
+
+        //    if (obj.RegionId != 0)
+        //    {
+        //        var sortedNew = data.newReqViewModel.Where(s => s.Regionid == obj.RegionId);
+        //        var sortedConclude = data.concludeReqViewModel.Where(s => s.Regionid == obj.RegionId);
+        //        var sortedClose = data.closeReqViewModels.Where(s => s.Regionid == obj.RegionId);
+        //        var sortedPending = data.pendingReqViewModel.Where(s => s.Regionid == obj.RegionId);
+        //        var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.Regionid == obj.RegionId);
+        //        var sortedActive = data.activeReqViewModels.Where(s => s.Regionid == obj.RegionId);
+
+        //        //data.newReqViewModel = sortedNew;
+        //        data.concludeReqViewModel = sortedConclude;
+        //        data.closeReqViewModels = sortedClose;
+        //        data.pendingReqViewModel = sortedPending;
+        //        data.activeReqViewModels = sortedActive;
+        //        data.unpaidReqViewModels = sortedUnpaid;
+
+        //    }
+        //    if (obj.reqType != 0)
+        //    {
+        //        var sortedNew = data.newReqViewModel.Where(s => s.reqTypeId == obj.reqType);
+        //        var sortedConclude = data.concludeReqViewModel.Where(s => s.reqTypeId == obj.reqType);
+        //        var sortedClose = data.closeReqViewModels.Where(s => s.reqTypeId == obj.reqType);
+        //        var sortedPending = data.pendingReqViewModel.Where(s => s.reqTypeId == obj.reqType);
+        //        var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.reqTypeId == obj.reqType);
+        //        var sortedActive = data.activeReqViewModels.Where(s => s.reqTypeId == obj.reqType);
+
+        //        //data.newReqViewModel = sortedNew;
+        //        data.concludeReqViewModel = sortedConclude;
+        //        data.closeReqViewModels = sortedClose;
+        //        data.pendingReqViewModel = sortedPending;
+        //        data.activeReqViewModels = sortedActive;
+        //        data.unpaidReqViewModels = sortedUnpaid;
+        //    }
+
+
+        //    return data;
+        //}
 
         public viewCaseViewModel viewCase(int reqClientId)
         {
@@ -884,6 +1154,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Status = adminRow.Status,
                 UserName = aspRow.UserName,
                 Region = regionData,
+                Roles = _db.Roles.Where(x => x.Accounttype == 1),
+                Statues = _db.PhysicianStatuses
             };
 
             return data;
@@ -985,7 +1257,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             var provider = new ProviderViewModel
             {
-                
+
                 providerTableViewModels = phy,
                 Region = region
             };
@@ -1093,7 +1365,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                  value = t1.Abbreviation,
                                  Checked = _db.Physicianregions.Any(x => x.Physicianid == phy.Physicianid && x.Regionid == t1.Regionid)
                              };
-            var Role = from t1 in _db.Roles select t1;
+            var Role = _db.Roles.Where(x => x.Accounttype == 2);
             var status = from t1 in _db.PhysicianStatuses select t1;
             var data = new EditProvider
             {
@@ -1123,11 +1395,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Statuses = status
             };
 
-            if (phy.Isagreementdoc==true)
+            if (phy.Isagreementdoc == true)
             {
                 data.Isagreementdoc = true;
-                data.agreementdoc = (IFormFile?)_db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == phy.Physicianid && x.FileType ==1);
-                String? fileName = (from t1 in _db.ProviderFiles
+                data.agreementdoc = (IFormFile?)_db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == phy.Physicianid && x.FileType == 1);
+                System.String? fileName = (from t1 in _db.ProviderFiles
                                     where t1.PhysicianId == phy.Physicianid && t1.FileType == 1
                                     select t1.FileName).FirstOrDefault();
                 IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "agreementdoc", fileName);
@@ -1137,7 +1409,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 data.Isbackgrounddoc = true;
                 data.backgrounddoc = (IFormFile?)_db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == phy.Physicianid && x.FileType == 2);
-                String? fileName = (from t1 in _db.ProviderFiles
+                System.String? fileName = (from t1 in _db.ProviderFiles
                                     where t1.PhysicianId == phy.Physicianid && t1.FileType == 2
                                     select t1.FileName).FirstOrDefault();
                 IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "backgrounddoc", fileName);
@@ -1146,16 +1418,16 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             if (phy.Islicensedoc == true)
             {
                 data.Islicensedoc = true;
-                String? fileName = (from t1 in _db.ProviderFiles
+                System.String? fileName = (from t1 in _db.ProviderFiles
                                     where t1.PhysicianId == phy.Physicianid && t1.FileType == 3
                                     select t1.FileName).FirstOrDefault();
-                IFormFile formFile = new FormFile(System.IO.Stream.Null, 0,0, "licensedoc", fileName);
+                IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "licensedoc", fileName);
                 data.licensedoc = formFile;
             }
             if (phy.Isnondisclosuredoc == true)
             {
                 data.Isnondisclosuredoc = true;
-                String? fileName = (from t1 in _db.ProviderFiles
+                System.String? fileName = (from t1 in _db.ProviderFiles
                                     where t1.PhysicianId == phy.Physicianid && t1.FileType == 4
                                     select t1.FileName).FirstOrDefault();
                 IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "nondisclosuredoc", fileName);
@@ -1164,7 +1436,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             if (phy.Istrainingdoc == true)
             {
                 data.Istrainingdoc = true;
-                String? fileName = (from t1 in _db.ProviderFiles
+                System.String? fileName = (from t1 in _db.ProviderFiles
                                     where t1.PhysicianId == phy.Physicianid && t1.FileType == 5
                                     select t1.FileName).FirstOrDefault();
                 IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "trainingdoc", fileName);
@@ -1187,7 +1459,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
 
             phy.Status = obj.Status;
-            phy.Roleid  = obj.Roleid;
+            phy.Roleid = obj.Roleid;
             _db.Physicians.Update(phy);
             _db.SaveChanges();
 
@@ -1379,11 +1651,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public void UploadProviderFile(int physicianId, string filename, int fileType)
         {
             var data = _db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == physicianId && x.FileType == fileType);
-            if(data != null)
+            if (data != null)
             {
                 data.IsDeleted = true;
-            _db.ProviderFiles.Update(data);
-            _db.SaveChanges();
+                _db.ProviderFiles.Update(data);
+                _db.SaveChanges();
             }
 
             var providerFile = new ProviderFile

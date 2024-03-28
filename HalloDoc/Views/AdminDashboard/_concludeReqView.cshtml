@@ -1,4 +1,5 @@
-﻿<table class="table table-responsive d-none d-md-table">
+﻿@model PaginatedList<concludeReqViewModel>;
+<table class="table table-responsive d-none d-md-table">
     <thead>
         <tr class="table-secondary">
             <td>Name</td>
@@ -12,7 +13,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Items)
         {
             var bg = "";
             @switch (item.reqTypeId)
@@ -105,7 +106,7 @@
 
 @*Mobile View*@
 <div class="d-md-none mobileView">
-    @foreach (var item in Model)
+    @foreach (var item in Model.Items)
     {
         var name = item.Firstname + "," + item.Lastname;
         <div class="shadow m-1 p-2" data-bs-toggle="collapse" href="#@item.reqClientId" role="button" aria-expanded="false">
@@ -191,3 +192,59 @@
         </div>
     }
 </div>
+
+@*Pagination*@
+
+<div class="row">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-end">
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="1">
+                        first
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex - 1)">
+                        Previous
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled": "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex + 1)">
+                        next
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.TotalPages)">
+                        Last
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+
+    $(".pageBtn").click(function () {
+        var reqType = $("#filterReqType").val()
+        var pageNumber = $(this).data('page');
+        var ReginoId = $("#RegionFilter").val()
+        var Name = $("#search").val();
+
+        $("#pagenumber").val(pageNumber);
+
+        $.ajax({
+            url: '/AdminDashboard/PartialTable',
+            type: 'POST',
+            data: { Name: Name, status: 4, reqType: reqType, pageNumber: pageNumber },
+            success: function (result) {
+                $('#PartialTable').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        })
+    })
+</script>

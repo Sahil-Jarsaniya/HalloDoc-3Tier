@@ -68,13 +68,8 @@
             <div class="row g-2 m-1">
                 <div class="col-lg-6">
                     <div class="form-floating m-1 form-div">
-                        <select asp-for="noOfRefill" class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
-                            <option hidden>Not Required</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                        </select>
-                        <label>Number of Refill</label>
+                        <input asp-for="noOfRefill"  type="number" maxlength="10" class="form-control" placeholder="">
+                        <label for="">Number of Refill</label>
                     </div>
                 </div>
             </div>

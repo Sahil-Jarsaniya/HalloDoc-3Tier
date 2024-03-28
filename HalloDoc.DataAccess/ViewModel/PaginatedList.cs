@@ -16,9 +16,10 @@ namespace HalloDoc.Services
         public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
         {
             PageIndex = pageIndex;
-            TotalItems = (int)Math.Ceiling(count / (double)pageSize);
+            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             Items = items;
-
+            PageSize = pageSize;
+            TotalItems = count;
         }
 
         public bool HasPreviousPage => (PageIndex > 1);

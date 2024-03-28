@@ -1,0 +1,61 @@
+﻿
+<div class="modal fade" id="CreateShiftModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Transfer Request</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <form>
+                        <p>To transfer this request, search and select anthoer Physician.</p>
+                        <input id="TransferClientId" value="" hidden />
+
+                        <select class="form-select form-select mb-3 RegionSelect TransferRegionSelect" aria-label="Large select example">
+                            <option>Narrow Search by Region</option>
+                          @*  @foreach (var item in Model.Region)
+                            {
+                                <option value="@item.Regionid">@item.Name</option>
+                            }*@
+                        </select>
+                        <select class="form-select form-select mb-3 TransferPhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
+                            <option>Select Physician</option>
+                        </select>
+
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" placeholder="">
+                                    <label for="">ShiftDate</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating">
+                                    <input type="time" class="form-control" placeholder="">
+                                    <label for="">start</label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-floating">
+                                    <input type="time" class="form-control" placeholder="">
+                                    <label for="">End</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-check form-switch">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+                                <input class="form-check-input" type="checkbox" role="slider" id="flexSwitchCheckDefault">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="ConfirmTransferBtn">Submit</button>
+                <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

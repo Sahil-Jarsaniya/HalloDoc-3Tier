@@ -6,6 +6,7 @@
 
 <div class="px-2 px-lg-4">
     <input value="@Model.status" id="DashboardStatus" hidden />
+    <input value="" id="pagenumber" hidden />
     <div class="row mt-3 nav nav-tabs">
 
         <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab active align-items-center" id="status-new-tab">
@@ -169,10 +170,10 @@
                     <span class="d-none d-lg-inline ms-1 ">Export All</span>
                 </button>
             </form>
-            @*   <button type="button" class="mx-1 px-2 py-1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReqSupportModal">
+            <button type="button" class="mx-1 px-2 py-1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReqSupportModal">
             <img src="~/images/person-circle.svg" />
             <span class="d-none d-lg-inline ms-1">Request DTY Support</span>
-            </button>*@
+            </button>
         </div>
 
     </div>
@@ -252,7 +253,7 @@
                 </a>*@
             </div>
         </div>
-        <div class="tab-content  mt-3 " id="PartialTable" style="overflow-x: scroll">
+        <div class="tab-content  mt-3 " id="PartialTable" style="overflow-x: hidden">
         </div>
     </form>
 
@@ -579,14 +580,4 @@
     </script>
     <script type="text/javascript" src="~/js/AdminDashboard.js"></script>
     <script src="~/js/CasesPopUp.js"></script>
-    @*   <script type="text/javascript">
-        $(function () {
-            $("#ExportBtn").click(function () {
-                var cloneaTable = $("#PartialTable").clone();
-                cloneaTable.find(" td:nth-last-child(1), td:nth-child(2)").remove();
-                cloneaTable.find(".mobileView").remove();
-                $("input[name='GridHtml']").val(cloneaTable.html());
-            });
-        });
-    </script>*@
 }

@@ -1,4 +1,5 @@
 ﻿using HalloDoc.DataAccess.Models;
+using HalloDoc.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,16 +20,16 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public string? Name { get; set; }
         public string? sorting { get; set; }
 
-        public IEnumerable<newReqViewModel> newReqViewModel { get; set; }
+        public PaginatedList<newReqViewModel> newReqViewModel { get; set; }
 
-        public IEnumerable<pendingReqViewModel> pendingReqViewModel { get; set; }
+        public PaginatedList<pendingReqViewModel> pendingReqViewModel { get; set; }
 
-        public IEnumerable<concludeReqViewModel> concludeReqViewModel { get; set; }
+        public PaginatedList<concludeReqViewModel> concludeReqViewModel { get; set; }
 
-        public IEnumerable<closeReqViewModel> closeReqViewModels { get; set; }
+        public PaginatedList<closeReqViewModel> closeReqViewModels { get; set; }
 
-        public IEnumerable<unpaidReqViewModel> unpaidReqViewModels { get; set; }
-        public IEnumerable<activeReqViewModel> activeReqViewModels { get; set; }
+        public PaginatedList<unpaidReqViewModel> unpaidReqViewModels { get; set; }
+        public PaginatedList<activeReqViewModel> activeReqViewModels { get; set; }
 
         public CancelcaseViewModel CancelcaseViewModel { get; set; }
     }

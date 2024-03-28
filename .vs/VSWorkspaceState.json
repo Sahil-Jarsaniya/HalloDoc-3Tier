@@ -6,6 +6,6 @@
     "\\HalloDoc\\Views",
     "\\HalloDoc\\Views\\AdminDashboard"
   ],
-  "SelectedNode": "\\HalloDoc\\Views\\AdminDashboard\\EditProvider.cshtml",
+  "SelectedNode": "\\HalloDoc\\Controllers\\AdminDashboard.cs",
   "PreviewInSolutionExplorer": false
 }

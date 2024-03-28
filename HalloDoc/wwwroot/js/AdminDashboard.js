@@ -8,7 +8,7 @@ $(".status-tab").click(function () {
     $('.status-tab').not(this).removeClass("active");
 
     var id = $(this).attr('id');
-
+    document.getElementById("DashboradForm").reset();
 
     if (id == 'status-new-tab') {
       /*  dashboardStatus = 1;*/
@@ -53,6 +53,7 @@ $(".status-tab").click(function () {
         type: 'POST',
         data: { status: status },
         success: function (result) {
+            console.log(result);
             $('#PartialTable').html(result);
         },
         error: function (error) {
@@ -88,6 +89,7 @@ $("#RegionFilter").change(function () {
     var Name = $("#search").val();
     var reqType = $("#filterReqType").val();
     var status = localStorage.getItem("status");
+    var page = $("#pagenumber").val();
     $.ajax({
         url: '/AdminDashboard/PartialTable',
         type: 'POST',
@@ -109,6 +111,7 @@ $("#search").keyup(function (e) {
     var Name = $(this).val();
     var reqType = $("#filterReqType").val();
     var status = localStorage.getItem("status");
+    var page = $("#pagenumber").val();
     $.ajax({
 
         url: '/AdminDashboard/PartialTable',
@@ -134,7 +137,7 @@ $(".filterReqByType").click(function () {
     var RegionId = $("#RegionFilter").val();
     var Name = $("#search").val();
     var status = localStorage.getItem("status");
-    console.log(reqType + " " + RegionId + " " + Name)
+    var page = $("#pagenumber").val();
     $.ajax({
 
         url: '/AdminDashboard/PartialTable',
@@ -151,6 +154,8 @@ $(".filterReqByType").click(function () {
         },
     });
 })
+
+
 
 //Export
 $("#ExportBtn").click(function () {

@@ -156,6 +156,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxEb2N1bWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/Halldoc/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/Scheduling.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxTY2hlZHVsaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Halldoc/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_CreateShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfQ3JlYXRlU2hpZnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/Halldoc/HalloDoc-3Tier/HalloDoc/Views/Request/createBusinessRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdFxjcmVhdGVCdXNpbmVzc1JlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

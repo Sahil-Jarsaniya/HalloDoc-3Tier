@@ -48,9 +48,17 @@
                 <div class="col-md-6">
                     <div class="form-floating">
                         <select asp-for="Status" class="form-select mb-3" id="status" disabled>
-                            <option>Active</option>
-                            <option>Out</option>
-                            <option>Died</option>
+                            @foreach (var item in Model.Statues)
+                            {
+                                if (Model.Status == item.StatusId)
+                                {
+                                    <option value="@item.StatusId" selected>@item.StatusName</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.StatusId">@item.StatusName</option>
+                                }
+                            }
                         </select>
                         <label for="">status</label>
                     </div>
@@ -58,9 +66,20 @@
                 <div class="col-md-6">
                     <div class="form-floating phone-div w-100 h-100 ">
                         <select asp-for="Roleid" class="form-select mb-3" id="role" disabled>
-                            <option>Active</option>
-                            <option>Out</option>
-                            <option>Died</option>
+                            @foreach (var item in Model.Roles)
+                            {
+                                if (item.Isdeleted != true)
+                                {
+                                    if (Model.Roleid == item.Roleid)
+                                    {
+                                        <option value="@item.Roleid" selected>@item.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Roleid">@item.Name</option>
+                                    }
+                                }
+                            }
                         </select>
                         <label for="">Role</label>
                     </div>
