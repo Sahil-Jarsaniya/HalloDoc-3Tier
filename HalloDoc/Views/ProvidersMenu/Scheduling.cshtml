@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Scheduling;
+@{
     ViewData["Title"] = "Admin Profile";
     Layout = "_adminLayout";
 }
@@ -23,10 +24,10 @@
                 </svg>
                 <select class="form-select border-0" id="RegionFilter2" name="RegionFilter2" aria-label="Default select example">
                     <option selected value="null">All Regions</option>
-                    @*@foreach (var item in Model.Region)
+                    @foreach (var item in Model.Regions)
                     {
                     <option value="@item.Regionid">@item.Name</option>
-                    }*@
+                    }
                 </select>
             </div>
         </form>
@@ -43,8 +44,8 @@
         </div>
     </div>
     <div class="container d-sm-flex justify-content-between mt-4" style="max-width:1500px">
-        <span>Monday, Dec 4, 2023</span>
-
+        <span>@Model.Date.ToString("MMM") , @Model.Date.Day, @Model.Date.Year</span>
+        <input id="date" value="@Model.Date" />
         <div class="d-flex">
             <div class="rounded mx-1" style="width:50px; height:25px; border: 1px solid pink; background-color: pink;"></div>
             <h5>Pending Shifts</h5>
@@ -54,83 +55,31 @@
     </div>
     <div class="container d-sm-flex justify-content-between mt-4" style="max-width:1500px">
         <div>
-            <h1 class="btn btn-primary me-1"><</h1>
+            <button type="button" id="previousDay" class="btn btn-primary me-1"><</button>
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
                 <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
                 <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
             </svg>
-            <h1 class="btn btn-primary ms-1">></h1>
+            <button type="button" id="nextDay" class="btn btn-primary ms-1">></button>
         </div>
-        <div>
-            <a href="#" class="btn btn-outline-primary m-2 mt-sm-0 float-sm-end ">
-                Month
-            </a>
-            <a href="#" class="btn btn-outline-primary m-2 mt-sm-0 float-sm-end ">
-                Week
-            </a>
-            <a href="#" class="btn btn-primary m-2 mt-sm-0 float-sm-end ">
-                Day
-            </a>
+        <div class="d-flex justify-content-center">
+            <div>
+                <input type="radio" class="btn-check " name="options" id="DayBtn" autocomplete="off" checked>
+                <label class="btn btn-outline-primary me-1" for="DayBtn">Day</label>
+            </div>
+            <div>
+                <input type="radio" class="btn-check" name="options" id="WeekBtn" autocomplete="off">
+                <label class="btn btn-outline-primary me-1" for="WeekBtn">Week</label>
+            </div>
+            <div>
+                <input type="radio" class="btn-check " name="options" id="MonthBtn" autocomplete="off">
+                <label class="btn btn-outline-primary me-1" for="MonthBtn">Month</label>
+            </div>
         </div>
     </div>
 
-    <div class="container d-sm-flex justify-content-between mt-4" style="max-width:1500px">
-        <table class="table table-bordered table-responsive">
-            <tr>
-                <td class="w-25">Staff</td>
-                <td>12A</td>
-                <td>1A</td>
-                <td>2A</td>
-                <td>3A</td>
-                <td>4A</td>
-                <td>5A</td>
-                <td>6A</td>
-                <td>7A</td>
-                <td>8A</td>
-                <td>9A</td>
-                <td>10A</td>
-                <td>11A</td>
-                <td>12P</td>
-                <td>1P</td>
-                <td>2P</td>
-                <td>3P</td>
-                <td>4P</td>
-                <td>5P</td>
-                <td>6P</td>
-                <td>7P</td>
-                <td>8P</td>
-                <td>9P</td>
-                <td>10P</td>
-                <td>11P</td>
-            </tr>
-            <tr>
-                <td class="w-25">Coverage</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </table>
+    <div class="container d-sm-flex justify-content-between mt-4" id="calenderDiv" style="max-width:1500px">
+        
     </div>
 </div>
 
@@ -139,14 +88,69 @@
 
 @section AdminScript {
     <script>
-            $("#CreateShiftBtn").click(function () {
-                $("#modelDiv").load('/ProvidersMenu/CreateShift', function(response, status, xhr){
-                    if(status == "success"){
-            $("#CreateShiftModel").modal('show');
-                    }else{
-                        console.log("Error loading partial view"+ xhr.status+ " "+ xhr.statusText);
-                    }
-                });
-            })
+
+        $("#CreateShiftBtn").click(function () {
+            $("#modelDiv").load('/ProvidersMenu/CreateShift', function (response, status, xhr) {
+                if (status == "success") {
+                    $("#CreateShiftModel").modal('show');
+                } else {
+                    console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+                }
+            });
+        })
+        $(document).ready(function(){
+            $("#DayBtn").click();
+        })
+        $("#DayBtn").click(function () {
+            $("#calenderDiv").empty();
+            var date = $("#date").val()
+            $("#calenderDiv").load('/ProvidersMenu/DayWiseScheduling?date=' + date, function (response, status, xhr) {
+                if (status == "success") {
+                    console.log("done");
+                } else {
+                    console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+                }
+            });
+        })
+        $("#WeekBtn").click(function () {
+            $("#calenderDiv").empty();
+            var date = $("#date").val()
+            $("#calenderDiv").load('/ProvidersMenu/WeekWiseScheduling?date='+ date, function (response, status, xhr) {
+                if (status == "success") {
+                    console.log("done");
+                } else {
+                    console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+                }
+            });
+        })
+        $("#MonthBtn").click(function () {
+            $("#calenderDiv").empty();
+            var date = $("#date").val()
+            $("#calenderDiv").load('/ProvidersMenu/MonthWiseScheduling', function (response, status, xhr) {
+                if (status == "success") {
+                    console.log("done");
+                } else {
+                    console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+                }
+            });
+        })
+
+        $("#nextDay").click(function(){
+            var date = $("#date").val();
+            var startDate = new Date(Date.parse(date));
+            startDate.setDate(startDate.getDate() + 1);
+            $("#date").val(startDate.toString());
+            console.log(startDate.toDateString());
+            $("#date").val(date);
+            if($("#DayBtn").prop('checked')){
+                $("#DayBtn").click();
+            }
+            if($("#WeekBtn").prop('checked')){
+                $("#WeekBtn").click();
+            }
+            if ($("#MonthBtn").prop('checked')) {
+                $("#MonthBtn").click();
+            }
+        })
     </script>
 }

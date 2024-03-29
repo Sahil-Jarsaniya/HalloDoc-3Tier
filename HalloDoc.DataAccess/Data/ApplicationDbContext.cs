@@ -1393,9 +1393,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("modifieddate");
             entity.Property(e => e.Regionid).HasColumnName("regionid");
-            entity.Property(e => e.Shiftdate)
-                .HasColumnType("timestamp without time zone")
-                .HasColumnName("shiftdate");
+            entity.Property(e => e.Shiftdate).HasColumnName("shiftdate");
             entity.Property(e => e.Shiftid).HasColumnName("shiftid");
             entity.Property(e => e.Starttime).HasColumnName("starttime");
             entity.Property(e => e.Status).HasColumnName("status");

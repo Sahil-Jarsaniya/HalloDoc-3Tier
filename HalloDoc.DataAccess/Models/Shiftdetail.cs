@@ -9,7 +9,7 @@ public partial class Shiftdetail
 
     public int Shiftid { get; set; }
 
-    public DateTime Shiftdate { get; set; }
+    public DateOnly Shiftdate { get; set; }
 
     public int? Regionid { get; set; }
 

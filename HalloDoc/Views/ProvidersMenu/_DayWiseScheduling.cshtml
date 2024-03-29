@@ -1,0 +1,84 @@
+﻿@model IEnumerable<DayScheduling>;
+<table class="table table-bordered table-responsive">
+    <tr>
+        <td class="w-25">Staff</td>
+        <td>12A</td>
+        <td>1A</td>
+        <td>2A</td>
+        <td>3A</td>
+        <td>4A</td>
+        <td>5A</td>
+        <td>6A</td>
+        <td>7A</td>
+        <td>8A</td>
+        <td>9A</td>
+        <td>10A</td>
+        <td>11A</td>
+        <td>12P</td>
+        <td>1P</td>
+        <td>2P</td>
+        <td>3P</td>
+        <td>4P</td>
+        <td>5P</td>
+        <td>6P</td>
+        <td>7P</td>
+        <td>8P</td>
+        <td>9P</td>
+        <td>10P</td>
+        <td>11P</td>
+    </tr>
+    <tr>
+        <td class="w-25">Coverage</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td class="w-25">@item.PhysicianName</td>
+           
+            @for(var i=0; i<24; i++)
+            {
+                if (i == 0)
+                {
+                    i = 24;
+                }
+                if( i >= item.StartTime.Hour && i<= item.EnddTime.Hour)
+                {
+                    <td class="" style="background-color: pink;"></td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                if (i == 24)
+                {
+                    i = 0;
+                }
+            }
+        </tr>
+    }
+</table>

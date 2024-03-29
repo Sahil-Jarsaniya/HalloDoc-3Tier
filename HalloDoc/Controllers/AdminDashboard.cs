@@ -78,7 +78,7 @@ namespace HalloDoc.Controllers
             {
                 pageNumber = 1;
             }
-            int pageSize = 1;
+            int pageSize = 2;
 
             if (obj.Name != null || obj.reqType != 0 || obj.RegionId != 0)
             {
