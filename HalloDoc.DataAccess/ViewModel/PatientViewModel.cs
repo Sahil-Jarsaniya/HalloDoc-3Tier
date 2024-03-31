@@ -11,12 +11,12 @@ namespace HalloDoc.DataAccess.ViewModel
         //public required Request request { get; set; }
         //public required Requestclient requestClient { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field can't be empty.")]
         [Column("notes")]
         [StringLength(500)]
         public string? Notes { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Enter Name")]
         [Column("firstname")]
         [StringLength(100)]
         public string Firstname { get; set; }
@@ -29,6 +29,9 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(23)]
         public string? Phonenumber { get; set; }
 
+
+        [Required(ErrorMessage = "Field can't be empty")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         [Column("email")]
         [StringLength(50)]
         public string Email { get; set; }
@@ -38,7 +41,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(100)]
         public  string? Password { get; set; }
 
-
+        [NotMapped] // Does not effect with your database
+        [Compare("Password", ErrorMessage ="Password doest not match.")]
         [Column("confirmPassword")]
         [StringLength(100)]
         public string? confirmPassword { get; set; }

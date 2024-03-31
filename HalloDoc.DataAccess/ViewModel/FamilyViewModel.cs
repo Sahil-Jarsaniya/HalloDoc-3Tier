@@ -6,7 +6,7 @@ namespace HalloDoc.DataAccess.ViewModel
 {
     public class FamilyViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Please Enter Name")]
         [Column("familyFirstname")]
         [StringLength(100)]
         public string? FamilyFirstname { get; set; }
@@ -19,6 +19,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(23)]
         public string? FamilyPhonenumber { get; set; }
 
+        [Required(ErrorMessage = "Field can't be empty")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         [Column("bussinessEmail")]
         [StringLength(50)]
         public string? FamilyEmail { get; set; }
@@ -27,12 +29,12 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(50)]
         public string? RelationWithPatient { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Enter Name")]
         [Column("notes")]
         [StringLength(500)]
         public string? Notes { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Enter Name")]
         [Column("firstname")]
         [StringLength(100)]
         public string Firstname { get; set; }
@@ -45,6 +47,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(23)]
         public string? Phonenumber { get; set; }
 
+        [Required(ErrorMessage = "Field can't be empty")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         [Column("email")]
         [StringLength(50)]
         public string Email { get; set; }

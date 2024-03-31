@@ -61,6 +61,7 @@ $("#ConfirmAssignBtn").click(function () {
     var reqClientId = $("#AssignreqClientId").val();
     var PhysicianSelect = $(".PhysicianSelect").val();
     var RegionSelect = $(".RegionSelect").val();
+
     $.ajax({
         url: '/AdminDashboard/AssignCase',
         type: 'POST',

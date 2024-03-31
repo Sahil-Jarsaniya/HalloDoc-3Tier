@@ -29,10 +29,10 @@ namespace HalloDoc.Controllers
 
         public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf, ILoginRepository loginRepo, IRequestRepository requestRepo, ISMSSender sms)
         {
+            _notyf = notyf;
             _adminRepo = adminRepo;
             _db = db;
             _jwtService = jwtService;
-            _notyf = notyf;
             _loginRepo = loginRepo;
             _requestRepo = requestRepo;
             _sms = sms;
@@ -82,7 +82,7 @@ namespace HalloDoc.Controllers
 
             if (obj.Name != null || obj.reqType != 0 || obj.RegionId != 0)
             {
-               
+
                 if (status == 1)
                 {
                     var parseData = _adminRepo.newReq(obj);
@@ -285,9 +285,18 @@ namespace HalloDoc.Controllers
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             int adminId = _adminRepo.GetAdminId(AspId);
+
+            if (PhysicianSelect == 0 || string.IsNullOrEmpty(RegionSelect))
+            {
+                _notyf.Warning("Login Failed");
+                return BadRequest(new { error = "Invalid data provided" });
+            }
+
             _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId, AspId);
 
-            return RedirectToAction("Dashboard");
+            //return RedirectToAction("Dashboard");
+            _notyf.Success("Physician Assigned Successfully.");
+            return Ok(new { success = true });
         }
 
         public IActionResult ViewUpload(int reqClientId)
@@ -641,7 +650,7 @@ namespace HalloDoc.Controllers
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
-           var data = _adminRepo.EditProvider(Physicianid);
+            var data = _adminRepo.EditProvider(Physicianid);
             return View(data);
         }
         [HttpPost]
@@ -662,11 +671,11 @@ namespace HalloDoc.Controllers
                     _adminRepo.ProviderProfileEdit(obj);
                     if (obj.PhySign != null)
                     {
-                        _loginRepo.uploadFile(obj.PhySign, "ProviderData\\"+ obj.Physicianid, obj.PhySign.FileName.ToString());
+                        _loginRepo.uploadFile(obj.PhySign, "ProviderData\\" + obj.Physicianid, obj.PhySign.FileName.ToString());
                     }
                     if (obj.PhyPhoto != null)
                     {
-                        _loginRepo.uploadFile(obj.PhyPhoto, "ProviderData\\"+ obj.Physicianid, obj.PhyPhoto.FileName.ToString());
+                        _loginRepo.uploadFile(obj.PhyPhoto, "ProviderData\\" + obj.Physicianid, obj.PhyPhoto.FileName.ToString());
                     }
                     break;
                 case 5:
@@ -758,7 +767,7 @@ namespace HalloDoc.Controllers
 
             if (obj.PhySign != null)
             {
-                _loginRepo.uploadFile(obj.PhySign, "ProviderData\\"+phyId, obj.PhySign.FileName.ToString());
+                _loginRepo.uploadFile(obj.PhySign, "ProviderData\\" + phyId, obj.PhySign.FileName.ToString());
             }
             if (obj.PhyPhoto != null)
             {

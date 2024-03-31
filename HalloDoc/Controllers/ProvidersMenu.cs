@@ -127,7 +127,7 @@ namespace HalloDoc.Controllers
 
         public PartialViewResult DayWiseScheduling(string date)
         {
-            var date1 = DateOnly.Parse("04/29/2024");
+            var date1 = DateOnly.Parse(date);
 
             var data = from t1 in _db.Physicians
                        join t2 in _db.Shifts on t1.Physicianid equals t2.Physicianid

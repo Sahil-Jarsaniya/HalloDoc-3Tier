@@ -10,7 +10,7 @@ namespace HalloDoc.DataAccess.ViewModel
 {
     public class ConciergeViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "This field can't be empty.")]
         [Column("ConciergeFirstname")]
         [StringLength(100)]
         public string? ConciergeFirstname { get; set; }
@@ -23,6 +23,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(23)]
         public string? ConciergePhonenumber { get; set; }
 
+        [Required(ErrorMessage = "Field can't be empty")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         [Column("ConciergeEmail")]
         [StringLength(50)]
         public string? ConciergeEmail { get; set; }
@@ -47,12 +49,12 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(10)]
         public string? ConciergeZipcode { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field can't be empty.")]
         [Column("notes")]
         [StringLength(500)]
         public string? Notes { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "This field can't be empty.")]
         [Column("firstname")]
         [StringLength(100)]
         public string? Firstname { get; set; }
@@ -68,6 +70,8 @@ namespace HalloDoc.DataAccess.ViewModel
         
         public string? ConciergeCountryCode { get; set; }
 
+        [Required(ErrorMessage = "Field can't be empty")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         [Column("email")]
         [StringLength(50)]
         public string? Email { get; set; }

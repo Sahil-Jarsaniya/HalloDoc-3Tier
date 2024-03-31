@@ -4,8 +4,9 @@
     "\\HalloDoc",
     "\\HalloDoc\\Controllers",
     "\\HalloDoc\\Views",
-    "\\HalloDoc\\Views\\AdminDashboard"
+    "\\HalloDoc\\Views\\AdminDashboard",
+    "\\HalloDoc\\Views\\ProvidersMenu"
   ],
-  "SelectedNode": "\\HalloDoc.sln",
+  "SelectedNode": "\\HalloDoc\\Views\\ProvidersMenu\\Scheduling.cshtml",
   "PreviewInSolutionExplorer": false
 }

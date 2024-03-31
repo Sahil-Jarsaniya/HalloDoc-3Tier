@@ -58,36 +58,42 @@
                 <div class="form-floating">
                     <input asp-for="bussinessFirstname" type="text" class="form-control" placeholder="">
                     <label for="">Your First Name</label>
+                    <span asp-validation-for="bussinessFirstname" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="bussinessLastname" type="text" class="form-control" placeholder="">
                     <label for="">Your Last Name</label>
+                    <span asp-validation-for="bussinessLastname" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating phone-div w-100 h-100 ">
                     <input asp-for="bussinessPhonenumber" type="tel" class="bussinessPhone form-control w-100 h-100" placeholder="">
                     <label for=""></label>
+                    <span asp-validation-for="bussinessPhonenumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="bussinessEmail" type="email" class="form-control" placeholder="name@example.com">
                     <label for="">Your Email</label>
+                    <span asp-validation-for="bussinessEmail" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="bussinessProperty" type="text" class="form-control" placeholder="">
                     <label for="">Business/Property Name</label>
+                    <span asp-validation-for="bussinessProperty" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="CaseNumber" type="text" class="form-control" placeholder="">
                     <label for="">Case Number(Optional)</label>
+                    <span asp-validation-for="CaseNumber" class="text-danger"></span>
                 </div>
             </div>
         </div>

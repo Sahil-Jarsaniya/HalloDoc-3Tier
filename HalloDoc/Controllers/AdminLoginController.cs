@@ -1,12 +1,9 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using HalloDoc.BussinessAccess.Repository.Implementation;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace HalloDoc.Controllers
 {
@@ -71,6 +68,7 @@ namespace HalloDoc.Controllers
                 Response.Cookies.Delete("jwt");
             };
             _notyf.Success("Successful Logout");
+            
             return RedirectToAction("login");
         }
     }

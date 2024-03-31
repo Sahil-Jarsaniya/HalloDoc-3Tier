@@ -340,14 +340,14 @@
                         <p>To assign this request, search and select anthoer Phiysician</p>
                         <input id="AssignreqClientId" value="" hidden />
 
-                        <select class="form-select form-select mb-3 RegionSelect" aria-label="Large select example">
+                        <select class="form-select form-select mb-3 RegionSelect" aria-label="Large select example" required>
                             <option>Narrow Search by Region</option>
                             @foreach (var item in Model.Region)
                             {
                                 <option value="@item.Regionid">@item.Name</option>
                             }
                         </select>
-                        <select class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
+                        <select class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example" required>
                             <option>Select Physician</option>
                         </select>
 
@@ -580,4 +580,5 @@
     </script>
     <script type="text/javascript" src="~/js/AdminDashboard.js"></script>
     <script src="~/js/CasesPopUp.js"></script>
+    @await Component.InvokeAsync("Notyf")
 }

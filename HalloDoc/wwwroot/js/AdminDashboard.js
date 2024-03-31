@@ -162,13 +162,14 @@ $("#ExportBtn").click(function () {
     var cloneaTable = $("#PartialTable").clone();
     cloneaTable.find(" td:nth-last-child(1), td:nth-child(2)").remove();
     cloneaTable.find(".mobileView").remove();
+    cloneaTable.find(".pageMenu").remove();
     $("input[name='GridHtml']").val(cloneaTable.html());
 });
 
 //Export all
 $("#ExportBtnAll").click(function () {
-    console.log("cc")
-    $("#exportStatus").val(dashboardStatus);
+    var status = localStorage.getItem("status");
+    $("#exportStatus").val(status);
     $("#exportAllForm").submit();
 })
 

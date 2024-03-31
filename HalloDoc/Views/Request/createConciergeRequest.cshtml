@@ -58,12 +58,14 @@
                 <div class="form-floating">
                     <input asp-for="ConciergeFirstname" type="text" class="form-control" placeholder="">
                     <label for="">Your First Name</label>
+                    <span asp-validation-for="ConciergeFirstname" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="ConciergeLastname" type="text" class="form-control" placeholder="">
                     <label for="">Your Last Name</label>
+                    <span asp-validation-for="ConciergeLastname" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
@@ -71,18 +73,21 @@
                     <input asp-for="ConciergeCountryCode" value="" id="countryCode" hidden />
                     <input asp-for="ConciergePhonenumber" type="tel" class="conciergePhone form-control w-100 h-100" placeholder="">
                     <label for=""></label>
+                    <span asp-validation-for="ConciergePhonenumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="ConciergeEmail" type="email" class="form-control" placeholder="name@example.com">
                     <label for="">Your Email</label>
+                    <span asp-validation-for="ConciergeEmail" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="ConciergeProperty" type="text" class="form-control" placeholder="">
                     <label for="">Hotel/Property Name</label>
+                    <span asp-validation-for="ConciergeProperty" class="text-danger"></span>
                 </div>
             </div>
         </div>
@@ -93,24 +98,28 @@
                 <div class="form-floating">
                     <input asp-for="ConciergeStreet" type="text" class="form-control" placeholder="">
                     <label for="">Street</label>
+                    <span asp-validation-for="ConciergeStreet" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <inpUt asp-for="ConciergeCity" type="text" class="form-control" placeholder="">
                     <label for="">City</label>
+                    <span asp-validation-for="ConciergeCity" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="ConciergeState" type="text" class="form-control" placeholder="">
                     <label for="">State</label>
+                    <span asp-validation-for="ConciergeState" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="ConciergeZipcode" type="text" class="form-control" placeholder="">
                     <label for="">Zip Code</label>
+                    <span asp-validation-for="ConciergeZipcode" class="text-danger"></span>
                 </div>
             </div>
         </div>
