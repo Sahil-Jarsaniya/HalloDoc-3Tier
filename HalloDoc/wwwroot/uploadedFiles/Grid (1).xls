@@ -1,0 +1,64 @@
+<table class="table table-responsive d-none d-md-table">
+    <thead>
+        <tr class="table-secondary">
+            <td>Name</td>
+            
+            <td>Date of Birth</td>
+            <td>Region</td>
+            <td>Physician Name</td>
+            <td>Date of Service</td>
+            <td>Phone</td>
+            <td>Address</td>
+            <td>Notes</td>
+            
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td style="background-color: #ff9e2c;">ash ash</td>
+                
+                <td style="background-color: #ff9e2c;">
+                    2002-02-22
+                </td>
+                <td style="background-color: #ff9e2c;">
+                    Asia
+                </td>
+                <td style="background-color: #ff9e2c;">
+                    doctor1 doctor1
+                </td>
+                <td style="background-color: #ff9e2c;">
+                    3/15/2024 5:37:08 PM
+                </td>
+                <td style="background-color: #ff9e2c;">
+                    <a href="tel:09313030346" class="btn border rounded d-flex justify-content-center">
+                        <img src="/images/telephone.svg">
+                        09313030346
+                    </a>
+                    (Patient)
+                        <div>
+                            <a href="tel:09313030346" class="btn border rounded d-flex justify-content-center">
+                                <img src="/images/telephone.svg">
+                                09313030346
+                            </a>
+                            (Family/Friend)
+                        </div>
+                </td>
+                <td style="background-color: #ff9e2c;">
+                    VGEC Boys hostel -2, chandkheda, Gujarat, 382424
+                </td>
+                <td style="background-color: #ff9e2c;">
+                    fever
+                </td>
+                
+            </tr>
+    </tbody>
+</table>
+
+
+
+<script>
+    $(".ClearCaseBtn").click(function () {
+        $("#ClearClientId").val($(this).data('id'));
+        $("#ClearCaseModel").modal('show');
+    })
+</script>

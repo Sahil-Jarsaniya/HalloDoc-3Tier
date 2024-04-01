@@ -96,15 +96,17 @@ namespace HalloDoc.Controllers
                     if (item.Checked)
                     {
                         var shiftDay = 7 * i - curDay + item.Id;
+                        if (shiftDay == 7)
+                        {
+                            shiftDay = 0;
+                        }
                         var shiftDate = curDate.AddDays(shiftDay);
-
                         var shiftdetail = new Shiftdetail()
                         {
                             Shiftid = shift.Shiftid,
                             Shiftdate = shiftDate,
                             Starttime = obj.StartTime,
-                            Endtime = obj.EnddTime,
-                            Status = (short)_db.Physicians.FirstOrDefault(x => x.Physicianid == obj.Physicianid).Status,
+                            Endtime = obj.EndTime,
 
                         };
                         _db.Shiftdetails.Add(shiftdetail);
@@ -125,33 +127,108 @@ namespace HalloDoc.Controllers
 
         }
 
+
+
         public PartialViewResult DayWiseScheduling(string date)
         {
             var date1 = DateOnly.Parse(date);
 
-            var data = from t1 in _db.Physicians
-                       join t2 in _db.Shifts on t1.Physicianid equals t2.Physicianid
-                            join t3 in _db.Shiftdetails on t2.Shiftid equals t3.Shiftid
-                       //where t3.Shiftdate.Month == date1.Month && t3.Shiftdate.Day == date1.Day && date1.Year == t3.Shiftdate.Year
+            var data = from t2 in _db.Shifts
+                       join t3 in _db.Shiftdetails.Where(x => x.Shiftdate.Month == date1.Month && x.Shiftdate.Day == date1.Day && x.Shiftdate.Year == date1.Year && x.Isdeleted != true)
+                       on t2.Shiftid equals t3.Shiftid into shiftDetails
+                       from t3 in shiftDetails.DefaultIfEmpty()
+                       join t1 in _db.Physicians
+                       on t2.Physicianid equals t1.Physicianid
                        select new DayScheduling()
                        {
                            PhysicianId = t1.Physicianid,
                            PhysicianName = t1.Firstname + " " + t1.Lastname,
-                           Shiftid = t3.Shiftid,
+                           Shiftid = t2.Shiftid,
+                           shiftDetailId = t3.Shiftdetailid,
                            Startdate = t2.Startdate,
-                           EnddTime = t3.Endtime,
-                           StartTime = t3.Starttime
+                           EndTime = t3.Endtime,
+                           StartTime = t3.Starttime,
+                           SelectedDate = date1,
+                           ShiftDate = t3.Shiftdate,
+                           status = t3.Status,
                        };
-
             return PartialView("_DayWiseScheduling", data);
         }
-        public PartialViewResult WeekWiseScheduling()
+        public PartialViewResult WeekWiseScheduling(string date)
         {
-            return PartialView("_WeekWiseScheduling");
+            var date1 = DateOnly.Parse(date);
+            var day = from t2 in _db.Shifts
+                      join t3 in _db.Shiftdetails.Where(x => x.Shiftdate.Month == date1.Month && x.Shiftdate.Day == date1.Day && x.Shiftdate.Year == date1.Year && x.Isdeleted != true)
+                      on t2.Shiftid equals t3.Shiftid into shiftDetails
+                      from t3 in shiftDetails.DefaultIfEmpty()
+                      join t1 in _db.Physicians
+                      on t2.Physicianid equals t1.Physicianid
+                      select new DayScheduling()
+                      {
+                          PhysicianId = t1.Physicianid,
+                          PhysicianName = t1.Firstname + " " + t1.Lastname,
+                          Shiftid = t2.Shiftid,
+                          shiftDetailId = t3.Shiftdetailid,
+                          Startdate = t2.Startdate,
+                          EndTime = t3.Endtime,
+                          StartTime = t3.Starttime,
+                          SelectedDate = date1,
+                          ShiftDate = t3.Shiftdate,
+                          status = t3.Status,
+                      };
+            var data = new WeekScheduling()
+            {
+                physicians = _db.Physicians,
+                shifts = _db.Shifts,
+                shiftdetails = _db.Shiftdetails.Where(x => x.Shiftdate > date1 && x.Shiftdate < date1.AddDays(7)),
+                Selecteddate = date1,
+                daySchedulings = day
+            };
+            return PartialView("_WeekWiseScheduling", data);
         }
         public PartialViewResult MonthWiseScheduling()
         {
             return PartialView("_MonthWiseScheduling");
+        }
+
+        public PartialViewResult ViewShift(int shiftDetailId)
+        {
+            var shiftDetail = _db.Shiftdetails.FirstOrDefault(x => x.Shiftdetailid == shiftDetailId);
+            var shift = _db.Shifts.FirstOrDefault(x => x.Shiftid == shiftDetail.Shiftid);
+            var shiftReg = _db.Shiftdetailregions.FirstOrDefault(x => x.Shiftdetailid == shiftDetail.Shiftdetailid);
+            var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == shift.Physicianid);
+
+            var data = new CreateShift()
+            {
+                Physicianid = phy.Physicianid,
+                PhysicianName = phy.Firstname + " "+ phy.Lastname,
+                Regionid = shiftReg.Regionid,
+                Startdate = shiftDetail.Shiftdate,
+                StartTime = shiftDetail.Starttime,
+                EndTime = shiftDetail.Endtime,
+                Shiftid = shiftDetail.Shiftid,
+                Regions = _db.Regions,
+                ShiftDetailId = shiftDetail.Shiftdetailid,
+            };
+
+            return PartialView("_ViewShift", data);
+        }
+
+        public IActionResult DeleteShift(int shiftDetailId)
+        {
+            var shiftDetail = _db.Shiftdetails.FirstOrDefault(x => x.Shiftdetailid==shiftDetailId);
+            shiftDetail.Isdeleted = true;
+            _db.Shiftdetails.Update(shiftDetail);
+            _db.SaveChanges();
+            return Ok(new { success = true });
+        }
+        public IActionResult ReturnShift(int shiftDetailId)
+        {
+            var shiftDetail = _db.Shiftdetails.FirstOrDefault(x => x.Shiftdetailid == shiftDetailId);
+            shiftDetail.Status = 2;
+            _db.Shiftdetails.Update(shiftDetail);
+            _db.SaveChanges();
+            return Ok(new { success = true });
         }
     }
 }

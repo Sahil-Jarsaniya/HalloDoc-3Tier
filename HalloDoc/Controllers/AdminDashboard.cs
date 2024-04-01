@@ -338,14 +338,20 @@ namespace HalloDoc.Controllers
 
                 _db.Requestwisefiles.Add(requestwisefile);
                 _db.SaveChanges();
+                _notyf.Success("File uploaded.");
+            }
+            else
+            {
+                _notyf.Error("Select File First.");
             }
             return RedirectToAction("ViewUpload", new { reqClientId = obj.reqId });
         }
-        public void DeleteFile(int reqClientId, string FileName)
+        public IActionResult DeleteFile(int reqClientId, string FileName)
         {
             _adminRepo.DeleteFile(reqClientId, FileName);
-
             //return RedirectToAction("ViewUpload", new { reqClientId = ReqClientId}); 
+            _notyf.Success("File uploaded.");
+            return Ok();
         }
 
         public void TransferCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)

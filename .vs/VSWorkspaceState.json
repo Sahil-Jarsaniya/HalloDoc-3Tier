@@ -7,6 +7,6 @@
     "\\HalloDoc\\Views\\AdminDashboard",
     "\\HalloDoc\\Views\\ProvidersMenu"
   ],
-  "SelectedNode": "\\HalloDoc\\Views\\ProvidersMenu\\Scheduling.cshtml",
+  "SelectedNode": "\\HalloDoc\\Controllers\\AdminDashboard.cs",
   "PreviewInSolutionExplorer": false
 }

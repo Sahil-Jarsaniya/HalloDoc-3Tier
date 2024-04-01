@@ -10,14 +10,16 @@ namespace HalloDoc.DataAccess.ViewModel.ProvidersMenu
     public class CreateShift
     {
         public int Shiftid { get; set; }
+        public int ShiftDetailId { get; set; }
         public int Regionid { get; set; }
 
         public int Physicianid { get; set; }
+        public string? PhysicianName { get; set; }
 
         public DateOnly Startdate { get; set; }
 
         public TimeOnly StartTime { get; set; }
-        public TimeOnly EnddTime { get; set; }
+        public TimeOnly EndTime { get; set; }
 
         public bool Isrepeat { get; set; }
 

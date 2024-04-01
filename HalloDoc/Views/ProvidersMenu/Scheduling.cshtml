@@ -44,8 +44,8 @@
         </div>
     </div>
     <div class="container d-sm-flex justify-content-between mt-4" style="max-width:1500px">
-        <span>@Model.Date.ToString("MMM") , @Model.Date.Day, @Model.Date.Year</span>
-        <input id="date" value="@Model.Date" />
+        <span id="DateSpan">@Model.Date.ToString("MMM") , @Model.Date.Day, @Model.Date.Year</span>
+        <input id="date" value="@Model.Date" hidden/>
         <div class="d-flex">
             <div class="rounded mx-1" style="width:50px; height:25px; border: 1px solid pink; background-color: pink;"></div>
             <h5>Pending Shifts</h5>
@@ -105,9 +105,7 @@
             $("#calenderDiv").empty();
             var date = $("#date").val()
             $("#calenderDiv").load('/ProvidersMenu/DayWiseScheduling?date=' + date, function (response, status, xhr) {
-                if (status == "success") {
-                    console.log("done");
-                } else {
+                if (status != "success") {
                     console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
                 }
             });
@@ -116,9 +114,7 @@
             $("#calenderDiv").empty();
             var date = $("#date").val()
             $("#calenderDiv").load('/ProvidersMenu/WeekWiseScheduling?date='+ date, function (response, status, xhr) {
-                if (status == "success") {
-                    console.log("done");
-                } else {
+                if (status != "success") {
                     console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
                 }
             });
@@ -127,30 +123,60 @@
             $("#calenderDiv").empty();
             var date = $("#date").val()
             $("#calenderDiv").load('/ProvidersMenu/MonthWiseScheduling', function (response, status, xhr) {
-                if (status == "success") {
-                    console.log("done");
-                } else {
+                if (status != "success") {
                     console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
                 }
             });
         })
 
+        var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
         $("#nextDay").click(function(){
             var date = $("#date").val();
             var startDate = new Date(Date.parse(date));
-            startDate.setDate(startDate.getDate() + 1);
-            $("#date").val(startDate.toString());
-            console.log(startDate.toDateString());
-            $("#date").val(date);
+            
             if($("#DayBtn").prop('checked')){
+                startDate.setDate(startDate.getDate() + 1);
+                $("#date").val(startDate.toLocaleDateString());
                 $("#DayBtn").click();
             }
             if($("#WeekBtn").prop('checked')){
+                startDate.setDate(startDate.getDate() + 7); 
+                $("#date").val(startDate.toLocaleDateString());
                 $("#WeekBtn").click();
             }
             if ($("#MonthBtn").prop('checked')) {
+                startDate.setMonth(startDate.getMonth() + 1);
+                $("#date").val(startDate.toLocaleDateString());
                 $("#MonthBtn").click();
             }
+
+            $("#DateSpan").empty();
+            $("#DateSpan").text(month[startDate.getMonth()] + ", " + startDate.getDate() + ", " + startDate.getFullYear());
+        })
+
+        $("#previousDay").click(function () {
+            var date = $("#date").val();
+            var startDate = new Date(Date.parse(date));
+
+            if ($("#DayBtn").prop('checked')) {
+                startDate.setDate(startDate.getDate() - 1);
+                $("#date").val(startDate.toLocaleDateString());
+                $("#DayBtn").click();
+            }
+            if ($("#WeekBtn").prop('checked')) {
+                startDate.setDate(startDate.getDate() - 7);
+                $("#date").val(startDate.toLocaleDateString());
+                $("#WeekBtn").click();
+            }
+            if ($("#MonthBtn").prop('checked')) {
+                startDate.setMonth(startDate.getMonth() - 1);
+                $("#date").val(startDate.toLocaleDateString());
+                $("#MonthBtn").click();
+            }
+
+            $("#DateSpan").empty();
+            $("#DateSpan").text(month[startDate.getMonth()] + ", " + startDate.getDate() + ", " + startDate.getFullYear());
         })
     </script>
 }

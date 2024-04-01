@@ -1,22 +1,36 @@
-﻿<table class="table table-bordered table-responsive">
+﻿@model WeekScheduling;
+<table class="table table-bordered table-responsive">
     <tr>
+        @{
+            var day = Model.Selecteddate.DayNumber;
+            var dayList = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
+        }
         <td class="w-25">Staff</td>
-        <td>SUN</td>
-        <td>MON</td>
-        <td>TUE</td>
-        <td>WED</td>
-        <td>THU</td>
-        <td>FRI</td>
-        <td>SAT</td>
+        @for (int i = 0; i < 7; i++)
+        {
+            <td>@dayList[day%7]</td>
+            day = day + 1;
+        }
     </tr>
     <tr>
+        @{
+            var date = Model.Selecteddate;
+        }
         <td class="w-25">Coverage</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        @for (int i = 0; i < 7; i++)
+        {
+            <td>@date</td>
+            date = date.AddDays(1);
+        }
     </tr>
+    @foreach (var item in Model.daySchedulings)
+    {
+        var date1 = Model.Selecteddate;
+        <tr>
+            <td>
+                @item.PhysicianName
+            </td>
+               
+        </tr>
+    }
 </table>

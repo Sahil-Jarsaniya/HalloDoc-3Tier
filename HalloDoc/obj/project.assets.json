@@ -12434,24 +12434,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Sahil\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\pca17\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc\\HalloDoc.csproj",
+      "projectUniqueName": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\HalloDoc.csproj",
       "projectName": "HalloDoc",
-      "projectPath": "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc\\HalloDoc.csproj",
-      "packagesPath": "C:\\Users\\Sahil\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc\\obj\\",
+      "projectPath": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\HalloDoc.csproj",
+      "packagesPath": "C:\\Users\\pca17\\.nuget\\packages\\",
+      "outputPath": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Sahil\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\pca17\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12459,18 +12454,18 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.302\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc.BussinessAccess\\HalloDoc.BussinessAccess.csproj": {
-              "projectPath": "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc.BussinessAccess\\HalloDoc.BussinessAccess.csproj"
+            "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc.BussinessAccess\\HalloDoc.BussinessAccess.csproj": {
+              "projectPath": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc.BussinessAccess\\HalloDoc.BussinessAccess.csproj"
             },
-            "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj": {
-              "projectPath": "C:\\Users\\Sahil\\Desktop\\project\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj"
+            "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj": {
+              "projectPath": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc.DataAccess\\HalloDoc.DataAccess.csproj"
             }
           }
         }
@@ -12565,7 +12560,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.302\\RuntimeIdentifierGraph.json"
       }
     }
   },
