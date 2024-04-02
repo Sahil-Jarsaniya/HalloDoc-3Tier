@@ -1,0 +1,86 @@
+﻿@model PaginatedList<VendorFormViewModel>;
+<table class="table table-responsive">
+    <thead>
+        <tr class="table-secondary">
+            <td>Profession</td>
+            <td>Business Name</td>
+            <td>Email</td>
+            <td>Fax Number</td>
+            <td>Phone Number</td>
+            <td>Business Contact</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+                <tr>
+                    <td>@item.professionName</td>
+                    <td>@item.BusinessName</td>
+                    <td>@item.Email</td>
+                    <td>@item.FaxNumber</td>
+                    <td>@item.Phonenumber</td>
+                    <td>@item.BusinessContact</td>
+                    <td>
+                        <a class="btn btn-outline-primary" asp-action="UpdateVendors" asp-route-id="@item.vendorId"> Edit</a>
+                        <a class="btn btn-outline-primary" asp-action="DeleteVendors" asp-route-id="@item.vendorId">Delete</a>
+                    </td>
+                </tr>
+        }
+    </tbody>
+</table>
+
+
+@*Pagination*@
+
+<div class="row pageMenu">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-end">
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="1">
+                        first
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex - 1)">
+                        Previous
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled": "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex + 1)">
+                        next
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.TotalPages)">
+                        Last
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+<script>
+    $(".pageBtn").click(function () {
+        var pageNumber = $(this).data('page');
+        var name = $("#search").val();
+        var RegionId = $("#RegionFilter").val();
+        $("#pagenumber").val(pageNumber);
+
+        $.ajax({
+            url: '/PartnersMenu/VendorTable',
+            type: 'POST',
+            data: { pageIndex: pageNumber, name: name, regionId: RegionId },
+            success: function (result) {
+                $('#VendorTable').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        })
+    })
+</script>

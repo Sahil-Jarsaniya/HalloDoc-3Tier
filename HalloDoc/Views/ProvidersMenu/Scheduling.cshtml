@@ -38,13 +38,13 @@
             <button class="btn btn-primary m-2 mt-sm-0 float-sm-end ">
                 Shift for review
             </button>
-            <button class="btn btn-primary m-2 mt-sm-0 float-sm-end ">
+            <a asp-action="ProviderOnCall" class="btn btn-primary m-2 mt-sm-0 float-sm-end ">
                 Provider on Call
-            </button>
+            </a>
         </div>
     </div>
     <div class="container d-sm-flex justify-content-between mt-4" style="max-width:1500px">
-        <span id="DateSpan">@Model.Date.ToString("MMM") , @Model.Date.Day, @Model.Date.Year</span>
+        <h4 id="DateSpan">@Model.Date.ToString("MMM") , @Model.Date.Day, @Model.Date.Year</h4>
         <input id="date" value="@Model.Date" hidden/>
         <div class="d-flex">
             <div class="rounded mx-1" style="width:50px; height:25px; border: 1px solid pink; background-color: pink;"></div>
@@ -103,7 +103,10 @@
         })
         $("#DayBtn").click(function () {
             $("#calenderDiv").empty();
-            var date = $("#date").val()
+            var date = $("#date").val();
+            var startDate = new Date(Date.parse(date));
+            $("#DateSpan").empty();
+            $("#DateSpan").text(month[startDate.getMonth()] + ", " + startDate.getDate() + ", " + startDate.getFullYear());
             $("#calenderDiv").load('/ProvidersMenu/DayWiseScheduling?date=' + date, function (response, status, xhr) {
                 if (status != "success") {
                     console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
@@ -112,7 +115,12 @@
         })
         $("#WeekBtn").click(function () {
             $("#calenderDiv").empty();
-            var date = $("#date").val()
+            var date = $("#date").val();
+            var startDate = new Date(Date.parse(date));
+            var endDate = new Date(Date.parse(date));
+            endDate.setDate(endDate.getDate()+7);
+            $("#DateSpan").empty();
+            $("#DateSpan").text(month[startDate.getMonth()] + " " + startDate.getDate() + " - " + month[endDate.getMonth()] + " " + endDate.getDate() +", " + startDate.getFullYear());
             $("#calenderDiv").load('/ProvidersMenu/WeekWiseScheduling?date='+ date, function (response, status, xhr) {
                 if (status != "success") {
                     console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
@@ -122,6 +130,10 @@
         $("#MonthBtn").click(function () {
             $("#calenderDiv").empty();
             var date = $("#date").val()
+            var startDate = new Date(Date.parse(date));
+            $("#DateSpan").empty();
+            $("#DateSpan").text(month[startDate.getMonth()]);
+
             $("#calenderDiv").load('/ProvidersMenu/MonthWiseScheduling', function (response, status, xhr) {
                 if (status != "success") {
                     console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
@@ -151,8 +163,6 @@
                 $("#MonthBtn").click();
             }
 
-            $("#DateSpan").empty();
-            $("#DateSpan").text(month[startDate.getMonth()] + ", " + startDate.getDate() + ", " + startDate.getFullYear());
         })
 
         $("#previousDay").click(function () {
@@ -174,9 +184,6 @@
                 $("#date").val(startDate.toLocaleDateString());
                 $("#MonthBtn").click();
             }
-
-            $("#DateSpan").empty();
-            $("#DateSpan").text(month[startDate.getMonth()] + ", " + startDate.getDate() + ", " + startDate.getFullYear());
         })
     </script>
 }

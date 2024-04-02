@@ -140,6 +140,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXZpZXdBZ3JlZW1lbnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PartnersMenu/AddVendors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydG5lcnNNZW51XEFkZFZlbmRvcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PartnersMenu/Partners.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydG5lcnNNZW51XFBhcnRuZXJzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PartnersMenu/UpdateVendors.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydG5lcnNNZW51XFVwZGF0ZVZlbmRvcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PartnersMenu/_VendorForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydG5lcnNNZW51XF9WZW5kb3JGb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PartnersMenu/_VendorsTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydG5lcnNNZW51XF9WZW5kb3JzVGFibGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/Patient/CreateRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxDcmVhdGVSZXF1ZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -154,6 +174,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/Patient/Document.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxEb2N1bWVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/ProviderOnCall.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxQcm92aWRlck9uQ2FsbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/Scheduling.cshtml]

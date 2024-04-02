@@ -1,0 +1,22 @@
+﻿@model VendorFormViewModel; 
+@{
+    ViewData["Title"] = "Admin Profile";
+    Layout = "_adminLayout";
+}
+<div>
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Add Business
+        </h4>
+        <a onclick="history.go(-1)" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="container-fluid d-flex justify-content-center mt-4">
+    <form asp-action="AddVendors" method="post" class="viewCaseForm form-floating shadow patient-request-form p-3">
+    <partial name="_VendorForm">
+        </form>
+    </div>
+</div>
