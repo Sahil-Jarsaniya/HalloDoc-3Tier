@@ -1,0 +1,114 @@
+﻿@model PaginatedList<SearchTableVM>;
+
+<table class="table table-responsive">
+    <thead>
+        <tr class="table-secondary">
+            <td>Patient Name</td>
+            <td>Requestor</td>
+            <td>Date of Service</td>
+            <td>Close Case Date</td>
+            <td>Email</td>
+            <td>Phone Number</td>
+            <td>Address</td>
+            <td>Zip</td>
+            <td>Request status</td>
+            <td>Physician</td>
+            <td>Physician Note</td>
+            <td>Cancelled By Provider Note</td>
+            <td>Admin note</td>
+            <td>Patient Note</td>
+            <td>Delete Permanently</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+
+                <td>@item.PatientName</td>
+                <td>@item.Requestor</td>
+                <td>@item.DateOfService</td>
+                <td>@item.CloseCaseDate</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Address</td>
+                <td>@item.Zip</td>
+                <td>@item.RequestStatus</td>
+                <td>@item.Physician</td>
+                <td>@item.PhysicianNote</td>
+                <td>@item.CancelledProviderNote</td>
+                <td>@item.AdminNote</td>
+                <td>@item.PatientNote</td>
+                <td>
+                    <a class="btn btn-outline-primary" asp-action="DeleteRecord" asp-route-id="@item.requestId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*Pagination*@
+
+<div class="row pageMenu">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-end">
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="1">
+                        first
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex - 1)">
+                        Previous
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled": "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex + 1)">
+                        next
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.TotalPages)">
+                        Last
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    $(".pageBtn").click(function () {
+        var pageNumber = $(this).data('page');
+        var ReqStatus = $("#ReqStatus").val();
+        var ReqType = $("#ReqType").val();
+        var Phonenumber = $("#Phonenumber").val();
+        var Email = $("#Email").val();
+        var ProviderName = $("#ProviderName").val();
+        var PatientName = $("#PatientName").val();
+        var Date2 = $("#Date2").val();
+        var Date1 = $("#Date1").val();
+        $.ajax({
+            url: '/RecordsMenu/SearchRecordsTable',
+            type: 'POST',
+            data: { pagenumber: pageNumber,
+                ReqStatus: ReqStatus,
+                ReqType: ReqType,
+                Phonenumber: Phonenumber,
+                ProviderName: ProviderName,
+                Email: Email,
+                PatientName: PatientName,
+                Date2: Date2,
+                Date1: Date1,
+            },
+            success: function (result) {
+                $('#partialTable').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        })
+    })
+</script>

@@ -19,7 +19,7 @@ namespace HalloDoc.Controllers
 
         public PartnersMenuController(IPartnersRepository partnersRepo, ApplicationDbContext db, INotyfService noty)
         {
-            _partnersRepo = partnersRepo;   
+            _partnersRepo = partnersRepo;
             _db = db;
             _noty = noty;
         }
@@ -34,6 +34,8 @@ namespace HalloDoc.Controllers
             return fname + "_" + lname;
         }
 
+
+
         public async Task<IActionResult> Partners()
         {
             ViewBag.AdminName = GetAdminName();
@@ -46,16 +48,16 @@ namespace HalloDoc.Controllers
         public async Task<IActionResult> VendorTable(int pageIndex, string name, int regionId)
         {
             var data = _partnersRepo.GetVendors();
-            if(name != null)
+            if (name != null)
             {
                 data = data.Where(x => x.BusinessName.ToUpper().Contains(name.ToUpper()));
             }
-            if(regionId != 0)
+            if (regionId != 0)
             {
                 data = data.Where(x => x.regionId == regionId);
             }
 
-            if(pageIndex < 1 )
+            if (pageIndex < 1)
             {
                 pageIndex = 1;
             }
@@ -68,87 +70,63 @@ namespace HalloDoc.Controllers
             ViewBag.AdminName = GetAdminName();
             var data = new VendorFormViewModel()
             {
-                Healthprofessionaltypes = _db.Healthprofessionaltypes
+                Healthprofessionaltypes = _partnersRepo.healthprofessionaltypes()
             };
-            return View(data);  
+            return View(data);
         }
 
         [HttpPost]
         public IActionResult AddVendors(VendorFormViewModel obj)
         {
-            var vendor = new Healthprofessional()
-            {
-                Vendorname = obj.BusinessName,
-                Faxnumber = obj.FaxNumber,
-                Phonenumber = obj.Phonenumber,
-                Email = obj.Email,
-                Businesscontact = obj.BusinessContact,
-                State = obj.State,
-                City = obj.City,
-                Address = obj.Street,
-                Zip = obj.Zipcode,
-                Profession = obj.professionTypeId
-            };
-            _db.Healthprofessionals.Add(vendor);
-            _db.SaveChanges();
+            bool x = _partnersRepo.AddVendors(obj);
 
-            _noty.Success("Created Vendor");
-            return RedirectToAction("Partners");   
+            if (x)
+            {
+                _noty.Success("Created Vendor");
+            }
+            else
+            {
+                _noty.Error("Something Went Wrong.");
+            }
+
+            return RedirectToAction("Partners");
         }
 
         public IActionResult UpdateVendors(int id)
         {
             ViewBag.AdminName = GetAdminName();
-            var vendor = _db.Healthprofessionals.Where(x => x.Vendorid == id).FirstOrDefault();
-            var data = new VendorFormViewModel()
-            {
-                vendorId = id,
-                BusinessContact = vendor.Businesscontact,
-                State = vendor.State,
-                City = vendor.City,
-                Phonenumber = vendor.Phonenumber,
-                BusinessName = vendor.Vendorname,
-                FaxNumber = vendor.Faxnumber,
-                Email = vendor.Email,
-                Street = vendor.Address,
-                Zipcode = vendor.Zip,
-                professionTypeId = (int)vendor.Profession,
-                Healthprofessionaltypes = _db.Healthprofessionaltypes
-            };
+            var data = _partnersRepo.UpdateVendors(id);
             return View(data);
         }
         [HttpPost]
         public IActionResult UpdateVendors(VendorFormViewModel obj, int id)
         {
             ViewBag.AdminName = GetAdminName();
-            var vendor = _db.Healthprofessionals.Where(x => x.Vendorid == id).FirstOrDefault();
-            vendor.Vendorname = obj.BusinessName;
-            vendor.Profession = obj.professionTypeId;
-            vendor.Businesscontact = obj.BusinessContact;
-            vendor.State = obj.State;   
-            vendor.City = obj.City;
-            vendor.Address = obj.Street;
-            vendor.Phonenumber = obj.Phonenumber;
-            vendor.Zip = obj.Zipcode;
-            vendor.Faxnumber = obj.FaxNumber;
-            vendor.Email = obj.Email;
-
-            _db.Healthprofessionals.Update(vendor);
-            _db.SaveChanges();
-
-            _noty.Success("Updated Vendor");
+            bool x = _partnersRepo.UpdateVendors(obj, id);
+            if (x)
+            {
+                _noty.Success("Updated Vendor");
+            }
+            else
+            {
+                _noty.Error("Something Went Wrong.");
+            }
             return RedirectToAction("Partners");
         }
 
         public IActionResult DeleteVendors(int id)
         {
-            var vendor = _db.Healthprofessionals.Where(x => x.Vendorid == id).FirstOrDefault();
-            vendor.Isdeleted = true;
-            _db.Healthprofessionals.Update(vendor);
-            _db.SaveChanges();
+            bool x = _partnersRepo.DeleteVendors(id);
 
+            if (x)
+            {
+                _noty.Success("Vendor deleted");
+            }
+            else
+            {
+                _noty.Error("Something Went Wrong.");
+            }
 
-            _noty.Success("Vendor deleted");
             return RedirectToAction("Partners");
         }
     }

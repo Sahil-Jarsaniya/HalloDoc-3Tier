@@ -1,0 +1,138 @@
+﻿@model SearchMenuVM;
+@{
+    ViewData["Title"] = "Admin Profile";
+    Layout = "_adminLayout";
+}
+
+<div class="container d-flex justify-content-between mt-4" style="max-width:1700px">
+    <h4>
+        Search Records
+    </h4>
+        <form method="post" asp-action="Export" asp-controller="AdminDashboard">
+            <input type="hidden" name="GridHtml" />
+            <input value="Export" hidden />
+            <button type="submit" class="mx-1 px-2 py-1 btn btn-primary exportData" id="ExportBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply" viewBox="0 0 16 16" style="transform: rotateY(180deg);">
+                    <path d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.7 8.7 0 0 0-1.921-.306 7 7 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254l-.042-.028a.147.147 0 0 1 0-.252l.042-.028zM7.8 10.386q.103 0 .223.006c.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96z" />
+                </svg>
+                <span class="d-none d-lg-inline ms-1">Export Data To Excel</span>
+            </button>
+        </form>
+</div>
+<div class="container  shadow mt-4" style="max-width:1700px">
+    <form class="viewCaseForm form-floating p-3" style="max-width:1700px" id="searchForm">
+        <div class="row g-2 m-1">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating">
+                    <select asp-for="search.ReqStatus" id="ReqStatus" class="form-select mb-3">
+                        <option value="0">All</option>
+                        <option value="1">Pending</option>
+                        <option value="2">Settled</option>
+                        <option value="3">Declined</option>
+                        <option value="4">Settled Offline</option>
+                    </select>
+                    <label>Select Request status</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating">
+                    <input asp-for="search.PatientName" id="PatientName" type="text" class="form-control" placeholder="">
+                    <label for="">Patient Name</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating">
+                    <select asp-for="search.ReqType" id="ReqType" class="form-select mb-3 ">
+                        <option value="0">All</option>
+                        <option value="1">Patient</option>
+                        <option value="2">family/Friend</option>
+                        <option value="3">Business</option>
+                        <option value="4">Concierge</option>
+                    </select>
+                    <label>Select Request Type</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating">
+                    <input asp-for="search.Date1" id="Date1" type="date" class="form-control" placeholder="">
+                    <label for="">From Date of Service</label>
+                </div>
+            </div>
+        </div>
+        <div class="row g-2 m-1">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating">
+                    <input asp-for="search.Date2" id="Date2" type="date" class="form-control" placeholder="">
+                    <label for="">To Date Of Service</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating">
+                    <input asp-for="search.ProviderName" id="ProviderName" type="text" class="form-control" placeholder="">
+                    <label for="">Provider Name</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating">
+                    <input asp-for="search.Email" id="Email" type="email" class="form-control" placeholder="name@example.com">
+                    <label for="">Email</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating phone-div w-100 h-100 ">
+                    <input asp-for="search.Phonenumber" id="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                    <label for="">Phone</label>
+                </div>
+            </div>
+        </div>
+        <br />
+        <button type="button" class="float-end btn btn-primary me-1" id="searchBtn">search</button>
+        <button type="reset" class="float-end btn btn-outline-primary me-1">clear</button>
+    </form>
+    <div class="mt-5" id="partialTable">
+    </div>
+</div>
+
+@section AdminScript {
+    <script>
+        $("#ExportBtn").click(function () {
+            var cloneaTable = $("#partialTable").clone();
+            cloneaTable.find(" td:nth-last-child(1)").remove();
+            cloneaTable.find(".mobileView").remove();
+            cloneaTable.find(".pageMenu").remove();
+            $("input[name='GridHtml']").val(cloneaTable.html());
+        });
+        $(document).ready(function(){
+            $("#partialTable").load("/RecordsMenu/SearchRecordsTable");
+        })
+        $("#searchBtn").click(function(){
+            var ReqStatus = $("#ReqStatus").val();
+            var ReqType = $("#ReqType").val();
+            var Phonenumber = $("#Phonenumber").val();
+            var Email = $("#Email").val();
+            var ProviderName = $("#ProviderName").val();
+            var PatientName = $("#PatientName").val();
+            var Date2 = $("#Date2").val();
+            var Date1 = $("#Date1").val();
+
+            $.ajax({
+                url: '/RecordsMenu/SearchRecordsTable',
+                type: 'POST',
+                data: {
+                    ReqStatus: ReqStatus,
+                    ReqType: ReqType,
+                    Phonenumber: Phonenumber,
+                    ProviderName: ProviderName,
+                    Email: Email,
+                    PatientName: PatientName,
+                    Date2: Date2,
+                    Date1: Date1,
+                },
+                success: function(data){
+                    console.log(data);
+                    $("#partialTable").html(data);
+                }
+            })
+        })
+    </script>
+}

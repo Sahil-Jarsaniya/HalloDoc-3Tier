@@ -5,8 +5,9 @@
     "\\HalloDoc\\Controllers",
     "\\HalloDoc\\Views",
     "\\HalloDoc\\Views\\AdminDashboard",
+    "\\HalloDoc\\Views\\PartnersMenu",
     "\\HalloDoc\\Views\\ProvidersMenu"
   ],
-  "SelectedNode": "\\HalloDoc\\Views\\ProvidersMenu\\_DayWiseScheduling.cshtml",
+  "SelectedNode": "\\HalloDoc\\Controllers\\ProvidersMenu.cs",
   "PreviewInSolutionExplorer": false
 }

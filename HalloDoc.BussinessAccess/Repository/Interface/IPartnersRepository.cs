@@ -1,4 +1,5 @@
-﻿using HalloDoc.DataAccess.ViewModel.PartnersMenu;
+﻿using HalloDoc.DataAccess.Models;
+using HalloDoc.DataAccess.ViewModel.PartnersMenu;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,12 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public PartnersViewModel Partners();
 
         public IQueryable<VendorFormViewModel> GetVendors();
+
+        public IEnumerable<Healthprofessionaltype> healthprofessionaltypes();
+
+        public bool AddVendors(VendorFormViewModel obj);
+        public VendorFormViewModel UpdateVendors(int id);
+        public bool UpdateVendors(VendorFormViewModel obj,int id);
+        public bool DeleteVendors(int id);
     }
 }

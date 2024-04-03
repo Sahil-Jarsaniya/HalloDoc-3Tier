@@ -1,0 +1,76 @@
+﻿@model SearchMenuVM;
+@{
+    ViewData["Title"] = "Admin Profile";
+    Layout = "_adminLayout";
+}
+
+<div class="container d-flex justify-content-between mt-4" style="max-width:1700px">
+    <h4>
+        Block History
+    </h4>
+</div>
+<div class="container  shadow mt-4" style="max-width:1700px">
+    <form class="viewCaseForm form-floating p-3" style="max-width:1700px" id="searchForm">
+        <div class="row g-2 m-1">
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating">
+                    <input asp-for="search.PatientName" id="PatientName" type="text" class="form-control" placeholder="">
+                    <label for="">Name</label>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating">
+                    <input asp-for="search.Date1" id="Date1" type="date" class="form-control" placeholder="">
+                    <label for="">From Date of Service</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating">
+                    <input asp-for="search.Email" id="Email" type="email" class="form-control" placeholder="name@example.com">
+                    <label for="">Email</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="form-floating phone-div w-100 h-100 ">
+                    <input asp-for="search.Phonenumber" id="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                    <label for="">Phone</label>
+                </div>
+            </div>
+        </div>
+        <br />
+        <button type="button" class="float-end btn btn-primary me-1" id="searchBtn">search</button>
+        <button type="reset" class="float-end btn btn-outline-primary me-1">clear</button>
+    </form>
+    <div class="mt-5" id="blockTable">
+    </div>
+</div>
+
+@section AdminScript {
+    <script>
+        $(document).ready(function () {
+            $("#blockTable").load('/RecordsMenu/BlockHistoryTable');
+        })
+        $("#searchBtn").click(function () {
+            var Phonenumber = $("#Phonenumber").val();
+            var Email = $("#Email").val();
+            var PatientName = $("#PatientName").val();
+            var Date1 = $("#Date1").val();
+
+            $.ajax({
+                url: '/RecordsMenu/BlockHistoryTable',
+                type: 'POST',
+                data: {
+                    Phonenumber: Phonenumber,
+                    Email: Email,
+                    PatientName: PatientName,
+                    Date1: Date1,
+                },
+                success: function (data) {
+                    $("#blockTable").html(data);
+                }
+            })
+        })
+    </script>
+}

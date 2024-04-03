@@ -76,7 +76,16 @@
                     </ul>
                     
                 <li class="nav-item ">
-                    <a class="nav-link" href="@Url.Action("Records", "AdminDashboard")">Records</a>
+                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Records
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="nav-link" href="@Url.Action("SearchRecords", "RecordsMenu")">Search Records</a></li>
+                        <li><a class="dropdown-item" href="#">Email Logs</a></li>
+                        <li><a class="dropdown-item" href="#">SMS Logs</a></li>
+                        <li><a class="dropdown-item" href="#">Patient Records</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("BlockHistory", "RecordsMenu")">Blocked History</a></li>
+                    </ul>
                 </li>
             </ul>
         </nav>

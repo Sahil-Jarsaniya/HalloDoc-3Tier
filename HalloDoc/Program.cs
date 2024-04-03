@@ -23,6 +23,7 @@ builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<IAdminDashboardRepository, AdminDashboardRepository>();
 builder.Services.AddScoped<IPartnersRepository, PartnersRepository>();
 builder.Services.AddScoped<IProviderMenuRepository, ProviderMenuRepository>();
+builder.Services.AddScoped<IRecordsRepository, RecordsRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ISMSSender, SMSSender>();
 

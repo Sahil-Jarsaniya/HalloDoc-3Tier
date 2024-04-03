@@ -204,6 +204,26 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfV2Vla1dpc2VTY2hlZHVsaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/BlockHistory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcQmxvY2tIaXN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/SearchRecords.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcU2VhcmNoUmVjb3Jkcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/_BlockHistoryTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcX0Jsb2NrSGlzdG9yeVRhYmxlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/_Historytable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcX0hpc3Rvcnl0YWJsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/_SearchRecordsTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcX1NlYXJjaFJlY29yZHNUYWJsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/Request/createBusinessRequest.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVxdWVzdFxjcmVhdGVCdXNpbmVzc1JlcXVlc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
