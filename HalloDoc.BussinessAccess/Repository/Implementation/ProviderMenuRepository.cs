@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
-    public class ProviderMenuRepository: IProviderMenuRepository
+    public class ProviderMenuRepository : IProviderMenuRepository
     {
         private readonly ApplicationDbContext _db;
 
@@ -204,19 +204,19 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 return false;
             }
-           
+
         }
         public bool UpdateShift(CreateShift obj, int id)
         {
             try
             {
                 var shiftDetail = _db.Shiftdetails.FirstOrDefault(x => x.Shiftdetailid == id);
-                shiftDetail.Shiftdate = obj.Startdate;
-                shiftDetail.Endtime = obj.EndTime;
-                shiftDetail.Starttime = obj.StartTime;
-                shiftDetail.Modifieddate = DateTime.Now;
-                shiftDetail.Regionid = obj.Regionid;
-                _db.Shiftdetails.Update(shiftDetail);
+                    shiftDetail.Shiftdate = obj.Startdate;
+                    shiftDetail.Endtime = obj.EndTime;
+                    shiftDetail.Starttime = obj.StartTime;
+                    shiftDetail.Modifieddate = DateTime.Now;
+                    shiftDetail.Regionid = obj.Regionid;
+                    _db.Shiftdetails.Update(shiftDetail);
 
                 var shift = _db.Shifts.FirstOrDefault(x => x.Shiftid == shiftDetail.Shiftid);
                 shift.Physicianid = obj.Physicianid;
@@ -230,7 +230,26 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 return false;
             }
-           
+
+        }
+
+        public IQueryable<RequestedShiftVM> RequestedShiftTable()
+        {
+            var data = from t1 in _db.Shifts
+                       join t2 in _db.Shiftdetails on t1.Shiftid equals t2.Shiftid
+                       where t2.Isdeleted != true && t2.Status !=2
+                       select new RequestedShiftVM()
+                       {
+                           shiftDetailId = t2.Shiftdetailid,
+                           staff = _db.Physicians.FirstOrDefault(x => x.Physicianid == t1.Physicianid).Firstname + " " +
+                            _db.Physicians.FirstOrDefault(x => x.Physicianid == t1.Physicianid).Lastname,
+
+                           Day = t2.Shiftdate.ToString(),
+                           Time = t2.Starttime.ToString() + "-" + t2.Endtime.ToString(),
+                           Region = _db.Regions.FirstOrDefault(x => x.Regionid == t2.Regionid).Name ?? "-",
+                           RegionId = t2.Regionid ?? 0
+                       };
+            return data;
         }
     }
 }

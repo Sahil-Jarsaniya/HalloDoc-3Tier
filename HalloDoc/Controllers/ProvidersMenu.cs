@@ -8,11 +8,13 @@ using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using HalloDoc.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Tls.Crypto.Impl.BC;
 using System.Data;
 using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.Controllers
 {
@@ -145,7 +147,61 @@ namespace HalloDoc.Controllers
 
         public IActionResult ProviderOnCall()
         {
-            return View();
+            TimeOnly currentTime = TimeOnly.FromDateTime(DateTime.Now);
+            var data1 = from t1 in _db.Shiftdetails
+                        join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
+                        join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
+                        where t1.Starttime <= currentTime && t1.Endtime >= currentTime
+                        select new ProviderOnCall()
+                        {
+                            Name = t3.Firstname + " "+ t3.Lastname,
+                            profilePhoto = t3.Photo,
+                            shiftDetailId = t1.Shiftdetailid,
+                            providerId = t3.Physicianid
+                        };
+
+            var data2 = from t1 in _db.Physicians
+                        where t1.Status == 4
+                        select new ProviderOnCall()
+                        {
+                            Name = t1.Firstname + " " + t1.Lastname,
+                            profilePhoto = t1.Photo,
+                            providerId = t1.Physicianid
+                        };
+
+
+            var data = new Scheduling
+            {
+                Regions = _ProviderMenu.Regions(),
+                ProviderOnCall = data1,
+                ProviderOffDuty = data2
+            };
+                return View(data);
         }
+
+        public IActionResult RequestedShift()
+        {
+            var data = new Scheduling
+            {
+                Regions = _ProviderMenu.Regions()
+            };
+            return View(data);
+        }
+        public async Task<IActionResult> RequestedShiftTable(int pagenumber, int RegionFilter)
+        {
+            if(pagenumber < 1)
+            {
+                pagenumber = 1;
+            }
+            var pageSize = 2;
+            var data = _ProviderMenu.RequestedShiftTable();
+            if(RegionFilter != 0 && RegionFilter != null)
+            {
+                data = data.Where(x => x.RegionId == RegionFilter);
+            }
+            return PartialView("_RequestedShiftTable", await PaginatedList<RequestedShiftVM>.CreateAsync(data, pagenumber, pageSize));
+        }
+
+
     }
 }

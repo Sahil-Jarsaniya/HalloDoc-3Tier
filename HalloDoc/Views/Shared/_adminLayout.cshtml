@@ -81,9 +81,9 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="nav-link" href="@Url.Action("SearchRecords", "RecordsMenu")">Search Records</a></li>
-                        <li><a class="dropdown-item" href="#">Email Logs</a></li>
-                        <li><a class="dropdown-item" href="#">SMS Logs</a></li>
-                        <li><a class="dropdown-item" href="#">Patient Records</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("EmailLogs", "RecordsMenu")">Email Logs</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("SmsLogs", "RecordsMenu")">SMS Logs</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("PatientHistory", "RecordsMenu")">Patient Records</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("BlockHistory", "RecordsMenu")">Blocked History</a></li>
                     </ul>
                 </li>

@@ -21,6 +21,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public CreateShift ViewShift(int shiftDetailId);
 
         public bool DeleteShift(int shiftDetailId); 
-        public bool UpdateShift(CreateShift obj, int id); 
+        public bool UpdateShift(CreateShift obj, int id);
+
+        public IQueryable<RequestedShiftVM> RequestedShiftTable();
     }
 }

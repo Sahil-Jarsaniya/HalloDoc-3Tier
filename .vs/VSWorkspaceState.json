@@ -6,8 +6,9 @@
     "\\HalloDoc\\Views",
     "\\HalloDoc\\Views\\AdminDashboard",
     "\\HalloDoc\\Views\\PartnersMenu",
-    "\\HalloDoc\\Views\\ProvidersMenu"
+    "\\HalloDoc\\Views\\ProvidersMenu",
+    "\\HalloDoc\\Views\\RecordsMenu"
   ],
-  "SelectedNode": "\\HalloDoc\\Controllers\\ProvidersMenu.cs",
+  "SelectedNode": "\\HalloDoc\\Views\\RecordsMenu\\EmailLogs.cshtml",
   "PreviewInSolutionExplorer": false
 }

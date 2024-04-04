@@ -1,0 +1,119 @@
+﻿@model PaginatedList<PatientRecordVM>;
+@{
+    ViewData["Title"] = "Admin Profile";
+    Layout = "_adminLayout";
+}
+
+<div class="container d-flex justify-content-between mt-4" style="max-width:1700px">
+    <h4>
+        Patient Records
+    </h4>
+    <a onclick="history.go(-1)" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+       id="back-btn">
+        <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+        Back
+    </a>
+</div>
+<div class="container  shadow mt-4" style="max-width:1700px">
+
+    <table class="table table-responsive">
+        <thead>
+            <tr class="table-secondary">
+                <td>Client/Member</td>
+                <td>Created Date</td>
+                <td>Confirmation</td>
+                <td>Provider Name</td>
+                <td>Concluded date</td>
+                <td>Status</td>
+                <td>Final Report</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Client</td>
+                    <td>@item.createDate</td>
+                    <td>@item.confirmation</td>
+                    <td>@item.providerName</td>
+                    <td>@item.ConcludedDate</td>
+                    <td>@item.status</td>
+                        @if (item.isFinalize == true)
+                        {
+                            <td>
+                                <button class="btn btn-outline-primary">
+                                    View
+                                </button>
+                            </td>
+                        }
+                        else
+                        {
+                            <td> - </td>
+                        }
+                    <td>
+                        <a class="btn border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Actions
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a class="dropdown-item" href="@Url.Action("ViewCase", "AdminDashboard", new {reqClientId = item.reqClientId})">View Case</a></li>
+                            <li><a class="dropdown-item" href="#">Chat</a></li>
+                            <li><a class="dropdown-item" href="#">Document</a></li>
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    @*Pagination*@
+
+    <div class="row pageMenu">
+        <div class="col-md-12">
+            <nav>
+                <ul class="pagination justify-content-end">
+                    <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                        <a class="btn pageBtn page-link text-black" data-page="1">
+                            first
+                        </a>
+                    </li>
+                    <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                        <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex - 1)">
+                            Previous
+                        </a>
+                    </li>
+                    <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled": "")">
+                        <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex + 1)">
+                            next
+                        </a>
+                    </li>
+                    <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                        <a class="btn pageBtn page-link text-black" data-page="@(Model.TotalPages)">
+                            Last
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".pageBtn").click(function () {
+        var pageNumber = $(this).data('page');
+        $.ajax({
+            url: '/RecordsMenu/PatientRecord',
+            type: 'POST',
+            data: {
+                pagenumber: pageNumber
+            },
+            success: function (result) {
+                $('#blockTable').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        })
+    })
+</script>

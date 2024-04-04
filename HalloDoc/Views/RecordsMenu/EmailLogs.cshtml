@@ -1,0 +1,91 @@
+﻿@model SearchMenuVM;
+@{
+    ViewData["Title"] = "Admin Profile";
+    Layout = "_adminLayout";
+}
+
+<div class="container d-flex justify-content-between mt-4" style="max-width:1700px">
+    <h4>
+        Email logs
+    </h4>
+</div>
+<div class="container  shadow mt-4" style="max-width:1700px">
+    <form class="viewCaseForm form-floating p-3" style="max-width:1700px" id="searchForm">
+        <div class="row g-2 m-1">
+            <div class="col-12 col-md-4 col-lg-2">
+                <div class="form-floating">
+                    <select asp-for="search.RoleId" id="RoleId" class="form-select mb-3">
+                        <option value="0"> All</option>
+                        @foreach(var item in Model.roles)
+                        {
+                            <option value="@item.Roleid">@item.Name</option>
+                        }
+                    </select>
+                    <label>Select Request status</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2">
+                <div class="form-floating">
+                    <input asp-for="search.PatientName" id="PatientName" type="text" class="form-control" placeholder="">
+                    <label for="">Receiver Name</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2">
+                <div class="form-floating">
+                    <input asp-for="search.Email" id="Email" type="email" class="form-control" placeholder="name@example.com">
+                    <label for="">Email Id</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2">
+                <div class="form-floating">
+                    <input asp-for="search.Date1" id="Date1" type="date" class="form-control" placeholder="">
+                    <label for="">Created Date</label>
+                </div>
+            </div>
+            <div class="col-12 col-md-4 col-lg-2">
+                <div class="form-floating">
+                    <input asp-for="search.Date2" id="Date2" type="date" class="form-control" placeholder="">
+                    <label for="">Sent Date</label>
+                </div>
+            </div>
+        <div class="col-12 col-md-4 col-lg-2">
+        <button type="button" class="float-end btn btn-primary me-1" id="searchBtn">search</button>
+        <button type="reset" class="float-end btn btn-outline-primary me-1">clear</button>
+        </div>
+        </div>
+    </form>
+    <div class="mt-5" id="EmailLogTable">
+    </div>
+</div>
+
+@section AdminScript {
+    <script>
+        $(document).ready(function () {
+            $("#EmailLogTable").load('/RecordsMenu/EmailLogTable');
+        })
+        $("#searchBtn").click(function () {
+            var RoleId = $("#RoleId").val();
+            var Phonenumber = $("#Phonenumber").val();
+            var Email = $("#Email").val();
+            var PatientName = $("#PatientName").val();
+            var Date1 = $("#Date1").val();
+            var Date2 = $("#Date2").val();
+
+            $.ajax({
+                url: '/RecordsMenu/EmailLogTable',
+                type: 'POST',
+                data: {
+                    RoleId: RoleId,
+                    Phonenumber: Phonenumber,
+                    Email: Email,
+                    PatientName: PatientName,
+                    Date1: Date1,
+                    Date2: Date2
+                },
+                success: function (data) {
+                    $("#EmailLogTable").html(data);
+                }
+            })
+        })
+    </script>
+}

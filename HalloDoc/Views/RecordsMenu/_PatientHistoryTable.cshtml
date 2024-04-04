@@ -1,0 +1,90 @@
+﻿@model PaginatedList<PatientHistoryVM>;
+
+<table class="table table-responsive">
+    <thead>
+        <tr class="table-secondary">
+            <td>First Name</td>
+            <td>Last Name</td>
+            <td>Email</td>
+            <td>Phone Number</td>
+            <td>Address</td>
+            <td>Action  </td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.firstName</td>
+                <td>@item.lastName</td>
+                <td>@item.email</td>
+                <td>@item.phoneNumber</td>
+                <td>@item.Address</td>
+                <td>
+                    <a class="btn btn-outline-primary" asp-action="PatientRecord" asp-controller="RecordsMenu" asp-route-reqId="@item.reqId">
+                        Explore
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*Pagination*@
+
+<div class="row pageMenu">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-end">
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="1">
+                        first
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex - 1)">
+                        Previous
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled": "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex + 1)">
+                        next
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.TotalPages)">
+                        Last
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    $(".pageBtn").click(function () {
+        var pageNumber = $(this).data('page');
+        var Phonenumber = $("#Phonenumber").val();
+        var Email = $("#Email").val();
+        var PatientName = $("#PatientName").val();
+        var Date1 = $("#Date1").val();
+        $.ajax({
+            url: '/RecordsMenu/PatientHistoryTable',
+            type: 'POST',
+            data: {
+                pagenumber: pageNumber,
+                Phonenumber: Phonenumber,
+                Email: Email,
+                PatientName: PatientName,
+                Date1: Date1
+            },
+            success: function (result) {
+                $('#PatientHistoryTable').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        })
+    })
+</script>

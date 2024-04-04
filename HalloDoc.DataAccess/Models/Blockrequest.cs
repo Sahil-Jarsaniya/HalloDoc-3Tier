@@ -15,11 +15,11 @@ public partial class Blockrequest
 
     public string? Reason { get; set; }
 
-    public string Requestid { get; set; } = null!;
-
     public string? Ip { get; set; }
 
     public DateTime? Createddate { get; set; }
 
     public DateTime? Modifieddate { get; set; }
+
+    public int Requestid { get; set; }
 }

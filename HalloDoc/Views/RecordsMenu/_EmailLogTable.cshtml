@@ -1,0 +1,103 @@
+﻿@model PaginatedList<EmailLogVM>;
+
+<table class="table table-responsive">
+    <thead>
+        <tr class="table-secondary">
+            <td>Recipient</td>
+            <td>Action</td>
+            <td>Role Name</td>
+            <td>Email Id</td>
+            <td>Create Date</td>
+            <td>Sen tDate</td>
+            <td>Sent </td>
+            <td>Sent Tries</td>
+            <td>Confirmation Number</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Recipient</td>
+                <td>@item.Action</td>
+                <td>@item.Rolename</td>
+                <td>@item.EmailId</td>
+                <td>@item.CreateDate</td>
+                    @if(item.SentDate == DateTime.MinValue)
+                    {
+                        <td>-</td>
+                        }
+                    else
+                    {
+                    <td>@item.SentDate</td>
+                    }
+                <td>@item.sent</td>
+                <td>@item.sentTries</td>
+                <td>@item.ConfirmationNumber</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*Pagination*@
+
+<div class="row pageMenu">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-end">
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="1">
+                        first
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex - 1)">
+                        Previous
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled": "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex + 1)">
+                        next
+                    </a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="btn pageBtn page-link text-black" data-page="@(Model.TotalPages)">
+                        Last
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    $(".pageBtn").click(function () {
+        var pageNumber = $(this).data('page');
+        var RoleId = $("#RoleId").val();
+        var Phonenumber = $("#Phonenumber").val();
+        var Email = $("#Email").val();
+        var PatientName = $("#PatientName").val();
+        var Date1 = $("#Date1").val();
+        var Date2 = $("#Date2").val();
+        $.ajax({
+            url: '/RecordsMenu/EmailLogTable',
+            type: 'POST',
+            data: {
+                pagenumber: pageNumber,
+                RoleId: RoleId,
+                Phonenumber: Phonenumber,
+                Email: Email,
+                PatientName: PatientName,
+                Date1: Date1,
+                Date2: Date2
+            },
+            success: function (data) {
+                $("#EmailLogTable").html(data);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        })
+    })
+</script>   

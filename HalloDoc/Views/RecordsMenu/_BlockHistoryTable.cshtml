@@ -24,15 +24,15 @@
                 <td>
                     @if (item.isActive == true)
                     {
-                        <input type="checkbox" checked/>
+                        <input type="checkbox" checked disabled/>
                     }
                     else
                     {
-                        <input type="checkbox"/>
+                        <input type="checkbox" disabled/>
                     }
                 </td>
                 <td>
-                    <a class="btn btn-outline-primary" asp-action="UnBlockPatient" asp-controller="RecordsMenu" asp-route-id="@item.ReqId">
+                    <a class="btn btn-outline-primary @(item.isActive == true ? "d-none" : "")" asp-action="UnBlockPatient" asp-controller="RecordsMenu" asp-route-id="@item.ReqId">
                         Unblock
                     </a>
                 </td>
@@ -90,7 +90,7 @@
                 Date1: Date1
             },
             success: function (result) {
-                $('#partialTable').html(result);
+                $('#blockTable').html(result);
             },
             error: function (error) {
                 console.log(error);

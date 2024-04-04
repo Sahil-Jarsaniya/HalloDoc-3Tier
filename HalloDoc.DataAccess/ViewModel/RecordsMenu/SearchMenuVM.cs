@@ -1,4 +1,6 @@
-﻿using HalloDoc.Services;
+﻿using HalloDoc.DataAccess.Models;
+using HalloDoc.Services;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +16,7 @@ namespace HalloDoc.DataAccess.ViewModel.RecordsMenu
         public PaginatedList<SearchTableVM>? searchTableVMs { get; set; }
 
         public PaginatedList<BlockHistoryVM>? BlockHistoryVM { get; set; }
+
+        public IEnumerable<Role>? roles { get; set; }
     }
 }

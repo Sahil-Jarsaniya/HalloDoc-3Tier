@@ -180,6 +180,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxQcm92aWRlck9uQ2FsbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/RequestedShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxSZXF1ZXN0ZWRTaGlmdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/Scheduling.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxTY2hlZHVsaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -196,6 +200,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfTW9udGhXaXNlU2NoZWR1bGluZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_RequestedShiftTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfUmVxdWVzdGVkU2hpZnRUYWJsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_ViewShift.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfVmlld1NoaWZ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -208,20 +216,44 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcQmxvY2tIaXN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/EmailLogs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcRW1haWxMb2dzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/PatientHIstory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcUGF0aWVudEhJc3RvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/PatientRecord.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcUGF0aWVudFJlY29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/SearchRecords.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcU2VhcmNoUmVjb3Jkcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/SmsLogs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcU21zTG9ncy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/_BlockHistoryTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcX0Jsb2NrSGlzdG9yeVRhYmxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/_Historytable.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcX0hpc3Rvcnl0YWJsZS5jc2h0bWw=
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/_EmailLogTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcX0VtYWlsTG9nVGFibGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/_PatientHistoryTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcX1BhdGllbnRIaXN0b3J5VGFibGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/_SearchRecordsTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcX1NlYXJjaFJlY29yZHNUYWJsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/RecordsMenu/_SmsLogTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3Jkc01lbnVcX1Ntc0xvZ1RhYmxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/Request/createBusinessRequest.cshtml]

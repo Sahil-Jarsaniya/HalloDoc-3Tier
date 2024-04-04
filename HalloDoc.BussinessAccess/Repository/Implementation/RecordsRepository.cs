@@ -1,8 +1,11 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
+using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel.RecordsMenu;
+using Org.BouncyCastle.Tls.Crypto.Impl.BC;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,17 +76,17 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public IQueryable<BlockHistoryVM> BlockHistory()
         {
-            var data = from t1 in _db.Requestclients
-                       join t2 in _db.Requests on t1.Requestid equals t2.Requestid
-                       where t2.Status == 14
+            var data = from t1 in _db.Blockrequests
                        select new BlockHistoryVM()
                        {
-                           PatientName = t1.Firstname + " " + t1.Lastname,
-                           PhoneNumber = t1.Phonenumber,
+                           PatientName = _db.Requestclients.FirstOrDefault(x => x.Requestid == t1.Requestid).Firstname
+                           + " " + _db.Requestclients.FirstOrDefault(x => x.Requestid == t1.Requestid).Lastname,
                            Email = t1.Email,
-                           CreatedDate = t2.Createddate,
-                           Notes = t1.Notes,
-                           ReqId = t2.Requestid,
+                           CreatedDate = (DateTime)t1.Createddate,
+                           Notes = t1.Reason,
+                           ReqId = t1.Requestid,
+                           isActive = t1.Isactive,
+                           PhoneNumber = _db.Requestclients.FirstOrDefault(x => x.Requestid == t1.Requestid).Phonenumber
                        };
             return data;
         }
@@ -97,9 +100,92 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 reqrow.Status = 1;
                 _db.Requests.Update(reqrow);
                 _db.SaveChanges();
+
+               
+                var block = _db.Blockrequests.FirstOrDefault(x => x.Requestid == reqId);
+                block.Isactive = true;
+                _db.Blockrequests.Update(block);    
+                _db.SaveChanges();
                 return true;
             }
             catch { return false; }
+        }
+
+        public IEnumerable<Role> roles()
+        {
+             return _db.Roles; 
+        }
+
+        public IQueryable<EmailLogVM> EmailLogs()
+        {
+            var data = from t1 in _db.Emaillogs
+                       join t2 in _db.Roles on t1.Roleid equals t2.Roleid
+                       select new EmailLogVM()
+                       {
+                           EmailId = t1.Emailid,
+                           ConfirmationNumber = t1.Confirmationnumber == null? "-" : t1.Confirmationnumber,
+                           CreateDate = t1.Createdate,
+                           SentDate = (DateTime)(t1.Sentdate == null? DateTime.MinValue : t1.Sentdate),
+                           sentTries = t1.Senttries,
+                           sent = t1.Isemailsent,
+                           RoleId = t1.Roleid,
+                           Rolename = t2.Name,
+                       };
+
+            return data;
+
+        }
+        public IQueryable<EmailLogVM> SmsLogs()
+        {
+            var data = from t1 in _db.Smslogs
+                       join t2 in _db.Roles on t1.Roleid equals t2.Roleid
+                       select new EmailLogVM()
+                       {
+                           PhoneNumber = t1.Mobilenumber,
+                           ConfirmationNumber = t1.Confirmationnumber == null ? "-" : t1.Confirmationnumber,
+                           CreateDate = t1.Createdate,
+                           SentDate = (DateTime)(t1.Sentdate == null ? DateTime.MinValue : t1.Sentdate),
+                           sentTries = t1.Senttries,
+                           sent = t1.Issmssent,
+                           RoleId = t1.Roleid,
+                           Rolename = t2.Name,
+                       };
+
+            return data;
+        }
+
+        public IQueryable<PatientHistoryVM> PatientHistory()
+        {
+            var data = from t1 in _db.Users
+                       select new PatientHistoryVM()
+                       {
+                           firstName = t1.Firstname,
+                           lastName = t1.Lastname,
+                           Address = t1.City + ", " + t1.Street+", "+ t1.State,
+                           email = t1.Email,
+                           phoneNumber = t1.Mobile,
+                           reqId = t1.Userid,
+                       };
+            return data;    
+        }
+
+        public IQueryable<PatientRecordVM> PatientRecord(int reqId)
+        {
+            var data = from t0 in _db.Users
+                       join t1 in _db.Requests on t0.Userid equals t1.Userid
+                       join t2 in _db.Requestclients on t1.Requestid equals t2.Requestid
+                       where t0.Userid == reqId
+                       select new PatientRecordVM()
+                       {
+                           Client = t0.Firstname + " " + t0.Lastname,
+                           createDate = t1.Createddate,
+                           confirmation = t1.Confirmationnumber,
+                           providerName = _db.Physicians.FirstOrDefault(x => x.Physicianid ==  t1.Physicianid).Firstname ?? "-",
+                           status = _db.RequestStatuses.FirstOrDefault(x => x.StatusId == t1.Status).Status,
+                           reqClientId = t2.Requestclientid,
+                           reqId = t1.Requestid
+                       };
+            return data;
         }
     }
 }

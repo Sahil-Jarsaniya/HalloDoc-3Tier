@@ -33,16 +33,16 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public Admin GetLoginData(AspNetUser obj, String hashPass)
         {
-                var myUser = _db.AspNetUsers.Where(x => x.UserName == obj.UserName && x.PasswordHash == hashPass).FirstOrDefault();
-                if (myUser == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    var userId = _db.Admins.Where(x => x.Aspnetuserid == myUser.Id).FirstOrDefault();
-                    return userId;
-                }
+            var myUser = _db.AspNetUsers.Where(x => x.UserName == obj.UserName && x.PasswordHash == hashPass).FirstOrDefault();
+            if (myUser == null)
+            {
+                return null;
+            }
+            else
+            {
+                var userId = _db.Admins.Where(x => x.Aspnetuserid == myUser.Id).FirstOrDefault();
+                return userId;
+            }
         }
 
         public User PatientLogin(AspNetUser obj, String hashPass)
@@ -61,25 +61,49 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public void SendEmail(string email, string subject, string body)
         {
-            var emailToSend = new MimeMessage();
-
-            emailToSend.From.Add(MailboxAddress.Parse("tatva.dotnet.sahiljarsaniya@outlook.com"));
-            emailToSend.To.Add(MailboxAddress.Parse(email));
-            emailToSend.Subject = subject;
-            emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };    
-
-            //send mail
-            using (var emailClient = new MailKit.Net.Smtp.SmtpClient())
+            var emailLog = new Emaillog()
             {
-                emailClient.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                emailClient.Authenticate("tatva.dotnet.sahiljarsaniya@outlook.com", "$@hilpj1");
-                emailClient.Send(emailToSend);
+                Emailid = email,
+                Createdate = DateTime.Now,
+                Subjectname = subject,
+                Emailtemplate = "a"
+            };
+            _db.Emaillogs.Add(emailLog);
+            _db.SaveChanges();
+            try
+            {
+                var emailToSend = new MimeMessage();
 
-                emailClient.Disconnect(true);
+                emailToSend.From.Add(MailboxAddress.Parse("tatva.dotnet.sahiljarsaniya@outlook.com"));
+                emailToSend.To.Add(MailboxAddress.Parse(email));
+                emailToSend.Subject = subject;
+                emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
+
+                //send mail
+                using (var emailClient = new MailKit.Net.Smtp.SmtpClient())
+                {
+                    emailClient.Connect("smtp.office365.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                    emailClient.Authenticate("tatva.dotnet.sahiljarsaniya@outlook.com", "$@hilpj1");
+                    emailClient.Send(emailToSend);
+
+                    emailClient.Disconnect(true);
+                }
+                emailLog.Sentdate = DateTime.Now;
+                emailLog.Senttries = emailLog.Senttries == null? 1: emailLog.Senttries+1;
+                emailLog.Isemailsent = true;
+                _db.Emaillogs.Update(emailLog);
+                _db.SaveChanges();
+            }
+            catch
+            {
+                emailLog.Senttries = emailLog.Senttries == null ? 1 : emailLog.Senttries + 1;
+                emailLog.Isemailsent = false;
+                _db.Emaillogs.Update(emailLog);
+                _db.SaveChanges();
             }
         }
 
-        public void uploadFile(IFormFile? file,string folder, string path)
+        public void uploadFile(IFormFile? file, string folder, string path)
         {
             //uploading files
             if (file != null && file.Length > 0)
@@ -88,7 +112,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var fileName = Path.GetFileName(file.FileName);
 
                 //define path
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles",folder);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", folder);
 
                 if (!Directory.Exists(filePath))
                 {

@@ -293,11 +293,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var name = obj.Name.ToUpper();
                 newReqData = newReqData.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
             }
-            if(obj.RegionId != 0)
+            if (obj.RegionId != 0)
             {
                 newReqData = newReqData.Where(s => s.Regionid == obj.RegionId);
             }
-            if(obj.reqType != 0)
+            if (obj.reqType != 0)
             {
                 newReqData = newReqData.Where(s => s.reqTypeId == obj.reqType);
             }
@@ -769,6 +769,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
             var reqCol = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
+            var userRow = _db.Users.FirstOrDefault(x => x.Userid == reqCol.Userid);
 
             reqCol.Status = 14;
             _db.Requests.Update(reqCol);
@@ -785,16 +786,29 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.Requeststatuslogs.Add(reqStatuslog);
             _db.SaveChanges();
 
-            var reqBlock = new Blockrequest
+            var Block = _db.Blockrequests.FirstOrDefault(x => x.Requestid == reqCol.Requestid);
+
+            if (Block == null)
             {
-                Phonenumber = reqId.Phonenumber,
-                Email = reqId.Email,
-                Reason = addNote,
-                Requestid = _db.Users.Where(x => x.Userid == reqCol.Userid).FirstOrDefault().Aspnetuserid,
-                Createddate = DateTime.Now
-            };
-            _db.Blockrequests.Add(reqBlock);
-            _db.SaveChanges();
+
+                var reqBlock = new Blockrequest
+                {
+                    Phonenumber = reqId.Phonenumber,
+                    Email = reqId.Email,
+                    Reason = addNote,
+                    Requestid = reqCol.Requestid,
+                    Createddate = DateTime.Now,
+                    Isactive = false
+                };
+                _db.Blockrequests.Add(reqBlock);
+                _db.SaveChanges();
+            }
+            else
+            {
+                Block.Isactive = false;
+                _db.Blockrequests.Update(Block);
+                _db.SaveChanges();
+            }
         }
 
         public object FilterPhysician(int Region)
@@ -1400,8 +1414,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 data.Isagreementdoc = true;
                 data.agreementdoc = (IFormFile?)_db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == phy.Physicianid && x.FileType == 1);
                 System.String? fileName = (from t1 in _db.ProviderFiles
-                                    where t1.PhysicianId == phy.Physicianid && t1.FileType == 1
-                                    select t1.FileName).FirstOrDefault();
+                                           where t1.PhysicianId == phy.Physicianid && t1.FileType == 1
+                                           select t1.FileName).FirstOrDefault();
                 IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "agreementdoc", fileName);
                 data.agreementdoc = formFile;
             }
@@ -1410,8 +1424,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 data.Isbackgrounddoc = true;
                 data.backgrounddoc = (IFormFile?)_db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == phy.Physicianid && x.FileType == 2);
                 System.String? fileName = (from t1 in _db.ProviderFiles
-                                    where t1.PhysicianId == phy.Physicianid && t1.FileType == 2
-                                    select t1.FileName).FirstOrDefault();
+                                           where t1.PhysicianId == phy.Physicianid && t1.FileType == 2
+                                           select t1.FileName).FirstOrDefault();
                 IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "backgrounddoc", fileName);
                 data.backgrounddoc = formFile;
             }
@@ -1419,8 +1433,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 data.Islicensedoc = true;
                 System.String? fileName = (from t1 in _db.ProviderFiles
-                                    where t1.PhysicianId == phy.Physicianid && t1.FileType == 3
-                                    select t1.FileName).FirstOrDefault();
+                                           where t1.PhysicianId == phy.Physicianid && t1.FileType == 3
+                                           select t1.FileName).FirstOrDefault();
                 IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "licensedoc", fileName);
                 data.licensedoc = formFile;
             }
@@ -1428,8 +1442,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 data.Isnondisclosuredoc = true;
                 System.String? fileName = (from t1 in _db.ProviderFiles
-                                    where t1.PhysicianId == phy.Physicianid && t1.FileType == 4
-                                    select t1.FileName).FirstOrDefault();
+                                           where t1.PhysicianId == phy.Physicianid && t1.FileType == 4
+                                           select t1.FileName).FirstOrDefault();
                 IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "nondisclosuredoc", fileName);
                 data.nondisclosuredoc = formFile;
             }
@@ -1437,8 +1451,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 data.Istrainingdoc = true;
                 System.String? fileName = (from t1 in _db.ProviderFiles
-                                    where t1.PhysicianId == phy.Physicianid && t1.FileType == 5
-                                    select t1.FileName).FirstOrDefault();
+                                           where t1.PhysicianId == phy.Physicianid && t1.FileType == 5
+                                           select t1.FileName).FirstOrDefault();
                 IFormFile formFile = new FormFile(System.IO.Stream.Null, 0, 0, "trainingdoc", fileName);
                 data.trainingdoc = formFile;
             }

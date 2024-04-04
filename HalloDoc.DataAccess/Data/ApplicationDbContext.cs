@@ -265,9 +265,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("phonenumber");
             entity.Property(e => e.Reason).HasColumnName("reason");
-            entity.Property(e => e.Requestid)
-                .HasMaxLength(50)
-                .HasColumnName("requestid");
+            entity.Property(e => e.Requestid).HasColumnName("requestid");
         });
 
         modelBuilder.Entity<Business>(entity =>
