@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "u9svTK8mgPs/Vnza2ftjVAA+fVul2FCmg26A7/HcV1Y=",
+  "Hash": "V3dWXUcucPhnntklx1rSOKMxswHr7kQfORELdMIuFmQ=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -4520,6 +4520,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\ProviderData\\19\\cloud_upload (1).svg"
+    },
+    {
+      "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\2\\7774236_3736765.jpg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/ProviderData/2/7774236_3736765.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\ProviderData\\2\\7774236_3736765.jpg"
     },
     {
       "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\20\\cloud_upload (1).svg",

@@ -1,38 +1,77 @@
-﻿<table class="table table-bordered table-responsive">
-    <tr>
-        <td>SUN</td>
-        <td>MON</td>
-        <td>TUE</td>
-        <td>WED</td>
-        <td>THU</td>
-        <td>FRI</td>
-        <td>SAT</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+﻿@model MonthScheduling;
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <td>SUN</td>
+            <td>MON</td>
+            <td>TUE</td>
+            <td>WED</td>
+            <td>THU</td>
+            <td>FRI</td>
+            <td>SAT</td>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var DaysInMonth = DateTime.DaysInMonth(Model.Selecteddate.Year, Model.Selecteddate.Month);
+            var WeeksInMonth = (int)Math.Ceiling((double)DaysInMonth / 7);
+            var day = Model.Selecteddate.Day;
+        }
+        @for (int i = 0; i < WeeksInMonth; i++)
+        {
+            <tr>
+                @{
+                    var currentDate = Model.Selecteddate;
+                    var date = 1 + (7 * i);
+                }
+                @for (int j = 0; j < 7; j++)
+                {
+                    var appointment = Model.DaySchedulings.Where(data => data.Startdate == currentDate).ToList();
+                    if (currentDate.Day == date % 7)
+                    {
+                        day++;
+                    }
+                    if (currentDate.Day == date )
+                    {
+                        <td>
+                            @foreach (var list in appointment)
+                            {
+                                @day
+                                @currentDate.Day
+                                @date
+                                <a class="btn viewShiftBtn" data-id="@list.shiftDetailId">
+                                    @list.StartTime to @list.EndTime
+                                </a>
+                            }
+                        </td>
+
+                        currentDate = currentDate.AddDays(1);
+                    }
+                    else
+                    {
+                        <td>
+                            @day
+                            @currentDate.Day
+                            @date
+                        </td>
+                    }
+                    date = date + 1;
+                }
+
+            </tr>
+        }
+    </tbody>
 </table>
+
+<script>
+    $(".viewShiftBtn").click(function () {
+        console.log($(this).data('id'));
+        $("#modelDiv").load('/ProvidersMenu/ViewShift?shiftDetailId=' + $(this).data('id'), function (response, status, xhr) {
+            if (status == "success") {
+                $("#CreateShiftModel").modal('show');
+            } else {
+                console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+            }
+        });
+    })
+</script>

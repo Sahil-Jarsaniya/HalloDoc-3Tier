@@ -4,6 +4,7 @@ using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Shiftdate = obj.Startdate,
                     Starttime = obj.StartTime,
                     Endtime = obj.EndTime,
+                    Regionid = obj.Regionid,
 
                 };
                 _db.Shiftdetails.Add(shiftdetail);
@@ -72,11 +74,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     {
                         if (item.Checked)
                         {
-                            var shiftDay = 7 * i - curDay + item.Id;
-                            if (shiftDay == 7)
-                            {
-                                shiftDay = 0;
-                            }
+                            var shiftDay = (7 - curDay + item.Id) % 7 + 7 * (i - 1);
                             var shiftDate = curDate.AddDays(shiftDay);
                             var shiftdetail = new Shiftdetail()
                             {
@@ -138,7 +136,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                       on t1.Physicianid equals t2.Physicianid into physicianShifts
                       from t2 in physicianShifts.DefaultIfEmpty()
                       join t3 in _db.Shiftdetails
-                      .Where(x => x.Shiftdate.Month == date1.Month && x.Shiftdate.Day == date1.Day && x.Shiftdate.Year == date1.Year && x.Isdeleted != true)
+                      .Where(x => x.Shiftdate >= date1 && x.Shiftdate <= date1.AddDays(7) && x.Isdeleted != true)
                       on t2.Shiftid equals t3.Shiftid into shiftDetails
                       from t3 in shiftDetails.DefaultIfEmpty()
                       select new DayScheduling()
@@ -147,7 +145,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                           PhysicianName = t1.Firstname + " " + t1.Lastname,
                           Shiftid = t2 != null ? t2.Shiftid : null,
                           shiftDetailId = t3 != null ? t3.Shiftdetailid : null,
-                          Startdate = t2 != null ? t2.Startdate : null,
+                          Startdate = t3 != null ? t3.Shiftdate: null,
                           EndTime = t3 != null ? t3.Endtime : null,
                           StartTime = t3 != null ? t3.Starttime : null,
                           SelectedDate = date1,
@@ -157,13 +155,47 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var data = new WeekScheduling()
             {
                 physicians = _db.Physicians,
-                shifts = _db.Shifts,
-                shiftdetails = _db.Shiftdetails.Where(x => x.Shiftdate > date1 && x.Shiftdate < date1.AddDays(7)),
                 Selecteddate = date1,
                 daySchedulings = day
             };
 
             return data;
+        }
+
+        public MonthScheduling MonthScheduling(string date)
+        {
+            var date1 = DateOnly.Parse(date);
+            var day = from t1 in _db.Physicians
+                      join t2 in _db.Shifts
+                      on t1.Physicianid equals t2.Physicianid into physicianShifts
+                      from t2 in physicianShifts.DefaultIfEmpty()
+                      join t3 in _db.Shiftdetails
+                      .Where(x => x.Shiftdate.Month == date1.Month && x.Shiftdate.Year == date1.Year && x.Isdeleted != true)
+                      on t2.Shiftid equals t3.Shiftid into shiftDetails
+                      from t3 in shiftDetails.DefaultIfEmpty()
+                      select new DayScheduling()
+                      {
+                          PhysicianId = t1.Physicianid,
+                          PhysicianName = t1.Firstname + " " + t1.Lastname,
+                          Shiftid = t2 != null ? t2.Shiftid : null,
+                          shiftDetailId = t3 != null ? t3.Shiftdetailid : null,
+                          Startdate = t3 != null ? t3.Shiftdate : null,
+                          EndTime = t3 != null ? t3.Endtime : null,
+                          StartTime = t3 != null ? t3.Starttime : null,
+                          SelectedDate = date1,
+                          ShiftDate = t3 != null ? t3.Shiftdate : null,
+                          status = t3 != null ? t3.Status : null,
+                      };
+
+            var data = new MonthScheduling
+            {
+                physicians = _db.Physicians,
+                Selecteddate = date1,
+                DaySchedulings = day,
+            };
+
+            return data;
+
         }
 
         public CreateShift ViewShift(int shiftDetailId)

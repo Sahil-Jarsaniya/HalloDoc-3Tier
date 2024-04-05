@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Physicianlocation>;
+@{
+    ViewData["Title"] = "Provider Location";
+    Layout = "_adminLayout";
+}
+@section Styles{
+    <link rel="stylesheet" type="text/css" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps.css" />
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js"></script>
+    <style>
+        #map {
+            height: 80vh;
+            width: 100vw;
+        }
+    </style>
+}
+<div id="map"></div>
+
+<script>
+
+    var map = tt.map({
+        container: "map",
+        key: "yhlg1glArkACz8sjjj2AL3ZHD9KYWlJl",
+        zoom: 10,
+        center: [73,23]
+    });
+
+    var popupOffsets = {
+        top: [0, 0],
+        bottom: [0, -70],
+        "bottom-right": [0, -70],
+        "bottom-left": [0, -70],
+        left: [25, -35],
+        right: [-25, -35],
+    }
+
+    var popup = new tt.Popup({ offset: popupOffsets });
+    @foreach(var item in Model)
+    {
+        <text>
+            var lon = parseFloat("@item.Longtitude");
+            var lat = parseFloat("@item.Latitude");
+            var Name = parseFloat("@item.Physicianname");
+            var Coordinates = [lon, lat];
+
+        var marker = new tt.Marker().setLngLat(Coordinates).addTo(map);
+            marker.setPopup(popup.setHTML("<b>@item.Physicianname</b>").addTo(map));
+        </text>
+    }
+</script>

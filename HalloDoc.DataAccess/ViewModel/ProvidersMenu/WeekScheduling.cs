@@ -12,8 +12,6 @@ namespace HalloDoc.DataAccess.ViewModel.ProvidersMenu
         public DateOnly Selecteddate { get; set; }
 
         public required IEnumerable<Physician> physicians { get; set; }
-        public IEnumerable <Shift>? shifts { get; set; }  
-        public IEnumerable<Shiftdetail>? shiftdetails { get; set; }  
-        public IEnumerable<DayScheduling>? daySchedulings { get; set; }  
+        public required IEnumerable<DayScheduling> daySchedulings { get; set; }
     }
 }

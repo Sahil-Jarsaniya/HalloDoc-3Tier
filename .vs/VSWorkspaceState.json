@@ -2,13 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\HalloDoc",
-    "\\HalloDoc\\Controllers",
+    "\\HalloDoc.BussinessAccess",
+    "\\HalloDoc.BussinessAccess\\Repository",
+    "\\HalloDoc.BussinessAccess\\Repository\\Implementation",
     "\\HalloDoc\\Views",
     "\\HalloDoc\\Views\\AdminDashboard",
     "\\HalloDoc\\Views\\PartnersMenu",
     "\\HalloDoc\\Views\\ProvidersMenu",
     "\\HalloDoc\\Views\\RecordsMenu"
   ],
-  "SelectedNode": "\\HalloDoc\\Views\\RecordsMenu\\EmailLogs.cshtml",
+  "SelectedNode": "\\HalloDoc.sln",
   "PreviewInSolutionExplorer": false
 }

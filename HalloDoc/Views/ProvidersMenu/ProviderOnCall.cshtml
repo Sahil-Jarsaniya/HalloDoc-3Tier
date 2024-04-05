@@ -1,6 +1,6 @@
-﻿@model Scheduling;
+﻿    @model Scheduling;
 @{
-    ViewData["Title"] = "Admin Profile";
+    ViewData["Title"] = "Provider On Call";
     Layout = "_adminLayout";
 }
 
@@ -47,8 +47,8 @@
             @foreach (var item in Model.ProviderOnCall)
             {
                 <div class="col-md-3 col-lg-4">
-                    <img src="~/uploadedFiles/ProviderData/  @item.providerId / @item.profilePhoto" />
-                    @item.Name
+                    <img width="100vh" height="100vh" src="~/uploadedFiles/ProviderData/@item.providerId/@item.profilePhoto" />
+                    @item.Name 
                 </div>
             }
         </div>
@@ -57,8 +57,8 @@
             @foreach (var item in Model.ProviderOffDuty)
             {
                 <div class="col-md-3 col-lg-4">
-                    <img src="~/uploadedFiles/ProviderData/ @item.providerId / @item.profilePhoto" />
-                    @item.Name
+                    <img width="100vh" height="100vh" src="~/uploadedFiles/ProviderData/@item.providerId/@item.profilePhoto" />
+                    @item.Name 
                 </div>
             }
         </div>

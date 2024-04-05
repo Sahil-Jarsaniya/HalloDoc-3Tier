@@ -1,6 +1,6 @@
 ﻿@model Scheduling;
 @{
-    ViewData["Title"] = "Admin Profile";
+    ViewData["Title"] = "Scheduling";
     Layout = "_adminLayout";
 }
 
@@ -118,7 +118,7 @@
             var date = $("#date").val();
             var startDate = new Date(Date.parse(date));
             var endDate = new Date(Date.parse(date));
-            endDate.setDate(endDate.getDate()+7);
+            endDate.setDate(endDate.getDate()+6);
             $("#DateSpan").empty();
             $("#DateSpan").text(month[startDate.getMonth()] + " " + startDate.getDate() + " - " + month[endDate.getMonth()] + " " + endDate.getDate() +", " + startDate.getFullYear());
             $("#calenderDiv").load('/ProvidersMenu/WeekWiseScheduling?date='+ date, function (response, status, xhr) {
@@ -134,7 +134,7 @@
             $("#DateSpan").empty();
             $("#DateSpan").text(month[startDate.getMonth()]);
 
-            $("#calenderDiv").load('/ProvidersMenu/MonthWiseScheduling', function (response, status, xhr) {
+            $("#calenderDiv").load('/ProvidersMenu/MonthWiseScheduling?date='+ date, function (response, status, xhr) {
                 if (status != "success") {
                     console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
                 }

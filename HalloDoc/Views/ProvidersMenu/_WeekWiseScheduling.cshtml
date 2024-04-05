@@ -1,4 +1,5 @@
-﻿@model WeekScheduling;
+﻿@model WeekScheduling
+
 <table class="table table-bordered table-responsive">
     <tr>
         @{
@@ -8,8 +9,8 @@
         <td class="w-25">Staff</td>
         @for (int i = 0; i < 7; i++)
         {
-            <td>@dayList[day%7]</td>
-            day = day + 1;
+            <td>@dayList[day % 7]</td>
+            day = (day + 1) % 7; // Corrected day calculation
         }
     </tr>
     <tr>
@@ -19,18 +20,50 @@
         <td class="w-25">Coverage</td>
         @for (int i = 0; i < 7; i++)
         {
-            <td>@date</td>
+            <td>@date.ToShortDateString()</td>
             date = date.AddDays(1);
         }
     </tr>
-    @foreach (var item in Model.daySchedulings)
+    @{
+        var physician = Model.physicians.ToList();
+    }
+
+    @foreach (var item in physician)
     {
-        var date1 = Model.Selecteddate;
         <tr>
-            <td>
-                @item.PhysicianName
-            </td>
-               
+            <td>@item.Firstname @item.Lastname</td>
+            @{
+                var currentDate = Model.Selecteddate;
+            }
+            @for (int i = 0; i < 7; i++)
+            {
+                var appointment = Model.daySchedulings.Where(data => data.Startdate == currentDate && data.PhysicianId == item.Physicianid).ToList();
+                <td>
+                    @if (appointment != null)
+                    {
+                        @foreach(var list in appointment)
+                        {   
+                            <a class="btn viewShiftBtn" data-id="@list.shiftDetailId">
+                                @list.StartTime to @list.EndTime
+                            </a>
+                        }
+                    }
+                </td>
+                currentDate = currentDate.AddDays(1);
+            }
         </tr>
     }
 </table>
+
+<script>
+    $(".viewShiftBtn").click(function () {
+        console.log($(this).data('id'));
+        $("#modelDiv").load('/ProvidersMenu/ViewShift?shiftDetailId=' + $(this).data('id'), function (response, status, xhr) {
+            if (status == "success") {
+                $("#CreateShiftModel").modal('show');
+            } else {
+                console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+            }
+        });
+    })
+</script>

@@ -95,9 +95,10 @@ namespace HalloDoc.Controllers
             var data = _ProviderMenu.WeekWiseScheduling(date);
             return PartialView("_WeekWiseScheduling", data);
         }
-        public PartialViewResult MonthWiseScheduling()
+        public PartialViewResult MonthWiseScheduling(string date)
         {
-            return PartialView("_MonthWiseScheduling");
+            var data = _ProviderMenu.MonthScheduling(date);
+            return PartialView("_MonthWiseScheduling", data);
         }
 
         public PartialViewResult ViewShift(int shiftDetailId)
@@ -147,6 +148,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult ProviderOnCall()
         {
+            ViewBag.AdminName = GetAdminName();
             TimeOnly currentTime = TimeOnly.FromDateTime(DateTime.Now);
             var data1 = from t1 in _db.Shiftdetails
                         join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
@@ -181,6 +183,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult RequestedShift()
         {
+            ViewBag.AdminName = GetAdminName();
             var data = new Scheduling
             {
                 Regions = _ProviderMenu.Regions()
@@ -202,6 +205,12 @@ namespace HalloDoc.Controllers
             return PartialView("_RequestedShiftTable", await PaginatedList<RequestedShiftVM>.CreateAsync(data, pagenumber, pageSize));
         }
 
+        public IActionResult ProviderLocation()
+        {
+            ViewBag.AdminName = GetAdminName();
 
+            var data = _db.Physicianlocations;
+            return View(data);
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public IEnumerable<DayScheduling> DayWiseScheduling(string date);
         public WeekScheduling WeekWiseScheduling(string date);
+        public MonthScheduling MonthScheduling(string date);
 
         public CreateShift ViewShift(int shiftDetailId);
 
