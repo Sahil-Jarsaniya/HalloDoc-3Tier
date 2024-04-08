@@ -1,10 +1,10 @@
 ﻿@model CreateShift;
-<div class="modal fade" id="CreateShiftModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+<div class="modal fade CreateShiftModel" id="CreateShiftModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #01bce9; color:white;">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Create Shift</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="dropdown">
@@ -126,5 +126,9 @@
                 }
             }
         })
+    })
+
+    $(".closeBtn").click(function () {
+        $("#CreateShiftModel").modal('toggle');
     })
 </script>

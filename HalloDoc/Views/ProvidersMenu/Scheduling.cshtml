@@ -22,7 +22,7 @@
                     <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
                     </path>
                 </svg>
-                <select class="form-select border-0" id="RegionFilter2" name="RegionFilter2" aria-label="Default select example">
+                <select class="form-select border-0" id="RegionFilter3" name="RegionFilter3" aria-label="Default select example">
                     <option selected value="null">All Regions</option>
                     @foreach (var item in Model.Regions)
                     {
@@ -83,6 +83,10 @@
     </div>
 </div>
 
+<div id="modelDiv2">
+</div>
+<div id="modelDiv3">
+</div>
 <div id="modelDiv">
 </div>
 
@@ -105,9 +109,10 @@
             $("#calenderDiv").empty();
             var date = $("#date").val();
             var startDate = new Date(Date.parse(date));
+            var region = $("#RegionFilter3").val();
             $("#DateSpan").empty();
             $("#DateSpan").text(month[startDate.getMonth()] + ", " + startDate.getDate() + ", " + startDate.getFullYear());
-            $("#calenderDiv").load('/ProvidersMenu/DayWiseScheduling?date=' + date, function (response, status, xhr) {
+            $("#calenderDiv").load('/ProvidersMenu/DayWiseScheduling' ,{date: date ,region: region}, function (response, status, xhr) {
                 if (status != "success") {
                     console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
                 }
@@ -119,9 +124,10 @@
             var startDate = new Date(Date.parse(date));
             var endDate = new Date(Date.parse(date));
             endDate.setDate(endDate.getDate()+6);
+            var region = $("#RegionFilter3").val();
             $("#DateSpan").empty();
             $("#DateSpan").text(month[startDate.getMonth()] + " " + startDate.getDate() + " - " + month[endDate.getMonth()] + " " + endDate.getDate() +", " + startDate.getFullYear());
-            $("#calenderDiv").load('/ProvidersMenu/WeekWiseScheduling?date='+ date, function (response, status, xhr) {
+            $("#calenderDiv").load('/ProvidersMenu/WeekWiseScheduling', { date: date, region: region }, function (response, status, xhr) {
                 if (status != "success") {
                     console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
                 }
@@ -133,8 +139,8 @@
             var startDate = new Date(Date.parse(date));
             $("#DateSpan").empty();
             $("#DateSpan").text(month[startDate.getMonth()]);
-
-            $("#calenderDiv").load('/ProvidersMenu/MonthWiseScheduling?date='+ date, function (response, status, xhr) {
+            var region = $("#RegionFilter3").val();
+            $("#calenderDiv").load('/ProvidersMenu/MonthWiseScheduling', { date: date, region: region }, function (response, status, xhr) {
                 if (status != "success") {
                     console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
                 }
@@ -146,7 +152,7 @@
         $("#nextDay").click(function(){
             var date = $("#date").val();
             var startDate = new Date(Date.parse(date));
-            
+        
             if($("#DayBtn").prop('checked')){
                 startDate.setDate(startDate.getDate() + 1);
                 $("#date").val(startDate.toLocaleDateString());
@@ -182,6 +188,18 @@
             if ($("#MonthBtn").prop('checked')) {
                 startDate.setMonth(startDate.getMonth() - 1);
                 $("#date").val(startDate.toLocaleDateString());
+                $("#MonthBtn").click();
+            }
+        })
+
+        $("#RegionFilter3").change(function(){
+            if ($("#DayBtn").prop('checked')) {
+                $("#DayBtn").click();
+            }
+            if ($("#WeekBtn").prop('checked')) {
+                $("#WeekBtn").click();
+            }
+            if ($("#MonthBtn").prop('checked')) {
                 $("#MonthBtn").click();
             }
         })

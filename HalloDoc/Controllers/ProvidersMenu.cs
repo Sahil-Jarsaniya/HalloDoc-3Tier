@@ -85,19 +85,32 @@ namespace HalloDoc.Controllers
 
 
 
-        public PartialViewResult DayWiseScheduling(string date)
+        public PartialViewResult DayWiseScheduling(string date, int region)
         {
             var data = _ProviderMenu.DayWiseScheduling(date);
+
+            if (region != 0 && region != null)
+            {
+                data = data.Where(x => x.regionId == region);
+            }
             return PartialView("_DayWiseScheduling", data);
         }
-        public PartialViewResult WeekWiseScheduling(string date)
+        public PartialViewResult WeekWiseScheduling(string date, int region)
         {
             var data = _ProviderMenu.WeekWiseScheduling(date);
+            if (region != 0 && region != null)
+            {
+                data.daySchedulings = data.daySchedulings.Where(x => x.regionId == region);
+            }
             return PartialView("_WeekWiseScheduling", data);
         }
-        public PartialViewResult MonthWiseScheduling(string date)
+        public PartialViewResult MonthWiseScheduling(string date, int region)
         {
             var data = _ProviderMenu.MonthScheduling(date);
+            if (region != 0 && region != null)
+            {
+                data.DaySchedulings = data.DaySchedulings.Where(x=> x.regionId == region);
+            }
             return PartialView("_MonthWiseScheduling", data);
         }
 
@@ -106,6 +119,29 @@ namespace HalloDoc.Controllers
             var data = _ProviderMenu.ViewShift(shiftDetailId);
 
             return PartialView("_ViewShift", data);
+        }
+
+        public PartialViewResult ViewAllShift(string date)
+        {
+            var date1 = DateOnly.Parse(date);
+            var data = from t3 in _db.Shiftdetails.Where(x => x.Shiftdate.Month == date1.Month && x.Shiftdate.Day == date1.Day && x.Shiftdate.Year == date1.Year && x.Isdeleted != true)
+                       join t2 in _db.Shifts on t3.Shiftid equals t2.Shiftid
+                       join t1 in _db.Physicians on t2.Physicianid equals t1.Physicianid
+                       select new DayScheduling
+                       {
+                           PhysicianId = t1.Physicianid,
+                           PhysicianName = t1.Firstname + " " + t1.Lastname,
+                           Shiftid = t2 != null ? t2.Shiftid : null,
+                           shiftDetailId = t3 != null ? t3.Shiftdetailid : null,
+                           Startdate = t2 != null ? t2.Startdate : null,
+                           EndTime = t3 != null ? t3.Endtime : null,
+                           StartTime = t3 != null ? t3.Starttime : null,
+                           SelectedDate = date1,
+                           ShiftDate = t3 != null ? t3.Shiftdate : null,
+                           status = t3 != null ? t3.Status : null,
+                       };
+
+            return PartialView("_ViewAllShift", data);
         }
 
         public IActionResult DeleteShift(int shiftDetailId)
@@ -150,13 +186,14 @@ namespace HalloDoc.Controllers
         {
             ViewBag.AdminName = GetAdminName();
             TimeOnly currentTime = TimeOnly.FromDateTime(DateTime.Now);
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
             var data1 = from t1 in _db.Shiftdetails
                         join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
                         join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
-                        where t1.Starttime <= currentTime && t1.Endtime >= currentTime
+                        where t1.Starttime <= currentTime && t1.Endtime >= currentTime && t1.Shiftdate == currentDate
                         select new ProviderOnCall()
                         {
-                            Name = t3.Firstname + " "+ t3.Lastname,
+                            Name = t3.Firstname + " " + t3.Lastname,
                             profilePhoto = t3.Photo,
                             shiftDetailId = t1.Shiftdetailid,
                             providerId = t3.Physicianid
@@ -178,7 +215,7 @@ namespace HalloDoc.Controllers
                 ProviderOnCall = data1,
                 ProviderOffDuty = data2
             };
-                return View(data);
+            return View(data);
         }
 
         public IActionResult RequestedShift()
@@ -192,13 +229,13 @@ namespace HalloDoc.Controllers
         }
         public async Task<IActionResult> RequestedShiftTable(int pagenumber, int RegionFilter)
         {
-            if(pagenumber < 1)
+            if (pagenumber < 1)
             {
                 pagenumber = 1;
             }
             var pageSize = 2;
             var data = _ProviderMenu.RequestedShiftTable();
-            if(RegionFilter != 0 && RegionFilter != null)
+            if (RegionFilter != 0 && RegionFilter != null)
             {
                 data = data.Where(x => x.RegionId == RegionFilter);
             }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OfficeOpenXml;
+using Org.BouncyCastle.Crypto.Modes.Gcm;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
 using System.Text;
@@ -908,6 +909,85 @@ namespace HalloDoc.Controllers
             var pass = _loginRepo.GetHash(obj.Password);
             _adminRepo.CreateAdmin(obj, pass, AspId, Region);
             return RedirectToAction("CreateAdmin");
+        }
+
+        public IActionResult UserAccess()
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+
+            var data = new UserAccessVM
+            {
+                Roles = _db.Roles,
+            };
+            return View(data);
+        }
+
+        public IActionResult UserAccessTable(int accountType, int RoleId)
+        {
+            var data= new object();
+            if (accountType == 2)
+            {
+                 data = from t1 in _db.Physicians
+                        join t2 in _db.Roles on t1.Roleid equals t2.Roleid
+                        join t3 in _db.AccountTypes on t2.Accounttype equals t3.Id
+                        where t2.Roleid == RoleId
+                       select new UserAccessTable
+                       {
+                           userId = t1.Physicianid,
+                           UserName = t1.Firstname + " " + t1.Lastname,
+                           AccountType = t3.Name,
+                           AccountTypeId = t3.Id,
+                           Phone = t1.Mobile
+                       };
+            }
+            else if (accountType == 1)
+            {
+                 data = from t2 in _db.Admins
+                        join t3 in _db.Roles on t2.Roleid equals t3.Roleid
+                        join t4 in _db.AccountTypes on t3.Accounttype equals t4.Id
+                        where t3.Roleid == RoleId
+                           select new UserAccessTable
+                           {
+                               userId = t2.Adminid,
+                               UserName = t2.Firstname + " " + t2.Lastname,
+                               AccountType = t4.Name,
+                               AccountTypeId = t4.Id,
+                               Phone = t2.Mobile,
+                           };
+            }
+            else
+            {
+                 data = (from t1 in _db.Physicians
+                         join t2 in _db.Roles on t1.Roleid equals t2.Roleid
+                         join t3 in _db.AccountTypes on t2.Accounttype equals t3.Id
+                         select new UserAccessTable
+                            {
+                                userId = t1.Physicianid,
+                                UserName = t1.Firstname + " " + t1.Lastname,
+                             AccountType = t3.Name,
+                             AccountTypeId = t3.Id,
+                             Phone = t1.Mobile,
+
+                         }).Union(from t2 in _db.Admins
+                                     join t3 in _db.Roles on t2.Roleid equals t3.Roleid
+                                     join t4 in _db.AccountTypes on t3.Accounttype equals t4.Id
+                                     select new UserAccessTable
+                                     {
+                                         userId = t2.Adminid,
+                                         UserName = t2.Firstname + " " + t2.Lastname,
+                                         AccountType = t4.Name,
+                                         AccountTypeId = t4.Id,
+                                         Phone = t2.Mobile,
+                                     }
+                                           );
+            }
+
+            return PartialView("_UserAccessTable", data);
         }
 
     }

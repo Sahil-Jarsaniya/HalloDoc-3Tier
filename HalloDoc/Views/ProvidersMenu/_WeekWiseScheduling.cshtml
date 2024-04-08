@@ -1,58 +1,78 @@
 ﻿@model WeekScheduling
 
 <table class="table table-bordered table-responsive">
-    <tr>
-        @{
-            var day = Model.Selecteddate.DayNumber;
-            var dayList = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
-        }
-        <td class="w-25">Staff</td>
-        @for (int i = 0; i < 7; i++)
-        {
-            <td>@dayList[day % 7]</td>
-            day = (day + 1) % 7; // Corrected day calculation
-        }
-    </tr>
-    <tr>
-        @{
-            var date = Model.Selecteddate;
-        }
-        <td class="w-25">Coverage</td>
-        @for (int i = 0; i < 7; i++)
-        {
-            <td>@date.ToShortDateString()</td>
-            date = date.AddDays(1);
-        }
-    </tr>
-    @{
-        var physician = Model.physicians.ToList();
-    }
+    <thead>
 
-    @foreach (var item in physician)
-    {
-        <tr>
-            <td>@item.Firstname @item.Lastname</td>
+        <tr class="table-secondary">
             @{
-                var currentDate = Model.Selecteddate;
+                var day = Model.Selecteddate.DayNumber;
+                var dayList = new[] { "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun" };
             }
+            <td class="w-25">Staff</td>
             @for (int i = 0; i < 7; i++)
             {
-                var appointment = Model.daySchedulings.Where(data => data.Startdate == currentDate && data.PhysicianId == item.Physicianid).ToList();
-                <td>
-                    @if (appointment != null)
-                    {
-                        @foreach(var list in appointment)
-                        {   
-                            <a class="btn viewShiftBtn" data-id="@list.shiftDetailId">
-                                @list.StartTime to @list.EndTime
-                            </a>
-                        }
-                    }
-                </td>
-                currentDate = currentDate.AddDays(1);
+                <td>@dayList[day % 7]</td>
+                day = (day + 1) % 7; // Corrected day calculation
             }
         </tr>
-    }
+    </thead>
+    <tbody>
+
+        <tr>
+            @{
+                var date = Model.Selecteddate;
+            }
+            <td class="w-25">Coverage</td>
+            @for (int i = 0; i < 7; i++)
+            {
+                <td>@date.ToShortDateString()</td>
+                date = date.AddDays(1);
+            }
+        </tr>
+        @{
+            var physician = Model.physicians.ToList();
+        }
+
+        @foreach (var item in physician)
+        {
+            <tr>
+                <td>@item.Firstname @item.Lastname</td>
+                @{
+                    var currentDate = Model.Selecteddate;
+                }
+                @for (int i = 0; i < 7; i++)
+                {
+                    var appointment = Model.daySchedulings.Where(data => data.Startdate == currentDate && data.PhysicianId == item.Physicianid).ToList();
+                    <td>
+                        @if (appointment != null)
+                        {
+                            @foreach (var list in appointment)
+                            {
+                                if (list.status == 2)
+                                {
+
+                                    <a class="btn viewShiftBtn m-1" style="background-color: lightgreen" data-id="@list.shiftDetailId">
+                                        @list.StartTime to @list.EndTime
+                                    </a>
+
+                                    <br />
+                                }
+                                else
+                                {
+                                    <a class="btn viewShiftBtn m-1" style="background-color: pink" data-id="@list.shiftDetailId">
+                                        @list.StartTime to @list.EndTime
+                                    </a>
+
+                                    <br />
+                                }
+                            }
+                        }
+                    </td>
+                    currentDate = currentDate.AddDays(1);
+                }
+            </tr>
+        }
+    </tbody>
 </table>
 
 <script>
@@ -66,4 +86,5 @@
             }
         });
     })
+
 </script>

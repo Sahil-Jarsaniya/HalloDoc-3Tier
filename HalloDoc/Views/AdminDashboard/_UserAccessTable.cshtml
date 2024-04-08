@@ -1,0 +1,34 @@
+﻿@model IEnumerable<UserAccessTable>;
+<table class="table">
+    <thead>
+        <tr>
+            <td>Account Type</td>
+            <td>Account  POC</td>
+            <td>Phone</td>
+            <td>Status</td>
+            <td>Open Request</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.AccountType</td>
+                <td>@item.UserName</td>
+                <td>@item.Phone</td>
+                <td>@item.userId</td>
+                <td>@item.userId</td>
+                <td>
+                    @if(item.AccountTypeId == 1)
+                    {
+                        <button class="btn btn-outline-primary" data-id="@item.userId">Edit</button>
+                    }else if(item.AccountTypeId == 2)
+                    {
+                        <a class="btn btn-outline-primary" asp-action="EditProvider" asp-route-Physicianid="@item.userId">Edit</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

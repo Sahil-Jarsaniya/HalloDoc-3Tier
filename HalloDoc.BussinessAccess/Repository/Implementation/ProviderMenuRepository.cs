@@ -124,6 +124,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                             SelectedDate = date1,
                             ShiftDate = t3 != null ? t3.Shiftdate : null,
                             status = t3 != null ? t3.Status : null,
+                            regionId = t3.Regionid
                         }).OrderBy(d => d.PhysicianId);
             return data;
         }
@@ -151,6 +152,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                           SelectedDate = date1,
                           ShiftDate = t3 != null ? t3.Shiftdate : null,
                           status = t3 != null ? t3.Status : null,
+                          regionId = t3.Regionid
                       };
             var data = new WeekScheduling()
             {
@@ -185,6 +187,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                           SelectedDate = date1,
                           ShiftDate = t3 != null ? t3.Shiftdate : null,
                           status = t3 != null ? t3.Status : null,
+                          regionId = t3.Regionid
                       };
 
             var data = new MonthScheduling

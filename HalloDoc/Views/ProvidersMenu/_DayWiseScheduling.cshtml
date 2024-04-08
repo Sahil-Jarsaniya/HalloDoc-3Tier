@@ -58,10 +58,10 @@
     @foreach (var item in Model)
     {
         var bg = "";
-        if(item.status == 2)
+        if (item.status == 2)
         {
             bg = "#90ee90";
-           
+
         }
         else
         {
@@ -69,12 +69,12 @@
         }
         if (item.ShiftDate == item.SelectedDate || item.ShiftDate == null)
         {
-            
+
             <tr>
                 <td class="w-25">@item.PhysicianName</td>
                 @for (var i = 0; i < 24; i++)
                 {
-                    
+
                     if (i == 0)
                     {
                         i = 24;
@@ -85,15 +85,14 @@
                         var StartMin = item.StartTime.Value.Minute;
                         var End = item.EndTime.Value;
                         var EndMin = item.EndTime.Value.Minute;
-                        var dif = item.EndTime.Value.Hour  - item.StartTime.Value.Hour + (Convert.ToDouble(StartMin)/60) + (Convert.ToDouble(EndMin)/60);
-                        var width = 100- ((Convert.ToDouble(StartMin) / 60)*(100/dif) - (Convert.ToDouble(EndMin) / 60)*(100/dif));
-                        var w1 = (Convert.ToDouble(StartMin) / 60) * (100 / dif);
-                        var w2 = (Convert.ToDouble(EndMin) / 60) * (100 / dif);
-                        if (i >= Start.Hour  && i <= End.Hour )
+                        var dif = item.EndTime.Value.Hour - item.StartTime.Value.Hour + (Convert.ToDouble(StartMin) / 60) + (Convert.ToDouble(EndMin) / 60);
+                        var startPercentage = StartMin * (100 / 60);
+                        var endPercentage = (60-EndMin) * (100 / 60);
+                        if (i >= Start.Hour && i <= End.Hour)
                         {
                             <td colspan="@dif" style="background-color: @bg;">
-                                <a class="btn viewShiftBtn" data-id = "@item.shiftDetailId">
-                                        @item.StartTime to @item.EndTime
+                                <a class="btn viewShiftBtn"  data-id="@item.shiftDetailId">
+                                    @item.StartTime to @item.EndTime
                                 </a>
                             </td>
                             i = i + Convert.ToInt32(dif);
@@ -120,7 +119,7 @@
 <script>
     $(".viewShiftBtn").click(function () {
         console.log($(this).data('id'));
-        $("#modelDiv").load('/ProvidersMenu/ViewShift?shiftDetailId='+ $(this).data('id'), function (response, status, xhr) {
+        $("#modelDiv").load('/ProvidersMenu/ViewShift?shiftDetailId=' + $(this).data('id'), function (response, status, xhr) {
             if (status == "success") {
                 $("#CreateShiftModel").modal('show');
             } else {

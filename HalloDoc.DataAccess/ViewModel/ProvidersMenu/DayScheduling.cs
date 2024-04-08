@@ -16,6 +16,7 @@ namespace HalloDoc.DataAccess.ViewModel.ProvidersMenu
         public int? status { get; set; }
         public int? Shiftid { get; set; }
         public int? shiftDetailId { get; set; }
+        public int? regionId { get; set; }
         public DateOnly? Startdate { get; set; }
 
         public TimeOnly? StartTime { get; set; }
