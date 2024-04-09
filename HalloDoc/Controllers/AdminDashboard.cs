@@ -6,13 +6,10 @@ using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using OfficeOpenXml;
-using Org.BouncyCastle.Crypto.Modes.Gcm;
 using System.IdentityModel.Tokens.Jwt;
 using System.Reflection;
-using System.Text;
+using System.Security.Claims;
 using System.Text.Json;
 
 namespace HalloDoc.Controllers
@@ -23,12 +20,13 @@ namespace HalloDoc.Controllers
         private readonly IAdminDashboardRepository _adminRepo;
         private readonly IRequestRepository _requestRepo;
         private readonly ILoginRepository _loginRepo;
+        private readonly ICommonRepository _common;
         private readonly ApplicationDbContext _db;
         private readonly IJwtService _jwtService;
         private readonly INotyfService _notyf;
         private readonly ISMSSender _sms;
 
-        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf, ILoginRepository loginRepo, IRequestRepository requestRepo, ISMSSender sms)
+        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf, ILoginRepository loginRepo, IRequestRepository requestRepo, ISMSSender sms, ICommonRepository common)
         {
             _notyf = notyf;
             _adminRepo = adminRepo;
@@ -37,6 +35,7 @@ namespace HalloDoc.Controllers
             _loginRepo = loginRepo;
             _requestRepo = requestRepo;
             _sms = sms;
+            _common = common;
         }
 
         public IActionResult Dashboard(int? status)
@@ -275,9 +274,9 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Dashboard");
         }
 
-        public object FilterPhysician(int Region)
+        public object FilterPhysician(int Region, int phyid)
         {
-            return _adminRepo.FilterPhysician(Region);
+            return _adminRepo.FilterPhysician(Region,phyid);
         }
 
         public IActionResult AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
@@ -483,7 +482,7 @@ namespace HalloDoc.Controllers
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
-
+    
             _adminRepo.MyProfile(obj, AspId);
 
             return RedirectToAction("MyProfile");
@@ -526,11 +525,54 @@ namespace HalloDoc.Controllers
             return View(obj);
         }
 
+        public IActionResult RequestSupport(string RequestNote)
+        {
+            var phy = _db.Physicians.Where(x => x.Status == 4).ToList();
+            foreach(var item in phy)
+            {
+                _loginRepo.SendEmail(item.Email, "Request Support", RequestNote);
+            }
+            return RedirectToAction("Dashboard");
+        }
 
         [HttpPost]
-        public FileResult Export(string GridHtml)
+        public FileResult Export(int status, searchViewModel obj)
         {
-            return File(Encoding.ASCII.GetBytes(GridHtml), "application/vnd.ms-excel", "Grid.xls");
+            byte[] excelBytes;
+
+            if (status == 8)
+            {
+                IEnumerable<activeReqViewModel> data = _adminRepo.activeReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == 2)
+            {
+                IEnumerable<pendingReqViewModel> data = _adminRepo.pendingReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == 4)
+            {
+                IEnumerable<concludeReqViewModel> data = _adminRepo.concludeReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == 5)
+            {
+                IEnumerable<closeReqViewModel> data = _adminRepo.closeReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == 13)
+            {
+                IEnumerable<unpaidReqViewModel> data = _adminRepo.unpaidReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else
+            {
+                IEnumerable<newReqViewModel> data = _adminRepo.newReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+
+
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sheet.xlsx");
         }
 
         public FileResult ExportAll(int status)
@@ -540,67 +582,38 @@ namespace HalloDoc.Controllers
             if (status == 8)
             {
                 IEnumerable<activeReqViewModel> data = _adminRepo.activeReq().ToList();
-                excelBytes = fileToExcel(data);
+                excelBytes = _common.fileToExcel(data);
             }
             else if (status == 2)
             {
                 IEnumerable<pendingReqViewModel> data = _adminRepo.pendingReq().ToList();
-                excelBytes = fileToExcel(data);
+                excelBytes = _common.fileToExcel(data);
             }
             else if (status == 4)
             {
                 IEnumerable<concludeReqViewModel> data = _adminRepo.concludeReq().ToList();
-                excelBytes = fileToExcel(data);
+                excelBytes = _common.fileToExcel(data);
             }
             else if (status == 5)
             {
                 IEnumerable<closeReqViewModel> data = _adminRepo.closeReq().ToList();
-                excelBytes = fileToExcel(data);
+                excelBytes = _common.fileToExcel(data);
             }
             else if (status == 13)
             {
                 IEnumerable<unpaidReqViewModel> data = _adminRepo.unpaidReq().ToList();
-                excelBytes = fileToExcel(data);
+                excelBytes = _common.fileToExcel(data);
             }
             else
             {
                 IEnumerable<newReqViewModel> data = _adminRepo.newReq().ToList();
-                excelBytes = fileToExcel(data);
+                excelBytes = _common.fileToExcel(data);
             }
 
 
             return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sheet.xlsx");
         }
 
-        public byte[] fileToExcel<T>(IEnumerable<T> data)
-        {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (ExcelPackage package = new ExcelPackage())
-            {
-                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Data");
-
-                PropertyInfo[] properties = typeof(T).GetProperties();
-                for (int i = 0; i < properties.Length; i++)
-                {
-                    worksheet.Cells[1, i + 1].Value = properties[i].Name;
-                }
-                int row = 2;
-
-                foreach (var item in data)
-                {
-                    for (int i = 0; i < properties.Length; i++)
-                    {
-                        worksheet.Cells[row, i + 1].Value = properties[i].GetValue(item);
-                    }
-                    row++;
-                }
-
-                byte[] excelBytes = package.GetAsByteArray();
-
-                return excelBytes;
-            }
-
-        }
 
         public IActionResult Provider()
         {
@@ -893,6 +906,12 @@ namespace HalloDoc.Controllers
 
         public IActionResult CreateAdmin()
         {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
             var data = _adminRepo.CreateAdmin();
 
             return View(data);
@@ -911,6 +930,30 @@ namespace HalloDoc.Controllers
             return RedirectToAction("CreateAdmin");
         }
 
+        public IActionResult EditAdmin(int id)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            var data = _adminRepo.EditAdmin(id);
+            return View(data);
+        }
+        [HttpPost]
+        public IActionResult EditAdmin(string selectedRegion, CreateAdminViewModel obj)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+
+            var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
+
+            _adminRepo.EditAdmin(obj,AspId, Region);
+            return View(obj.Adminid);
+        }
+
         public IActionResult UserAccess()
         {
             var token = Request.Cookies["jwt"];
@@ -920,74 +963,21 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
 
-            var data = new UserAccessVM
-            {
-                Roles = _db.Roles,
-            };
+            var data = _adminRepo.UserAccess();
             return View(data);
         }
 
-        public IActionResult UserAccessTable(int accountType, int RoleId)
+        public async Task<IActionResult> UserAccessTable(int accountType, int RoleId, int pageNumber)
         {
-            var data= new object();
-            if (accountType == 2)
-            {
-                 data = from t1 in _db.Physicians
-                        join t2 in _db.Roles on t1.Roleid equals t2.Roleid
-                        join t3 in _db.AccountTypes on t2.Accounttype equals t3.Id
-                        where t2.Roleid == RoleId
-                       select new UserAccessTable
-                       {
-                           userId = t1.Physicianid,
-                           UserName = t1.Firstname + " " + t1.Lastname,
-                           AccountType = t3.Name,
-                           AccountTypeId = t3.Id,
-                           Phone = t1.Mobile
-                       };
-            }
-            else if (accountType == 1)
-            {
-                 data = from t2 in _db.Admins
-                        join t3 in _db.Roles on t2.Roleid equals t3.Roleid
-                        join t4 in _db.AccountTypes on t3.Accounttype equals t4.Id
-                        where t3.Roleid == RoleId
-                           select new UserAccessTable
-                           {
-                               userId = t2.Adminid,
-                               UserName = t2.Firstname + " " + t2.Lastname,
-                               AccountType = t4.Name,
-                               AccountTypeId = t4.Id,
-                               Phone = t2.Mobile,
-                           };
-            }
-            else
-            {
-                 data = (from t1 in _db.Physicians
-                         join t2 in _db.Roles on t1.Roleid equals t2.Roleid
-                         join t3 in _db.AccountTypes on t2.Accounttype equals t3.Id
-                         select new UserAccessTable
-                            {
-                                userId = t1.Physicianid,
-                                UserName = t1.Firstname + " " + t1.Lastname,
-                             AccountType = t3.Name,
-                             AccountTypeId = t3.Id,
-                             Phone = t1.Mobile,
+            var data = _adminRepo.UserAccessTables(accountType, RoleId);    
 
-                         }).Union(from t2 in _db.Admins
-                                     join t3 in _db.Roles on t2.Roleid equals t3.Roleid
-                                     join t4 in _db.AccountTypes on t3.Accounttype equals t4.Id
-                                     select new UserAccessTable
-                                     {
-                                         userId = t2.Adminid,
-                                         UserName = t2.Firstname + " " + t2.Lastname,
-                                         AccountType = t4.Name,
-                                         AccountTypeId = t4.Id,
-                                         Phone = t2.Mobile,
-                                     }
-                                           );
+            if(pageNumber < 1)
+            {
+                pageNumber = 1;
             }
+            var pageSize = 2;
 
-            return PartialView("_UserAccessTable", data);
+            return PartialView("_UserAccessTable", await PaginatedList<UserAccessTable>.CreateAsync(data, pageNumber, pageSize));
         }
 
     }

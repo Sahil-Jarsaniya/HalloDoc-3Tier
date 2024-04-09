@@ -1,12 +1,14 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
-using HalloDoc.DataAccess.Models;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Reflection;
+using OfficeOpenXml;
+using HalloDoc.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;  
+using System.Text.Json;
+
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
@@ -36,6 +38,36 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     file.CopyTo(stream);
                 }
             }
+        }
+
+        public byte[] fileToExcel<T>(IEnumerable<T> data)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (ExcelPackage package = new ExcelPackage())
+            {
+                ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("Data");
+
+                PropertyInfo[] properties = typeof(T).GetProperties();
+                for (int i = 0; i < properties.Length; i++)
+                {
+                    worksheet.Cells[1, i + 1].Value = properties[i].Name;
+                }
+                int row = 2;
+
+                foreach (var item in data)
+                {
+                    for (int i = 0; i < properties.Length; i++)
+                    {
+                        worksheet.Cells[row, i + 1].Value = properties[i].GetValue(item);
+                    }
+                    row++;
+                }
+
+                byte[] excelBytes = package.GetAsByteArray();
+
+                return excelBytes;
+            }
+
         }
 
     }

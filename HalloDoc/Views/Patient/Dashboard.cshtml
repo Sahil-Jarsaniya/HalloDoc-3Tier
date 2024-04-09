@@ -72,7 +72,7 @@
                                 </div>
                                 <div>
                                     <a href="@Url.Action("Document", "Patient", new{reqId = item.RequestId})" class="btn" id="doc" style="color: #01bce9; border: 1px solid #01bce9;">
-                                        Document
+                                        (@item.fileCount) Document
                                     </a>
                                 </div>
                             </div>
@@ -99,7 +99,7 @@
                                     {
 
                                         <a href="@Url.Action("Document", "Patient", new{reqId = item.RequestId})" class="btn" id="doc" style="color: #01bce9; border: 1px solid #01bce9;">
-                                            Document
+                                            (@item.fileCount) Document
                                         </a>
                                     }
                                 </td>

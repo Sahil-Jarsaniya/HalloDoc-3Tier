@@ -49,10 +49,6 @@ namespace HalloDoc.Controllers
                 var jwtToken = _JwtService.GenerateJwtToken(user2);
                 Response.Cookies.Append("jwt", jwtToken);
 
-                String userName = myUser.Firstname + " " + myUser.Lastname;
-                HttpContext.Session.SetString("adminToken", userName);
-                HttpContext.Session.SetInt32("AdminId", myUser.Adminid);
-                String AspId = myUser.Aspnetuserid;
                 _notyf.Success("Successful Login");
                 return RedirectToAction("Dashboard", "AdminDashboard");
             }
@@ -60,8 +56,6 @@ namespace HalloDoc.Controllers
         
         public IActionResult logout()
         {
-            HttpContext.Session.Remove("adminToken");
-            HttpContext.Session.Remove("AdminId");
 
             if (Request.Cookies["jwt"] != null)
             {

@@ -11,7 +11,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
     {
         public IEnumerable<Role>? Roles { get; set; }    
 
-        public IEnumerable<UserAccessTable>? userAccessTables { get; set; }
+        public IQueryable<UserAccessTable>? userAccessTables { get; set; }
     }
 
     public class UserAccessTable

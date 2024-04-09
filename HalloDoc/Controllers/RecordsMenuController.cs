@@ -1,10 +1,13 @@
 ﻿    using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDoc.BussinessAccess.Repository.Interface;
+using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.DataAccess.ViewModel.RecordsMenu;
 using HalloDoc.Services;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
 using System.Drawing.Printing;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
 
 namespace HalloDoc.Controllers
 {
@@ -12,14 +15,64 @@ namespace HalloDoc.Controllers
     public class RecordsMenuController : Controller
     {
         private readonly IRecordsRepository _recordsRepo;
+        private readonly ICommonRepository _common;
         private readonly INotyfService _noty;
         private readonly IJwtService _jwtService;
-        public RecordsMenuController(IRecordsRepository recordsRepo, INotyfService noty, IJwtService jwtService)
+        public RecordsMenuController(IRecordsRepository recordsRepo, INotyfService noty, IJwtService jwtService, ICommonRepository common)
         {
             _recordsRepo = recordsRepo;
             _noty = noty;
             _jwtService = jwtService;
+            _common = common;
 
+        }
+        public FileResult Export(SearchSortingVM obj)
+        {
+            var data = _recordsRepo.SearchRecords();
+
+            if (obj != null)
+            {
+                if (obj.Phonenumber != null)
+                {
+                    data = data.Where(x => x.PhoneNumber == obj.Phonenumber);
+                }
+                if (obj.ProviderName != null)
+                {
+                    data = data.Where(x => x.Physician.ToUpper().Contains(obj.ProviderName.ToUpper()));
+                }
+                if (obj.PatientName != null)
+                {
+                    data = data.Where(x => x.PatientName.ToUpper().Contains(obj.PatientName.ToUpper()));
+                }
+                if (obj.Email != null)
+                {
+                    data = data.Where(x => x.Email == obj.Email);
+                }
+                if (obj.ReqStatus != null && obj.ReqStatus != 0)
+                {
+                    data = data.Where(x => x.ReqStatusId == obj.ReqStatus);
+                }
+                if (obj.ReqType != null && obj.ReqType != 0)
+                {
+                    data = data.Where(x => x.ReqTypeId == obj.ReqType);
+                }
+                if (obj.Date1.Month != 1 && obj.Date1.Year != 1 && obj.Date1.Day != 1)
+                {
+                    data = data.Where(x => x.DateOfService.Year >= obj.Date1.Year &&
+                    x.DateOfService.Month >= obj.Date1.Month &&
+                    x.DateOfService.Day >= obj.Date1.Day
+                    );
+                }
+                if (obj.Date2.Month != 1 && obj.Date2.Year != 1 && obj.Date2.Day != 1)
+                {
+                    data = data.Where(x => x.DateOfService.Year <= obj.Date2.Year &&
+                    x.DateOfService.Month <= obj.Date2.Month &&
+                    x.DateOfService.Day <= obj.Date2.Day
+                    );
+                }
+            }
+            byte[] excelBytes = _common.fileToExcel(data);
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sheet.xlsx");
         }
         public string GetAdminName()
         {
@@ -74,17 +127,11 @@ namespace HalloDoc.Controllers
                 }
                 if (obj.Date1.Month != 1 && obj.Date1.Year != 1 && obj.Date1.Day != 1)
                 {
-                    data = data.Where(x => x.DateOfService.Year == obj.Date1.Year &&
-                    x.DateOfService.Month == obj.Date1.Month &&
-                    x.DateOfService.Day == obj.Date1.Day
-                    );
+                    data = data.Where(x => x.DateOfService >= obj.Date1);
                 }
                 if (obj.Date2.Month != 1 && obj.Date2.Year != 1 && obj.Date2.Day != 1)
                 {
-                    data = data.Where(x => x.CloseCaseDate.Year == obj.Date2.Year &&
-                    x.CloseCaseDate.Month == obj.Date2.Month &&
-                    x.CloseCaseDate.Day == obj.Date2.Day
-                    );
+                    data = data.Where(x => x.DateOfService <= obj.Date2);
                 }
             }
 
@@ -269,6 +316,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult PatientHistory()
         {
+            ViewBag.AdminName = GetAdminName();
             return View();
         }
 
@@ -306,6 +354,7 @@ namespace HalloDoc.Controllers
 
         public async Task<IActionResult> PatientRecord(int reqId, int pagenumber)
         {
+            ViewBag.AdminName = GetAdminName();
             if (pagenumber < 1)
             {
                 pagenumber = 1;

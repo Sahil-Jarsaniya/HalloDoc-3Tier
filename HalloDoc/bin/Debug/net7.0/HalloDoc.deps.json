@@ -2754,6 +2754,7 @@
       "HalloDoc.BussinessAccess/1.0.0": {
         "dependencies": {
           "AspNetCoreHero.ToastNotification": "1.1.0",
+          "EPPlus": "7.0.9",
           "HalloDoc.DataAccess": "1.0.0",
           "MailKit": "4.3.0",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "7.0.16",

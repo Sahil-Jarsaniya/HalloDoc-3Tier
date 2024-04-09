@@ -1,0 +1,177 @@
+﻿@model CreateAdminViewModel;
+@{
+    ViewData["Title"] = "Create Provider";
+    Layout = "_adminLayout";
+}
+<div class="">
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Edit Admin Account
+        </h4>
+        <a href="@Url.Action("UserAccess","AdminDashboard")" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="d-grid justify-content-center mt-4">
+        <div class="shadow">
+            <form method="post" asp-action="EditAdmin" asp-controller="AdminDashboard" id="CreateProviderForm" class="viewCaseForm form-floating  patient-request-form p-3">
+                <h5>Account Information</h5>
+                <div class="row g-2 m-1">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input asp-for="Adminid" hidden/>
+                            <input asp-for="Username" type="text" class="form-control" id="userName" placeholder="" disabled>
+                            <label for="">User Name</label>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <select asp-for="Roleid" class="form-select mb-3" id="role">
+                                @foreach (var item in Model.Rolemenus)
+                                {
+                                    <option value="@item.Roleid">@item.Name</option>
+                                }
+                            </select>
+                            <label for="">Role</label>
+                        </div>
+                    </div>
+                </div>
+
+                <h5>Administrator Information</h5>
+
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Firstname" type="text" class="form-control" placeholder="">
+                            <label for="">First Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Lastname" type="text" class="form-control" placeholder="">
+                            <label for="">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+                            <label for="">Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+                            <label for="">Confirm Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                            <label for="">Phone</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @foreach (var item in Model.CheckedRegion)
+                        {
+                            if (item.Checked)
+                            {
+                                <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.Id" checked />
+                                <label for="@item.Id">@item.value</label>
+                            }
+                            else
+                            {
+                                <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.Id" />
+                                <label for="@item.Id">@item.value</label>
+                            }
+                        }
+                    </div>
+                </div>
+                <h5>Mailing & Billing Information</h5>
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Address1" type="text" class="form-control" placeholder="">
+                            <label for="">Address1</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Address2" type="text" class="form-control" placeholder="">
+                            <label for="floatingSelectGrid">Address2</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="City" type="text" class="form-control" placeholder="">
+                            <label for="">City</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <select class="form-select">
+                                <option>guj</option>
+                                <option>raj</option>
+                                <option>md</option>
+                            </select>
+                            <label for="">State</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="Zip" type="text" class="form-control" placeholder="">
+                            <label for="">Zip</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                            <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                            <label for="">Phone</label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="button" id="CreateAdminBtn" class="btn btn-success float-end">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section AdminScript {
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <script>
+        $("#CreateAdminBtn").click(function () {
+            var selectedRegion = [];
+            $(".regionCheckbox").each(function () {
+
+                var checkboxdata = {
+                    Id: parseInt($(this).attr('id')),
+                    value: $(this).val(),
+                    Checked: $(this).is(':checked')
+                };
+
+                selectedRegion.push(checkboxdata);
+            })
+
+            var formdata = new FormData($("#CreateProviderForm")[0]);
+
+            formdata.append('selectedRegion', JSON.stringify(selectedRegion));
+
+            $.ajax({
+                url: '/AdminDashboard/EditAdmin',
+                type: 'POST',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    window.location.href("/AdminDashboard/EditAdmin");
+                }
+            })
+
+        })
+    </script>
+}

@@ -9,6 +9,7 @@
         <h4>
             Account Access
         </h4>
+        
     </div>
     <div class="container mt-4 w-100" style="max-width:1000px">
         <a asp-action="CreateRole" class="btn btn-outline-primary mb-1 float-end ">
@@ -47,7 +48,7 @@
                             <td>
                                 <div class="float-end">
                                 <a class="btn btn-outline-primary" asp-action="EditRole" asp-route-id="@item.Roleid">Edit</a>
-                                <a class="btn btn-outline-primary" asp-action="DeleteRole" asp-controller="AdminDashboard" asp-route-id="@item.Roleid">Delete</a>
+                                <a class="btn btn-outline-danger" asp-action="DeleteRole" asp-controller="AdminDashboard" asp-route-id="@item.Roleid">Delete</a>
                                 </div>
                             </td>
                         </tr>

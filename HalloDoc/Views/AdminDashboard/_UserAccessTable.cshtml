@@ -1,7 +1,7 @@
-﻿@model IEnumerable<UserAccessTable>;
-<table class="table">
+﻿@model PaginatedList<UserAccessTable>;
+<table class="table table-responsive">
     <thead>
-        <tr>
+        <tr class="table-secondary">
             <td>Account Type</td>
             <td>Account  POC</td>
             <td>Phone</td>
@@ -11,7 +11,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Items)
         {
             <tr>
                 <td>@item.AccountType</td>
@@ -22,7 +22,7 @@
                 <td>
                     @if(item.AccountTypeId == 1)
                     {
-                        <button class="btn btn-outline-primary" data-id="@item.userId">Edit</button>
+                        <a class="btn btn-outline-primary" asp-action="EditAdmin" asp-route-id="@item.userId">Edit</a>
                     }else if(item.AccountTypeId == 2)
                     {
                         <a class="btn btn-outline-primary" asp-action="EditProvider" asp-route-Physicianid="@item.userId">Edit</a>
@@ -32,3 +32,29 @@
         }
     </tbody>
 </table>
+
+@*Pagination*@
+
+<partial name="_PaginationPart" />
+
+<script>
+    $(".pageBtn").click(function () {
+        var pageNumber = $(this).data('page');
+        var AccountType = $("#AccountType").val();
+        var RoleId = $("option:selected", "#AccountType").attr('id');
+        $.ajax({
+            url: '/AdminDashboard/UserAccessTable',
+            type: 'POST',
+            data: {
+                pagenumber: pageNumber, accountType: AccountType, RoleId: RoleId
+            },
+            success: function (result) {
+                $('#UserAccessTable').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        })
+    })
+</script>

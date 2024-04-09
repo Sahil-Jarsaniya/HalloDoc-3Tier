@@ -80,12 +80,13 @@ $("#ConfirmAssignBtn").click(function () {
 //Transfer Case Region filter
 $(".TransferRegionSelect").change(function () {
     var selectedRegion = $(this).val();
-    console.log("assign")
+    var selectedPhy = $("#PhyId").val();
+    console.log(selectedPhy);
     $.ajax({
         url: '/AdminDashboard/FilterPhysician',
         method: 'POST',
         data: {
-            region: selectedRegion
+            region: selectedRegion, PhyId: selectedPhy
         },
         success: function (response) {
             $(".TransferPhysicianSelect").empty();
@@ -121,7 +122,7 @@ $("#ConfirmTransferBtn").click(function () {
 
 $("#ConfirmClearBtn").click(function () {
     var reqClientId = $("#ClearClientId").val();
-    console.log(dashboardStatus);
+   
     $.ajax({
         url: '/AdminDashboard/ClearCase',
         type: 'POST',

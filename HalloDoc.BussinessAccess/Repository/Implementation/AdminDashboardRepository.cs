@@ -96,7 +96,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                   City = rc.City,
                                   State = rc.State,
                                   Zipcode = rc.Zipcode,
-                                  Notes = rc.Notes,
+                                  Notes = rc.Notes ?? "-",
                                   reqTypeId = req.Requesttypeid,
                                   Regionid = rc.Regionid,
                                   Email = rc.Email,
@@ -126,9 +126,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                      City = rc.City,
                                      State = rc.State,
                                      Zipcode = rc.Zipcode,
-                                     Notes = rc.Notes,
+                                     Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid ).OrderByDescending(x => x.Createddate).Select(x=> x.Notes).FirstOrDefault() ?? "-",
                                      reqTypeId = req.Requesttypeid,
                                      physicianName = phy.Firstname + " " + phy.Lastname,
+                                     Physicianid = phy.Physicianid,
                                      Regionid = rc.Regionid,
                                      Email = rc.Email,
                                  };
@@ -157,7 +158,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                     City = rc.City,
                                     State = rc.State,
                                     Zipcode = rc.Zipcode,
-                                    Notes = rc.Notes,
+                                    Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid).OrderByDescending(x => x.Createddate).Select(x => x.Notes).FirstOrDefault() ?? "-",
                                     reqTypeId = req.Requesttypeid,
                                     physicianName = phy.Firstname + " " + phy.Lastname,
                                     Regionid = rc.Regionid,
@@ -219,7 +220,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                    City = rc.City,
                                    State = rc.State,
                                    Zipcode = rc.Zipcode,
-                                   Notes = rc.Notes,
+                                   Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid).OrderByDescending(x => x.Createddate).Select(x => x.Notes).FirstOrDefault() ?? "-",
                                    reqTypeId = req.Requesttypeid,
                                    physicianName = phy.Firstname + " " + phy.Lastname,
                                    Regionid = rc.Regionid,
@@ -282,7 +283,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                   City = rc.City,
                                   State = rc.State,
                                   Zipcode = rc.Zipcode,
-                                  Notes = rc.Notes,
+                                  Notes = rc.Notes ?? "-",
                                   reqTypeId = req.Requesttypeid,
                                   Regionid = rc.Regionid,
                                   Email = rc.Email,
@@ -327,9 +328,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                      City = rc.City,
                                      State = rc.State,
                                      Zipcode = rc.Zipcode,
-                                     Notes = rc.Notes,
+                                     Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid).OrderByDescending(x => x.Createddate).Select(x => x.Notes).FirstOrDefault() ?? "-",
                                      reqTypeId = req.Requesttypeid,
                                      physicianName = phy.Firstname + " " + phy.Lastname,
+                                     Physicianid = phy.Physicianid,
                                      Regionid = rc.Regionid,
                                      Email = rc.Email,
                                  };
@@ -372,7 +374,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                     City = rc.City,
                                     State = rc.State,
                                     Zipcode = rc.Zipcode,
-                                    Notes = rc.Notes,
+                                    Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid).OrderByDescending(x => x.Createddate).Select(x => x.Notes).FirstOrDefault() ?? "-",
                                     reqTypeId = req.Requesttypeid,
                                     physicianName = phy.Firstname + " " + phy.Lastname,
                                     Regionid = rc.Regionid,
@@ -461,7 +463,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                    City = rc.City,
                                    State = rc.State,
                                    Zipcode = rc.Zipcode,
-                                   Notes = rc.Notes,
+                                   Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid ).OrderByDescending(x => x.Createddate).Select(x => x.Notes).FirstOrDefault() ?? "-",
                                    reqTypeId = req.Requesttypeid,
                                    physicianName = phy.Firstname + " " + phy.Lastname,
                                    Regionid = rc.Regionid,
@@ -528,68 +530,6 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return unpaidReqData;
         }
 
-        //public AdminDashboardViewModel searchPatient(searchViewModel obj, AdminDashboardViewModel data)
-        //{
-        //    if (obj.Name == null && obj.RegionId == 0 && obj.reqType == 0)
-        //    {
-        //        return data;
-        //    }
-        //    if (obj.Name != null)
-        //    {
-        //        var name = obj.Name.ToUpper();
-        //        var sortedNew = data.newReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-        //        var sortedConclude = data.concludeReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-        //        var sortedClose = data.closeReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-        //        var sortedPending = data.pendingReqViewModel.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-        //        var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-        //        var sortedActive = data.activeReqViewModels.Where(s => s.Firstname.ToUpper().Contains(name) || s.Lastname.ToUpper().Contains(name) || s.reqFirstname.ToUpper().Contains(name) || s.reqLastname.ToUpper().Contains(name));
-
-        //        //data.newReqViewModel = sortedNew;
-        //        data.concludeReqViewModel = sortedConclude;
-        //        data.closeReqViewModels = sortedClose;
-        //        data.pendingReqViewModel = sortedPending;
-        //        data.activeReqViewModels = sortedActive;
-        //        data.unpaidReqViewModels = sortedUnpaid;
-
-        //    }
-
-        //    if (obj.RegionId != 0)
-        //    {
-        //        var sortedNew = data.newReqViewModel.Where(s => s.Regionid == obj.RegionId);
-        //        var sortedConclude = data.concludeReqViewModel.Where(s => s.Regionid == obj.RegionId);
-        //        var sortedClose = data.closeReqViewModels.Where(s => s.Regionid == obj.RegionId);
-        //        var sortedPending = data.pendingReqViewModel.Where(s => s.Regionid == obj.RegionId);
-        //        var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.Regionid == obj.RegionId);
-        //        var sortedActive = data.activeReqViewModels.Where(s => s.Regionid == obj.RegionId);
-
-        //        //data.newReqViewModel = sortedNew;
-        //        data.concludeReqViewModel = sortedConclude;
-        //        data.closeReqViewModels = sortedClose;
-        //        data.pendingReqViewModel = sortedPending;
-        //        data.activeReqViewModels = sortedActive;
-        //        data.unpaidReqViewModels = sortedUnpaid;
-
-        //    }
-        //    if (obj.reqType != 0)
-        //    {
-        //        var sortedNew = data.newReqViewModel.Where(s => s.reqTypeId == obj.reqType);
-        //        var sortedConclude = data.concludeReqViewModel.Where(s => s.reqTypeId == obj.reqType);
-        //        var sortedClose = data.closeReqViewModels.Where(s => s.reqTypeId == obj.reqType);
-        //        var sortedPending = data.pendingReqViewModel.Where(s => s.reqTypeId == obj.reqType);
-        //        var sortedUnpaid = data.unpaidReqViewModels.Where(s => s.reqTypeId == obj.reqType);
-        //        var sortedActive = data.activeReqViewModels.Where(s => s.reqTypeId == obj.reqType);
-
-        //        //data.newReqViewModel = sortedNew;
-        //        data.concludeReqViewModel = sortedConclude;
-        //        data.closeReqViewModels = sortedClose;
-        //        data.pendingReqViewModel = sortedPending;
-        //        data.activeReqViewModels = sortedActive;
-        //        data.unpaidReqViewModels = sortedUnpaid;
-        //    }
-
-
-        //    return data;
-        //}
 
         public viewCaseViewModel viewCase(int reqClientId)
         {
@@ -811,11 +751,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
         }
 
-        public object FilterPhysician(int Region)
+        public object FilterPhysician(int Region, int PhyId)
         {
             var physicians = (from t1 in _db.Physicianregions
                               join t2 in _db.Physicians on t1.Physicianid equals t2.Physicianid
-                              where t1.Regionid == Region
+                              where t1.Regionid == Region && t2.Physicianid != PhyId
                               select new
                               {
                                   physicians = t2.Firstname + " " + t2.Lastname,
@@ -1412,7 +1352,6 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             if (phy.Isagreementdoc == true)
             {
                 data.Isagreementdoc = true;
-                data.agreementdoc = (IFormFile?)_db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == phy.Physicianid && x.FileType == 1);
                 System.String? fileName = (from t1 in _db.ProviderFiles
                                            where t1.PhysicianId == phy.Physicianid && t1.FileType == 1
                                            select t1.FileName).FirstOrDefault();
@@ -1422,7 +1361,6 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             if (phy.Isbackgrounddoc == true)
             {
                 data.Isbackgrounddoc = true;
-                data.backgrounddoc = (IFormFile?)_db.ProviderFiles.FirstOrDefault(x => x.PhysicianId == phy.Physicianid && x.FileType == 2);
                 System.String? fileName = (from t1 in _db.ProviderFiles
                                            where t1.PhysicianId == phy.Physicianid && t1.FileType == 2
                                            select t1.FileName).FirstOrDefault();
@@ -1463,14 +1401,6 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public void ProviderAccountEdit(EditProvider obj)
         {
             var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == obj.Physicianid);
-            var aspRow = _db.AspNetUsers.FirstOrDefault(x => x.Id == phy.Aspnetuserid);
-
-            if (aspRow != null)
-            {
-                aspRow.UserName = obj.UserName;
-                _db.AspNetUsers.Update(aspRow);
-                _db.SaveChanges();
-            }
 
             phy.Status = obj.Status;
             phy.Roleid = obj.Roleid;
@@ -1601,7 +1531,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var asp = new AspNetUser
             {
                 Id = guid.ToString(),
-                UserName = obj.UserName,
+                UserName = "MD." + obj.Lastname + "." + obj.Firstname[0],
                 Email = obj.Email,
                 PasswordHash = pass,
                 CreatedDate = DateTime.UtcNow,
@@ -1633,7 +1563,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Isbackgrounddoc = obj.Isbackgrounddoc,
                 Islicensedoc = obj.Islicensedoc,
                 Isnondisclosuredoc = obj.Isnondisclosuredoc,
-                Istrainingdoc = obj.Istrainingdoc
+                Istrainingdoc = obj.Istrainingdoc,
+                Roleid = obj.Roleid,
+                Status = obj.Status
             };
             _db.Physicians.Add(provider);
             _db.SaveChanges();
@@ -1842,7 +1774,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             Guid guid = Guid.NewGuid();
             var asp = new AspNetUser()
             {
-                UserName = obj.Username,
+                UserName = obj.Lastname + obj.Firstname[0],
                 PasswordHash = password,
                 CreatedDate = DateTime.UtcNow,
                 Email = obj.Email,
@@ -1867,6 +1799,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Createddate = DateTime.Now,
                 Status = obj.Status,
                 Zip = obj.Zip,
+                Roleid = obj.Roleid 
             };
             _db.Admins.Add(admin);
             _db.SaveChanges();
@@ -1884,6 +1817,162 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     _db.SaveChanges();
                 }
             }
+        }
+
+
+        public CreateAdminViewModel EditAdmin(int id)
+        {
+            var admin = _db.Admins.FirstOrDefault(x => x.Adminid == id);
+            var aspRow = _db.AspNetUsers.FirstOrDefault(x => x.Id == admin.Aspnetuserid);
+            var regionData = from t1 in _db.Regions
+                             select new CheckBoxData
+                             {
+                                 Id = t1.Regionid,
+                                 value = t1.Abbreviation,
+                                 Checked = _db.Adminregions.Any(x => x.Adminid == id && x.Regionid == t1.Regionid)
+                             };
+            var data = new CreateAdminViewModel
+            {
+                Username = aspRow.UserName,
+                Adminid = id,
+                Firstname = admin.Firstname,
+                Lastname = admin.Lastname,
+                Email = admin.Email,
+                Status = admin.Status,
+                Roleid = admin.Roleid,
+                Mobile = admin.Mobile,
+                Address1 = admin.Address1,
+                Address2 = admin.Address2,
+                City = admin.City,
+                Zip = admin.Zip,
+                Altphone = admin.Altphone,
+                Aspnetuserid = admin.Aspnetuserid,
+                Isdeleted = admin.Isdeleted,
+                CheckedRegion = regionData,
+                Rolemenus = _db.Roles,
+                Regions = _db.Regions
+            };
+
+            return data;
+        }
+
+        public void EditAdmin(CreateAdminViewModel obj, string AspId, IEnumerable<CheckBoxData> selectedRegion)
+        {
+            var asp = _db.AspNetUsers.First(x => x.Id == AspId);
+            var admin = _db.Admins.FirstOrDefault(x => x.Adminid == obj.Adminid);
+
+            admin.Firstname = obj.Firstname;
+            admin.Lastname = obj.Lastname;
+            admin.Address1 = obj.Address1;
+            admin.Address2 = obj.Address2;
+            admin.Mobile = obj.Mobile;
+            admin.Altphone = obj.Altphone;
+            admin.City = obj.City;
+            admin.Zip = obj.Zip;
+            admin.Status = obj.Status;
+            admin.Email = obj.Email;
+            admin.Roleid = obj.Roleid;
+
+            _db.Admins.Update(admin);
+
+            foreach (var item in selectedRegion)
+            {
+                var adminRegion = _db.Adminregions.FirstOrDefault(x => x.Adminid == obj.Adminid && x.Regionid == item.Id);
+
+                if (adminRegion == null)
+                {
+                    if (item.Checked)
+                    {
+
+                        var region = new Adminregion()
+                        {
+                            Adminid = admin.Adminid,
+                            Regionid = item.Id
+                        };
+                        _db.Adminregions.Add(region);
+                        _db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    if (!item.Checked)
+                    {
+                        _db.Adminregions.Remove(adminRegion);
+                        _db.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public UserAccessVM UserAccess()
+        {
+            var data = new UserAccessVM
+            {
+                Roles = _db.Roles,
+            };
+            return data;
+        }
+
+        public IQueryable<UserAccessTable> UserAccessTables(int accountType, int RoleId)
+        {
+            var data = new object();
+            if (accountType == 2)
+            {
+                data = from t1 in _db.Physicians
+                       join t2 in _db.Roles on t1.Roleid equals t2.Roleid
+                       join t3 in _db.AccountTypes on t2.Accounttype equals t3.Id
+                       where t2.Roleid == RoleId
+                       select new UserAccessTable
+                       {
+                           userId = t1.Physicianid,
+                           UserName = t1.Firstname + " " + t1.Lastname,
+                           AccountType = t3.Name,
+                           AccountTypeId = t3.Id,
+                           Phone = t1.Mobile
+                       };
+            }
+            else if (accountType == 1)
+            {
+                data = from t2 in _db.Admins
+                       join t3 in _db.Roles on t2.Roleid equals t3.Roleid
+                       join t4 in _db.AccountTypes on t3.Accounttype equals t4.Id
+                       where t3.Roleid == RoleId
+                       select new UserAccessTable
+                       {
+                           userId = t2.Adminid,
+                           UserName = t2.Firstname + " " + t2.Lastname,
+                           AccountType = t4.Name,
+                           AccountTypeId = t4.Id,
+                           Phone = t2.Mobile,
+                       };
+            }
+            else
+            {
+                data = (from t1 in _db.Physicians
+                        join t2 in _db.Roles on t1.Roleid equals t2.Roleid
+                        join t3 in _db.AccountTypes on t2.Accounttype equals t3.Id
+                        select new UserAccessTable
+                        {
+                            userId = t1.Physicianid,
+                            UserName = t1.Firstname + " " + t1.Lastname,
+                            AccountType = t3.Name,
+                            AccountTypeId = t3.Id,
+                            Phone = t1.Mobile,
+
+                        }).Union(from t2 in _db.Admins
+                                 join t3 in _db.Roles on t2.Roleid equals t3.Roleid
+                                 join t4 in _db.AccountTypes on t3.Accounttype equals t4.Id
+                                 select new UserAccessTable
+                                 {
+                                     userId = t2.Adminid,
+                                     UserName = t2.Firstname + " " + t2.Lastname,
+                                     AccountType = t4.Name,
+                                     AccountTypeId = t4.Id,
+                                     Phone = t2.Mobile,
+                                 }
+                                          );
+            }
+            return (IQueryable<UserAccessTable>)data;
         }
     }
 }

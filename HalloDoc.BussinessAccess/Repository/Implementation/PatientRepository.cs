@@ -32,7 +32,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            select new PatientDashboardViewModel
                            {
                                RequestId = r.Requestid,
-                               fileCount = 1,
+                               fileCount = _db.Requestwisefiles.Where(x=> x.Requestid == r.Requestid).Count(),
                                Status = s.Status,
                                Createddate = r.Createddate
                            }).ToList();

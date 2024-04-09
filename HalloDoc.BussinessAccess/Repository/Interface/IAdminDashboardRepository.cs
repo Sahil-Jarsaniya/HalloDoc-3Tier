@@ -45,7 +45,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public void BlockCase(int reqClientId, string addNote, int adminId);
 
-        public object FilterPhysician(int Region);
+        public object FilterPhysician(int Region, int PhyId);
 
         public void AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect, int adminId, string AspId);
 
@@ -116,5 +116,13 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public CreateAdminViewModel CreateAdmin();
 
         public void CreateAdmin(CreateAdminViewModel obj, string password, string AspId, IEnumerable<CheckBoxData> selectedRegion);
+
+        public CreateAdminViewModel EditAdmin(int id);
+
+        public void EditAdmin(CreateAdminViewModel obj, string AspId, IEnumerable<CheckBoxData> selectedRegion);
+
+        public UserAccessVM UserAccess();
+
+        public IQueryable<UserAccessTable> UserAccessTables(int accountType, int RoleId);
     }
 }

@@ -14,9 +14,9 @@
             <div class="py-2 ps-2 w-100 status-new">
                 <div class="d-flex">
                     @*<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
-                         fill="currentcolor">
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                    fill="currentcolor">
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
                     </svg>*@
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20px" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
@@ -151,10 +151,12 @@
                 <span class="d-none d-lg-inline ms-1 ">Create Request</span>
             </a>
 
-            <form method="post" asp-action="Export" asp-controller="AdminDashboard">
-                <input type="hidden" name="GridHtml" />
-                <input value="Export" hidden />
-                <button type="submit" class="mx-1 px-2 py-1 btn btn-primary exportData" id="ExportBtn">
+            <form id="exportForm" method="post" asp-action="Export" asp-controller="AdminDashboard">
+                <input id="status" value="" name="status" hidden />
+                <input id="RegionId" value="" name="RegionId" hidden />
+                <input id="Name" value="" name="Name" hidden />
+                <input id="reqType" value="" name="reqType" hidden />
+                <button type="button" class="mx-1 px-2 py-1 btn btn-primary exportData" id="ExportBtn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply" viewBox="0 0 16 16" style="transform: rotateY(180deg);">
                         <path d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.7 8.7 0 0 0-1.921-.306 7 7 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254l-.042-.028a.147.147 0 0 1 0-.252l.042-.028zM7.8 10.386q.103 0 .223.006c.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96z" />
                     </svg>
@@ -171,8 +173,8 @@
                 </button>
             </form>
             <button type="button" class="mx-1 px-2 py-1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReqSupportModal">
-            <img src="~/images/person-circle.svg" />
-            <span class="d-none d-lg-inline ms-1">Request DTY Support</span>
+                <img src="~/images/person-circle.svg" />
+                <span class="d-none d-lg-inline ms-1">Request DTY Support</span>
             </button>
         </div>
 
@@ -380,9 +382,10 @@
                     <form>
                         <p>To transfer this request, search and select anthoer Physician.</p>
                         <input id="TransferClientId" value="" hidden />
+                        <input id="PhyId" value="" hidden />
 
                         <select class="form-select form-select mb-3 RegionSelect TransferRegionSelect" aria-label="Large select example">
-                            <option>Narrow Search by Region</option>
+                            <option>Narrow Search by Region</option>    
                             @foreach (var item in Model.Region)
                             {
                                 <option value="@item.Regionid">@item.Name</option>
@@ -499,28 +502,29 @@
 <div class="modal fade" id="ReqSupportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header" style="background-color: #01bce9; color:white;">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Block</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="dropdown">
-                    <form>
+            <form asp-action="RequestSupport">
+                <div class="modal-header" style="background-color: #01bce9; color:white;">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Request Support</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="dropdown">
                         <p>
                             To all unscheduled Physicians: we are short on coverage and needs addtionals support on Call to respond to Requests.
                         </p>
                         <div class="form-floating m-1 form-div">
                             <textarea class="form-control"
+                                      name="RequestNote"
                                       style="height: 100px"></textarea>
                             <label for=""> Notes</label>
                         </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" id="ConfirmBlockBtn">Confirm</button>
-                <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="ConfirmBlockBtn">Confirm</button>
+                    <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -528,8 +532,8 @@
 @*Send Link*@
 <div class="modal fade" id="SendLinkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-            <form class="form-floating patient-request-form p-2" asp-action="SendEmailToPatient" asp-controller="AdminDashboard">
-        <div class="modal-content">
+        <form class="form-floating patient-request-form p-2" asp-action="SendEmailToPatient" asp-controller="AdminDashboard">
+            <div class="modal-content">
                 <div class="modal-header" style="background-color: #01bce9; color:white;">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Send mail to patient for submitting request</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -569,8 +573,8 @@
                     <button type="submit" class="btn btn-primary" id="SendEmailBtn">Send</button>
                     <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
                 </div>
-        </div>
-            </form>
+            </div>
+        </form>
     </div>
 </div>
 

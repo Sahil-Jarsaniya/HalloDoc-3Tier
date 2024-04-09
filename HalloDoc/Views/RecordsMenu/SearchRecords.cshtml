@@ -8,9 +8,15 @@
     <h4>
         Search Records
     </h4>
-        <form method="post" asp-action="Export" asp-controller="AdminDashboard">
-            <input type="hidden" name="GridHtml" />
-            <input value="Export" hidden />
+        <form method="post" id="ExportForm" asp-action="Export" asp-controller="RecordsMenu">
+        <input id="ReqStatus1" name="ReqStatus" hidden />
+        <input id="ReqType1" name="ReqType" hidden />
+        <input id="Phonenumber1" name="Phonenumber" hidden />
+        <input id="Email1" name="Email" hidden />
+        <input id="ProviderName1" name="ProviderName" hidden />
+        <input id="PatientName1" name="PatientName" hidden />
+        <input id="Date21" name="Date2" hidden />
+        <input id="Date11" name="Date1" hidden />
             <button type="submit" class="mx-1 px-2 py-1 btn btn-primary exportData" id="ExportBtn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-reply" viewBox="0 0 16 16" style="transform: rotateY(180deg);">
                     <path d="M6.598 5.013a.144.144 0 0 1 .202.134V6.3a.5.5 0 0 0 .5.5c.667 0 2.013.005 3.3.822.984.624 1.99 1.76 2.595 3.876-1.02-.983-2.185-1.516-3.205-1.799a8.7 8.7 0 0 0-1.921-.306 7 7 0 0 0-.798.008h-.013l-.005.001h-.001L7.3 9.9l-.05-.498a.5.5 0 0 0-.45.498v1.153c0 .108-.11.176-.202.134L2.614 8.254l-.042-.028a.147.147 0 0 1 0-.252l.042-.028zM7.8 10.386q.103 0 .223.006c.434.02 1.034.086 1.7.271 1.326.368 2.896 1.202 3.94 3.08a.5.5 0 0 0 .933-.305c-.464-3.71-1.886-5.662-3.46-6.66-1.245-.79-2.527-.942-3.336-.971v-.66a1.144 1.144 0 0 0-1.767-.96l-3.994 2.94a1.147 1.147 0 0 0 0 1.946l3.994 2.94a1.144 1.144 0 0 0 1.767-.96z" />
@@ -96,11 +102,24 @@
 @section AdminScript {
     <script>
         $("#ExportBtn").click(function () {
-            var cloneaTable = $("#partialTable").clone();
-            cloneaTable.find(" td:nth-last-child(1)").remove();
-            cloneaTable.find(".mobileView").remove();
-            cloneaTable.find(".pageMenu").remove();
-            $("input[name='GridHtml']").val(cloneaTable.html());
+            var ReqStatus = $("#ReqStatus").val();
+            var ReqType = $("#ReqType").val();
+            var Phonenumber = $("#Phonenumber").val();
+            var Email = $("#Email").val();
+            var ProviderName = $("#ProviderName").val();
+            var PatientName = $("#PatientName").val();
+            var Date2 = $("#Date2").val();
+            var Date1 = $("#Date1").val();
+            $("#Date11").val(Date1);
+            $("#Date21").val(Date2);
+            $("#PatientName1").val(PatientName);
+            $("#ProviderName1").val(ProviderName);
+            $("#Email1").val(Email);
+            $("#Phonenumber1").val(Phonenumber);
+            $("#ReqType1").val(ReqType);
+            $("#ReqStatus1").val(ReqStatus);
+
+            $("#ExportForm").submit();
         });
         $(document).ready(function(){
             $("#partialTable").load("/RecordsMenu/SearchRecordsTable");
@@ -129,7 +148,6 @@
                     Date1: Date1,
                 },
                 success: function(data){
-                    console.log(data);
                     $("#partialTable").html(data);
                 }
             })

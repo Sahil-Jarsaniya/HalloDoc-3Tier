@@ -8,7 +8,7 @@
         <h4>
             Create Physician Account
         </h4>
-        <a onclick="history.go(-1)" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+        <a href="@Url.Action("Provider","AdminDashboard")" class="btn btn-outline-primary m-2 text-decoration-none float-end"
            id="back-btn">
             <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
             Back
@@ -21,7 +21,7 @@
                 <div class="row g-2 m-1">
                     <div class="col-md">
                         <div class="form-floating">
-                            <input asp-for="UserName" type="text" class="form-control" id="userName" placeholder="">
+                            <input asp-for="UserName" type="text" class="form-control" id="userName" placeholder="" disabled>
                             <label for="">User Name</label>
                         </div>
                         <span></span>

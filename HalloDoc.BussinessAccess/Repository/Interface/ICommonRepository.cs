@@ -11,6 +11,6 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
     public interface ICommonRepository
     {
         public void uploadFile(IFormFile? fileName, string path);
-
+        public byte[] fileToExcel<T>(IEnumerable<T> data);
     }
 }

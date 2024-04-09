@@ -53,7 +53,6 @@ $(".status-tab").click(function () {
         type: 'POST',
         data: { status: status },
         success: function (result) {
-            console.log(result);
             $('#PartialTable').html(result);
         },
         error: function (error) {
@@ -159,11 +158,16 @@ $(".filterReqByType").click(function () {
 
 //Export
 $("#ExportBtn").click(function () {
-    var cloneaTable = $("#PartialTable").clone();
-    cloneaTable.find(" td:nth-last-child(1), td:nth-child(2)").remove();
-    cloneaTable.find(".mobileView").remove();
-    cloneaTable.find(".pageMenu").remove();
-    $("input[name='GridHtml']").val(cloneaTable.html());
+    var status = localStorage.getItem("status");
+    var RegionId = $("#RegionFilter").val();
+    var Name = $("#search").val();
+    var reqType = $("#filterReqType").val();
+
+    $("#status").val(status);
+    $("#RegionId").val(RegionId);
+    $("#Name").val(Name);
+    $("#reqType").val(reqType);
+    $("#exportForm").submit();
 });
 
 //Export all
