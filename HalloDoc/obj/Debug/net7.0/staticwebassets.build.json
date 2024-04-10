@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "9vTB4U0KaWW4ea/SMBlG+S6fLBxPI5VMSAZz26auP04=",
+  "Hash": "Itoev60Z8r4d2r94Nn4GAialz/MExMxxJwmybbobkis=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -967,6 +967,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\phone.js"
+    },
+    {
+      "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\js\\PhysicianDashboard.js",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "js/PhysicianDashboard.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\PhysicianDashboard.js"
     },
     {
       "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\js\\pop up.js",

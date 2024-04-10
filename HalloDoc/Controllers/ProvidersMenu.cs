@@ -124,22 +124,7 @@ namespace HalloDoc.Controllers
         public PartialViewResult ViewAllShift(string date)
         {
             var date1 = DateOnly.Parse(date);
-            var data = from t3 in _db.Shiftdetails.Where(x => x.Shiftdate.Month == date1.Month && x.Shiftdate.Day == date1.Day && x.Shiftdate.Year == date1.Year && x.Isdeleted != true)
-                       join t2 in _db.Shifts on t3.Shiftid equals t2.Shiftid
-                       join t1 in _db.Physicians on t2.Physicianid equals t1.Physicianid
-                       select new DayScheduling
-                       {
-                           PhysicianId = t1.Physicianid,
-                           PhysicianName = t1.Firstname + " " + t1.Lastname,
-                           Shiftid = t2 != null ? t2.Shiftid : null,
-                           shiftDetailId = t3 != null ? t3.Shiftdetailid : null,
-                           Startdate = t2 != null ? t2.Startdate : null,
-                           EndTime = t3 != null ? t3.Endtime : null,
-                           StartTime = t3 != null ? t3.Starttime : null,
-                           SelectedDate = date1,
-                           ShiftDate = t3 != null ? t3.Shiftdate : null,
-                           status = t3 != null ? t3.Status : null,
-                       };
+            var data = _ProviderMenu.ViewAllShift(date);
 
             return PartialView("_ViewAllShift", data);
         }
@@ -160,11 +145,17 @@ namespace HalloDoc.Controllers
         }
         public IActionResult ReturnShift(int shiftDetailId)
         {
-            var shiftDetail = _db.Shiftdetails.FirstOrDefault(x => x.Shiftdetailid == shiftDetailId);
-            shiftDetail.Status = 2;
-            _db.Shiftdetails.Update(shiftDetail);
-            _db.SaveChanges();
-            return Ok(new { success = true });
+            bool x = _ProviderMenu.ReturnShift(shiftDetailId);
+            if (x)
+            {
+                _noty.Success("Shift Deleted");
+                return Ok(new { success = true });
+            }
+            else
+            {
+                _noty.Error("somthing went wrong");
+                return Ok(new { success = true });
+            }
         }
         public IActionResult UpdateShift(CreateShift obj, int id)
         {

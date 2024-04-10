@@ -1,0 +1,123 @@
+﻿@model HalloDoc.DataAccess.ViewModel.AdminViewModel.SendOrderViewModel;
+@{
+    ViewData["Title"] = "View Upload";
+    Layout = "_adminLayout";
+}
+
+<div>
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Send Order
+        </h4>
+        <a href="@Url.Action("Dashboard", "AdminDashboard", new {status = Model.status})" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="container shadow" style="max-width: 1000px">
+        <form id="patient-request-form" asp-action="SendOrders" asp-controller="AdminDashboard" class="form-floating patient-request-form p-2 ">
+            <h4 class="mt-4 mb-4 ms-2">Business Information</h4>
+            <input value="@Model.reqClientId" asp-for="reqClientId" hidden/>
+            <div class="row g-2 m-1">
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <select asp-for="ProfessionTypeId" class="form-select mb-3 ProfType" id="ProfType">
+                            <option hidden>Select Profession</option>
+                            @foreach(var item in Model.Healthprofessionaltype)
+                            {
+                            <option value="@item.Healthprofessionalid">@item.Professionname</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <select asp-for="ProfessionalId" class="form-select form-select mb-3 ProfName" id="ProfName" aria-label="Large select example">
+                            <option hidden>Business</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating phone-div w-100 h-100 ">
+                        <input asp-for="ProfessionalPhone" id="vendorPhone" type="tel" class="bussinessPhone form-control w-100 h-100" placeholder="">
+                        <label for="">Business Contact</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input asp-for="email" id="vendorEmail" type="email" class="form-control" placeholder="">
+                        <label for="">Email</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating">
+                        <input asp-for="FaxNumber" id="vendorFax" type="text" class="form-control" placeholder="">
+                        <label for="">Fax Number</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-2 m-1">
+                <div class="col-12">
+                <div class="form-floating m-1 form-div">
+                    <textarea asp-for="OrderDetail" class="form-control h-100" placeholder="" id="floatingTextarea2" rows="3"></textarea>
+                    <label for="">Prescription or Order details</label>
+                </div>
+                </div>
+            </div>
+            <div class="row g-2 m-1">
+                <div class="col-lg-6">
+                    <div class="form-floating m-1 form-div">
+                        <input asp-for="noOfRefill"  type="number" maxlength="10" class="form-control" placeholder="">
+                        <label for="">Number of Refill</label>
+                    </div>
+                </div>
+            </div>
+            <button type="reset" id="cancelBtn" class="btn btn-primary float-end m-1">Cancel</button>
+            <button type="submit" id="submitBtn" class="btn btn-primary float-end m-1">Submit</button><br /><br />
+        </form>
+    </div>
+</div>
+
+@section AdminScript {
+    <script>
+        $("#ProfType").change(function(){
+            var selectedProf = $(this).val();
+            $.ajax({
+                url: '/AdminDashboard/FilterProfession',
+                type: 'POST',
+                data: { ProfessionId : selectedProf},   
+                success: function (response) {
+                    $("#ProfName").empty();
+                    $("#ProfName").append($('<option>').text("Business").prop("hidden", true));
+                    $.each(response, function (index, doctor) {
+                        $("#ProfName").append($('<option>').text(doctor.vendorname).val(doctor.vendorid));
+                    });
+                    $("#vendorPhone").val("");
+                    $("#vendorEmail").val("");
+                    $("#vendorFax").val("");
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('error fetching details')
+                },
+            })
+        });
+
+        $("#ProfName").change(function(){
+            var selectVendor = $(this).val();
+            $.ajax({
+                url: '/AdminDashboard/ShowVendorDetail',
+                type: 'POST',
+                data: { selectVendor: selectVendor },
+                success: function(response){
+                    $.each(response, function (index, doctor) {
+                        $("#vendorPhone").val(doctor.vendorPhone);
+                        $("#vendorEmail").val(doctor.email);
+                        $("#vendorFax").val(doctor.faxNumber);
+                    });
+                }
+            })
+        });
+    </script>
+}

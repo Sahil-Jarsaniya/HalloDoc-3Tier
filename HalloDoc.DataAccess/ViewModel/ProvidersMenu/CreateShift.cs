@@ -26,8 +26,11 @@ namespace HalloDoc.DataAccess.ViewModel.ProvidersMenu
         public string? Weekdays { get; set; }
 
         public int? Repeatupto { get; set; }
+        public int? status { get; set; }
 
         public IEnumerable<Region> Regions { get; set; }
+        public IEnumerable<Physicianregion>? phyRegions { get; set; }
+
 
         public IEnumerable<CheckBoxData> Days { get; set; }     
 

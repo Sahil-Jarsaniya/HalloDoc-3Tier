@@ -20,8 +20,9 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public MonthScheduling MonthScheduling(string date);
 
         public CreateShift ViewShift(int shiftDetailId);
-
+        public IEnumerable<DayScheduling> ViewAllShift(string date);
         public bool DeleteShift(int shiftDetailId); 
+        public bool ReturnShift(int shiftDetailId); 
         public bool UpdateShift(CreateShift obj, int id);
 
         public IQueryable<RequestedShiftVM> RequestedShiftTable();

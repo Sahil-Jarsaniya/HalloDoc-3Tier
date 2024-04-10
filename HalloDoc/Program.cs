@@ -21,6 +21,7 @@ builder.Services.AddScoped<IRequestRepository, RequestRepository>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<ILoginRepository, LoginRepository>();
 builder.Services.AddScoped<IAdminDashboardRepository, AdminDashboardRepository>();
+builder.Services.AddScoped<IPhysicianSiteRepository, PhysicianSiteRepository>();
 builder.Services.AddScoped<IPartnersRepository, PartnersRepository>();
 builder.Services.AddScoped<IProviderMenuRepository, ProviderMenuRepository>();
 builder.Services.AddScoped<IRecordsRepository, RecordsRepository>();

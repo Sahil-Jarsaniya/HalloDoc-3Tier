@@ -1,0 +1,44 @@
+﻿@model PatientViewModel;
+@{
+    Layout = "_PhysicianLayout";
+    ViewData["Title"] = "Create Request";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/submit-request-screen.css">
+    <link rel="stylesheet" href="~/css/PatientDashBoard.css">
+    @*<link rel="stylesheet" href="~/css/create-patient-request.css">*@
+
+    <!-- js ans css for phone input -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+}
+<div class="container  mt-4" >
+    <a href="@Url.Action("Dashboard", "PhysicianDashboard")" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+       id="back-btn">
+        <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+        Back
+    </a>
+</div>
+<div class="container-fluid d-flex justify-content-center">
+    <form method="post" asp-controller="AdminDashboard" asp-action="CreateRequest" enctype="multipart/form-data" id="patient-request-form" class="form-floating patient-request-form p-2 shadow">
+
+        <partial name="_PatientForm" />
+
+        <h4 class="mt-4 mb-4 ms-2">(Optional) Upload Photo or Document</h4>
+        <div class="input-group m-1 mb-3">
+            <input name="formFile" type="file" id="actualFileBtn" class="form-control" id="inputGroupFile02" hidden>
+            <span  id="fileChoosen" class="form-control">No file chosen</span>
+            <label class="input-group-text" id="uploadFileLabel" for="actualFileBtn">
+                <img src="~/images/cloud_upload.svg" alt="">
+                Upload
+            </label>
+        </div>
+        <button type="submit" id="cancelBtn" class="btn btn-primary float-end m-1">Cancel</button>
+        <button type="submit" id="submitBtn" class="btn btn-primary float-end m-1">Submit</button>
+    </form>
+</div>
+
+@section AdminScript {
+    <script src="~/js/site.js" asp-append-version="true"></script>
+}

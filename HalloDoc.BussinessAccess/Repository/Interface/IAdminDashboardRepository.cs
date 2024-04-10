@@ -1,14 +1,6 @@
-﻿using HalloDoc.BussinessAccess.Repository.Implementation;
-using HalloDoc.DataAccess.Models;
+﻿using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
-using Microsoft.AspNetCore.Http;
-using Org.BouncyCastle.Tls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HalloDoc.BussinessAccess.Repository.Interface
 {

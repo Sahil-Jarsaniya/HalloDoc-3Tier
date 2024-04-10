@@ -1,0 +1,49 @@
+﻿<div class="modal fade AllShiftModel" id="AllShiftModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">View All Shift</h1>
+                <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    
+                    @foreach(var list in Model)
+                    {
+                        if (list.status == 2)
+                        {
+
+                            <a class="btn ShiftBtn m-1" style="background-color: lightgreen" data-id="@list.shiftDetailId">
+                                @list.PhysicianName
+                            </a>
+
+                            <br />
+                        }
+                        else
+                        {
+                            <a class="btn ShiftBtn m-1" style="background-color: pink" data-id="@list.shiftDetailId">
+                                @list.PhysicianName
+                            </a>
+
+                            <br />
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(".ShiftBtn").click(function () {
+        console.log($(this).data('id'));
+        $("#AllShiftModel").modal('toggle');
+        $("#modelDiv3").load('/PhysicianDashboard/ViewShift?shiftDetailId=' + $(this).data('id'), function (response, status, xhr) {
+            if (status == "success") {
+                $("#CreateShiftModel").modal('show');
+            } else {
+                console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+            }
+        });
+    })
+</script>

@@ -1,0 +1,102 @@
+﻿@model CreateShift;
+<div class="modal fade CreateShiftModel" id="CreateShiftModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Shift</h1>
+                <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <form id="ViewShiftForm" asp-action="UpdateShift" asp-controller="PhysicianDashboard" asp-route-id="@Model.ShiftDetailId">
+                        <fieldset id="fieldset" disabled>
+                            <select asp-for="Regionid" class="form-select form-select mb-3  RegionSelect" aria-label="Large select example">
+                                <option>Select Region</option>
+                                @foreach (var item in Model.Regions)
+                                {
+                                    if (item.Regionid == Model.Regionid)
+                                    {
+                                        <option value="@item.Regionid" selected>@item.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Regionid">@item.Name</option>
+                                    }
+                                }
+                            </select>
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <input asp-for="Startdate" type="date" value="@Model.Startdate.ToString("yyyy-MM-dd")" class="form-control" placeholder="">
+                                        <label for="">ShiftDate</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input asp-for="StartTime" type="time" class="form-control" placeholder="">
+                                        <label for="">start</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input asp-for="EndTime" type="time" class="form-control" placeholder="">
+                                        <label for="">End</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset><br />
+                        @if (Model.status != 2)
+                        {
+                            <button type="reset" class="btn btn-primary d-none me-1 float-end" id="cancelBtn" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary me-1 d-none float-end" id="saveBtn">Save</button>
+                            <button type="button" class="btn btn-danger me-1 float-end" id="deleteBtn" data-id="@Model.ShiftDetailId">Delete</button>
+                            <button type="button" class="btn btn-primary me-1 float-end" id="editBtn" data-id="@Model.ShiftDetailId">Edit</button>
+                            <button type="button" class="btn btn-primary me-1 float-end" id="reurnBtn" data-id="@Model.ShiftDetailId">Return</button>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#editBtn").click(function () {
+        $("#fieldset").prop('disabled', false);
+        $("#cancelBtn").removeClass('d-none');
+        $("#saveBtn").removeClass('d-none');
+        $(this).addClass('d-none');
+    })
+
+    $("#deleteBtn").click(function () {
+        var id = $(this).data('id');
+
+        $.ajax({
+            url: '/PhysicianDashboard/DeleteShift',
+            type: 'POST',
+            data: { shiftDetailId: id },
+            success: function () {
+                $("#CreateShiftModel").modal('toggle');
+                location.reload();
+            }
+        })
+    })
+
+    $("#reurnBtn").click(function () {
+        var id = $(this).data('id');
+
+        $.ajax({
+            url: '/PhysicianDashboard/ReturnShift',
+            type: 'POST',
+            data: { shiftDetailId: id },
+            success: function () {
+                $("#CreateShiftModel").modal('toggle');
+                location.reload();
+            }
+        })
+    })
+
+    $(".closeBtn").click(function () {
+        $("#CreateShiftModel").modal('toggle');
+    })
+</script>

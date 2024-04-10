@@ -264,7 +264,7 @@
         $.ajax({
             url: '/AdminDashboard/PartialTable',
             type: 'POST',
-            data: { Name: Name, status: status, reqType: reqType, pageNumber: pageNumber },
+            data: { Name: Name, status: 2, reqType: reqType, pageNumber: pageNumber },
             success: function (result) {
                 $('#PartialTable').html(result);
             },

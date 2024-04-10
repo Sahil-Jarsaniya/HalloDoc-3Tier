@@ -1,0 +1,345 @@
+﻿@model AdminDashboardViewModel;
+@{
+    ViewData["Title"] = "Physician Dashboard";
+    Layout = "_PhysicianLayout";
+}
+
+<div class="px-2 px-lg-4">
+    <input value="@Model.status" id="DashboardStatus" hidden />
+    <input value="" id="pagenumber" hidden />
+    <div class="row mt-3 nav nav-tabs">
+
+        <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab active align-items-center" id="status-new-tab">
+
+            <div class="py-2 ps-2 w-100 status-new">
+                <div class="d-flex">
+                    @*<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
+                    fill="currentcolor">
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                    </svg>*@
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20px" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                    </svg>
+                    <span class="ms-2 text-uppercase">new</span>
+                </div>
+                <span class="fw-bold">@Model.countRequestViewModel.newCount</span>
+            </div>
+
+            <svg class="d-none" fill="#203f9a" height="10px" width="20px" viewBox="0 0 200 100">
+                <polygon points="0,0 100,100 200,0 " />
+            </svg>
+
+        </a>
+
+        <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center" id='status-pending-tab'>
+            <div class="py-2 ps-2 w-100 status-pending">
+                <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24" fill="currentColor" viewBox="0 -960 960 960" width="24">
+                        <path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17-62.5t47-43.5q60-30 124.5-46T480-440q67 0 131.5 16T736-378q30 15 47 43.5t17 62.5v112H160Zm320-400q33 0 56.5-23.5T560-640q0-33-23.5-56.5T480-720q-33 0-56.5 23.5T400-640q0 33 23.5 56.5T480-560Zm160 228v92h80v-32q0-11-5-20t-15-14q-14-8-29.5-14.5T640-332Zm-240-21v53h160v-53q-20-4-40-5.5t-40-1.5q-20 0-40 1.5t-40 5.5ZM240-240h80v-92q-15 5-30.5 11.5T260-306q-10 5-15 14t-5 20v32Zm400 0H320h320ZM480-640Z" />
+                    </svg>
+                    <span class="ms-2 text-uppercase">pending</span>
+                </div>
+                <span class="fw-bold">@Model.countRequestViewModel.pendingCount</span>
+            </div>
+
+            <svg class="d-none" fill="#00adef" height="10px" width="20px" viewBox="0 0 200 100">
+                <polygon points="0,0 100,100 200,0 " />
+            </svg>
+
+        </a>
+
+        <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center" id="status-active-tab">
+            <div class="py-2 ps-2 w-100 status-active">
+                <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check2-circle" viewBox="0 0 16 16">
+                        <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0" />
+                        <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z" />
+                    </svg>
+                    <span class="ms-2 text-uppercase">active</span>
+                </div>
+                <span class="fw-bold">@Model.countRequestViewModel.activeCount</span>
+            </div>
+
+            <svg class="d-none" fill="#228c20" height="10px" width="20px" viewBox="0 0 200 100">
+                <polygon points="0,0 100,100 200,0 " />
+            </svg>
+
+        </a>
+
+        <a class="col-6 col-md-4 col-lg-2 d-flex mb-2 mb-lg-0 flex-column status-tab align-items-center" id="status-conclude-tab">
+            <div class="py-2 ps-2 w-100 status-conclude">
+                <div class="d-flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+                        <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022zm2.004.45a7 7 0 0 0-.985-.299l.219-.976q.576.129 1.126.342zm1.37.71a7 7 0 0 0-.439-.27l.493-.87a8 8 0 0 1 .979.654l-.615.789a7 7 0 0 0-.418-.302zm1.834 1.79a7 7 0 0 0-.653-.796l.724-.69q.406.429.747.91zm.744 1.352a7 7 0 0 0-.214-.468l.893-.45a8 8 0 0 1 .45 1.088l-.95.313a7 7 0 0 0-.179-.483m.53 2.507a7 7 0 0 0-.1-1.025l.985-.17q.1.58.116 1.17zm-.131 1.538q.05-.254.081-.51l.993.123a8 8 0 0 1-.23 1.155l-.964-.267q.069-.247.12-.501m-.952 2.379q.276-.436.486-.908l.914.405q-.24.54-.555 1.038zm-.964 1.205q.183-.183.35-.378l.758.653a8 8 0 0 1-.401.432z" />
+                        <path d="M8 1a7 7 0 1 0 4.95 11.95l.707.707A8.001 8.001 0 1 1 8 0z" />
+                        <path d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5" />
+                    </svg>
+                    <span class="ms-2 text-uppercase">conclude</span>
+                </div>
+                <span class="fw-bold">@Model.countRequestViewModel.concludeCount</span>
+            </div>
+
+            <svg class="d-none" fill="#da0f82" height="10px" width="20px" viewBox="0 0 200 100">
+                <polygon points="0,0 100,100 200,0 " />
+            </svg>
+
+        </a>
+
+    </div>
+
+    <div class="d-flex align-items-center justify-content-between mt-3">
+
+        <div class="d-flex align-items-center">
+            <h6 class="d-none d-md-block fs-6">Patients(New)</h6>
+            <h6 class="d-md-none" style="font-size: 12px;">
+                Patients
+                (new)
+            </h6>
+        </div>
+
+        <div class="d-flex align-items-center">
+
+            <button type="button" class="mx-1 px-2 py-1 btn btn-primary" data-bs-toggle="modal" data-bs-target="#SendLinkModal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+                    <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
+                </svg>
+                <span class="d-none d-lg-inline ms-1">Send Link</span>
+            </button>
+
+            <a href="@Url.Action("CreateRequest", "PhysicianDashboard")" class="mx-1 px-2 py-1 btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journal-text" viewBox="0 0 16 16">
+                    <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2" />
+                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z" />
+                </svg>
+                <span class="d-none d-lg-inline ms-1 ">Create Request</span>
+            </a>
+        </div>
+
+    </div>
+
+
+
+    <form method="post" asp-action="PartialTable" id="DashboradForm">
+
+        <div class="d-block d-lg-flex mt-3 align-items-center justify-content-between">
+
+            <div class="d-md-flex mb-3 mb-lg-0">
+
+                <div class="d-flex normal-input rounded align-items-center ps-2 me-md-2 mb-2 mb-md-0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 50 50">
+                        <path d="M 21 3 C 11.654545 3 4 10.654545 4 20 C 4 29.345455 11.654545 37 21 37 C 24.701287 37 28.127393 35.786719 30.927734 33.755859 L 44.085938 46.914062 L 46.914062 44.085938 L 33.875 31.046875 C 36.43682 28.068316 38 24.210207 38 20 C 38 10.654545 30.345455 3 21 3 z M 21 5 C 29.254545 5 36 11.745455 36 20 C 36 28.254545 29.254545 35 21 35 C 12.745455 35 6 28.254545 6 20 C 6 11.745455 12.745455 5 21 5 z">
+                        </path>
+                    </svg>
+                    <input type="search" asp-for="Name" id="search" class="form-control border border-0" placeholder="Search Patients">
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <input id="filterReqType" value="" hidden />
+                <a class="btn d-none d-lg-flex  align-items-center  px-lg-2 py-1 border rounded filterReqByType">
+                    <input value="0" hidden />
+                    <h6 class="fs-6 ms-lg-2 m-auto">All</h6>
+                </a>
+
+                <a class="btn px-lg-1 py-lg-1 rounded d-md-flex align-items-center ms-lg-2 filterReqByType">
+                    <input value="1" hidden />
+                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="#5fbc61" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                    </svg>
+                    <h6 class="fs-6 ms-lg-2 m-auto">Patient</h6>
+                </a>
+
+                <a class="btn px-lg-1 py-lg-1 rounded d-md-flex align-items-center ms-lg-2 filterReqByType">
+                    <input value="2" hidden />
+                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="#ed9124" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                    </svg>
+                    <h6 class="fs-6 ms-lg-2  m-auto">Family</h6>
+                </a>
+                <a class="btn px-lg-1 py-lg-1 rounded d-md-flex align-items-center ms-lg-2 filterReqByType">
+                    <input value="4" hidden />
+                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="#e26277" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                    </svg>
+                    <h6 class="fs-6 ms-lg-2  m-auto">Business</h6>
+                </a>
+                <a class="btn p-0 px-lg-1 py-lg-1 rounded d-md-flex align-items-center ms-lg-2 filterReqByType">
+                    <input value="3" hidden />
+                    <svg height="15" width="15" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle fill="#007fc6" r="45" cx="50" cy="50" stroke="grey" stroke-width="3" />
+                    </svg>
+                    <h6 class="fs-6 ms-lg-2 m-auto">Concierge</h6>
+                </a>
+            </div>
+        </div>
+        <div class="tab-content  mt-3 " id="PartialTable" style="overflow-x: hidden">
+        </div>
+    </form>
+
+</div>
+
+
+<div id="ModalDiv"></div>
+
+@*Transfer Case Model*@
+<div class="modal fade" id="TransferModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Transfer Request</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="dropdown">
+                    <form>
+                        <p>To transfer this request, search and select anthoer Physician.</p>
+                        <input id="TransferClientId" value="" hidden />
+                        <input id="PhyId" value="" hidden />
+
+                        <select class="form-select form-select mb-3 RegionSelect TransferRegionSelect" aria-label="Large select example">
+                            <option>Narrow Search by Region</option>    
+                            @foreach (var item in Model.Region)
+                            {
+                                <option value="@item.Regionid">@item.Name</option>
+                            }
+                        </select>
+                        <select class="form-select form-select mb-3 TransferPhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
+                            <option>Select Physician</option>
+                        </select>
+
+                        <div class="form-floating m-1 form-div">
+                            <textarea class="form-control" id="addTransferNote"
+                                      style="height: 100px"></textarea>
+                            <label for="">Description</label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="ConfirmTransferBtn">Submit</button>
+                <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*Send Agreement *@
+<div class="modal fade" id="SendAgreementModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="modalContent">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5">Send Agreement</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h6>Patient</h6>
+                <p>To Send Agreement please make sure you are updating the correct contact information below for the responsible party.</p>
+                <form class="w-100 form-floating">
+                    <div class="form-floating">
+                        <input id="AgreementClientId" value="" hidden />
+                        <input class="form-control w-100 mb-2" type="text" id="AgreementPhone" />
+                        <label class="">Phone Number</label>
+                    </div><div class="form-floating">
+                        <input class="form-control w-100 mb-2" type="text" id="AgreementEmail" />
+                        <label class="">Email</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="AgreementConfirmBtn">Submit</button>
+                <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Encounter Case*@
+
+<div class="modal  fade" id="EncounterModal" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <input value="" id="EncounterId" hidden />
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Select Type of Care</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex justify-content-center">
+                    <input type="radio" class="btn-check me-1" value="HouseCall" name="options" id="HouseCall" autocomplete="off" checked>
+                    <label class="btn btn-outline-primary me-1" for="HouseCall">HouseCall</label>
+
+                    <input type="radio" class="btn-check me-1" value="Consult" name="options" id="Consult" autocomplete="off">
+                    <label class="btn btn-outline-primary me-1" for="Consult">Consult</label>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="EncounerSavebtn" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*Send Link*@
+<div class="modal fade" id="SendLinkModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="form-floating patient-request-form p-2" asp-action="SendEmailToPatient" asp-controller="PhysicianDashboard">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #01bce9; color:white;">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Send mail to patient for submitting request</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="dropdown">
+                        <div class="row g-2 m-1">
+
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input type="text" name="FirstName" class="form-control" placeholder="">
+                                    <label for="">First Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md">
+                                <div class="form-floating">
+                                    <input type="text" name="LastName" class="form-control" placeholder="">
+                                    <label for="floatingSelectGrid">Last Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input id="checkEmail" name="Email" type="email" class="form-control" placeholder="name@example.com">
+                                    <label for="">Email</label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-floating phone-div w-100 h-100 ">
+                                    <input type="tel" name="PhoneNumber" class="patientPhone form-control w-100 h-100" placeholder="">
+                                    <label for="">Phone</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="SendEmailBtn">Send</button>
+                    <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section AdminScript {
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <script type="text/javascript" src="~/js/PhysicianDashboard.js"></script>
+    <script src="~/js/CasesPopUp.js"></script>
+    @await Component.InvokeAsync("Notyf")
+}

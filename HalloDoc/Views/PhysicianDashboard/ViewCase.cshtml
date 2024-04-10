@@ -1,0 +1,149 @@
+﻿@model HalloDoc.DataAccess.ViewModel.AdminViewModel.viewCaseViewModel;
+@{
+    ViewData["Title"] = "View Case";
+    Layout = "_PhysicianLayout";
+}
+<div class="tab-pane fade show" id="tab2">
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>New Request 
+            <span class="border bg-success rounded-pill h-50 fs-6 p-1 text-white">Patient</span>
+        </h4>
+        <a href="@Url.Action("Dashboard","PhysicianDashboard")" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="container-fluid d-flex justify-content-center mt-4">
+        @if(ViewBag.error != null)
+        {   
+        <span>@ViewBag.error</span>
+        }
+        @if (ViewBag.success != null)
+        {
+            <span>@ViewBag.success</span>
+        }
+        <form  method="post" asp-action="ViewCase" class="viewCaseForm form-floating shadow patient-request-form p-3">
+
+                <h5>Patient Information</h5>
+                <input name="Requestclientid" value="@Model.Requestclientid" type="hidden" disabled/>
+                <div>
+                    <span style="font-size: 10px;">Confirmation Number</span><br />
+                    <span class="fw-bold" style="color: #10bce9" >@Model.confirmationNumber</span>
+                </div>
+                <div class="form-floating m-1 form-div">
+                    <textarea asp-for="Notes" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                          style="height: 100px" disabled></textarea>
+                    <label for="">Patient Note</label>
+                </div>
+                <div class="row g-2 m-1">
+                    <div class="col-md">
+                        <div class="form-floating">
+                            <input asp-for="Firstname" type="text" class="form-control" placeholder="" disabled>
+                            <label for="">First Name</label>
+                        </div>
+                        <span asp-validation-for="Firstname"></span>
+                    </div>
+                    <div class="col-md">
+                        <div class="form-floating">
+                        <input asp-for="Lastname" type="text" class="form-control" placeholder="" disabled>
+                            <label for="floatingSelectGrid">Last Name</label>
+                        </div>
+                        <span asp-validation-for="Lastname"></span>
+                    </div>
+                </div>
+
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                        <input asp-for="Strmonth" type="date" class="form-control" placeholder="" disabled>
+                            <label for="">Date Of Birth</label>
+                        </div>
+                        <span asp-validation-for="Strmonth"></span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-floating phone-div w-100 h-100 ">
+                        <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100 inputDis" placeholder="" disabled>
+                            <label for=""></label>
+                        </div>
+                        <span asp-validation-for="Phonenumber"></span>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="tel:@Model.Phonenumber" class="btn btn-outline-primary form-floating d-flex align-items-center justify-content-center rounded h-100 w-100" >
+                            @*<img src="~/images/telephone.svg"/>*@
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-telephone" viewBox="0 0 16 16">
+                            <path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z" />
+                        </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                        <input asp-for="Email" id="checkEmail" type="email" class="form-control inputDis" placeholder="name@example.com" disabled>
+                            <label for="">Email</label>
+                        </div>
+                        <span asp-validation-for="Email"></span>
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button"  id="editBtn" class="btn btn-outline-primary form-floating w-100 h-100 float-end" enabled>Edit</button>
+                    <button type="submit" id="submitBtn" class="btn btn-outline-primary form-floating w-100 h-100 float-end d-none" enabled>submit</button>
+                    </div>
+                    
+                </div>
+
+                <h5>Location Information</h5>
+                <div class="row g-2 m-1">
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="" disabled>
+                            <label for="">Regoin</label>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-floating">
+                        <input type="text" class="form-control" placeholder="" disabled>
+                            <label for="">Business Name/ Address</label>
+                        </div>
+                        <span></span>
+                    </div>
+                    <div class="col-md-1">
+                    <a target="_blank" href="http://maps.google.com/?q= +@Model.State + @Model.City + @Model.Street"
+                       class="btn btn-outline-primary form-floating d-flex align-items-center justify-content-center rounded h-100 w-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A32 32 0 0 1 8 14.58a32 32 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10" />
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4m0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                        </svg>
+                    </a>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" placeholder="" disabled>
+                            <label for="">Room #</label>
+                        </div>
+                        <span ></span>
+                    </div>
+                </div>
+            @if(Model.status == 1)
+            {   
+                <a  class="btn btn-success float-end m-1 " asp-action="AcceptRequest" asp-route-id="@Model.Requestclientid">Accept</a>
+            }
+            <a type="button" href="@Url.Action("ViewNote", new{reqClientId = Model.Requestclientid})" id="viewNoteBtn" class="btn btn-primary float-end m-1">View Notes</a>
+
+            
+        </form>
+    </div>
+</div>
+
+
+@section AdminScript {
+    <!-- js ans css for phone input -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+            integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
+    </script>
+    <script src="~/js/admin.js"></script>
+}

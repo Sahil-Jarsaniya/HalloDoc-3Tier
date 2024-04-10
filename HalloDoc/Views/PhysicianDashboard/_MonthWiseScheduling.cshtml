@@ -1,0 +1,115 @@
+﻿@model MonthScheduling;
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr class="table-secondary">
+            <td>SUN</td>
+            <td>MON</td>
+            <td>TUE</td>
+            <td>WED</td>
+            <td>THU</td>
+            <td>FRI</td>
+            <td>SAT</td>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var DaysInMonth = DateTime.DaysInMonth(Model.Selecteddate.Year, Model.Selecteddate.Month);
+            var WeeksInMonth = (int)Math.Ceiling((double)DaysInMonth / 7);
+            var firstDayOfMonth = new DateTime(Model.Selecteddate.Year, Model.Selecteddate.Month, 1);
+            var LastDayOfMonth = firstDayOfMonth.AddMonths(1).AddSeconds(-1);
+            var NoOfDayOfMonth = System.DateTime.DaysInMonth(Model.Selecteddate.Year, Model.Selecteddate.Month);
+            var day = 0;
+            var currentDate = new DateOnly(firstDayOfMonth.Year, firstDayOfMonth.Month, 1);
+        }
+        @for (int i = 0; i < WeeksInMonth; i++)
+        {
+            <tr>
+                @{
+                    var date = 1 + (7 * i);
+                }
+                @for (int j = 0; j < 7; j++)
+                {
+
+                    if (((int)firstDayOfMonth.DayOfWeek) % 7 != day || NoOfDayOfMonth == 0)
+                    {
+                        day++;
+
+                        <td>
+                            @*@day*@
+                        </td>
+                    }
+                    else
+                    {
+                        var appointment = Model.DaySchedulings.Where(x => x.Startdate == currentDate).ToList();
+
+                        <td>
+                            <span>
+                                <span class="float-end">
+                                    @currentDate.Day
+                                </span><br />
+                                @if (appointment != null)
+                                {
+                                    @if (appointment.Count > 2)
+                                    {
+                                        <a class="btn btn-outline-primary viewAllShiftsBtn" data-id="@currentDate">View All Shifts</a>
+                                    }
+                                    else
+                                    {
+                                        foreach (var list in appointment)
+                                        {
+                                            if (list.status == 2)
+                                            {
+
+                                                <a class="btn viewShiftBtn m-1" style="background-color: lightgreen" data-id="@list.shiftDetailId">
+                                                    @list.PhysicianName
+                                                </a>
+
+                                                <br />
+                                            }
+                                            else
+                                            {
+                                                <a class="btn viewShiftBtn m-1" style="background-color: pink" data-id="@list.shiftDetailId">
+                                                    @list.PhysicianName
+                                                </a>
+
+                                                <br />
+                                            }
+                                        }
+                                    }
+                                }
+                            </span>
+                        </td>
+                        currentDate = currentDate.AddDays(1);
+                        NoOfDayOfMonth--;
+                    }
+
+                }
+
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    $(".viewShiftBtn").click(function () {
+        console.log($(this).data('id'));
+        $("#modelDiv").load('/PhysicianDashboard/ViewShift?shiftDetailId=' + $(this).data('id'), function (response, status, xhr) {
+            if (status == "success") {
+                $("#CreateShiftModel").modal('show');
+            } else {
+                console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+            }
+        });
+    })
+
+    $(".viewAllShiftsBtn").click(function(){
+        console.log($(this).data('id'));
+        $("#modelDiv2").load('/PhysicianDashboard/ViewAllShift?date=' + $(this).data('id'), function (response, status, xhr) {
+            if (status == "success") {
+                $("#AllShiftModel").modal('show');
+            } else {
+                console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+            }
+        });
+    })  
+</script>

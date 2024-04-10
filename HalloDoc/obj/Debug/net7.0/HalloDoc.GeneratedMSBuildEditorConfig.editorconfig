@@ -188,6 +188,74 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxEb2N1bWVudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/CreateRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXENyZWF0ZVJlcXVlc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXERhc2hib2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/EncounterForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXEVuY291bnRlckZvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/MyProfile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXE15UHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/Scheduling.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXFNjaGVkdWxpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/SendOrders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXFNlbmRPcmRlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/ViewCase.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXFZpZXdDYXNlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/ViewNote.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXFZpZXdOb3RlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/ViewUpload.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXFZpZXdVcGxvYWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/_activeRequestView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9hY3RpdmVSZXF1ZXN0Vmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/_concludeReqView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9jb25jbHVkZVJlcVZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/_CreateShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9DcmVhdGVTaGlmdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/_MonthWiseScheduling.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9Nb250aFdpc2VTY2hlZHVsaW5nLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/_newRequestView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9uZXdSZXF1ZXN0Vmlldy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/_pendingRequestView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9wZW5kaW5nUmVxdWVzdFZpZXcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/_ViewAllShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9WaWV3QWxsU2hpZnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/_ViewShift.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9WaWV3U2hpZnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/ProviderLocation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxQcm92aWRlckxvY2F0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -314,6 +382,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/Shared/_PatientForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QYXRpZW50Rm9ybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/Shared/_PhysicianLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9QaHlzaWNpYW5MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/Haaa/HalloDoc-3Tier/HalloDoc/Views/Shared/_ValidationScriptsPartial.cshtml]

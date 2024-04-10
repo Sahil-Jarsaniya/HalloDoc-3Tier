@@ -9,6 +9,7 @@
   <ItemGroup>
     <Folder Include="Contacts\" />
     <Folder Include="Data\" />
+    <Folder Include="ViewModel\PhysicianDashboard\" />
   </ItemGroup>
 
   <ItemGroup>

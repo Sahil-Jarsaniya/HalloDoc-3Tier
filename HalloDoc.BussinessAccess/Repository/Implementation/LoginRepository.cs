@@ -31,7 +31,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
         }
 
-        public Admin GetLoginData(AspNetUser obj, String hashPass)
+        public AspNetUser GetLoginData(AspNetUser obj, String hashPass)
         {
             var myUser = _db.AspNetUsers.Where(x => x.UserName == obj.UserName && x.PasswordHash == hashPass).FirstOrDefault();
             if (myUser == null)
@@ -40,11 +40,20 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             else
             {
-                var userId = _db.Admins.Where(x => x.Aspnetuserid == myUser.Id).FirstOrDefault();
-                return userId;
+                return myUser;
             }
         }
+        public Admin isAdmin(string AspId)
+        {
+            var isAdmin = _db.Admins.FirstOrDefault(x => x.Aspnetuserid == AspId);
+            return isAdmin;
+        }
+        public Physician isPhysician(string AspId)
+        {
+            var isPhysician = _db.Physicians.FirstOrDefault(x => x.Aspnetuserid == AspId);
 
+            return isPhysician;
+        }
         public User PatientLogin(AspNetUser obj, String hashPass)
         {
             var myUser = _db.AspNetUsers.Include(x => x.Roles).Where(x => x.UserName == obj.UserName && x.PasswordHash == hashPass).FirstOrDefault();

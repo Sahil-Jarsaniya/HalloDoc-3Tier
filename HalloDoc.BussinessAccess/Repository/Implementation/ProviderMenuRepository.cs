@@ -219,11 +219,51 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Shiftid = shiftDetail.Shiftid,
                 Regions = _db.Regions,
                 ShiftDetailId = shiftDetail.Shiftdetailid,
+                status = shiftDetail.Status,
             };
 
             return data;
         }
+        public IEnumerable<DayScheduling> ViewAllShift(string date)
+        {
+            var date1 = DateOnly.Parse(date);
+            var data = from t3 in _db.Shiftdetails.Where(x => x.Shiftdate.Month == date1.Month && x.Shiftdate.Day == date1.Day && x.Shiftdate.Year == date1.Year && x.Isdeleted != true)
+                       join t2 in _db.Shifts on t3.Shiftid equals t2.Shiftid
+                       join t1 in _db.Physicians
+                       on t2.Physicianid equals t1.Physicianid
+                       select new DayScheduling
+                       {
+                           PhysicianId = t1.Physicianid,
+                           PhysicianName = t1.Firstname + " " + t1.Lastname,
+                           Shiftid = t2 != null ? t2.Shiftid : null,
+                           shiftDetailId = t3 != null ? t3.Shiftdetailid : null,
+                           Startdate = t2 != null ? t2.Startdate : null,
+                           EndTime = t3 != null ? t3.Endtime : null,
+                           StartTime = t3 != null ? t3.Starttime : null,
+                           SelectedDate = date1,
+                           ShiftDate = t3 != null ? t3.Shiftdate : null,
+                           status = t3 != null ? t3.Status : null,
+                       };
 
+            return data;
+        }
+        public bool ReturnShift(int shiftDetailId)
+        {
+           
+            try
+            {
+                var shiftDetail = _db.Shiftdetails.FirstOrDefault(x => x.Shiftdetailid == shiftDetailId);
+                shiftDetail.Status = 2;
+                _db.Shiftdetails.Update(shiftDetail);
+                _db.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public bool DeleteShift(int shiftDetailId)
         {
             try

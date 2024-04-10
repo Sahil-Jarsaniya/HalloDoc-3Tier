@@ -13,12 +13,15 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
     {
         public string GetHash(string text);
 
-        public Admin GetLoginData(AspNetUser obj, String hashPass);
+        public AspNetUser GetLoginData(AspNetUser obj, String hashPass);
 
         public User PatientLogin(AspNetUser obj, String hashPass);
 
         public void SendEmail(String email, string subject, string body);
 
         public void uploadFile(IFormFile? fileName,string folder, string path);
+
+        public Admin isAdmin(string AspId);
+        public Physician isPhysician(string AspId);
     }
 }

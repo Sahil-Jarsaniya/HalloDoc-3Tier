@@ -1,0 +1,120 @@
+﻿@model Scheduling;
+@{
+    ViewData["Title"] = "Scheduling";
+    Layout = "_PhysicianLayout";
+}
+
+<div class="container d-flex justify-content-between mt-4" style="max-width:1500px">
+    <h4>
+        My Schedule
+    </h4>
+    <a onclick="history.go(-1)" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+       id="back-btn">
+        <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+        Back
+    </a>
+</div>
+<div class="container mt-4 shadow p-1" style="max-width:1500px">
+    <div class="container d-sm-flex justify-content-between mt-4" style="max-width:1500px">
+        <h4 id="DateSpan">@Model.Date.ToString("MMM") , @Model.Date.Day, @Model.Date.Year</h4>
+        <input id="date" value="@Model.Date" hidden />
+        <div class="d-flex">
+            <div class="rounded mx-1" style="width:50px; height:25px; border: 1px solid pink; background-color: pink;"></div>
+            <h5>Pending Shifts</h5>
+            <div class="rounded mx-1" style="width:50px; height:25px; border: 1px solid lightgreen; background-color: lightgreen;"></div>
+            <h5>Approved Shits</h5>
+        </div>
+    </div>
+    <div class="container d-sm-flex justify-content-between mt-4" style="max-width:1500px">
+        <div>
+            <button type="button" id="previousDay" class="btn btn-primary me-1"><</button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
+                <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+            </svg>
+            <button type="button" id="nextDay" class="btn btn-primary ms-1">></button>
+        </div>
+        <div class="d-flex justify-content-center">
+            <a id="CreateShiftBtn" class="btn btn-primary m-2 mt-sm-0 float-sm-end ">
+                Add new shift
+            </a>
+        </div>
+    </div>
+
+    <div class="container d-sm-flex justify-content-between mt-4" id="calenderDiv" style="max-width:1500px">
+    </div>
+</div>
+
+<div id="modelDiv2">
+</div>
+<div id="modelDiv3">
+</div>
+<div id="modelDiv">
+</div>
+
+@section AdminScript {
+    <script>
+
+        $("#CreateShiftBtn").click(function () {
+            $("#modelDiv").load('/PhysicianDashboard/CreateShift', function (response, status, xhr) {
+                if (status == "success") {
+                    $("#CreateShiftModel").modal('show');
+                } else {
+                    console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+                }
+            });
+        })
+
+        $(document).ready(function () {
+            var date = $("#date").val();
+            var startDate = new Date(Date.parse(date));
+            var endDate = new Date(Date.parse(date));
+            endDate.setDate(1);
+            endDate.setMonth(endDate.getMonth() + 1);
+            endDate.setDate(endDate.getDate() - 1);
+            $("#DateSpan").empty();
+            $("#DateSpan").text(month[startDate.getMonth()] + ", " + startDate.getFullYear());
+            $("#calenderDiv").load('/PhysicianDashboard/MonthWiseScheduling', { date: date }, function (response, status, xhr) {
+                if (status != "success") {
+                    console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+                }
+            });
+        })
+
+
+        var month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        $("#nextDay").click(function () {
+            var date = $("#date").val();
+            var startDate = new Date(Date.parse(date));
+            startDate.setMonth(startDate.getMonth() + 1);
+            $("#date").val(startDate.toLocaleDateString());
+            var date1 = $("#date").val();
+            $("#DateSpan").empty();
+            $("#DateSpan").text(month[startDate.getMonth()] + ", " + startDate.getFullYear());
+            $("#calenderDiv").empty();
+            $("#calenderDiv").load('/PhysicianDashboard/MonthWiseScheduling', { date: date1 }, function (response, status, xhr) {
+                if (status != "success") {
+                    console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+                }
+            });
+
+        })
+
+        $("#previousDay").click(function () {
+            var date = $("#date").val();
+            var startDate = new Date(Date.parse(date));
+            startDate.setMonth(startDate.getMonth() - 1);
+            $("#date").val(startDate.toLocaleDateString());
+            var date1 = $("#date").val();
+            $("#DateSpan").empty();
+            $("#DateSpan").text(month[startDate.getMonth()] + ", " + startDate.getFullYear());
+            $("#calenderDiv").empty();  
+            $("#calenderDiv").load('/PhysicianDashboard/MonthWiseScheduling', { date:date1 }, function (response, status, xhr) {
+                if (status != "success") {
+                    console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
+                }
+            });
+        })
+    </script>
+}
