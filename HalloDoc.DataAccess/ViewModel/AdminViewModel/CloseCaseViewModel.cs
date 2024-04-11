@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 {
@@ -36,6 +37,11 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         [StringLength(50)]
         public required string Email { get; set; }
 
+        public string? note { get; set; }
+
+        public IFormFile? fileName { get; set; }
+
         public IEnumerable<PatientDocumentViewModel> PatientDocumentViewModel { get; set; }
+
     }
 }

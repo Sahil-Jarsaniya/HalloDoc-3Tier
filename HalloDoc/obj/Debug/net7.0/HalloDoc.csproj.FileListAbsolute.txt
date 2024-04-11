@@ -1379,3 +1379,4 @@ G:\Haaa\HalloDoc-3Tier\HalloDoc\obj\Debug\net7.0\refint\HalloDoc.dll
 G:\Haaa\HalloDoc-3Tier\HalloDoc\obj\Debug\net7.0\HalloDoc.pdb
 G:\Haaa\HalloDoc-3Tier\HalloDoc\obj\Debug\net7.0\HalloDoc.genruntimeconfig.cache
 G:\Haaa\HalloDoc-3Tier\HalloDoc\obj\Debug\net7.0\ref\HalloDoc.dll
+G:\Haaa\HalloDoc-3Tier\HalloDoc\bin\Debug\net7.0\Rotativa.AspNetCore.dll

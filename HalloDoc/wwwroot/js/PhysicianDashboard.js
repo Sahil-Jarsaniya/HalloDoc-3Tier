@@ -11,28 +11,24 @@ $(".status-tab").click(function () {
     document.getElementById("DashboradForm").reset();
 
     if (id == 'status-new-tab') {
-        /*  dashboardStatus = 1;*/
         localStorage.setItem("status", 1);
-        //$("#DashboardStatus").val(1);
-        $('#status-text').text('(New)');
+        $('#stateName').text('(New)');
     }
     else if (id == 'status-pending-tab') {
-        //dashboardStatus = 2;
         localStorage.setItem("status", 2);
-        //$("#DashboardStatus").val(2);
-        $('#status-text').text('(Pending)');
+        $('#stateName').text('(Pending)');
     }
     else if (id == 'status-active-tab') {
         //dashboardStatus = 8;
         localStorage.setItem("status", 8);
         //$("#DashboardStatus").val(8);
-        $('#status-text').text('(Active)');
+        $('#stateName').text('(Active)');
     }
     else if (id == 'status-conclude-tab') {
         //dashboardStatus = 4;
         localStorage.setItem("status", 4);
         //$("#DashboardStatus").val(4);
-        $('#status-text').text('(Conclude)');
+        $('#stateName').text('(Conclude)');
     }
 
     var status = localStorage.getItem("status");

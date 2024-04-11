@@ -50,11 +50,11 @@
                         Actions
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a class="dropdown-item" href="#">Conclude Care</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("ConcludeCare", "PhysicianDashboard", new{reqClientId = item.reqClientId})">Conclude Care</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewCase", "PhysicianDashboard", new {reqClientId = item.reqClientId})">View Case</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewUpload","PhysicianDashboard", new {reqClientId = item.reqClientId})">View Uploads</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewNote","PhysicianDashboard", new{reqClientId = item.reqClientId})">View Notes</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("EncounterForm","PhysicianDashboard", new{reqClientId = item.reqClientId})">Encounter</a></li>
+                        <li><a class="dropdown-item encounterBtn" data-id="@item.reqClientId" @*href="@Url.Action("EncounterForm","PhysicianDashboard", new{reqClientId = item.reqClientId})"*@>Encounter</a></li>
                     </ul>
                 </td>
             </tr>
@@ -92,7 +92,7 @@
             <p>Patient: @item.Phonenumber</p>
             <div class="row">
                 <div class="col-5 m-2">
-                    <a class="btn btn-success w-100" href="@Url.Action("ViewNote","PhysicianDashboard", new {reqClientId = item.reqClientId})">Conclude Care</a>
+                    <a class="btn btn-success w-100" href="@Url.Action("ConcludeCare", "PhysicianDashboard", new{reqClientId = item.reqClientId})">Conclude Care</a>
                 </div>
                 <div class="col-5 m-2">
                     <a class="btn btn-success w-100" href="@Url.Action("ViewNote","PhysicianDashboard", new {reqClientId = item.reqClientId})">View Notes</a>
@@ -101,7 +101,7 @@
                     <a class="btn btn-success w-100" href="@Url.Action("ViewUpload","PhysicianDashboard", new {reqClientId = item.reqClientId})">View Uploads</a>
                 </div>
                 <div class="col-5 m-2">
-                    <a class="btn btn-success w-100" href="@Url.Action("EncounterForm","PhysicianDashboard", new{reqClientId = item.reqClientId})">Encounter</a>
+                    <a class="btn btn-success w-100 encounterBtn" data-id="@item.reqClientId" @*href="@Url.Action("EncounterForm","PhysicianDashboard", new{reqClientId = item.reqClientId})"*@>Encounter</a>
                 </div>
                 <div class="col-5 m-2">
                     <a href="mailto: @item.Email" class="w-100 btn btn-success rounded">
@@ -112,11 +112,36 @@
         </div>
     }
 </div>
-
+<div id="DivModal"></div>
 @*Pagination*@
 <partial name="_PaginationPart" />
 
 <script>
+    $(".encounterBtn").click(function(){
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/PhysicianDashboard/isFinalizedform',
+            type: 'POST',
+            data: {id: id},
+            success: function(res){
+                if(res.success == false){
+                    $.ajax({
+                        url: '/PhysicianDashboard/EncounterForm',
+                        type: 'GET',
+                        data: { reqClientId: id },
+                        success: function(res){
+                            console.log(res);
+                            $("body").html(res);
+                        }
+                    })
+                }else{
+                $("#DivModal").html(res);
+                    $("#EncounterId").val(id);
+                $("#FinalizedPopUp").modal('show');
+                }
+            }
+        })
+    })
 
     $(".pageBtn").click(function () {
         var reqType = $("#filterReqType").val()

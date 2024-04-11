@@ -57,7 +57,6 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public CloseCaseViewModel CloseCase(int reqClientId);
         public void CloseCase(CloseCaseViewModel obj);
         public void CloseToUnpaidCase(int reqClientId);
-
         public Encounter Encounter(int reqClientId);
         public void Encounter(Encounter obj);
 

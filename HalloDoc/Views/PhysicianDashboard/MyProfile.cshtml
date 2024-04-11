@@ -18,7 +18,7 @@
         <div class="shadow">
             <form method="post" asp-action="EditProvider" asp-route-formid="1" asp-controller="AdminDashboard" class="viewCaseForm form-floating  patient-request-form p-3">
                 <input id="Physicianid" asp-for="Physicianid" hidden />
-                <button class="btn btn-outline-primary float-end">Request To Admin</button><br />
+                <button type="button" class="btn btn-outline-primary float-end" data-bs-toggle="modal" data-bs-target="#RequestEditModal">Request To Admin</button><br />
                 <h5>Account Information</h5>
                 <div class="row g-2 m-1">
                     <div class="col-md">
@@ -108,9 +108,6 @@
                         </div>
                     </div>
                 </fieldset>
-                <button type="reset" id="editBtn1" class="btn btn-primary float-end m-1">Edit</button>
-                <button type="reset" id="cancelBtn1" class="btn btn-outline-danger float-end me-1 d-none">Cancel</button>
-                <button type="button" id="saveBtn1" class="btn btn-outline-primary float-end me-1 d-none">Save</button><br />
             </form>
 
             <form method="post" asp-action="EditProvider" asp-route-formid="3" asp-controller="AdminDashboard" class="viewCaseForm form-floating  patient-request-form p-3">
@@ -162,10 +159,6 @@
                     </div>
 
                 </fieldset>
-                <button type="reset" id="editBtn2" class="btn btn-primary float-end m-1">Edit</button>
-                <button type="reset" id="cancelBtn2" class="btn btn-outline-danger float-end m-1 d-none">Cancel</button>
-                <button type="submit" id="saveBtn2" class="btn btn-outline-primary float-end m-1 d-none">Save</button><br />
-
             </form>
 
             <form method="post" asp-action="EditProvider" asp-route-formid="4" asp-controller="AdminDashboard" enctype="multipart/form-data" class="viewCaseForm form-floating  patient-request-form p-3">
@@ -237,14 +230,14 @@
                     </div>
 
                 </fieldset>
-                <button type="reset" id="editBtn3" class="btn btn-primary float-end m-1">Edit</button>
-                <button type="reset" id="cancelBtn3" class="btn btn-outline-danger float-end m-1 d-none">Cancel</button>
-                <button type="submit" id="saveBtn3" class="btn btn-outline-primary float-end m-1 d-none">Save</button><br />
                 <hr />
             </form>
 
             <form method="post" asp-action="EditProvider" asp-route-formid="5" asp-controller="AdminDashboard" enctype="multipart/form-data" class="viewCaseForm form-floating  patient-request-form p-3">
                 <h5>Onboarding</h5>
+                <fieldset disabled>
+
+           
                 <input id="Physicianid" asp-for="Physicianid" hidden />
                 <div class="row g-2 m-1">
 
@@ -353,8 +346,7 @@
                 </div>
                 <hr />
 
-                <a asp-action="DeletePhysician" asp-route-Physicianid="@Model.Physicianid" class="btn btn-danger float-end m-1">Delete Account</a>
-                <button type="submit" class="btn btn-primary float-end m-1 ">Save</button><br />
+                </fieldset>
             </form>
         </div>
     </div>
@@ -372,6 +364,27 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal  fade" id="RequestEditModal" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Request to Administrator</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Need to send message to edit</p>
+                <textarea class="form-control" placeholder="Message" id="Message"
+                          style="height: 100px"></textarea>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="RequestEditBtn" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -399,74 +412,19 @@
             fileChosen2.textContent = this.files[0].name
         })
 
-
-        var editBtn1 = document.getElementById("editBtn1");
-        var saveBtn1 = document.getElementById("saveBtn1");
-        var cancelBtn1 = document.getElementById("cancelBtn1");
-        var ResetPassBtn = document.getElementById("ResetPassBtn");
-
-        $("#editBtn1").click(function () {
-            document.getElementById("fieldset1").disabled = false;
-
-            editBtn1.classList.add('d-none');
-            cancelBtn1.classList.remove('d-none');
-            saveBtn1.classList.remove('d-none');
-
-        });
-
-        $("#cancelBtn1").click(function () {
-            document.getElementById("fieldset1").disabled = true;
-
-            editBtn1.classList.remove('d-none');
-            cancelBtn1.classList.add('d-none');
-            saveBtn1.classList.add('d-none');
-
-        });
-
-        var editBtn2 = document.getElementById("editBtn2");
-        var saveBtn2 = document.getElementById("saveBtn2");
-        var cancelBtn2 = document.getElementById("cancelBtn2");
-
-        $("#editBtn2").click(function () {
-            document.getElementById("fieldset2").disabled = false;
-
-            editBtn2.classList.add('d-none');
-            cancelBtn2.classList.remove('d-none');
-            saveBtn2.classList.remove('d-none');
-
-        });
-
-        $("#cancelBtn2").click(function () {
-            document.getElementById("fieldset2").disabled = true;
-
-            editBtn2.classList.remove('d-none');
-            cancelBtn2.classList.add('d-none');
-            saveBtn2.classList.add('d-none');
-
-        });
-
-        var editBtn3 = document.getElementById("editBtn3");
-        var saveBtn3 = document.getElementById("saveBtn3");
-        var cancelBtn3 = document.getElementById("cancelBtn3");
-
-        $("#editBtn3").click(function () {
-            document.getElementById("fieldset3").disabled = false;
-
-            editBtn3.classList.add('d-none');
-            cancelBtn3.classList.remove('d-none');
-            saveBtn3.classList.remove('d-none');
-
-        });
-
-        $("#cancelBtn3").click(function () {
-            document.getElementById("fieldset3").disabled = true;
-
-            editBtn3.classList.remove('d-none');
-            cancelBtn3.classList.add('d-none');
-            saveBtn3.classList.add('d-none');
-
-        });
-
+        //Request edit
+        $("#RequestEditBtn").click(function(){
+            var text = $("#Message").val();
+            $.ajax({
+                url: '/PhysicianDashboard/SendRequestToEdit',
+                type: 'POST',
+                data: {Message: text},
+                success: function(){
+                    $("#RequestEditModal").modal('toggle');
+                }
+            })
+        })
+       
 
         //Reset Password Enable
         var saveBtn00 = document.getElementById("saveBtn00");
@@ -493,29 +451,6 @@
             })
         })
 
-        //Region Updation
-        $("#saveBtn1").click(function () {
-            var selectedRegion = [];
-            var Physicianid = $("#Physicianid").val();
-            $(".regionCheckbox").each(function () {
-
-                var checkboxdata = {
-                    Id: $(this).attr('id'),
-                    value: $(this).val(),
-                    Checked: $(this).is(':checked')
-                };
-
-                selectedRegion.push(checkboxdata);
-            })
-
-            $.ajax({
-                url: '/AdminDashboard/PhysicianRegionUpdate',
-                type: 'POST',
-                data: { selectedRegion: selectedRegion, Physicianid: Physicianid },
-            })
-
-            $("#EditProviderForm").submit();
-        })
 
 
 

@@ -1,6 +1,7 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
+using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using Microsoft.AspNetCore.Mvc;
@@ -283,6 +284,175 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 }
             }
             return false;
+        }
+
+        public bool Encounter(int reqClientId, string option)
+        {
+            try
+            {
+                var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+                var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
+                if (option == "Consult")
+                {
+                    reqRow.Status = 4;
+                }
+                else
+                {
+                    reqRow.Status = 15;
+                }
+                _db.Requests.Update(reqRow);
+                _db.SaveChanges();
+                return true;
+            }
+            catch { return false; }
+        }
+        public Encounter Encounter(int id)
+        {
+            Encounter encounter = _db.Encounters.FirstOrDefault(x => x.EncounterId == id);
+
+            return encounter;
+        }
+        public bool HouseCallBtn(int id)
+        {
+            try
+            {
+                var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == id).FirstOrDefault();
+                var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
+                reqRow.Status = 4;
+                _db.Requests.Update(reqRow);
+                _db.SaveChanges();
+                return true;
+            }
+            catch { return false; }
+        }
+
+        public bool FinalizeEncounter(int id)
+        {
+            try
+            {
+                var encounter = _db.Encounters.FirstOrDefault(x => x.EncounterId == id);
+                encounter.Isfinalized = true;
+                encounter.FinalizedDate = DateTime.Now;
+                _db.Encounters.Update(encounter);
+                _db.SaveChanges();
+                return true;
+            }catch { return false; }    
+        }
+
+        public bool TransferCase(int reqClientId, string note)
+        {
+            try
+            {
+                var reqClientRow = _db.Requestclients.FirstOrDefault(x =>x.Requestclientid == reqClientId);
+                var reqRow = _db.Requests.FirstOrDefault(x => x.Requestid == reqClientRow.Requestid);
+                var reqstatuslog = new Requeststatuslog()
+                {
+                    Requestid = reqRow.Requestid,
+                    Status = 1,
+                    Physicianid = reqRow.Physicianid,
+                    Notes = note,
+                    Createddate = DateTime.Now,
+                    Transtoadmin = true,
+                };
+                reqRow.Status = 1;
+                reqRow.Physicianid = null;
+                _db.Requeststatuslogs.Add(reqstatuslog); _db.SaveChanges();
+                _db.Requests.Update(reqRow);
+                _db.SaveChanges();
+
+                return true;
+            }catch { return false; }
+        }
+
+        public void ViewNotePost(int reqClientId, string Note, int phyId, string phyAspId)
+        {
+            var reqIdCol = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+            var reqId = reqIdCol.Requestid;
+            var Status = _db.Requests.Where(x => x.Requestid == reqId).FirstOrDefault().Status;
+
+            var reqNote = _db.Requestnotes.Where(x => x.Requestid == reqId).FirstOrDefault();
+
+            if (reqNote == null)
+            {
+                var reqNoteDb = new Requestnote
+                {
+                    Requestid = (int)reqId,
+                    Physiciannotes = Note,
+                    Createddate = DateTime.Now,
+                    Createdby = phyAspId
+                };
+                _db.Requestnotes.Add(reqNoteDb);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var reqNoteDb = _db.Requestnotes.Where(x => x.Requestid == reqId).FirstOrDefault();
+
+                reqNoteDb.Requestid = (int)reqId;
+                reqNoteDb.Physiciannotes = Note;
+                reqNoteDb.Modifieddate = DateTime.Now;
+                reqNoteDb.Modifiedby = phyAspId;
+                _db.Requestnotes.Update(reqNoteDb);
+                _db.SaveChanges();
+            }
+
+            var reqStatusLog = new Requeststatuslog
+            {
+                Requestid = (int)reqId,
+                Status = Status,
+                Physicianid = phyId,
+                Notes = Note,
+                Createddate = DateTime.Now,
+            };
+            _db.Requeststatuslogs.Add(reqStatusLog);
+            _db.SaveChanges();
+        }
+
+        public void ConcludeCare(CloseCaseViewModel obj, string aspId)
+        {
+            var reqCRow = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == obj.ReqClientId);
+            var reqRow = _db.Requests.FirstOrDefault(x => x.Requestid == reqCRow.Requestid);
+
+            reqRow.Status = 5;
+            _db.Requests.Update(reqRow);    
+            _db.SaveChanges();
+            var reqNote = _db.Requestnotes.Where(x => x.Requestid == reqRow.Requestid).FirstOrDefault();
+
+            if (reqNote == null)
+            {
+                var reqNoteDb = new Requestnote
+                {
+                    Requestid = reqRow.Requestid,
+                Physiciannotes = obj.note,
+                    Createddate = DateTime.Now,
+                    Createdby = aspId
+                };
+                _db.Requestnotes.Add(reqNoteDb);
+                _db.SaveChanges();
+            }
+            else
+            {
+
+            var reqNoteDb = _db.Requestnotes.Where(x => x.Requestid == reqRow.Requestid).FirstOrDefault();
+
+            reqNoteDb.Requestid = reqRow.Requestid;
+            reqNoteDb.Physiciannotes = obj.note;
+            reqNoteDb.Modifieddate = DateTime.Now;
+            reqNoteDb.Modifiedby = aspId;
+            _db.Requestnotes.Update(reqNoteDb);
+            _db.SaveChanges();
+            }
+
+            var reqStatusLog = new Requeststatuslog
+            {
+                Requestid = reqRow.Requestid,
+                Status = reqRow.Status,
+                Physicianid = reqRow.Physicianid,
+                Notes = obj.note,
+                Createddate = DateTime.Now,
+            };
+            _db.Requeststatuslogs.Add(reqStatusLog);
+            _db.SaveChanges();
         }
     }
 }

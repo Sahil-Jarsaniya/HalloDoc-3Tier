@@ -6,6 +6,7 @@
             <td></td>
             <td>Phone</td>
             <td>Address</td>
+            <td>Status</td>
             <td>Actions</td>
         </tr>
     </thead>
@@ -47,14 +48,20 @@
                     @item.Street, @item.City, @item.State, @item.Zipcode
                 </td>
                 <td style="background-color: @bg;">
+                    @if(item.Status == 15)
+                    {
+                        <button class="btn btn-primary" asp-action="HouseCallBtn" asp-route-id="@item.reqClientId"> HouseCall</button>
+                    }
+                </td>
+                <td style="background-color: @bg;">
                     <a class="btn border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Actions
                     </a>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li><a class="dropdown-item" href="@Url.Action("ViewCase", new {reqClientId = item.reqClientId})">View Case</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("ViewCase","PhysicianDashboard", new {reqClientId = item.reqClientId})">View Case</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewUpload","PhysicianDashboard", new {reqClientId = item.reqClientId})">View Uploads</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("ViewNote", new{reqClientId = item.reqClientId})">View Notes</a></li>
-                        <li><a class="dropdown-item" href="@Url.Action("SendOrders", new{reqClientId = item.reqClientId})">Orders</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("ViewNote","PhysicianDashboard", new{reqClientId = item.reqClientId})">View Notes</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("SendOrders", "PhysicianDashboard",new{reqClientId = item.reqClientId})">Orders</a></li>
                         <li><a class="btn dropdown-item EncounterBtn" data-id="@item.reqClientId" href="#">Encounter</a></li>
                     </ul>
                 </td>
@@ -94,7 +101,7 @@
             <p>Patient: @item.Phonenumber</p>
             <div class="row">
                 <div class="col-5 m-2">
-                    <a class="btn btn-success w-100" href="@Url.Action("ViewNote", new {reqClientId = item.reqClientId})">View Notes</a>
+                    <a class="btn btn-success w-100" href="@Url.Action("ViewNote","PhysicianDashboard", new {reqClientId = item.reqClientId})">View Notes</a>
                 </div>
                 <div class="col-5 m-2">
                     <a class="btn btn-success w-100" href="@Url.Action("ViewUpload","PhysicianDashboard", new {reqClientId = item.reqClientId})">View Uploads</a>
@@ -103,7 +110,7 @@
                     <a class="btn btn-success w-100 EncounterBtn" data-id="@item.reqClientId">Encounter</a>
                 </div>
                 <div class="col-5 m-2">
-                    <a class="btn btn-warning w-100" href="@Url.Action("SendOrders", new{reqClientId = item.reqClientId})">Orders</a>
+                    <a class="btn btn-warning w-100" href="@Url.Action("SendOrders","PhysicianDashboard", new{reqClientId = item.reqClientId})">Orders</a>
                 </div>
                 <div class="col-5 m-2">
                     <a href="mailto: @item.Email" class="w-100 btn btn-success rounded">
@@ -123,6 +130,8 @@
         $("#EncounterId").val($(this).data('id'));
         $("#EncounterModal").modal('show');
     })
+    
+
 
     $(".pageBtn").click(function () {
         var reqType = $("#filterReqType").val()

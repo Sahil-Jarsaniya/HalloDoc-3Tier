@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\HalloDoc.bundle.scp.css"
     },
     {
+      "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\Rotativa\\wkhtmltoimage.exe",
+      "PackagePath": "staticwebassets\\Rotativa\\wkhtmltoimage.exe"
+    },
+    {
+      "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\Rotativa\\wkhtmltopdf.exe",
+      "PackagePath": "staticwebassets\\Rotativa\\wkhtmltopdf.exe"
+    },
+    {
       "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\css\\AdminDashboard.css",
       "PackagePath": "staticwebassets\\css\\AdminDashboard.css"
     },
@@ -1133,6 +1141,10 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\list.svg"
     },
     {
+      "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\76\\Test Instructions.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\76\\Test Instructions.pdf"
+    },
+    {
       "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees-21Feb24.pdf",
       "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees-21Feb24.pdf"
     },
@@ -1141,8 +1153,16 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees-8March24.pdf"
     },
     {
+      "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\Test Instructions.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Test Instructions.pdf"
+    },
+    {
       "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg"
+    },
+    {
+      "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\box-arrow-right (1).svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\box-arrow-right (1).svg"
     },
     {
       "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\box-arrow-right.svg",
@@ -1195,6 +1215,10 @@
     {
       "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\plus-lg.svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\plus-lg.svg"
+    },
+    {
+      "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\plus.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\plus.svg"
     },
     {
       "Id": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\telephone.svg",

@@ -1020,7 +1020,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Location = requestclient.Location,
                     Requestid = request.Requestid
                 };
-
+                _db.Encounters.Add(obj);
+                _db.SaveChanges();
                 return obj;
             }
             else
@@ -1068,7 +1069,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 _db.Encounters.Update(encounter);
                 _db.SaveChanges();
             }
-        }
+            }
 
         public int GetStatus(int reqClientId)
         {

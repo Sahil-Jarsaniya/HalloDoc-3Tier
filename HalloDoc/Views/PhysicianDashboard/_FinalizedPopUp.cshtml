@@ -1,0 +1,23 @@
+﻿@model Encounter;
+<div class="modal  fade" id="FinalizedPopUp" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <input value="" id="EncounterId" hidden />
+            <div class="modal-header" style="background-color: #01bce9; color:white;">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Encounter Form</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Encounter Form is finalized successfully!</p>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" asp-action="downloadFinalEncounter" asp-controller="PhysicianDashboard" asp-route-id="@Model.EncounterId">Download</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>

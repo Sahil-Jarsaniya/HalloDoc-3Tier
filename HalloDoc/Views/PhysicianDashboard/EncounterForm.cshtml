@@ -1,14 +1,14 @@
 ﻿@model Encounter;
 @{
-    ViewData["Title"] = "Admin Dashboard";
-    Layout = "_adminLayout";
+    ViewData["Title"] = "Encounter Form";
+    Layout = "_PhysicianLayout";
 }
 <div class="container">
     <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
         <h4>
             Encounter Form
         </h4>
-        <a href="@Url.Action("Dashboard","AdminDashboard")" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+        <a href="@Url.Action("Dashboard","PhysicianDashboard")" class="btn btn-outline-primary m-2 text-decoration-none float-end"
            id="back-btn">
             <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
             Back
@@ -16,7 +16,7 @@
     </div>
     <div class="container-fluid d-flex justify-content-center mt-4">
 
-        <form method="post" asp-action="EncounterForm" asp-controller="AdminDashboard"  class="viewCaseForm form-floating shadow patient-request-form p-3">
+        <form method="post" asp-action="EncounterForm" asp-controller="PhysicianDashboard" class="viewCaseForm form-floating shadow patient-request-form p-3">
             <span class="fs-2 m-auto" style="color:#01bce9">
                 Medical Report-Confidential
             </span>
@@ -255,7 +255,7 @@
                 </div>
             </div>
             <button type="reset"  class="btn btn-outline-primary float-end m-1">Cancel</button>
-            <button type="submit"  class="btn btn-info float-end m-1">Finalize</button>
+            <button asp-action="FinalizeEncounter" asp-route-id="@Model.EncounterId"  class="btn btn-info float-end m-1">Finalize</button>
             <button type="submit" class="btn btn-primary float-end m-1">Save Changes</button>
         </form>
     </div>

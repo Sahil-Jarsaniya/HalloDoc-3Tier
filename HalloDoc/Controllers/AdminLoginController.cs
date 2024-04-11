@@ -64,7 +64,7 @@ namespace HalloDoc.Controllers
                         FirstName = isPhysician.Firstname,
                         LastName = isPhysician.Lastname,
                         Email = isPhysician.Email,
-                        Role = "Admin"
+                        Role = "Provider"
                     };
                     var jwtToken = _JwtService.GenerateJwtToken(user3);
                     Response.Cookies.Append("jwt", jwtToken);

@@ -161,7 +161,7 @@ $("#AgreementConfirmBtn").click(function () {
     })
 });
 
-
+//Encounter
 $("#EncounerSavebtn").click(function () {
     var id = $("#EncounterId").val();
     var radioValue = $("input[name='options']:checked").val();

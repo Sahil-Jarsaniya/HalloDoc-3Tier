@@ -11,40 +11,28 @@ $(".status-tab").click(function () {
     document.getElementById("DashboradForm").reset();
 
     if (id == 'status-new-tab') {
-      /*  dashboardStatus = 1;*/
         localStorage.setItem("status", 1);
-        //$("#DashboardStatus").val(1);
-        $('#status-text').text('(New)');
+        $('#stateName').text('(New)');
     }
     else if (id == 'status-pending-tab') {
-        //dashboardStatus = 2;
         localStorage.setItem("status", 2);
-        //$("#DashboardStatus").val(2);
-        $('#status-text').text('(Pending)');
+        $('#stateName').text('(Pending)');
     }
     else if (id == 'status-active-tab') {
-        //dashboardStatus = 8;
         localStorage.setItem("status", 8);
-        //$("#DashboardStatus").val(8);
-        $('#status-text').text('(Active)');
+        $('#stateName').text('(Active)');
     }
     else if (id == 'status-conclude-tab') {
-        //dashboardStatus = 4;
         localStorage.setItem("status", 4);
-        //$("#DashboardStatus").val(4);
-        $('#status-text').text('(Conclude)');
+        $('#stateName').text('(Conclude)');
     }
     else if (id == 'status-to-close-tab') {
-        //dashboardStatus = 5;
         localStorage.setItem("status", 5);
-        //$("#DashboardStatus").val(5);
-        $('#status-text').text('(To Close)');
+        $('#stateName').text('(To Close)');
     }
     else if (id == 'status-unpaid-tab') {
-        //dashboardStatus = 13;
         localStorage.setItem("status", 13);
-        //$("#DashboardStatus").val(13);
-        $('#status-text').text('(Unpaid)');
+        $('#stateName').text('(Unpaid)');
     }
 
     var status = localStorage.getItem("status");

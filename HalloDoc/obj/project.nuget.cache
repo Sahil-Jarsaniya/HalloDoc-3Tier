@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "MjovTUnefeS9uw2tfPx/E70ZxJrdFJCMAHFa3bhmWQPyFL3X5Rdwp5bePtUJPayN7O8HwN/f+4NLHHsvdMF3eA==",
+  "dgSpecHash": "BE1SLBxuAy3ACgV5XwAdEMSi5Wr6lSgmRJznlyKpfNXuu2tmdMAxlFxbkWk52i9ddQdM7FZM2ryzSwrvZfIm2A==",
   "success": true,
   "projectFilePath": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\HalloDoc.csproj",
   "expectedPackageFiles": [
@@ -147,6 +147,7 @@
     "C:\\Users\\pca17\\.nuget\\packages\\nuget.versioning\\6.6.1\\nuget.versioning.6.6.1.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\pagedlist\\1.17.0\\pagedlist.1.17.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\restsharp\\110.2.0\\restsharp.110.2.0.nupkg.sha512",
+    "C:\\Users\\pca17\\.nuget\\packages\\rotativa.aspnetcore\\1.3.2\\rotativa.aspnetcore.1.3.2.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\pca17\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

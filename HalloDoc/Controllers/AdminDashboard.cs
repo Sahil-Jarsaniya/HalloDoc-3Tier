@@ -86,37 +86,31 @@ namespace HalloDoc.Controllers
                 if (status == 1)
                 {
                     var parseData = _adminRepo.newReq(obj);
-                    //return PartialView("_newRequestView", parseData);
                     return PartialView("_newRequestView", await PaginatedList<newReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
                 else if (status == 2)
                 {
                     var parseData = _adminRepo.pendingReq(obj);
-                    //return PartialView("_PendingRequestView", parseData);
                     return PartialView("_PendingRequestView", await PaginatedList<pendingReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
                 else if (status == 8)
                 {
                     var parseData = _adminRepo.activeReq(obj);
-                    //return PartialView("_activeRequestView", parseData);
                     return PartialView("_activeRequestView", await PaginatedList<activeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
                 else if (status == 4)
                 {
                     var parseData = _adminRepo.concludeReq(obj);
-                    //return PartialView("_concludeReqView", parseData);
                     return PartialView("_concludeReqView", await PaginatedList<concludeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
                 else if (status == 5)
                 {
                     var parseData = _adminRepo.closeReq(obj);
-                    //return PartialView("_closeReqView", parseData);
                     return PartialView("_closeReqView", await PaginatedList<closeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
                 else
                 {
                     var parseData = _adminRepo.unpaidReq(obj);
-                    //return PartialView("_unpaidReqView", parseData);
                     return PartialView("_unpaidReqView", await PaginatedList<unpaidReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
             }
@@ -124,7 +118,6 @@ namespace HalloDoc.Controllers
             if (status == 1)
             {
                 var parseData = _adminRepo.newReq();
-                //return PartialView("_newRequestView", parseData);
                 return PartialView("_newRequestView", await PaginatedList<newReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
             else if (status == 2)

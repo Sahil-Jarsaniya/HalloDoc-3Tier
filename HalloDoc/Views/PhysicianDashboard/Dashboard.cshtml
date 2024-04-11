@@ -92,10 +92,10 @@
     <div class="d-flex align-items-center justify-content-between mt-3">
 
         <div class="d-flex align-items-center">
-            <h6 class="d-none d-md-block fs-6">Patients(New)</h6>
+            <h6 class="d-none d-md-block fs-6">Patients <span id="stateName"></span></h6>
             <h6 class="d-md-none" style="font-size: 12px;">
                 Patients
-                (new)
+                <span id="stateName"></span>
             </h6>
         </div>
 
@@ -194,21 +194,8 @@
             <div class="modal-body">
                 <div class="dropdown">
                     <form>
-                        <p>To transfer this request, search and select anthoer Physician.</p>
-                        <input id="TransferClientId" value="" hidden />
-                        <input id="PhyId" value="" hidden />
-
-                        <select class="form-select form-select mb-3 RegionSelect TransferRegionSelect" aria-label="Large select example">
-                            <option>Narrow Search by Region</option>    
-                            @foreach (var item in Model.Region)
-                            {
-                                <option value="@item.Regionid">@item.Name</option>
-                            }
-                        </select>
-                        <select class="form-select form-select mb-3 TransferPhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
-                            <option>Select Physician</option>
-                        </select>
-
+                        <p>This request will be transfered to admin.</p>
+                        <input value="" id="TransferClientId" hidden />
                         <div class="form-floating m-1 form-div">
                             <textarea class="form-control" id="addTransferNote"
                                       style="height: 100px"></textarea>
@@ -218,7 +205,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" id="ConfirmTransferBtn">Submit</button>
+                <button class="btn btn-primary" id="ConfirmTransferBtn1">Submit</button>
                 <button type="button" id="" class="btn btn-outline-primary CloseModal" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -341,5 +328,48 @@
     </script>
     <script type="text/javascript" src="~/js/PhysicianDashboard.js"></script>
     <script src="~/js/CasesPopUp.js"></script>
+    <script>
+        $("#EncounerSavebtn").click(function () {
+            var id = $("#EncounterId").val();
+            var radioValue = $("input[name='options']:checked").val();
+            console.log(radioValue);
+            $.ajax({
+                url: '/PhysicianDashboard/Encounter',
+                type: 'POST',
+                data: {
+                    reqClientId: id, option: radioValue
+                },
+                success: function () {
+                    $(".CloseModal").click();
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('error fetching details')
+                },
+            })
+        });
+
+
+        //Transfer Case
+        $("#ConfirmTransferBtn1").click(function () {
+            var addNote = $("#addTransferNote").val();
+            var reqClientId = $("#TransferClientId").val();
+            $.ajax({
+                url: '/PhysicianDashboard/TransferCase',
+                type: 'POST',
+                data: { reqClientId: reqClientId, addNote: addNote },
+                success: function (result) {
+                    $(".CloseModal").click();
+                    location.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('error fetching details')
+                },
+            })
+        })
+
+    </script>
     @await Component.InvokeAsync("Notyf")
 }

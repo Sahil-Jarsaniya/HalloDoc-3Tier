@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Itoev60Z8r4d2r94Nn4GAialz/MExMxxJwmybbobkis=",
+  "Hash": "ZQPiRF78Fo8IIjjO4R3vOt8JwFG8gzY5rXqID+r54zY=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -4080,6 +4080,40 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
+      "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\Rotativa\\wkhtmltoimage.exe",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Rotativa/wkhtmltoimage.exe",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Rotativa\\wkhtmltoimage.exe"
+    },
+    {
+      "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\Rotativa\\wkhtmltopdf.exe",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "Rotativa/wkhtmltopdf.exe",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Rotativa\\wkhtmltopdf.exe"
+    },
+    {
       "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\11116016_415.jpg",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -4129,6 +4163,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg"
+    },
+    {
+      "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\box-arrow-right (1).svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/box-arrow-right (1).svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\box-arrow-right (1).svg"
     },
     {
       "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\box-arrow-right.svg",
@@ -4384,6 +4435,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\list.svg"
+    },
+    {
+      "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\plus.svg",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/plus.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\plus.svg"
     },
     {
       "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\plus-lg.svg",
@@ -5151,6 +5219,23 @@
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\ProviderData\\Microsoft.AspNetCore.Http.FormFile"
     },
     {
+      "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\76\\Test Instructions.pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/76/Test Instructions.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\76\\Test Instructions.pdf"
+    },
+    {
       "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees-21Feb24.pdf",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -5200,6 +5285,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\telephone.svg"
+    },
+    {
+      "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\Test Instructions.pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/Test Instructions.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\Test Instructions.pdf"
     },
     {
       "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\user_circle.svg",

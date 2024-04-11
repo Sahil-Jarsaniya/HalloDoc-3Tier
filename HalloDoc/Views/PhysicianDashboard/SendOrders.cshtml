@@ -1,7 +1,7 @@
 ﻿@model HalloDoc.DataAccess.ViewModel.AdminViewModel.SendOrderViewModel;
 @{
     ViewData["Title"] = "View Upload";
-    Layout = "_adminLayout";
+    Layout = "_PhysicianLayout";
 }
 
 <div>
@@ -9,7 +9,7 @@
         <h4>
             Send Order
         </h4>
-        <a href="@Url.Action("Dashboard", "AdminDashboard", new {status = Model.status})" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+        <a href="@Url.Action("Dashboard", "PhysicianDashboard", new {status = Model.status})" class="btn btn-outline-primary m-2 text-decoration-none float-end"
            id="back-btn">
             <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
             Back
