@@ -9,9 +9,11 @@ $(document).ready(function () {
             success: function (data) {
                 if (!data.exists) {
                     $('#hiddendiv').show();
+                    $("#hiddendiv input").attr("required", "true");
                 }
                 else {
                     $('#hiddendiv').hide();
+                    $("#hiddendiv input").attr("required", "false");
                 }
             }
         });

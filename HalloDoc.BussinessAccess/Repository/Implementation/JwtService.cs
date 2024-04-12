@@ -24,7 +24,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 new Claim(ClaimTypes.Role, user.Role),
                 new Claim("AspId", user.AspId),
                 new Claim("firstName", user.FirstName),
-                new Claim("lastName", user.LastName)
+                new Claim("lastName", user.LastName),
+                new Claim("RoleId", user.Roleid)
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));

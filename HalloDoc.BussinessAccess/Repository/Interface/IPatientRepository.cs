@@ -16,7 +16,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public int Document(UploadFileViewModel obj);
 
-        public String PatientProfile(DashboardViewModel obj);
+        public String PatientProfile(ProfileEditViewModel obj);
 
         public String CreateReqMeOrElse(PatientViewModel obj, int uid);
 

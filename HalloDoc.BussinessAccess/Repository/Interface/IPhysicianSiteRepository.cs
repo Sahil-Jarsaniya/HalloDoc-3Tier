@@ -10,6 +10,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
     {
         public int GetPhysicianId(string AspId);
 
+        public bool PhysicianLocationUpdate(double latitude, double longitude, int phyId);
         public countRequestViewModel DashboardCount(int phyId);
         public IQueryable<pendingReqViewModel> newReq(searchViewModel? obj, int phyId);
         public IQueryable<pendingReqViewModel> pendingReq(searchViewModel? obj, int phyId);
@@ -22,7 +23,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public IEnumerable<DayScheduling> ViewAllShift(string date, int phyId);
 
-        public bool  AccpetRequest(int reqClientId);
+        public bool AccpetRequest(int reqClientId);
         public bool Encounter(int reqClientId, string option);
 
         public bool HouseCallBtn(int id);
@@ -36,5 +37,6 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void ViewNotePost(int reqClientId, string Note, int phyId, string phyAspId);
 
         public void ConcludeCare(CloseCaseViewModel obj, string aspId);
+        
     }
 }

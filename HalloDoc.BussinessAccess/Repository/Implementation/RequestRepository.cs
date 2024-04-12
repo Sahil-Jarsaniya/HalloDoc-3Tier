@@ -500,5 +500,146 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.Requeststatuslogs.Add(requeststatuslog);
             _db.SaveChanges();
         }
+
+        public void CreateRequestByPhysician(PatientViewModel obj, int PhyId)
+        {
+
+            var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
+            Guid guid = Guid.NewGuid();
+            var uid = 0;
+
+            if (existUser == null)
+            {
+                if (obj.Password != null)
+                {
+                    var hashPass = _loginRepo.GetHash(obj.Password);
+                    AspNetUser aspNetUser = new AspNetUser
+                    {
+
+                        Id = guid.ToString(),
+                        PasswordHash = hashPass,
+                        UserName = obj.Email,
+                        CreatedDate = DateTime.UtcNow,
+                        PhoneNumber = obj.Phonenumber,
+                        Email = obj.Email,
+                    };
+                    _db.AspNetUsers.Add(aspNetUser);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    AspNetUser aspNetUser = new AspNetUser
+                    {
+
+                        Id = guid.ToString(),
+                        UserName = obj.Email,
+                        CreatedDate = DateTime.UtcNow,
+                        PhoneNumber = obj.Phonenumber,
+                        Email = obj.Email,
+                    };
+                    _db.AspNetUsers.Add(aspNetUser);
+                    _db.SaveChanges();
+                    string subject = "Registration Link";
+                    string body = "link";
+                    _loginRepo.SendEmail(obj.Email, subject, body);
+                }
+
+
+                User user = new User
+                {
+                    Aspnetuserid = guid.ToString(),
+                    Firstname = obj.Firstname,
+                    Lastname = obj.Lastname,
+                    Email = obj.Email,
+                    Mobile = obj.Phonenumber,
+                    Street = obj.Street,
+                    City = obj.City,
+                    State = obj.State,
+                    Zipcode = obj.Zipcode,
+                    Createddate = DateTime.Now,
+                    Strmonth = obj.Strmonth,
+                    Createdby = "admin"
+                };
+                _db.Users.Add(user);
+                _db.SaveChanges();
+                uid = user.Userid;
+            }
+            else
+            {
+                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
+                uid = user.Userid;
+            }
+
+            //Inserting into Request
+            Request request = new Request
+            {
+                Physicianid = PhyId,
+                Requesttypeid = 1,
+                Userid = uid,
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Status = 2,
+                Createddate = DateTime.Now,
+                Isurgentemailsent = false,
+                Phonenumber = obj.Phonenumber,
+                Confirmationnumber = GetConfirmationNumber(DateTime.Now, obj.Lastname, obj.Firstname)
+            };
+            _db.Requests.Add(request);
+            _db.SaveChanges();
+            //Insertung into RequestClient
+            Requestclient requestclient = new Requestclient
+            {
+                Requestid = request.Requestid,
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Phonenumber = obj.Phonenumber,
+                Strmonth = obj.Strmonth,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Notes = obj.Notes
+            };
+            _db.Requestclients.Add(requestclient);
+            _db.SaveChanges();
+            //Inserting into requestStatusLog
+
+            Requeststatuslog requeststatuslog = new Requeststatuslog
+            {
+                Requestid = request.Requestid,
+                Status = 1,
+                Createddate = DateTime.Now
+            };
+            _db.Requeststatuslogs.Add(requeststatuslog);
+            _db.SaveChanges();
+
+
+            //uploading files
+            if (obj.formFile != null && obj.formFile.Length > 0)
+            {
+                //get file name
+                var fileName = Path.GetFileName(obj.formFile.FileName);
+
+                //define path
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
+
+                // Copy the file to the desired location
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    obj.formFile.CopyTo(stream);
+                }
+                Requestwisefile requestwisefile = new Requestwisefile
+                {
+                    Filename = fileName,
+                    Requestid = request.Requestid,
+                    Createddate = DateTime.Now
+                };
+
+                _db.Requestwisefiles.Add(requestwisefile);
+                _db.SaveChanges();
+            }
+        }
     }
 }

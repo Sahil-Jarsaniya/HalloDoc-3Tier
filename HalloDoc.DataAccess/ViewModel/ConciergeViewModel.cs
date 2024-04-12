@@ -11,10 +11,12 @@ namespace HalloDoc.DataAccess.ViewModel
     public class ConciergeViewModel
     {
         [Required(ErrorMessage = "This field can't be empty.")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
         [Column("ConciergeFirstname")]
         [StringLength(100)]
         public string? ConciergeFirstname { get; set; }
 
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
         [Column("ConciergeLastname")]
         [StringLength(100)]
         public string? ConciergeLastname { get; set; }

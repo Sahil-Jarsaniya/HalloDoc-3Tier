@@ -1,4 +1,26 @@
-/*var dashboardStatus = $("#DashboardStatus").val();*/
+$(document).ready(function () {
+
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+        } 
+    function showPosition(position) {
+      
+    var latitude = position.coords.latitude;
+    var longitude = position.coords.longitude;
+        console.log(latitude);
+        console.log(longitude);
+    $.ajax({
+        url: '/PhysicianDashboard/PhysicianLocationUpdate',
+        type: 'POST',
+        data: {
+            latitude: latitude, longitude: longitude
+        }
+    })
+    }
+
+})
+
 var status = localStorage.getItem("status");
 $(".status-tab").click(function () {
     $(this).addClass("active");

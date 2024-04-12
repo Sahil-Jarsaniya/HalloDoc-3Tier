@@ -42,13 +42,13 @@
                         @item.Phonenumber
                     </a>
                     (Patient)
-                    
+
                 </td>
                 <td style="background-color: @bg;">
                     @item.Street, @item.City, @item.State, @item.Zipcode
                 </td>
                 <td style="background-color: @bg;">
-                    @if(item.Status == 15)
+                    @if (item.Status == 15)
                     {
                         <button class="btn btn-primary" asp-action="HouseCallBtn" asp-route-id="@item.reqClientId"> HouseCall</button>
                     }
@@ -62,7 +62,14 @@
                         <li><a class="dropdown-item" href="@Url.Action("ViewUpload","PhysicianDashboard", new {reqClientId = item.reqClientId})">View Uploads</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("ViewNote","PhysicianDashboard", new{reqClientId = item.reqClientId})">View Notes</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("SendOrders", "PhysicianDashboard",new{reqClientId = item.reqClientId})">Orders</a></li>
-                        <li><a class="btn dropdown-item EncounterBtn" data-id="@item.reqClientId" href="#">Encounter</a></li>
+                        @if (item.callType == 0)
+                        {
+                            <li><a class="btn dropdown-item EncounterBtn" data-id="@item.reqClientId" href="#">Encounter</a></li>
+                        }
+                        else
+                        {
+                            <li><a class="dropdown-item encounterBtn" data-id="@item.reqClientId">Encounter</a></li>
+                        }
                     </ul>
                 </td>
             </tr>
@@ -79,7 +86,7 @@
 
             <div class="d-flex justify-content-between mb-2">
                 @name
-                
+
             </div>
             <div class="d-flex justify-content-between">
                 <span class="w-50">
@@ -107,7 +114,15 @@
                     <a class="btn btn-success w-100" href="@Url.Action("ViewUpload","PhysicianDashboard", new {reqClientId = item.reqClientId})">View Uploads</a>
                 </div>
                 <div class="col-5 m-2">
-                    <a class="btn btn-success w-100 EncounterBtn" data-id="@item.reqClientId">Encounter</a>
+                    @if (item.callType != 0)
+                    {
+                        <a class="btn btn-success w-100 EncounterBtn" data-id="@item.reqClientId">Encounter</a>
+
+                    }
+                    else
+                    {
+                        <a class="btn btn-success w-100 encounterBtn" data-id="@item.reqClientId">Encounter</a>
+                    }
                 </div>
                 <div class="col-5 m-2">
                     <a class="btn btn-warning w-100" href="@Url.Action("SendOrders","PhysicianDashboard", new{reqClientId = item.reqClientId})">Orders</a>
@@ -130,7 +145,31 @@
         $("#EncounterId").val($(this).data('id'));
         $("#EncounterModal").modal('show');
     })
-    
+    $(".encounterBtn").click(function () {
+        var id = $(this).data('id');
+        $.ajax({
+            url: '/PhysicianDashboard/isFinalizedform',
+            type: 'POST',
+            data: { id: id },
+            success: function (res) {
+                if (res.success == false) {
+                    $.ajax({
+                        url: '/PhysicianDashboard/EncounterForm',
+                        type: 'GET',
+                        data: { reqClientId: id },
+                        success: function (res) {
+                            console.log(res);
+                            $("body").html(res);
+                        }
+                    })
+                } else {
+                    $("#DivModal").html(res);
+                    $("#EncounterId").val(id);
+                    $("#FinalizedPopUp").modal('show');
+                }
+            }
+        })
+    })
 
 
     $(".pageBtn").click(function () {

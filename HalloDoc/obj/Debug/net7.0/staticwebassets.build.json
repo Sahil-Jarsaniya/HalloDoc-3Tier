@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ZQPiRF78Fo8IIjjO4R3vOt8JwFG8gzY5rXqID+r54zY=",
+  "Hash": "iXSYQDB75meJ+RNerMVVx6SsmcX/skPAjKYlWaBbGNA=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -5236,6 +5236,23 @@
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\76\\Test Instructions.pdf"
     },
     {
+      "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\88\\FinalizedEncounterForm (1).pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/88/FinalizedEncounterForm (1).pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\88\\FinalizedEncounterForm (1).pdf"
+    },
+    {
       "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees-21Feb24.pdf",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -5302,6 +5319,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\Test Instructions.pdf"
+    },
+    {
+      "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\Updated-Training-Plan-20March24.pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/Updated-Training-Plan-20March24.pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\Updated-Training-Plan-20March24.pdf"
     },
     {
       "Identity": "G:\\Haaa\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\user_circle.svg",

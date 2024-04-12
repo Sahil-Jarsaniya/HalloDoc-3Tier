@@ -11,11 +11,13 @@ namespace HalloDoc.DataAccess.ViewModel
 {
     public class BussinessViewModel
     {
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
         [Required(ErrorMessage = "Please Enter Name")]
         [Column("bussinessFirstname")]
         [StringLength(100)]
         public string? bussinessFirstname { get; set; }
 
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid Last Name")]
         [Column("bussinessLastname")]
         [StringLength(100)]
         public string? bussinessLastname { get; set; }

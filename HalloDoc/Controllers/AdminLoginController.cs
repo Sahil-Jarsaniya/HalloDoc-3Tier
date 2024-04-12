@@ -31,7 +31,6 @@ namespace HalloDoc.Controllers
             var myUser = _LoginRepository.GetLoginData(obj, hashPass);
             if (myUser == null)
             {
-                //ViewBag.message = "Login Failed";
                 _notyf.Error("Login Failed");
                 return View();
             }
@@ -47,11 +46,21 @@ namespace HalloDoc.Controllers
                         FirstName = isAdmin.Firstname,
                         LastName = isAdmin.Lastname,
                         Email = isAdmin.Email,
-                        Role = "Admin"
+                        Role = "Admin",
+                        Roleid = isAdmin.Roleid.ToString(),
                     };
                     var jwtToken = _JwtService.GenerateJwtToken(user2);
                     Response.Cookies.Append("jwt", jwtToken);
 
+
+                    var menus = _db.Rolemenus.Where(x => x.Roleid == isAdmin.Roleid);
+                    var menuList = "";
+                    foreach(var menu in menus)
+                    {
+                        menuList= menuList+ menu.Menuid +",";    
+                    }
+
+                    Response.Cookies.Append("menuList", menuList);
                     _notyf.Success("Successful Login");
                     return RedirectToAction("Dashboard", "AdminDashboard");
                 }
@@ -64,10 +73,20 @@ namespace HalloDoc.Controllers
                         FirstName = isPhysician.Firstname,
                         LastName = isPhysician.Lastname,
                         Email = isPhysician.Email,
-                        Role = "Provider"
+                        Role = "Provider",
+                        Roleid = isPhysician.Roleid.ToString()
                     };
                     var jwtToken = _JwtService.GenerateJwtToken(user3);
                     Response.Cookies.Append("jwt", jwtToken);
+
+                    var menus = _db.Rolemenus.Where(x => x.Roleid == isPhysician.Roleid);
+                    var menuList = "";
+                    foreach (var menu in menus)
+                    {
+                        menuList = menuList +","+ menu.Menuid ;
+                    }
+
+                    Response.Cookies.Append("menuList", menuList);
 
                     _notyf.Success("Successful Login");
                     return RedirectToAction("Dashboard", "PhysicianDashboard");
@@ -84,6 +103,11 @@ namespace HalloDoc.Controllers
             if (Request.Cookies["jwt"] != null)
             {
                 Response.Cookies.Delete("jwt");
+            };
+
+            if (Request.Cookies["menuList"] != null)
+            {
+                Response.Cookies.Delete("menuList");
             };
             _notyf.Success("Successful Logout");
 

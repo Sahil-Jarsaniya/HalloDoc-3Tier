@@ -5,6 +5,7 @@ using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage;
 using Org.BouncyCastle.Bcpg;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
     public class PhysicianSiteRepository : IPhysicianSiteRepository
     {
         private readonly ApplicationDbContext _db;
-
+        private readonly LoginRepository _login;
+        //private readonly RequestRepository _request;
         public PhysicianSiteRepository(ApplicationDbContext db)
         {
             _db = db;
@@ -29,7 +31,39 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return _db.Physicians.FirstOrDefault(x => x.Aspnetuserid == AspId).Physicianid;
         }
 
+        public bool PhysicianLocationUpdate(double latitude, double longitude, int phyId)
+        {
+            try
+            {
 
+                var phyLocation = _db.Physicianlocations.Where(x => x.Physicianid == phyId).FirstOrDefault();
+                var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == phyId);
+                if (phyLocation == null)
+                {
+                    var location = new Physicianlocation()
+                    {
+                        Physicianid = phyId,
+                        Latitude = (decimal?)latitude,
+                        Longtitude = (decimal?)longitude,
+                        Createddate = DateTime.Now,
+                        Physicianname = phy.Firstname + " " + phy.Lastname,
+                    };
+                    _db.Physicianlocations.Add(location);
+                    _db.SaveChanges();
+                }
+                else
+                {
+                    phyLocation.Latitude = (decimal?)latitude;
+                    phyLocation.Longtitude = (decimal?)longitude;
+                    _db.Physicianlocations.Update(phyLocation);
+                    _db.SaveChanges();
+                }
+                return true;
+            } catch (Exception ex)
+            {
+                return false;   
+            }
+        }
         public countRequestViewModel DashboardCount(int phyId)
         {
             var newCount = (from t1 in _db.Requests
@@ -149,6 +183,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                     State = rc.State,
                                     Zipcode = rc.Zipcode,
                                     City = rc.City,
+                                    callType = req.Calltype ?? 0
                                 };
             if (obj.Name != null)
             {
@@ -295,10 +330,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 if (option == "Consult")
                 {
                     reqRow.Status = 4;
+                    reqRow.Calltype = 1;
                 }
                 else
                 {
                     reqRow.Status = 15;
+                    reqRow.Calltype = 2;
                 }
                 _db.Requests.Update(reqRow);
                 _db.SaveChanges();
@@ -336,14 +373,15 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 _db.Encounters.Update(encounter);
                 _db.SaveChanges();
                 return true;
-            }catch { return false; }    
+            }
+            catch { return false; }
         }
 
         public bool TransferCase(int reqClientId, string note)
         {
             try
             {
-                var reqClientRow = _db.Requestclients.FirstOrDefault(x =>x.Requestclientid == reqClientId);
+                var reqClientRow = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == reqClientId);
                 var reqRow = _db.Requests.FirstOrDefault(x => x.Requestid == reqClientRow.Requestid);
                 var reqstatuslog = new Requeststatuslog()
                 {
@@ -361,7 +399,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 _db.SaveChanges();
 
                 return true;
-            }catch { return false; }
+            }
+            catch { return false; }
         }
 
         public void ViewNotePost(int reqClientId, string Note, int phyId, string phyAspId)
@@ -414,7 +453,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var reqRow = _db.Requests.FirstOrDefault(x => x.Requestid == reqCRow.Requestid);
 
             reqRow.Status = 5;
-            _db.Requests.Update(reqRow);    
+            _db.Requests.Update(reqRow);
             _db.SaveChanges();
             var reqNote = _db.Requestnotes.Where(x => x.Requestid == reqRow.Requestid).FirstOrDefault();
 
@@ -423,7 +462,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var reqNoteDb = new Requestnote
                 {
                     Requestid = reqRow.Requestid,
-                Physiciannotes = obj.note,
+                    Physiciannotes = obj.note,
                     Createddate = DateTime.Now,
                     Createdby = aspId
                 };
@@ -433,14 +472,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             else
             {
 
-            var reqNoteDb = _db.Requestnotes.Where(x => x.Requestid == reqRow.Requestid).FirstOrDefault();
+                var reqNoteDb = _db.Requestnotes.Where(x => x.Requestid == reqRow.Requestid).FirstOrDefault();
 
-            reqNoteDb.Requestid = reqRow.Requestid;
-            reqNoteDb.Physiciannotes = obj.note;
-            reqNoteDb.Modifieddate = DateTime.Now;
-            reqNoteDb.Modifiedby = aspId;
-            _db.Requestnotes.Update(reqNoteDb);
-            _db.SaveChanges();
+                reqNoteDb.Requestid = reqRow.Requestid;
+                reqNoteDb.Physiciannotes = obj.note;
+                reqNoteDb.Modifieddate = DateTime.Now;
+                reqNoteDb.Modifiedby = aspId;
+                _db.Requestnotes.Update(reqNoteDb);
+                _db.SaveChanges();
             }
 
             var reqStatusLog = new Requeststatuslog
@@ -454,5 +493,6 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.Requeststatuslogs.Add(reqStatusLog);
             _db.SaveChanges();
         }
+
     }
 }

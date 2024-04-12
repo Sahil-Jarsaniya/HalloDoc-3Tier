@@ -6,6 +6,7 @@ using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using HalloDoc.Services;
+using HalloDoc.utils;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,8 @@ namespace HalloDoc.Controllers
 
             return AspId;
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public IActionResult Scheduling()
         {
 
@@ -65,6 +68,8 @@ namespace HalloDoc.Controllers
 
             return View(data);
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public PartialViewResult CreateShift()
         {
 
@@ -76,6 +81,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public void CreateShift(string selectedDays, CreateShift obj)
         {
             string AspId = GetAdminAspId();
@@ -83,8 +89,7 @@ namespace HalloDoc.Controllers
             _ProviderMenu.CreateShift(selectedDays, obj, AspId);
         }
 
-
-
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public PartialViewResult DayWiseScheduling(string date, int region)
         {
             var data = _ProviderMenu.DayWiseScheduling(date);
@@ -95,6 +100,8 @@ namespace HalloDoc.Controllers
             }
             return PartialView("_DayWiseScheduling", data);
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public PartialViewResult WeekWiseScheduling(string date, int region)
         {
             var data = _ProviderMenu.WeekWiseScheduling(date);
@@ -104,6 +111,8 @@ namespace HalloDoc.Controllers
             }
             return PartialView("_WeekWiseScheduling", data);
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public PartialViewResult MonthWiseScheduling(string date, int region)
         {
             var data = _ProviderMenu.MonthScheduling(date);
@@ -114,6 +123,7 @@ namespace HalloDoc.Controllers
             return PartialView("_MonthWiseScheduling", data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public PartialViewResult ViewShift(int shiftDetailId)
         {
             var data = _ProviderMenu.ViewShift(shiftDetailId);
@@ -121,6 +131,7 @@ namespace HalloDoc.Controllers
             return PartialView("_ViewShift", data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public PartialViewResult ViewAllShift(string date)
         {
             var date1 = DateOnly.Parse(date);
@@ -129,6 +140,7 @@ namespace HalloDoc.Controllers
             return PartialView("_ViewAllShift", data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public IActionResult DeleteShift(int shiftDetailId)
         {
             bool x = _ProviderMenu.DeleteShift(shiftDetailId);
@@ -143,6 +155,8 @@ namespace HalloDoc.Controllers
                 return Ok(new { success = true });
             }
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public IActionResult ReturnShift(int shiftDetailId)
         {
             bool x = _ProviderMenu.ReturnShift(shiftDetailId);
@@ -157,6 +171,8 @@ namespace HalloDoc.Controllers
                 return Ok(new { success = true });
             }
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public IActionResult UpdateShift(CreateShift obj, int id)
         {
             bool x = _ProviderMenu.UpdateShift(obj, id);
@@ -173,6 +189,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Scheduling");
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public IActionResult ProviderOnCall()
         {
             ViewBag.AdminName = GetAdminName();
@@ -209,6 +226,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public IActionResult RequestedShift()
         {
             ViewBag.AdminName = GetAdminName();
@@ -218,6 +236,8 @@ namespace HalloDoc.Controllers
             };
             return View(data);
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public async Task<IActionResult> RequestedShiftTable(int pagenumber, int RegionFilter)
         {
             if (pagenumber < 1)
@@ -233,6 +253,7 @@ namespace HalloDoc.Controllers
             return PartialView("_RequestedShiftTable", await PaginatedList<RequestedShiftVM>.CreateAsync(data, pagenumber, pageSize));
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.ProviderLocation)]
         public IActionResult ProviderLocation()
         {
             ViewBag.AdminName = GetAdminName();

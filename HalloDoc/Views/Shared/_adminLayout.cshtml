@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/css/AdminDashboard.css" />
     <link rel="stylesheet" href="~/css/HeaderFooter.css" />
     @RenderSection("Styles", required: false)
+    
 </head>
 
 <body>
@@ -16,9 +17,9 @@
         <header id="header" class="shadow-lg w-100 border-bottom">
             @if (ViewBag.AdminName != null)
             {
-                <a id="listImg" class="btn border d-md-none mt-3 mb-3">
-                <img src="~/images/list.svg" alt="">
-            </a>
+                <a id="listImg" class="btn border d-md-none mt-3 mb-3" onclick="onenNav()" >
+                    <img src="~/images/list.svg" alt="">
+                </a>
             }
 
             <img src="~/images/logo.png" class="" height="80%" alt="">
@@ -26,16 +27,16 @@
             <div class="float-end d-flex">
                 @if (ViewBag.AdminName != null)
                 {
-                <h4 class="m-auto d-none d-md-block">Welcome <b>@ViewBag.AdminName</b></h4>
-                <a id="logout-btn"
-                   asp-controller="AdminLogin" asp-action="logout"
-                   class="btn mt-3 mb-3 me-1 m-md-3 m-lg-4 float-end"
-                   style="color: #01bce9; border: 1px solid #01bce9;">
-                    <span class="d-none d-md-block">Log Out</span>
-                    <img id="logoutImg" src="~/images/box-arrow-right.svg" class="d-md-none">
-                </a>
+                    <h4 class="m-auto d-none d-md-block">Welcome <b>@ViewBag.AdminName</b></h4>
+                    <a id="logout-btn"
+                       asp-controller="AdminLogin" asp-action="logout"
+                       class="btn mt-3 mb-3 me-1 m-md-3 m-lg-4 float-end"
+                       style="color: #01bce9; border: 1px solid #01bce9;">
+                        <span class="d-none d-md-block">Log Out</span>
+                        <img id="logoutImg" src="~/images/box-arrow-right.svg" class="d-md-none">
+                    </a>
 
-                }   
+                }
                 <a id="light-dark-btn" class="btn border border-black mt-3 mb-3 m-md-3 m-lg-4">
                     <img src="~/images/dark_mode_black_24dp.svg" alt="">
                 </a>
@@ -74,7 +75,7 @@
                         <li><a class="dropdown-item" href="@Url.Action("UserAccess", "AdminDashboard")">User Access</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("CreateAdmin", "AdminDashboard")">Create Admin</a></li>
                     </ul>
-                    
+
                 <li class="nav-item ">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Records
@@ -88,8 +89,33 @@
                     </ul>
                 </li>
             </ul>
+
         </nav>
 
+        <div id="mySidebar" class="sidebar">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <li class="navi col-lg-1 col-md-1  active">
+                <a class="nav-link" href="#">DashBoard</a>
+            </li>
+            <li class="col-lg-1 col-md-1 nav-item">
+                <a class="nav-link" href="#">Provider Location</a>
+            </li>
+            <li class="col-lg-1 col-md-1 nav-item ">
+                <a class="nav-link" href="#">My Profile</a>
+            </li>
+            <li class="col-lg-1 col-md-1 nav-item">
+                <a class="nav-link" href="#">Providers</a>
+            </li>
+            <li class="col-lg-1 col-md-1 nav-item">
+                <a class="nav-link" href="#">Partners</a>
+            </li>
+            <li class=" col-lg-1 col-md-1 nav-item">
+                <a class="nav-link" href="#">Access</a>
+            </li>
+            <li class="col-lg-1  col-md-1 nav-item ">
+                <a class="nav-link" href="#">Records</a>
+            </li>
+        </div>
         @RenderBody()
     </div>
 
@@ -117,6 +143,14 @@
         }
         else {
             document.documentElement.setAttribute('data-bs-theme', 'dark')
+        }
+        function openNav(){
+            document.getElementById("mySidebar").style.width("150px");
+        }
+
+        function closeNav(){
+
+            document.getElementById("mySidebar").style.width("0px");
         }
     </script>
     <script src="~/js/admin.js"></script>

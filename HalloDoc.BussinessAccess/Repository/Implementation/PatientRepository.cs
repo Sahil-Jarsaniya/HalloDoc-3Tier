@@ -134,40 +134,26 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return id;
         }
 
-        public String PatientProfile(DashboardViewModel obj)
+        public String PatientProfile(ProfileEditViewModel obj)
         {
           
-            var existUser = _db.Users.FirstOrDefault(x => x.Userid == obj.ProfileEditViewModel.UserId);
+            var existUser = _db.Users.FirstOrDefault(x => x.Userid == obj.UserId);
             var email = existUser.Email;
 
-            existUser.Firstname = obj.ProfileEditViewModel.Firstname;
-            existUser.Lastname = obj.ProfileEditViewModel.Lastname;
-            existUser.Email = obj.ProfileEditViewModel.Email;
-            existUser.Mobile = obj.ProfileEditViewModel.Phonenumber;
-            existUser.Street = obj.ProfileEditViewModel.Street;
-            existUser.City = obj.ProfileEditViewModel.City;
-            existUser.State = obj.ProfileEditViewModel.State;
-            existUser.Zipcode = obj.ProfileEditViewModel.Zipcode;
+            existUser.Firstname = obj.Firstname;
+            existUser.Lastname = obj.Lastname;
+            existUser.Street = obj.Street;
+            existUser.City = obj.City;
+            existUser.State = obj.State;
+            existUser.Zipcode = obj.Zipcode;
             existUser.Modifieddate = DateTime.Now;
             _db.Users.Update(existUser);
             _db.SaveChanges();
 
-            var existAsp = _db.AspNetUsers.FirstOrDefault(x => x.Id == existUser.Aspnetuserid);
-
-            existAsp.Email = obj.ProfileEditViewModel.Email;
-            existAsp.PhoneNumber = obj.ProfileEditViewModel.Phonenumber;
-            existAsp.ModifiedDate = DateTime.UtcNow;
-
-            _db.AspNetUsers.Update(existAsp);
-            _db.AspNetUsers.Update(existAsp);
-            _db.SaveChanges();
-
             _db.Requests.Where(x => x.Userid == existUser.Userid).ToList().ForEach(x =>
             {
-                x.Firstname = obj.ProfileEditViewModel.Firstname;
-                x.Lastname = obj.ProfileEditViewModel.Lastname;
-                x.Email = obj.ProfileEditViewModel.Email;
-                x.Phonenumber = obj.ProfileEditViewModel.Phonenumber;
+                x.Firstname = obj.Firstname;
+                x.Lastname = obj.Lastname;
                 x.Modifieddate = DateTime.Now;
 
                 _db.Requests.Update(x);
@@ -176,19 +162,17 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             _db.Requestclients.Where(x => x.Email == email).ToList().ForEach(x =>
             {
-                x.Firstname = obj.ProfileEditViewModel.Firstname;
-                x.Lastname = obj.ProfileEditViewModel.Lastname;
-                x.Email = obj.ProfileEditViewModel.Email;
-                x.Phonenumber = obj.ProfileEditViewModel.Phonenumber;
-                x.Street = obj.ProfileEditViewModel.Street;
-                x.City = obj.ProfileEditViewModel.City;
-                x.State = obj.ProfileEditViewModel.State;
-                x.Zipcode = obj.ProfileEditViewModel.Zipcode;
+                x.Firstname = obj.Firstname;
+                x.Lastname = obj.Lastname;
+                x.Street = obj.Street;
+                x.City = obj.City;
+                x.State = obj.State;
+                x.Zipcode = obj.Zipcode;
                 _db.Requestclients.Update(x);
                 _db.SaveChanges();
             });
 
-            return existAsp.Id;
+            return existUser.Aspnetuserid;
         }
 
         public String CreateReqMeOrElse(PatientViewModel obj, int uid)

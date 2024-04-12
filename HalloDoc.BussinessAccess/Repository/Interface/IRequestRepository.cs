@@ -18,6 +18,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void CreateConciergeRequest(ConciergeViewModel obj);
 
         public void CreateBusinessRequest(BussinessViewModel obj);
+        public void CreateRequestByPhysician(PatientViewModel obj, int PhyId);
 
     }
 }

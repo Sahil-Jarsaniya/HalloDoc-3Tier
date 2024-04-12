@@ -7,10 +7,12 @@ namespace HalloDoc.DataAccess.ViewModel
     public class FamilyViewModel
     {
         [Required(ErrorMessage = "Please Enter Name")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
         [Column("familyFirstname")]
         [StringLength(100)]
         public string? FamilyFirstname { get; set; }
 
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid Last Name")]
         [Column("bussinessLastname")]
         [StringLength(100)]
         public string? FamilyLastname { get; set; }

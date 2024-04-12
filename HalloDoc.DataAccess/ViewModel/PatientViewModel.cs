@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace HalloDoc.DataAccess.ViewModel
 {
@@ -10,18 +11,20 @@ namespace HalloDoc.DataAccess.ViewModel
 
         //public required Request request { get; set; }
         //public required Requestclient requestClient { get; set; }
-
+        [MinLength(10, ErrorMessage ="Short Descirption Please Specify more.")]
         [Required(ErrorMessage = "This field can't be empty.")]
         [Column("notes")]
         [StringLength(500)]
         public string? Notes { get; set; }
 
         [Required(ErrorMessage = "Please Enter Name")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
         [Column("firstname")]
         [StringLength(100)]
         public string Firstname { get; set; }
 
         [Column("lastname")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid Last Name")]
         [StringLength(100)]
         public string Lastname { get; set; }
 
@@ -41,8 +44,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(100)]
         public  string? Password { get; set; }
 
-        [NotMapped] // Does not effect with your database
-        [Compare("Password", ErrorMessage ="Password doest not match.")]
+       /* [NotMapped]*/ // Does not effect with your database
+        //[Compare("Password", ErrorMessage ="Password doest not match.")]
         [Column("confirmPassword")]
         [StringLength(100)]
         public string? confirmPassword { get; set; }

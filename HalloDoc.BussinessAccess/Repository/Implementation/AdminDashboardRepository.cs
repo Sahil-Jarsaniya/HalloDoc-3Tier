@@ -768,7 +768,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
             var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
-            reqRow.Status = 2;
+            reqRow.Status = 1;
             reqRow.Physicianid = PhysicianSelect;
             reqRow.Modifieddate = DateTime.Now;
             _db.Requests.Update(reqRow);

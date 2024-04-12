@@ -30,6 +30,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public int? Regionid { get; set; }
 
         public short Status { get; set; }
+        public short callType { get; set; }
 
         public int? Physicianid { get; set; }
 

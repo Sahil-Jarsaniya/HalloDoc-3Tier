@@ -4,6 +4,7 @@ using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel.PartnersMenu;
 using HalloDoc.Services;
+using HalloDoc.utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,13 +15,11 @@ namespace HalloDoc.Controllers
     public class PartnersMenuController : Controller
     {
         private readonly IPartnersRepository _partnersRepo;
-        private readonly ApplicationDbContext _db;
         private readonly INotyfService _noty;
 
-        public PartnersMenuController(IPartnersRepository partnersRepo, ApplicationDbContext db, INotyfService noty)
+        public PartnersMenuController(IPartnersRepository partnersRepo, INotyfService noty)
         {
             _partnersRepo = partnersRepo;
-            _db = db;
             _noty = noty;
         }
 
@@ -35,7 +34,7 @@ namespace HalloDoc.Controllers
         }
 
 
-
+        [RoleAuth((int)enumsFile.adminRoles.Vendersinfo)]
         public async Task<IActionResult> Partners()
         {
             ViewBag.AdminName = GetAdminName();
@@ -45,6 +44,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Vendersinfo)]
         public async Task<IActionResult> VendorTable(int pageIndex, string name, int regionId)
         {
             var data = _partnersRepo.GetVendors();
@@ -65,6 +65,7 @@ namespace HalloDoc.Controllers
             return PartialView("_Vendorstable", await PaginatedList<VendorFormViewModel>.CreateAsync(data, pageIndex, pageSize));
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Vendersinfo)]
         public IActionResult AddVendors()
         {
             ViewBag.AdminName = GetAdminName();
@@ -76,6 +77,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.Vendersinfo)]
         public IActionResult AddVendors(VendorFormViewModel obj)
         {
             bool x = _partnersRepo.AddVendors(obj);
@@ -92,6 +94,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Partners");
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Vendersinfo)]
         public IActionResult UpdateVendors(int id)
         {
             ViewBag.AdminName = GetAdminName();
@@ -99,6 +102,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.Vendersinfo)]
         public IActionResult UpdateVendors(VendorFormViewModel obj, int id)
         {
             ViewBag.AdminName = GetAdminName();
@@ -114,6 +118,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Partners");
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Vendersinfo)]
         public IActionResult DeleteVendors(int id)
         {
             bool x = _partnersRepo.DeleteVendors(id);

@@ -5,11 +5,9 @@ using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.Services;
+using HalloDoc.utils;
 using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
 using System.IdentityModel.Tokens.Jwt;
-using System.Reflection;
-using System.Security.Claims;
 using System.Text.Json;
 
 namespace HalloDoc.Controllers
@@ -38,6 +36,8 @@ namespace HalloDoc.Controllers
             _common = common;
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult Dashboard(int? status)
         {
             var token = Request.Cookies["jwt"];
@@ -57,6 +57,7 @@ namespace HalloDoc.Controllers
             return View(dashData);
         }
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult Dashboard(searchViewModel? obj)
         {
             var data = _adminRepo.adminDashboard();
@@ -71,6 +72,8 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
+
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public async Task<IActionResult> PartialTable(int status, searchViewModel? obj, int pageNumber)
         {
             var data = _adminRepo.adminDashboard();
@@ -147,6 +150,8 @@ namespace HalloDoc.Controllers
             }
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult CreateRequest()
         {
             var token = Request.Cookies["jwt"];
@@ -160,6 +165,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult CreateRequest(PatientViewModel obj)
         {
 
@@ -172,6 +178,8 @@ namespace HalloDoc.Controllers
             return View();
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult SendEmailToPatient(string FirstName, string LastName, string Email, string PhoneNumber)
         {
             var subject = "Send your request";
@@ -182,6 +190,8 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Dashboard");
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult ViewCase(int reqClientId)
         {
             var token = Request.Cookies["jwt"];
@@ -195,6 +205,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult ViewCase(viewCaseViewModel obj)
         {
 
@@ -213,6 +224,7 @@ namespace HalloDoc.Controllers
 
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult ViewNote(int reqClientId)
         {
             var token = Request.Cookies["jwt"];
@@ -228,6 +240,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult ViewNote(string adminNote, int reqClientId)
         {
             var token = Request.Cookies["jwt"];
@@ -243,6 +256,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult CancelCase(int CaseTag, string addNote, int reqClientId)
         {
             var token = Request.Cookies["jwt"];
@@ -255,6 +269,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Dashboard");
         }
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult BlockCase(int reqClientId, string addNote)
         {
             var token = Request.Cookies["jwt"];
@@ -267,11 +282,13 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Dashboard");
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public object FilterPhysician(int Region, int phyid)
         {
             return _adminRepo.FilterPhysician(Region,phyid);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult AssignCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
         {
             var token = Request.Cookies["jwt"];
@@ -292,6 +309,7 @@ namespace HalloDoc.Controllers
             return Ok(new { success = true });
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult ViewUpload(int reqClientId)
         {
             var token = Request.Cookies["jwt"];
@@ -305,6 +323,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult UploadDocument(UploadFileViewModel obj)
         {
             var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == obj.reqId).FirstOrDefault();
@@ -339,6 +358,9 @@ namespace HalloDoc.Controllers
             }
             return RedirectToAction("ViewUpload", new { reqClientId = obj.reqId });
         }
+
+
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult DeleteFile(int reqClientId, string FileName)
         {
             _adminRepo.DeleteFile(reqClientId, FileName);
@@ -347,6 +369,7 @@ namespace HalloDoc.Controllers
             return Ok();
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public void TransferCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
         {
             var token = Request.Cookies["jwt"];
@@ -357,6 +380,8 @@ namespace HalloDoc.Controllers
             _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId, AspId);
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.SendOrder)]
         public IActionResult SendOrders(int reqClientId)
         {
             var token = Request.Cookies["jwt"];
@@ -371,6 +396,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.SendOrder)]
         public IActionResult SendOrders(SendOrderViewModel obj)
         {
             var token = Request.Cookies["jwt"];
@@ -383,21 +409,28 @@ namespace HalloDoc.Controllers
         }
 
 
+        [RoleAuth((int)enumsFile.adminRoles.SendOrder)]
         public object FilterProfession(int ProfessionId)
         {
             return _adminRepo.FilterProfession(ProfessionId);
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.SendOrder)]
         public object ShowVendorDetail(int selectVendor)
         {
             return _adminRepo.ShowVendorDetail(selectVendor);
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public void ClearCase(int reqClientId)
         {
             _adminRepo.ClearCase(reqClientId);
         }
 
+
+        [RoleAuth((int) enumsFile.adminRoles.AdminDashboard)]
         public void SendAgreement(int reqClientId, string email, string phone)
         {
 
@@ -409,6 +442,8 @@ namespace HalloDoc.Controllers
             _loginRepo.SendEmail(email, subject, body);
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult CloseCase(int reqClientId)
         {
             var token = Request.Cookies["jwt"];
@@ -424,18 +459,21 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult CloseCase(CloseCaseViewModel obj)
         {
             _adminRepo.CloseCase(obj);
             return RedirectToAction("CloseCase", new { reqClientId = obj.ReqClientId });
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult CloseToUnpaidCase(int reqClientId)
         {
             _adminRepo.CloseToUnpaidCase(reqClientId);
             return RedirectToAction("Dashboard", new { status = 13 });
         }
-
+        
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult Encounter(int reqClientId, string option)
         {
 
@@ -455,6 +493,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Dashboard", new { status = reqRow.Status });
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.MyProfile)]
         public IActionResult MyProfile()
         {
             var token = Request.Cookies["jwt"];
@@ -470,6 +509,7 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.MyProfile)]
         public IActionResult MyProfile(Profile obj)
         {
             var token = Request.Cookies["jwt"];
@@ -481,11 +521,13 @@ namespace HalloDoc.Controllers
             return RedirectToAction("MyProfile");
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.MyProfile)]
         public void AdminRegionUpdate(List<CheckBoxData> selectedRegion, int adminId)
         {
             _adminRepo.AdminRegionUpdate(selectedRegion, adminId);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.MyProfile)]
         public IActionResult ResetPass(string pass, int adminId)
         {
             if (pass == null)
@@ -504,6 +546,8 @@ namespace HalloDoc.Controllers
             return RedirectToAction("MyProfile", "AdminDashboard");
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult EncounterForm(int reqClientId)
         {
             var obj = _adminRepo.Encounter(reqClientId);
@@ -511,6 +555,7 @@ namespace HalloDoc.Controllers
             return View(obj);
         }
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult EncounterForm(Encounter obj)
         {
 
@@ -518,6 +563,7 @@ namespace HalloDoc.Controllers
             return View(obj);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult RequestSupport(string RequestNote)
         {
             var phy = _db.Physicians.Where(x => x.Status == 4).ToList();
@@ -608,6 +654,7 @@ namespace HalloDoc.Controllers
         }
 
 
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult Provider()
         {
             var token = Request.Cookies["jwt"];
@@ -622,17 +669,20 @@ namespace HalloDoc.Controllers
             return View(provider);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public void StopNoty(int Physicianid)
         {
             _adminRepo.StopNoty(Physicianid);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult ProviderFilter(int RegionId)
         {
             ProviderViewModel data = _adminRepo.FilterProvider((int)RegionId);
             return PartialView("_ProviderTable", data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult ContactProvider(string Email, string note, string Mobile, int contactType)
         {
             var sub = "hey there";
@@ -655,6 +705,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Provider");
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult EditProvider(int Physicianid)
         {
             var token = Request.Cookies["jwt"];
@@ -667,6 +718,8 @@ namespace HalloDoc.Controllers
             return View(data);
         }
         [HttpPost]
+
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult EditProvider(EditProvider obj, int formid)
         {
             switch (formid)
@@ -723,11 +776,14 @@ namespace HalloDoc.Controllers
             return RedirectToAction("EditProvider", new { Physicianid = obj.Physicianid });
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public void PhysicianRegionUpdate(List<CheckBoxData> selectedRegion, int Physicianid)
         {
             _adminRepo.PhysicianRegionUpdate(selectedRegion, Physicianid);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult ResetPhysicianPass(string pass, int Physicianid)
         {
             if (pass == null)
@@ -746,6 +802,8 @@ namespace HalloDoc.Controllers
             return RedirectToAction("EditProvider", new { Physicianid = Physicianid });
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult DeletePhysician(int Physicianid)
         {
             _adminRepo.DeletePhysician(Physicianid);
@@ -753,6 +811,8 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Provider", "AdminDashboard");
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult CreateProvider()
         {
             var token = Request.Cookies["jwt"];
@@ -767,6 +827,8 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
+
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult CreateProvider(string selectedRegion, EditProvider obj)
         {
             var token = Request.Cookies["jwt"];
@@ -815,6 +877,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("CreateProvider");
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult Access()
         {
             var token = Request.Cookies["jwt"];
@@ -828,6 +891,8 @@ namespace HalloDoc.Controllers
             return View(data);
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult CreateRole()
         {
             var token = Request.Cookies["jwt"];
@@ -846,12 +911,16 @@ namespace HalloDoc.Controllers
             return View(data);
         }
 
+
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IEnumerable<Menu> PageListFilter(int id)
         {
             return _adminRepo.PageListFilter(id);
         }
 
         [HttpPost]
+
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult CreateRole(string selectedPage, CreateRole obj, int AccountType)
         {
             var token = Request.Cookies["jwt"];
@@ -864,7 +933,7 @@ namespace HalloDoc.Controllers
 
             return RedirectToAction("Access");
         }
-
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult EditRole(int id)
         {
             var token = Request.Cookies["jwt"];
@@ -878,6 +947,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult EditRole(string selectedPage, CreateRole obj, int AccountType)
         {
             var token = Request.Cookies["jwt"];
@@ -890,13 +960,13 @@ namespace HalloDoc.Controllers
 
             return RedirectToAction("Access");
         }
-
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult DeleteRole(int id)
         {
             _adminRepo.DeleteRole(id);
             return RedirectToAction("Access");
         }
-
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult CreateAdmin()
         {
             var token = Request.Cookies["jwt"];
@@ -910,6 +980,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult CreateAdmin(string selectedRegion, CreateAdminViewModel obj)
         {
             var token = Request.Cookies["jwt"];
@@ -923,6 +994,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("CreateAdmin");
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult EditAdmin(int id)
         {
             var token = Request.Cookies["jwt"];
@@ -935,6 +1007,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
         [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult EditAdmin(string selectedRegion, CreateAdminViewModel obj)
         {
             var token = Request.Cookies["jwt"];
@@ -947,6 +1020,7 @@ namespace HalloDoc.Controllers
             return View(obj.Adminid);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult UserAccess()
         {
             var token = Request.Cookies["jwt"];
@@ -960,6 +1034,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public async Task<IActionResult> UserAccessTable(int accountType, int RoleId, int pageNumber)
         {
             var data = _adminRepo.UserAccessTables(accountType, RoleId);    

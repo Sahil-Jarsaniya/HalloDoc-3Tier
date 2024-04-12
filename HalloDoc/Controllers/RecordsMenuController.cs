@@ -3,6 +3,7 @@ using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.DataAccess.ViewModel.RecordsMenu;
 using HalloDoc.Services;
+using HalloDoc.utils;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using System.Drawing.Printing;
@@ -26,6 +27,8 @@ namespace HalloDoc.Controllers
             _common = common;
 
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.PatientRecords)]
         public FileResult Export(SearchSortingVM obj)
         {
             var data = _recordsRepo.SearchRecords();
@@ -74,6 +77,8 @@ namespace HalloDoc.Controllers
             byte[] excelBytes = _common.fileToExcel(data);
             return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sheet.xlsx");
         }
+
+
         public string GetAdminName()
         {
             var token = Request.Cookies["jwt"];
@@ -83,12 +88,16 @@ namespace HalloDoc.Controllers
 
             return fname + "_" + lname;
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.PatientRecords)]
         public IActionResult SearchRecords()
         {
             ViewBag.AdminName = GetAdminName();
 
             return View();
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.PatientRecords)]
         public async Task<IActionResult> SearchRecordsTable(int pagenumber, SearchSortingVM obj)
         {
             if (pagenumber < 1)
@@ -138,6 +147,7 @@ namespace HalloDoc.Controllers
             return PartialView("_SearchRecordsTable", await PaginatedList<SearchTableVM>.CreateAsync(data, pagenumber, pageSize));
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.PatientRecords)]
         public IActionResult DeleteRecord(int id)
         {
             bool x = _recordsRepo.DeleteRecords(id);
@@ -152,11 +162,14 @@ namespace HalloDoc.Controllers
             return RedirectToAction("SearchRecords");
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.PatientRecords)]
         public IActionResult BlockHistory()
         {
             ViewBag.AdminName = GetAdminName();
             return View();
         }
+
+        [RoleAuth((int)enumsFile.adminRoles.BlockedHistory)]
         public async Task<IActionResult> BlockHistoryTable(int pagenumber, SearchSortingVM obj)
         {
             if (pagenumber < 1)
@@ -192,6 +205,7 @@ namespace HalloDoc.Controllers
             return PartialView("_BlockHistoryTable", await PaginatedList<BlockHistoryVM>.CreateAsync(data, pagenumber, pageSize));
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.BlockedHistory)]
         public IActionResult UnBlockPatient(int id)
         {
             bool x = _recordsRepo.UnBlock(id);
@@ -208,6 +222,7 @@ namespace HalloDoc.Controllers
             return RedirectToAction("BlockHistory");
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.EmailLogs)]
         public IActionResult EmailLogs()
         {
             ViewBag.AdminName = GetAdminName();
@@ -218,6 +233,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.SMSLogs)]
         public IActionResult SmsLogs()
         {
             ViewBag.AdminName = GetAdminName();
@@ -228,6 +244,7 @@ namespace HalloDoc.Controllers
             return View(data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.EmailLogs)]
         public async Task<IActionResult> EmailLogTable(int pagenumber, SearchSortingVM obj)
         {
             if (pagenumber < 1)
@@ -271,6 +288,7 @@ namespace HalloDoc.Controllers
             return PartialView("_EmailLogTable", await PaginatedList<EmailLogVM>.CreateAsync(data, pagenumber, pageSize));
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.SMSLogs)]
         public async Task<IActionResult> SmsLogTable(int pagenumber, SearchSortingVM obj)
         {
             if (pagenumber < 1)
@@ -314,12 +332,14 @@ namespace HalloDoc.Controllers
             return PartialView("_SmsLogTable", await PaginatedList<EmailLogVM>.CreateAsync(data, pagenumber, pageSize));
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.PatientRecords)]
         public IActionResult PatientHistory()
         {
             ViewBag.AdminName = GetAdminName();
             return View();
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.PatientRecords)]
         public async Task<IActionResult> PatientHistoryTable(int pagenumber, SearchSortingVM obj)
         {
             if (pagenumber < 1)
@@ -352,6 +372,7 @@ namespace HalloDoc.Controllers
             return PartialView("_PatientHistoryTable", await PaginatedList<PatientHistoryVM>.CreateAsync(data, pagenumber, pageSize));
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.PatientRecords)]
         public async Task<IActionResult> PatientRecord(int reqId, int pagenumber)
         {
             ViewBag.AdminName = GetAdminName();

@@ -71,17 +71,21 @@
             <div class="col-md-6">
                 <div class="form-floating phone-div w-100 h-100 ">
                     <input asp-for="ConciergeCountryCode" value="" id="countryCode" hidden />
-                    <input asp-for="ConciergePhonenumber" type="tel" class="conciergePhone form-control w-100 h-100" placeholder="">
+                    <input asp-for="ConciergePhonenumber" type="tel" class="conciergePhone form-control w-100 h-100" id="otherPhone" placeholder="">
                     <label for=""></label>
-                    <span asp-validation-for="ConciergePhonenumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="ConciergeEmail" type="email" class="form-control" placeholder="name@example.com">
                     <label for="">Your Email</label>
-                    <span asp-validation-for="ConciergeEmail" class="text-danger"></span>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <span asp-validation-for="ConciergePhonenumber" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <span asp-validation-for="ConciergeEmail" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">

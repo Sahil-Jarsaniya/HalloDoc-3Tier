@@ -59,26 +59,49 @@ function showHideConfirmPassword() {
 }
 
 //contry code for phone number
-const patientPhone = document.querySelector(".patientPhone");
-var phoneInput = window.intlTelInput(patientPhone,
-    {
+//const patientPhone = document.querySelector(".patientPhone");
+//var phoneInput = window.intlTelInput(patientPhone,
+//    {
+//        utilsScript:
+//            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+//        preferredCountries: ["in"],
+//        separateDialCode: true,
+//        initialCountry: "in"
+//    });
+
+//const friendPhone = document.querySelector(".friendPhone");
+//var phoneInput = window.intlTelInput(friendPhone,
+//    {
+//        utilsScript:
+//            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+//        preferredCountries: ["in"],
+//        separateDialCode: true,
+//        initialCountry: "in",
+       
+//    });
+
+const patientPhoneInputElement = document.getElementById("patientPhone");
+let patientIntlInput = window.intlTelInput(patientPhoneInputElement, {
+    utilsScript:
+        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+    preferredCountries: ["in"],
+    separateDialCode: true,
+    initialCountry: "in"
+});
+
+
+const otherPhoneInputElement = document.getElementById("otherPhone");
+let otherIntlInput;
+
+if (otherPhoneInputElement != null) {
+    otherIntlInput = window.intlTelInput(otherPhoneInputElement, {
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         preferredCountries: ["in"],
         separateDialCode: true,
         initialCountry: "in"
     });
-
-const friendPhone = document.querySelector(".friendPhone");
-var phoneInput = window.intlTelInput(friendPhone,
-    {
-        utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        preferredCountries: ["in"],
-        separateDialCode: true,
-        initialCountry: "in",
-       
-    });
+}
 
 // alert box 
 $(window).on('load', function () {
@@ -89,12 +112,12 @@ function closeModal() {
 }
 
 // Edit Details buttons
+
 function editDetails() {
     var cancelbtn = document.getElementById("cancelBtn");
     var submitBtn = document.getElementById("submitBtn");
     var editBtn = document.getElementById("editBtn");
-    var mapBtn = document.getElementById("mapBtn");
-    var field = document.getElementById("field")
+    var field = document.getElementsByClassName("disableInput");
     cancelbtn.classList.remove("d-none");
     submitBtn.classList.remove("d-none");
     editBtn.classList.remove("d-block");
@@ -103,16 +126,16 @@ function editDetails() {
     submitBtn.classList.add("d-block");
     editBtn.classList.add("d-none");
 
-    field.disabled = false;
-    mapBtn.disabled = false;
+    for (var i = 0; i < field.length; i++) {
+        field[i].disabled = false;
+    }
 }
 
 function cancelEdit() {
     var cancelbtn = document.getElementById("cancelBtn");
     var submitBtn = document.getElementById("submitBtn");
     var editBtn = document.getElementById("editBtn");
-    var mapBtn = document.getElementById("mapBtn");
-    var field = document.getElementById("field")
+    var field = document.getElementsByClassName("disableInput")
     cancelbtn.classList.remove("d-block");
     submitBtn.classList.remove("d-block");
     editBtn.classList.remove("d-none");
@@ -120,6 +143,7 @@ function cancelEdit() {
     cancelbtn.classList.add("d-none");
     submitBtn.classList.add("d-none");
     editBtn.classList.add("d-block");
-    field.disabled = true;
-    mapBtn.disabled = false;
+    for (var i = 0; i < field.length; i++) {
+        field[i].disabled = true;
+    }
 }

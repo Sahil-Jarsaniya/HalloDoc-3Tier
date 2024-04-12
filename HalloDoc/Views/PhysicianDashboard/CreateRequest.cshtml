@@ -21,20 +21,21 @@
     </a>
 </div>
 <div class="container-fluid d-flex justify-content-center">
-    <form method="post" asp-controller="AdminDashboard" asp-action="CreateRequest" enctype="multipart/form-data" id="patient-request-form" class="form-floating patient-request-form p-2 shadow">
+    <form method="post" asp-controller="PhysicianDashboard" asp-action="CreateRequest" enctype="multipart/form-data" id="patient-request-form" class="form-floating patient-request-form p-2 shadow">
 
         <partial name="_PatientForm" />
 
         <h4 class="mt-4 mb-4 ms-2">(Optional) Upload Photo or Document</h4>
         <div class="input-group m-1 mb-3">
-            <input name="formFile" type="file" id="actualFileBtn" class="form-control" id="inputGroupFile02" hidden>
+            <input name="formFile" type="file" id="actualFileBtn" class="form-control" hidden>
             <span  id="fileChoosen" class="form-control">No file chosen</span>
             <label class="input-group-text" id="uploadFileLabel" for="actualFileBtn">
                 <img src="~/images/cloud_upload.svg" alt="">
                 Upload
             </label>
+            <span asp-validation-for="formFile"></span>
         </div>
-        <button type="submit" id="cancelBtn" class="btn btn-primary float-end m-1">Cancel</button>
+        <button type="reset" id="cancelBtn" class="btn btn-primary float-end m-1">Cancel</button>
         <button type="submit" id="submitBtn" class="btn btn-primary float-end m-1">Submit</button>
     </form>
 </div>

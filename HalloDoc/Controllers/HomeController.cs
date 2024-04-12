@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Http;
 using System.Text;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.BussinessAccess.Repository.Interface;
-
+using NuGet.Protocol;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using System.IdentityModel.Tokens.Jwt;
 
 public class HomeController : Controller
 {
@@ -16,13 +18,15 @@ public class HomeController : Controller
     private readonly ILoginRepository _login;
     private readonly IJwtService _jwtService;
     private readonly IPatientRepository _patientRepo;
-    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, ILoginRepository login, IJwtService jwtService, IPatientRepository patientRepo)
+    private readonly INotyfService _notyf;
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, ILoginRepository login, IJwtService jwtService, IPatientRepository patientRepo, INotyfService notyf)
     {
         _logger = logger;
         _db = db;
         _login = login;
         _jwtService = jwtService;
         _patientRepo = patientRepo;
+        _notyf = notyf;
     }
 
     public IActionResult Index()
@@ -101,14 +105,8 @@ public class HomeController : Controller
 
             var jwtToken = _jwtService.GenerateJwtToken(user2);
             Response.Cookies.Append("jwt", jwtToken);
-
-            String userName = myUser.Firstname + " " + myUser.Lastname;
-
-            HttpContext.Session.SetString("token", userName);
-            HttpContext.Session.SetInt32("userId", myUser.Userid);
-            String AspId = myUser.Aspnetuserid;
-
-            return RedirectToAction("Dashboard", "Patient", new { AspId = AspId });
+            _notyf.Success("Successful Login");
+            return RedirectToAction("Dashboard", "Patient");
         }
     }
     public IActionResult logout()
@@ -117,10 +115,9 @@ public class HomeController : Controller
         {
             Response.Cookies.Delete("jwt");
 
-            return RedirectToAction("login");
-
         };
-        return View();
+        _notyf.Success("Successful Logout");
+        return RedirectToAction("login");
     }
 
     public IActionResult ReviewAgreement(string reqClientId)
@@ -143,6 +140,12 @@ public class HomeController : Controller
 
     public IActionResult AccessDenied()
     {
+        var token = Request.Cookies["jwt"];
+        var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+        string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+        string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+        string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+        ViewBag.AdminName = fname + "_" + lname;    
         return View();
     }
 

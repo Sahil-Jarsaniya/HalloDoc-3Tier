@@ -59,6 +59,11 @@ namespace HalloDoc.Controllers
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             return fname + "_" + lname;
         }
+
+        public void PhysicianLocationUpdate(double latitude, double longitude)
+        {
+            bool x = _phyRepo.PhysicianLocationUpdate(latitude, longitude, _phyRepo.GetPhysicianId(GetAspID()));    
+        }
         public IActionResult Dashboard(int? status)
         {
             var token = Request.Cookies["jwt"];
@@ -334,8 +339,7 @@ namespace HalloDoc.Controllers
 
             if (ModelState.IsValid)
             {
-                _requestRepo.CreatePatientRequest(obj);
-                
+                _requestRepo.CreateRequestByPhysician(obj, _phyRepo.GetPhysicianId(GetAspID()));
 
                 return RedirectToAction("Dashboard");
             }

@@ -27,7 +27,7 @@
 <div class="row g-2 m-1 ">
     <div class="col-md-6">
         <div class="form-floating">
-            <input asp-for="Strmonth" type="date" class="form-control" placeholder="">
+            <input asp-for="Strmonth" max="@DateTime.Now.ToString("yyyy-MM-dd")" type="date" class="form-control" placeholder="">
             <label for="">Date Of Birth</label>
         </div>
         <span asp-validation-for="Strmonth" class="text-danger"></span>
@@ -41,20 +41,26 @@
             <input id="checkEmail" asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
             <label for="">Email</label>
         </div>
-        <span asp-validation-for="Email" class="text-danger"></span>
+
     </div>
     <div class="col-md-6">
         <div class="form-floating phone-div w-100 h-100 ">
-            <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+            <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
             <label for="">Phone</label>
         </div>
-        <span asp-validation-for="Phonenumber" class="text-danger"></span>
+
     </div>
+</div>
+<div class="row g-2 m-1">
+    <div class="col-md-6">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="col-md-6"><span asp-validation-for="Phonenumber" class="text-danger"></span></div>
 </div>
 <div class="row  g-2 m-1" id="hiddendiv" style="display:none">
     <div class="col-md-6 col-12">
         <div class="input-div form-floating mb-3 d-flex border rounded shadow-none">
-            <input asp-for="Password" type="password" class="form-control border border-0" id="floatingPassword" placeholder="Password" required>
+            <input asp-for="Password" type="password" class="form-control border border-0" id="floatingPassword" placeholder="Password">
             <label asp-for="Password" for="floatingPassword">Password</label>
             <img id="passImg" src="~/images/password_visibility_on.svg" onclick="showHidePassword()" class="pe-3" alt="">
         </div>
@@ -63,8 +69,7 @@
 
     <div class="col-md-6 col-12">
         <div class="input-div form-floating mb-3 d-flex border rounded shadow-none">
-            <input asp-for="confirmPassword" type="password" class="form-control border border-0" id="floatingPassword2" placeholder="Password" required
-            >
+            <input asp-for="confirmPassword" type="password" class="form-control border border-0" id="floatingPassword2" placeholder="Password">
             <label asp-for="confirmPassword" for="floatingPassword">Password</label>
             <img id="passImg2" src="~/images/password_visibility_on.svg" onclick="showHideConfirmPassword()" class="pe-3" alt="">
         </div>

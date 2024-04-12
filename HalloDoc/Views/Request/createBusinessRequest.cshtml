@@ -18,12 +18,11 @@
             <div class="modal-body">
                 @* <img src="~/images/exclamation2.jpg" alt="" id="warning-icon"> *@
                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="white"
-                        class="bi bi-exclamation-circle" viewBox="0 0 16 16"
-                        style="background-color: #ffc107;border:3px #ffc107 solid;   border-radius: 100%;">
-                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                        <path
-                            d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
-                    </svg>
+                     class="bi bi-exclamation-circle" viewBox="0 0 16 16"
+                     style="background-color: #ffc107;border:3px #ffc107 solid;   border-radius: 100%;">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0M7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0z" />
+                </svg>
                 <h4>Information</h4>
                 <p>
                     When submitting a request, you must provide the correct contact information about the patient or
@@ -72,15 +71,19 @@
                 <div class="form-floating phone-div w-100 h-100 ">
                     <input asp-for="bussinessPhonenumber" type="tel" class="bussinessPhone form-control w-100 h-100" placeholder="">
                     <label for=""></label>
-                    <span asp-validation-for="bussinessPhonenumber" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="bussinessEmail" type="email" class="form-control" placeholder="name@example.com">
                     <label for="">Your Email</label>
-                    <span asp-validation-for="bussinessEmail" class="text-danger"></span>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <span asp-validation-for="bussinessPhonenumber" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <span asp-validation-for="bussinessEmail" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
@@ -98,11 +101,11 @@
             </div>
         </div>
 
-         <partial name="_PatientForm" />
+        <partial name="_PatientForm" />
 
         <button type="submit" id="cancelBtn" class="btn btn-primary float-end m-1">Cancel</button>
         <button type="submit" id="submitBtn" class="btn btn-primary float-end m-1">Submit</button>
-    <br><br><br><br><br>
+        <br><br><br><br><br>
     </form>
 </div>
 

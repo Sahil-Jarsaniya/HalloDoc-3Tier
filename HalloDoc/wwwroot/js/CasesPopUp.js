@@ -160,25 +160,3 @@ $("#AgreementConfirmBtn").click(function () {
         },
     })
 });
-
-//Encounter
-$("#EncounerSavebtn").click(function () {
-    var id = $("#EncounterId").val();
-    var radioValue = $("input[name='options']:checked").val();
-    console.log(radioValue);
-    $.ajax({
-        url: '/AdminDashboard/Encounter',
-        type: 'POST',
-        data: {
-            reqClientId: id, option: radioValue
-        },
-        success: function () {
-            $(".CloseModal").click();
-            location.reload();
-        },
-        error: function (error) {
-            console.log(error);
-            alert('error fetching details')
-        },
-    })
-});

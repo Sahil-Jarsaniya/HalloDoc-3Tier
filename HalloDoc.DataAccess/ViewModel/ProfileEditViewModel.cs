@@ -12,18 +12,21 @@ namespace HalloDoc.DataAccess.ViewModel
     {
 
         public int UserId { get; set; }
-
+        [Required(ErrorMessage = "Please Enter Name")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
         [Column("firstname")]
         [StringLength(100)]
-        public string? Firstname { get; set; }
+        public string Firstname { get; set; }
 
         [Column("lastname")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid Last Name")]
         [StringLength(100)]
-        public string? Lastname { get; set; }
+        public string Lastname { get; set; }
 
         [Column("phonenumber")]
         [StringLength(23)]
         public string? Phonenumber { get; set; }
+
 
         [Column("email")]
         [StringLength(50)]
