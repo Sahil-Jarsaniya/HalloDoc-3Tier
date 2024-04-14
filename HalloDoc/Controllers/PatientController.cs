@@ -55,10 +55,19 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult Document(UploadFileViewModel obj)
         {
+            if(obj.formFile != null)
+            {
+
             var id = _patientrepo.Document(obj);
 
             _notyf.Success("Successfully Uploaded");
             return RedirectToAction("Document", "Patient", new { reqId = id });
+            }
+            else
+            {
+                _notyf.Error("File is note Selected!!");
+                return RedirectToAction("Document", "Patient", new { reqId = obj.reqId });
+            }
         }
 
         public IActionResult MyProfile()

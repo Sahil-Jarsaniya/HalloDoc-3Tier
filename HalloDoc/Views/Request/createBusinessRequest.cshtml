@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="~/css/submit-request-screen.css" />
     <link rel="stylesheet" href="~/css/create-patient-request.css" />
+    <link rel="stylesheet" href="~/css/validation.css" />
 }
 <!-- alert box -->
 <div class="modal fade" tabindex="-1" id="myModal">
@@ -55,49 +56,45 @@
         <div class="row g-2 m-1">
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input asp-for="bussinessFirstname" type="text" class="form-control" placeholder="">
+                    <input asp-for="bussinessFirstname" type="text" class="form-control firstnameInput" placeholder="">
                     <label for="">Your First Name</label>
-                    <span asp-validation-for="bussinessFirstname" class="text-danger"></span>
                 </div>
+                <span asp-validation-for="bussinessFirstname" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input asp-for="bussinessLastname" type="text" class="form-control" placeholder="">
+                    <input asp-for="bussinessLastname" type="text" class="form-control firstnameInput" placeholder="">
                     <label for="">Your Last Name</label>
-                    <span asp-validation-for="bussinessLastname" class="text-danger"></span>
                 </div>
+                <span asp-validation-for="bussinessLastname" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <div class="form-floating phone-div w-100 h-100 ">
                     <input asp-for="bussinessPhonenumber" type="tel" class="bussinessPhone form-control w-100 h-100" placeholder="">
                     <label for=""></label>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-floating">
-                    <input asp-for="bussinessEmail" type="email" class="form-control" placeholder="name@example.com">
-                    <label for="">Your Email</label>
-                </div>
-            </div>
-            <div class="col-md-6">
                 <span asp-validation-for="bussinessPhonenumber" class="text-danger"></span>
             </div>
             <div class="col-md-6">
-                <span asp-validation-for="bussinessEmail" class="text-danger"></span>
+                <div class="form-floating">
+                    <input asp-for="bussinessEmail" type="email" class="form-control emailInput" placeholder="name@example.com">
+                    <label for="">Your Email</label>
+                </div>
+                <span asp-validation-for="bussinessEmail" class="text-danger" id="emailError"></span>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="bussinessProperty" type="text" class="form-control" placeholder="">
                     <label for="">Business/Property Name</label>
-                    <span asp-validation-for="bussinessProperty" class="text-danger"></span>
                 </div>
+                <span asp-validation-for="bussinessProperty" class="text-danger"></span>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
                     <input asp-for="CaseNumber" type="text" class="form-control" placeholder="">
                     <label for="">Case Number(Optional)</label>
-                    <span asp-validation-for="CaseNumber" class="text-danger"></span>
                 </div>
+                <span asp-validation-for="CaseNumber" class="text-danger"></span>
             </div>
         </div>
 
@@ -115,4 +112,5 @@
     <script src="~/js/bussinessphone.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/pop up.js" asp-append-version="true"></script>
+    <script src="~/js/Validation.js" asp-append-version="true"></script>
 }

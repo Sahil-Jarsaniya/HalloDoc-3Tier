@@ -152,9 +152,11 @@
         $("#nextDay").click(function(){
             var date = $("#date").val();
             var startDate = new Date(Date.parse(date));
-        
+            console.log(startDate); 
             if($("#DayBtn").prop('checked')){
                 startDate.setDate(startDate.getDate() + 1);
+                console.log(startDate.getDate())
+                console.log(startDate.getMonth())   
                 $("#date").val(startDate.toLocaleDateString());
                 $("#DayBtn").click();
             }
@@ -176,6 +178,8 @@
             var startDate = new Date(Date.parse(date));
 
             if ($("#DayBtn").prop('checked')) {
+                console.log(startDate.getDate())
+                console.log(startDate.getMonth())
                 startDate.setDate(startDate.getDate() - 1);
                 $("#date").val(startDate.toLocaleDateString());
                 $("#DayBtn").click();

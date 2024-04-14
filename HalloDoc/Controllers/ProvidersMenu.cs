@@ -8,6 +8,7 @@ using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using HalloDoc.Services;
 using HalloDoc.utils;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Tls.Crypto.Impl.BC;
@@ -92,6 +93,7 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public PartialViewResult DayWiseScheduling(string date, int region)
         {
+           
             var data = _ProviderMenu.DayWiseScheduling(date);
 
             if (region != 0 && region != null)
@@ -118,7 +120,7 @@ namespace HalloDoc.Controllers
             var data = _ProviderMenu.MonthScheduling(date);
             if (region != 0 && region != null)
             {
-                data.DaySchedulings = data.DaySchedulings.Where(x=> x.regionId == region);
+                data.DaySchedulings = data.DaySchedulings.Where(x => x.regionId == region);
             }
             return PartialView("_MonthWiseScheduling", data);
         }

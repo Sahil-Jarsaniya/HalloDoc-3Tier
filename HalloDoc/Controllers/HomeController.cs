@@ -100,7 +100,8 @@ public class HomeController : Controller
                 FirstName = myUser.Firstname,
                 LastName = myUser.Lastname,
                 Email = myUser.Email,
-                Role = "patient"
+                Role = "patient",
+                Roleid = "0",
             };
 
             var jwtToken = _jwtService.GenerateJwtToken(user2);

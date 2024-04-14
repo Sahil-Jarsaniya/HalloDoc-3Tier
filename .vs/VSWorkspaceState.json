@@ -9,8 +9,9 @@
     "\\HalloDoc\\Views\\AdminDashboard",
     "\\HalloDoc\\Views\\PartnersMenu",
     "\\HalloDoc\\Views\\ProvidersMenu",
-    "\\HalloDoc\\Views\\RecordsMenu"
+    "\\HalloDoc\\Views\\RecordsMenu",
+    "\\HalloDoc\\Views\\Shared"
   ],
-  "SelectedNode": "\\HalloDoc.sln",
+  "SelectedNode": "\\HalloDoc\\Program.cs",
   "PreviewInSolutionExplorer": false
 }

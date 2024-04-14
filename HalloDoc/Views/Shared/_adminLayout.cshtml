@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/css/AdminDashboard.css" />
     <link rel="stylesheet" href="~/css/HeaderFooter.css" />
     @RenderSection("Styles", required: false)
-    
+
 </head>
 
 <body>
@@ -17,7 +17,7 @@
         <header id="header" class="shadow-lg w-100 border-bottom">
             @if (ViewBag.AdminName != null)
             {
-                <a id="listImg" class="btn border d-md-none mt-3 mb-3" onclick="onenNav()" >
+                <a id="listImg" class="btn border d-md-none mt-3 mb-3" onclick="openNav()">
                     <img src="~/images/list.svg" alt="">
                 </a>
             }
@@ -75,7 +75,7 @@
                         <li><a class="dropdown-item" href="@Url.Action("UserAccess", "AdminDashboard")">User Access</a></li>
                         <li><a class="dropdown-item" href="@Url.Action("CreateAdmin", "AdminDashboard")">Create Admin</a></li>
                     </ul>
-
+                </li>
                 <li class="nav-item ">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Records
@@ -93,28 +93,55 @@
         </nav>
 
         <div id="mySidebar" class="sidebar">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-            <li class="navi col-lg-1 col-md-1  active">
-                <a class="nav-link" href="#">DashBoard</a>
-            </li>
-            <li class="col-lg-1 col-md-1 nav-item">
-                <a class="nav-link" href="#">Provider Location</a>
-            </li>
-            <li class="col-lg-1 col-md-1 nav-item ">
-                <a class="nav-link" href="#">My Profile</a>
-            </li>
-            <li class="col-lg-1 col-md-1 nav-item">
-                <a class="nav-link" href="#">Providers</a>
-            </li>
-            <li class="col-lg-1 col-md-1 nav-item">
-                <a class="nav-link" href="#">Partners</a>
-            </li>
-            <li class=" col-lg-1 col-md-1 nav-item">
-                <a class="nav-link" href="#">Access</a>
-            </li>
-            <li class="col-lg-1  col-md-1 nav-item ">
-                <a class="nav-link" href="#">Records</a>
-            </li>
+            <p class="p1">Welcome</p>
+            <a class="closebtn" onclick="closeNav()">×</a>
+            <b class="nameOfuser">@ViewBag.AdminName</b>
+            <ul class="d-md-none w-100">
+                <li class="nav-item pe-1">
+                    <a class="nav-link" id="DashboardLink" href="@Url.Action("Dashboard", "AdminDashboard")">Dashboard</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="@Url.Action("ProviderLocation", "ProvidersMenu")">Provider Location</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="@Url.Action("MyProfile", "AdminDashboard")">My Profile</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" role="button" href="#collapseExample" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
+                        Providers
+                    </a>
+                    <ul class="collapse" id="collapseExample">
+                        <li><a class="dropdown-item" href="@Url.Action("Provider", "AdminDashboard")">Providers</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("Scheduling", "ProvidersMenu")">Scheduling</a></li>
+                        <li><a class="dropdown-item" href="#">Invoicing</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="@Url.Action("Partners", "PartnersMenu")">Partners</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" role="button" href="#collapse2" data-bs-toggle="collapse" aria-expanded="false">
+                        Access
+                    </a>
+                    <ul class="collapse" id="collapse2">
+                        <li><a class="nav-link" href="@Url.Action("Access", "AdminDashboard")">Account Access</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("UserAccess", "AdminDashboard")">User Access</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("CreateAdmin", "AdminDashboard")">Create Admin</a></li>
+                    </ul>
+
+                <li class="nav-item ">
+                    <a class="nav-link" role="button" data-bs-toggle="collapse" href="#collapse3" aria-expanded="false">
+                        Records
+                    </a>
+                    <ul class="collapse" id="collapse3">
+                        <li><a class="nav-link" href="@Url.Action("SearchRecords", "RecordsMenu")">Search Records</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("EmailLogs", "RecordsMenu")">Email Logs</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("SmsLogs", "RecordsMenu")">SMS Logs</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("PatientHistory", "RecordsMenu")">Patient Records</a></li>
+                        <li><a class="dropdown-item" href="@Url.Action("BlockHistory", "RecordsMenu")">Blocked History</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
         @RenderBody()
     </div>
@@ -144,13 +171,13 @@
         else {
             document.documentElement.setAttribute('data-bs-theme', 'dark')
         }
-        function openNav(){
-            document.getElementById("mySidebar").style.width("150px");
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "45vw";
         }
 
-        function closeNav(){
+        function closeNav() {
 
-            document.getElementById("mySidebar").style.width("0px");
+            document.getElementById("mySidebar").style.width = "0px";
         }
     </script>
     <script src="~/js/admin.js"></script>

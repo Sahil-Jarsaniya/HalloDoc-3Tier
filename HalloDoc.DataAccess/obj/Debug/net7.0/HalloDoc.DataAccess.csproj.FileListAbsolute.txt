@@ -59,3 +59,16 @@ G:\Haaa\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.
 G:\Haaa\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\refint\HalloDoc.DataAccess.dll
 G:\Haaa\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.pdb
 G:\Haaa\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\ref\HalloDoc.DataAccess.dll
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\bin\Debug\net7.0\HalloDoc.DataAccess.deps.json
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\bin\Debug\net7.0\HalloDoc.DataAccess.dll
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\bin\Debug\net7.0\HalloDoc.DataAccess.pdb
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.csproj.AssemblyReference.cache
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.AssemblyInfoInputs.cache
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.AssemblyInfo.cs
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.sourcelink.json
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.dll
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\refint\HalloDoc.DataAccess.dll
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\HalloDoc.DataAccess.pdb
+C:\Users\Sahil\Desktop\HalloDoc-3Tier\HalloDoc.DataAccess\obj\Debug\net7.0\ref\HalloDoc.DataAccess.dll

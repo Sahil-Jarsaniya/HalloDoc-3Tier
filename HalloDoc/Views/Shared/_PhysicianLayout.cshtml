@@ -17,7 +17,7 @@
             @if (ViewBag.AdminName != null)
             {
                 <a id="listImg" class="btn border d-md-none mt-3 mb-3">
-                    <img src="~/images/list.svg" alt="">
+                    <img src="~/images/list.svg" alt="" onclick="openNav()">
                 </a>
             }
 
@@ -57,6 +57,25 @@
                 </li>
             </ul>
         </nav>
+        <div id="mySidebar" class="sidebar">
+            <p class="p1">Welcome</p>
+            <a class="closebtn" onclick="closeNav()">×</a>
+            <b class="nameOfuser">@ViewBag.AdminName</b>
+            <ul class="d-md-none w-100">
+                <li class="nav-item pe-1">
+                    <a class="nav-link" id="DashboardLink" href="@Url.Action("Dashboard", "PhysicianDashboard")">Dashboard</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="@Url.Action("Invoicing", "PhysicianDashboard")">Invoicing</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="@Url.Action("MyProfile", "PhysicianDashboard")">My Profile</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="@Url.Action("Scheduling", "PhysicianDashboard")">My Schedule</a>
+                </li>
+            </ul>
+        </div>
 
         @RenderBody()
     </div>
@@ -87,10 +106,19 @@
             document.documentElement.setAttribute('data-bs-theme', 'dark')
         }
 
-        $("#logout-btn").click(function(){
+        $("#logout-btn").click(function () {
             localStorage.clear();
         });
-       
+
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "45vw";
+        }
+
+        function closeNav() {
+
+            document.getElementById("mySidebar").style.width = "0px";
+        }
+
     </script>
     <script src="~/js/admin.js"></script>
     @RenderSection("AdminScript", required: false)

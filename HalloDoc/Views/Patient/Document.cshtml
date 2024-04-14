@@ -26,7 +26,7 @@
 
         <form class="form-floating p-2" method="post" asp-action="Document" asp-controller="Patient" enctype="multipart/form-data">
             <div class="input-group m-1 mb-3">
-                <input type="hidden" name="reqId" value="@Model.UploadFileViewModel.reqId" />
+                <input type="hidden" name="reqId" value="@Model.UploadFileViewModel.reqId" required/>
                 <input asp-for="UploadFileViewModel.formFile" name="formFile" type="file" id="actualFileBtn" class="form-control" id="inputGroupFile02" hidden>
                 <span asp-validation-for="UploadFileViewModel.formFile" id="fileChoosen" class="form-control">Select File</span>
                 <label class="input-group-text" id="uploadFileLabel" for="actualFileBtn">
@@ -115,6 +115,20 @@
                 }
             })
         })
+        $(".selectFile").click(function(){
+            $(".selectFile").each(function () {
+                var flag = true;
+                if (!$(this).prop('checked')) {
+                    $("#selectAll").prop('checked', false);
+                } else {
+                    flag = false;
+                }
+
+                if (flag) {
+                    $("#selectAll").prop('checked', true);
+                }
+            })
+        })
 
         $("#DownloadAll").click(function () {
             $(".selectFile").each(function () {
@@ -134,5 +148,6 @@
                 }   
             });
         });
+
     </script>
 }

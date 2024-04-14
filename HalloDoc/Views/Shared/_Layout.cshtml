@@ -7,6 +7,7 @@
     <title>@ViewData["Title"] - HalloDoc</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/HeaderFooter.css" />
+    <link rel="stylesheet" href="~/css/validation.css" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     @RenderSection("Styles", required: false)
@@ -18,8 +19,8 @@
         <header id="header" class="shadow-lg w-100">
             @if (ViewBag.Data != null)
             {
-                <a id="listImg" class="btn border d-md-none mt-3 mb-3 " data-bs-toggle="collapse" data-bs-target="#togglebar">
-                    <img src="~/images/list.svg" alt="">
+                <a id="listImg" class="btn border d-md-none mt-3 mb-3 " onclick="openNav()">
+                    <img src="~/images/list.svg" alt="" >
                 </a>
             }
 
@@ -56,7 +57,19 @@
                 </li>
             </ul>
         }
-
+        <div id="mySidebar" class="sidebar">
+            <p class="p1">Welcome</p>
+            <a class="closebtn" onclick="closeNav()">×</a>
+            <b class="nameOfuser">@ViewBag.Data</b>
+            <ul class="d-md-none w-100">
+                <li class="nav-item pe-1">
+                    <a class="nav-link" id="DashboardLink" href="@Url.Action("Dashboard", "Patient")">Dashboard</a>
+                </li>
+                <li class="nav-item pe-1">
+                    <a class="nav-link" href="@Url.Action("MyProfile", "Patient")">My Profile</a>
+                </li>
+            </ul>
+        </div>
         @RenderBody()
     </div>
     <footer id="footer" class="footer w-100 mt-auto bg-dark  shadow">
@@ -69,7 +82,16 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     @* <script src="~/js/bootstra.bundle.min.js"></script> *@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/Validation.js"></script>
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "45vw";
+        }
 
+        function closeNav() {
+
+            document.getElementById("mySidebar").style.width = "0px";
+        }</script>
     @RenderSection("Script", required: false)
     @await RenderSectionAsync("Scripts", required: false)
     @await Component.InvokeAsync("Notyf")
