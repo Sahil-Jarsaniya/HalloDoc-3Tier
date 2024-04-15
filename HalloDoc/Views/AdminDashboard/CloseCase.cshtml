@@ -3,7 +3,9 @@
     ViewData["Title"] = "View Upload";
     Layout = "_adminLayout";
 }
-
+@section Styles{
+    <link rel="stylesheet" href="~/css/validation.css" />
+}
 <div class="container">
     <div class="d-flex justify-content-between mt-5">
         <h3>
@@ -93,12 +95,14 @@
                         <input asp-for="Firstname" type="text" class="form-control" placeholder="" disabled>
                         <label for="">First Name</label>
                     </div>
+                    <span asp-validation-for="Firstname" class="text-danger"></span>
                 </div>
                 <div class="col-md">
                     <div class="form-floating">
                         <input asp-for="Lastname" type="text" class="form-control" placeholder="" disabled>
                         <label for="floatingSelectGrid">Last Name</label>
                     </div>
+                    <span asp-validation-for="Lastname" class="text-danger"></span>
                 </div>
             </div>
 
@@ -108,12 +112,14 @@
                         <input asp-for="Strmonth" type="date" class="form-control" placeholder="" disabled>
                         <label for="">Date Of Birth</label>
                     </div>
+                    <span asp-validation-for="Strmonth" class="text-danger"></span>
                 </div>
                 <div class="col-md-5">
                     <div class="form-floating phone-div w-100 h-100 ">
-                        <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" id="disablePhone" placeholder="" disabled>
+                        <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="" disabled>
                         <label for=""></label>
                     </div>
+                    <span asp-validation-for="Phonenumber" class="text-danger"></span>
                 </div>
                 <div class="col-md-1">
                     <a href="@*tel:@Model.Phonenumber*@" class="btn btn-outline-primary form-floating d-flex align-items-center justify-content-center rounded h-100 w-100" style="color: #10bce9 ; border: 1px solid #10bce9">
@@ -124,9 +130,10 @@
             <div class="row g-2 m-1">
                 <div class="col-md-6">
                     <div class="form-floating">
-                        <input asp-for="Email" type="email" class="form-control" id="disableEmail" placeholder="name@example.com" disabled>
+                        <input asp-for="Email" type="email" class="form-control emailInput" id="disableEmail" placeholder="name@example.com" disabled>
                         <label for="">Email</label>
                     </div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 
             </div>
@@ -143,6 +150,7 @@
 </div>
 
 @section AdminScript {
+    <script src="~/js/Validation.js"></script>
     <script>
         // Edit Details buttons
         function editDetails() {
@@ -152,7 +160,7 @@
             document.getElementById("CloseCaseBtn").classList.add("d-none");
 
             document.getElementById("disableEmail").disabled = false;
-            document.getElementById("disablePhone").disabled = false;
+            document.getElementById("patientPhone").disabled = false;
 
         }
 
@@ -163,7 +171,7 @@
             document.getElementById("CloseCaseBtn").classList.remove("d-none");
 
             document.getElementById("disableEmail").disabled = true;
-            document.getElementById("disablePhone").disabled = true;
+            document.getElementById("patientPhone").disabled = true;
         }
     </script>
 }

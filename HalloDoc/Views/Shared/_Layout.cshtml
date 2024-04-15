@@ -7,10 +7,10 @@
     <title>@ViewData["Title"] - HalloDoc</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/HeaderFooter.css" />
-    <link rel="stylesheet" href="~/css/validation.css" />
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     @RenderSection("Styles", required: false)
+    <link rel="stylesheet" href="~/css/validation.css" />
 
 </head>
 
@@ -95,6 +95,9 @@
     @RenderSection("Script", required: false)
     @await RenderSectionAsync("Scripts", required: false)
     @await Component.InvokeAsync("Notyf")
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 </body>
 
 </html>

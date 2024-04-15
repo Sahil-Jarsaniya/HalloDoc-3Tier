@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var navLinks = document.querySelectorAll('#adminNav .nav-link');
 
     // Function to remove 'active' class from all links
-   
+
     function removeAllActive() {
         navLinks.forEach(function (link) {
             link.classList.remove('active');
@@ -48,9 +48,28 @@ document.addEventListener("DOMContentLoaded", function () {
 //console.log(controller);
 //console.log(action);
 
-const patientPhone = document.querySelector(".patientPhone");
-var phoneInput = window.intlTelInput(patientPhone,
-    {
+$(document).ready(function () {
+
+
+    const patientPhoneInputElement = document.getElementById("patientPhone");
+    let patientIntlInput = window.intlTelInput(patientPhoneInputElement, {
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+        preferredCountries: ["in"],
+        separateDialCode: true,
+        initialCountry: "in"
     });
+
+    const otherPhoneInputElement = document.getElementById("otherPhone");
+    let otherIntlInput;
+
+    if (otherPhoneInputElement != null) {
+        otherIntlInput = window.intlTelInput(otherPhoneInputElement, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            preferredCountries: ["in"],
+            separateDialCode: true,
+            initialCountry: "in"
+        });
+    }
+});

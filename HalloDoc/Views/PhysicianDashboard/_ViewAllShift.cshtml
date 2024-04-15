@@ -40,7 +40,7 @@
         $("#AllShiftModel").modal('toggle');
         $("#modelDiv3").load('/PhysicianDashboard/ViewShift?shiftDetailId=' + $(this).data('id'), function (response, status, xhr) {
             if (status == "success") {
-                $("#CreateShiftModel").modal('show');
+                $("#VieShiftModel").modal('show');
             } else {
                 console.log("Error loading partial view" + xhr.status + " " + xhr.statusText);
             }

@@ -32,7 +32,7 @@
                             <input asp-for="Password" type="password" class="form-control" id="Password" placeholder="Password" disabled>
                             <label asp-for="Password" for="floatingPassword">Password</label>
                         </div>
-
+                        <span class="text-danger" asp-validation-for="Password"></span>
                     </div>
                 </div>
 
@@ -95,24 +95,28 @@
                                 <input asp-for="Firstname" type="text" class="form-control" placeholder="">
                                 <label for="">First Name</label>
                             </div>
+                            <span class="text-danger" asp-validation-for="Firstname"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input asp-for="Lastname" type="text" class="form-control" placeholder="">
                                 <label for="">Last Name</label>
                             </div>
+                            <span class="text-danger" asp-validation-for="Lastname"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
                                 <label for="">Email</label>
                             </div>
+                            <span class="text-danger" asp-validation-for="Email"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating phone-div w-100 h-100 ">
                                 <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
                                 <label for="">Phone</label>
                             </div>
+                            <span class="text-danger" asp-validation-for="Mobile"></span>
                         </div>
 
                         <div class="col-md-6">
@@ -132,6 +136,7 @@
                                 <input asp-for="Syncemailaddress" type="email" class="form-control" placeholder="">
                                 <label for="">Synchronization Email Address</label>
                             </div>
+                            <span class="text-danger" asp-validation-for="Syncemailaddress"></span>
                         </div>
                         <div class="col-md-6">
                             @foreach (var item in Model.Region)
@@ -221,12 +226,14 @@
                                 <input asp-for="Businessname" type="text" class="form-control" placeholder="">
                                 <label for="">Business Name</label>
                             </div>
+                            <span class="text-danger" asp-validation-for="Businessname"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input asp-for="Businesswebsite" type="text" class="form-control" placeholder="">
                                 <label for="floatingSelectGrid">Business website</label>
                             </div>
+                            <span class="text-danger" asp-validation-for="Businesswebsite"></span>
                         </div>
                         <div class="col-md-6">
                             <div class="input-group m-1 mb-3">

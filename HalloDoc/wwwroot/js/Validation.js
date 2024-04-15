@@ -20,6 +20,9 @@ document.querySelectorAll(".dobInput").forEach(function (input) {
     input.addEventListener("keyup", function () {
         validateDateOfBirth(this.value, this.parentNode.nextElementSibling, this.parentNode);
     });
+    input.addEventListener("change", function () {
+        validateDateOfBirth(this.value, this.parentNode.nextElementSibling, this.parentNode);
+    });
 });
 
 function isValidDate(dateString) {
@@ -64,6 +67,9 @@ document.querySelectorAll(".emailInput").forEach(function (input) {
     input.addEventListener("keyup", function () {
         validateEmail(this.value, this.parentNode.nextElementSibling, this.parentNode);
     });
+    input.addEventListener("change", function () {
+        validateEmail(this.value, this.parentNode.nextElementSibling, this.parentNode);
+    });
 });
 function validateEmail(email, errorSpan, div) {
     var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -87,7 +93,7 @@ document.querySelectorAll(".notesInput").forEach(function (input) {
     });
 });
 
-function validateNotes(notes, errorSpan, div) {
+function validateNotes(notes, errorSpan, div){
     if (notes.length >= 10) {
         errorSpan.textContent = "";
         div.classList.remove("invalidInput");
@@ -96,3 +102,87 @@ function validateNotes(notes, errorSpan, div) {
         div.classList.add("invalidInput");
     }
 };
+
+
+
+//Admin Dashboard
+
+document.querySelectorAll(".regionDropdown").forEach(function (input) {
+    input.addEventListener("change", function () {
+        if (this.value == 0) {
+            this.nextElementSibling.textContent = "Please Select Region";
+        } else {
+            this.nextElementSibling.textContent = "";
+        }
+    })
+})
+
+document.querySelectorAll(".physicianDropdown").forEach(function (input) {
+    input.addEventListener("change", function () {
+        if (this.value == 0) {
+            this.nextElementSibling.textContent = "Please Select Physician";
+        } else {
+            this.nextElementSibling.textContent = "";
+        }
+    })
+})
+
+document.querySelectorAll(".CaseTag").forEach(function (input) {
+    input.addEventListener("change", function () {
+        if (this.value == 0) {
+            this.nextElementSibling.textContent = "Please Select Reason";
+        } else {
+            this.nextElementSibling.textContent = "";
+        }
+    })
+})
+
+
+document.querySelectorAll(".adminNote").forEach(function (input) {
+    input.addEventListener("input", function () {
+        if (this.value == "") {
+            this.nextElementSibling.nextElementSibling.textContent = "Enter Note";
+        } else {
+            this.nextElementSibling.nextElementSibling.textContent = "";
+        }
+    })
+})
+
+
+document.querySelectorAll(".faxInput").forEach(function (input) {
+    input.addEventListener("keyup", function () {
+        validateFaxNumber(this.value, this.parentNode.nextElementSibling, this.parentNode);
+    });
+});
+
+function validateFaxNumber(faxNumber, errorSpan, div) {
+    var faxRegex = /^\+?[0-9]{1,3}\.[0-9]{1,14}$/;
+
+    if (faxRegex.test(faxNumber)) {
+        errorSpan.textContent = "";
+        div.classList.remove("invalidInput");
+    } else {
+        errorSpan.textContent = "Please enter a valid fax number";
+        div.classList.add("invalidInput");
+    }
+}
+
+document.querySelectorAll(".proffesionDD").forEach(function (input) {
+    input.addEventListener("change", function () {
+        if (this.value == 0) {
+            this.parentNode.nextElementSibling.textContent = "Please Select Reason";
+        } else {
+            this.parentNode.nextElementSibling.textContent = "";
+        }
+    })
+})
+
+document.querySelectorAll(".OrderDetail").forEach(function (input) {
+    input.addEventListener("input", function () {
+        if (this.value == "") {
+            this.parentNode.nextElementSibling.textContent = "Enter Prescription!!";
+        } else {
+            this.parentNode.nextElementSibling.textContent = "";
+        }
+    })
+})

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/AdminDashboard.css" />
     <link rel="stylesheet" href="~/css/HeaderFooter.css" />
+    <link rel="stylesheet" href="~/css/validation.css" />
     @RenderSection("Styles", required: false)
 </head>
 
@@ -121,8 +122,12 @@
 
     </script>
     <script src="~/js/admin.js"></script>
+    <script src="~/js/Validation.js"></script>
     @RenderSection("AdminScript", required: false)
     @await Component.InvokeAsync("Notyf")
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 </body>
 
 </html>

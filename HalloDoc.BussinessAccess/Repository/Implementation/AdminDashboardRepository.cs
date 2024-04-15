@@ -96,7 +96,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                   City = rc.City,
                                   State = rc.State,
                                   Zipcode = rc.Zipcode,
-                                  Notes = rc.Notes ?? "-",
+                                  Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid).OrderByDescending(x => x.Createddate).Select(x => x.Notes).FirstOrDefault() ?? "-",
                                   reqTypeId = req.Requesttypeid,
                                   Regionid = rc.Regionid,
                                   Email = rc.Email,
@@ -1110,7 +1110,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 UserName = aspRow.UserName,
                 Region = regionData,
                 Roles = _db.Roles.Where(x => x.Accounttype == 1),
-                Statues = _db.PhysicianStatuses
+                Statues = _db.PhysicianStatuses,
+                City = adminRow.City,
+                Zip = adminRow.Zip,
             };
 
             return data;

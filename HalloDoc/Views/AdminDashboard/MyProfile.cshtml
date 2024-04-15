@@ -3,6 +3,9 @@
     ViewData["Title"] = "Admin Profile";
     Layout = "_adminLayout";
 }
+@section Styles{
+    <link rel="stylesheet" href="~/css/validation.css">
+}
 <div class="">
     <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
         <h4>
@@ -40,7 +43,7 @@
                         <input asp-for="Password" type="password" class="form-control" id="Password" placeholder="Password" disabled>
                         <label asp-for="Password" for="floatingPassword">Password</label>
                     </div>
-
+                    <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>
 
@@ -62,9 +65,10 @@
                         </select>
                         <label for="">status</label>
                     </div>
+                    <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
                 <div class="col-md-6">
-                    <div class="form-floating phone-div w-100 h-100 ">
+                    <div class="form-floating w-100 h-100 ">
                         <select asp-for="Roleid" class="form-select mb-3" id="role" disabled>
                             @foreach (var item in Model.Roles)
                             {
@@ -83,6 +87,7 @@
                         </select>
                         <label for="">Role</label>
                     </div>
+                    <span asp-validation-for="Roleid" class="text-danger"></span>
                 </div>
             </div>
             <button type="button" id="ResetPassBtn" class="btn btn-outline-primary float-end m-1">Reset Password</button>
@@ -93,33 +98,38 @@
                 <div class="row g-2 m-1">
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Firstname" type="text" class="form-control" placeholder="">
+                            <input asp-for="Firstname" type="text" class="form-control firstnameInput" placeholder="">
                             <label for="">First Name</label>
                         </div>
+                        <span asp-validation-for="Firstname" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Lastname" type="text" class="form-control" placeholder="">
+                            <input asp-for="Lastname" type="text" class="form-control firstnameInput" placeholder="">
                             <label for="floatingSelectGrid">Last Name</label>
                         </div>
+                        <span asp-validation-for="Lastname" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+                            <input asp-for="Email" type="email" class="form-control emailInput" placeholder="name@example.com">
                             <label for="">Email</label>
                         </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="ConfirmEmail" type="email" class="form-control" placeholder="name@example.com">
+                            <input asp-for="ConfirmEmail" type="email" class="form-control emailInput" placeholder="name@example.com">
                             <label for="">Confirm Email</label>
                         </div>
+                        <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating phone-div w-100 h-100 ">
-                            <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                            <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         @foreach (var item in Model.Region)
@@ -151,40 +161,46 @@
                             <input asp-for="Address1" type="text" class="form-control" placeholder="">
                             <label for="">Address1</label>
                         </div>
+                        <span asp-validation-for="Address1" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input asp-for="Address2" type="text" class="form-control" placeholder="">
                             <label for="floatingSelectGrid">Address2</label>
                         </div>
+                        <span asp-validation-for="Address2" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input asp-for="City" type="text" class="form-control" placeholder="">
                             <label for="">City</label>
                         </div>
+                        <span asp-validation-for="City  " class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating phone-div w-100 h-100 ">
                             <select asp-for="Regionid" class="form-select">
-                                <option>guj</option>
-                                <option>raj</option>
-                                <option>md</option>
+                                <option value="1">guj</option>
+                                <option value="2">raj</option>
+                                <option value="3">md</option>
                             </select>
                             <label for="">State</label>
                         </div>
+                        <span asp-validation-for="Regionid" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input asp-for="Zip" type="text" class="form-control" placeholder="">
                             <label for="">Zip</label>
                         </div>
+                        <span asp-validation-for="Zip" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating phone-div w-100 h-100 ">
-                            <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                            <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" id="otherPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
+                        <span asp-validation-for="Altphone" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -200,7 +216,9 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
+    <script src="~/js/Validation.js"></script>
     <script>
+
         var editBtn1 = document.getElementById("editBtn1");
         var saveBtn1 = document.getElementById("saveBtn1");
         var cancelBtn1 = document.getElementById("cancelBtn1");
@@ -208,7 +226,6 @@
 
         $("#editBtn1").click(function () {
             document.getElementById("fieldset1").disabled = false;
-            document.getElementById("userName").disabled = false;
             document.getElementById("status").disabled = false;
             document.getElementById("role").disabled = false;
 
@@ -220,7 +237,6 @@
 
         $("#cancelBtn1").click(function () {
             document.getElementById("fieldset1").disabled = true;
-            document.getElementById("userName").disabled = true;
             document.getElementById("status").disabled = true;
             document.getElementById("role").disabled = true;
 

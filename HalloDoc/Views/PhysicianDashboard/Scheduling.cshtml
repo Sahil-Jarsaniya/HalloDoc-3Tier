@@ -44,7 +44,8 @@
     <div class="container d-sm-flex justify-content-between mt-4" id="calenderDiv" style="max-width:1500px">
     </div>
 </div>
-
+<div id="newshiftModal">
+</div>
 <div id="modelDiv2">
 </div>
 <div id="modelDiv3">
@@ -56,7 +57,7 @@
     <script>
 
         $("#CreateShiftBtn").click(function () {
-            $("#modelDiv").load('/PhysicianDashboard/CreateShift', function (response, status, xhr) {
+            $("#newshiftModal").load('/PhysicianDashboard/CreateShift', function (response, status, xhr) {
                 if (status == "success") {
                     $("#CreateShiftModel").modal('show');
                 } else {

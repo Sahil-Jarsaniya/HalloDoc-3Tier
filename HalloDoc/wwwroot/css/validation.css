@@ -1,13 +1,14 @@
 ﻿.invalidInput {
-    border:!important 1px solid red;
+    border: !important 1px solid red;
     border-radius: 0.375rem;
-}
-.invalidInput input:focus{
-    color: !important red;
 }
 
-.invalidInput:focus {
-    border: 1px solid red;
-    border-radius: 0.375rem;
-    color: red;
-}
+    .invalidInput input:focus {
+        color: !important red;
+    }
+
+    .invalidInput:focus {
+        border: 1px solid red;
+        border-radius: 0.375rem;
+        color: red;
+    }

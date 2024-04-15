@@ -278,17 +278,19 @@
                         <h5 id="PatientName" class="mb-2">Patient Name: </h5>
                         <input id="reqClientId" value="" hidden />
                         <select class="form-select form-select mb-3 CaseTag" id="CaseTag" aria-label="Large select example">
-                            <option>Reasons for Cancellation</option>
+                            <option value="0">Reasons for Cancellation</option>
 
                             @foreach (var item in Model.Casetag)
                             {
                                 <option value="@item.Casetagid">@item.Name</option>
                             }
                         </select>
+                        <span class="text-danger" id="casetagSpan"></span>
                         <div class="form-floating m-1 form-div">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="addNote"
+                            <textarea class="form-control adminNote" placeholder="Leave a comment here" id="addNote"
                                       style="height: 100px"></textarea>
                             <label for="">Provide Additional Notes</label>
+                            <span class="text-danger" id="noteSpan"></span>
                         </div>
                     </form>
                 </div>
@@ -315,9 +317,10 @@
                         <h5 id="BloackPatientName" class="mb-2"> </h5>
                         <input id="blockreqClientId" value="" hidden />
                         <div class="form-floating m-1 form-div">
-                            <textarea class="form-control" id="addBlockNote"
+                            <textarea class="form-control adminNote" id="addBlockNote"
                                       style="height: 100px"></textarea>
                             <label for="">Provide Additional Notes</label>
+                            <span class="text-danger" id="blockSpan"></span>
                         </div>
                     </form>
                 </div>
@@ -344,21 +347,23 @@
                         <p>To assign this request, search and select anthoer Phiysician</p>
                         <input id="AssignreqClientId" value="" hidden />
 
-                        <select class="form-select form-select mb-3 RegionSelect" aria-label="Large select example" required>
-                            <option>Narrow Search by Region</option>
+                        <select class="form-select form-select mb-3 RegionSelect regionDropdown" aria-label="Large select example" required>
+                            <option value="0">Narrow Search by Region</option>
                             @foreach (var item in Model.Region)
                             {
                                 <option value="@item.Regionid">@item.Name</option>
                             }
                         </select>
-                        <select class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example" required>
-                            <option>Select Physician</option>
+                        <span class="text-danger" id="assignRegionSpan"></span>
+                        <select class="form-select form-select mb-3 PhysicianSelect physicianDropdown" id="PhysicianSelect" aria-label="Large select example" required>
+                            <option value="0">Select Physician</option>
                         </select>
-
+                        <span class="text-danger" id="assignPhySpan"></span>
                         <div class="form-floating m-1 form-div">
-                            <textarea class="form-control" id="addAssignNote"
+                            <textarea class="form-control adminNote" id="addAssignNote "
                                       style="height: 100px"></textarea>
                             <label for="">Description</label>
+                            <span class="text-danger" id="assignSpan"></span>
                         </div>
                     </form>
                 </div>
@@ -386,21 +391,23 @@
                         <input id="TransferClientId" value="" hidden />
                         <input id="PhyId" value="" hidden />
 
-                        <select class="form-select form-select mb-3 RegionSelect TransferRegionSelect" aria-label="Large select example">
-                            <option>Narrow Search by Region</option>    
+                        <select class="form-select form-select mb-3 RegionSelect TransferRegionSelect regionDropdown" aria-label="Large select example">
+                            <option value="0">Narrow Search by Region</option>
                             @foreach (var item in Model.Region)
                             {
                                 <option value="@item.Regionid">@item.Name</option>
                             }
                         </select>
-                        <select class="form-select form-select mb-3 TransferPhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
-                            <option>Select Physician</option>
+                        <span class="text-danger" id="transferRegionSpan"></span>
+                        <select class="form-select form-select mb-3 TransferPhysicianSelect physicianDropdown" id="PhysicianSelect" aria-label="Large select example">
+                            <option value="0">Select Physician</option>
                         </select>
-
+                        <span class="text-danger" id="transferPhySpan"></span>
                         <div class="form-floating m-1 form-div">
-                            <textarea class="form-control" id="addTransferNote"
+                            <textarea class="form-control adminNote" id="addTransferNote"
                                       style="height: 100px"></textarea>
                             <label for="">Description</label>
+                            <span class="text-danger" id="transferSpan"></span>
                         </div>
                     </form>
                 </div>
@@ -458,10 +465,13 @@
                         <input id="AgreementClientId" value="" hidden />
                         <input class="form-control w-100 mb-2" type="text" id="AgreementPhone" />
                         <label class="">Phone Number</label>
-                    </div><div class="form-floating">
-                        <input class="form-control w-100 mb-2" type="text" id="AgreementEmail" />
+                    </div>
+                    <span class="text-danger"></span>
+                    <div class="form-floating">
+                        <input class="form-control w-100 mb-2 emailInput" type="text" id="AgreementEmail" />
                         <label class="">Email</label>
                     </div>
+                    <span class="text-danger" id="errorBox"></span>
                 </form>
             </div>
             <div class="modal-footer">
@@ -487,11 +497,12 @@
                             To all unscheduled Physicians: we are short on coverage and needs addtionals support on Call to respond to Requests.
                         </p>
                         <div class="form-floating m-1 form-div">
-                            <textarea class="form-control"
+                            <textarea class="form-control adminNote"
                                       name="RequestNote"
-                                      style="height: 100px"></textarea>
+                                      style="height: 100px" required></textarea>
                             <label for=""> Notes</label>
                         </div>
+                            <span class="text-danger"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -518,27 +529,31 @@
 
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <input type="text" name="FirstName" class="form-control" placeholder="">
+                                    <input type="text" name="FirstName" class="form-control firstnameInput" placeholder="" required>
                                     <label for="">First Name</label>
                                 </div>
+                                <span class="text-danger"></span>
                             </div>
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="text" name="LastName" class="form-control" placeholder="">
+                                    <input type="text" name="LastName" class="form-control firstnameInput" placeholder="" required>
                                     <label for="floatingSelectGrid">Last Name</label>
                                 </div>
+                                <span class="text-danger"></span>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <input id="checkEmail" name="Email" type="email" class="form-control" placeholder="name@example.com">
+                                    <input id="checkEmail" name="Email" type="email" class="form-control emailInput" placeholder="name@example.com" required>
                                     <label for="">Email</label>
                                 </div>
+                                <span class="text-danger"></span>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-floating phone-div w-100 h-100 ">
-                                    <input type="tel" name="PhoneNumber" class="patientPhone form-control w-100 h-100" placeholder="">
+                                    <input type="tel" name="PhoneNumber" class="patientPhone form-control w-100 h-100" placeholder="" required>
                                     <label for="">Phone</label>
                                 </div>
+                                <span class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -558,5 +573,6 @@
     </script>
     <script type="text/javascript" src="~/js/AdminDashboard.js"></script>
     <script src="~/js/CasesPopUp.js"></script>
+    <script src="~/js/Validation.js"></script>
     @await Component.InvokeAsync("Notyf")
 }

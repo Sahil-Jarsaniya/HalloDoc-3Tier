@@ -1,5 +1,5 @@
 ﻿@model CreateShift;
-<div class="modal fade CreateShiftModel" id="CreateShiftModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
+<div class="modal fade CreateShiftModel" id="VieShiftModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #01bce9; color:white;">
@@ -76,7 +76,7 @@
             type: 'POST',
             data: { shiftDetailId: id },
             success: function () {
-                $("#CreateShiftModel").modal('toggle');
+                $("#VieShiftModel").modal('toggle');
                 location.reload();
             }
         })
@@ -90,13 +90,13 @@
             type: 'POST',
             data: { shiftDetailId: id },
             success: function () {
-                $("#CreateShiftModel").modal('toggle');
+                $("#VieShiftModel").modal('toggle');
                 location.reload();
             }
         })
     })
 
     $(".closeBtn").click(function () {
-        $("#CreateShiftModel").modal('toggle');
+        $("#VieShiftModel").modal('toggle');
     })
 </script>

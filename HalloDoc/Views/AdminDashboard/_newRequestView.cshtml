@@ -34,7 +34,9 @@
                     break;
             }
             <tr>
-                <td style="background-color: @bg;">@item.Firstname @item.Lastname</td>
+                <td style="background-color: @bg;">
+                    @item.Firstname @item.Lastname
+                </td>
                 <td style="background-color: @bg;">
                     <a href="mailto: @item.Email" class="btn border rounded">
                         <img src="~/images/envelope.svg" />
@@ -249,11 +251,11 @@
 
 
     $(".pageBtn").click(function () {
-        var reqType = $("#filterReqType").val() 
+        var reqType = $("#filterReqType").val()
         var pageNumber = $(this).data('page');
-        var ReginoId = $("#RegionFilter").val() 
-        var Name = $("#search").val() ;
-        
+        var ReginoId = $("#RegionFilter").val()
+        var Name = $("#search").val();
+
         $("#pagenumber").val(pageNumber);
 
         $.ajax({

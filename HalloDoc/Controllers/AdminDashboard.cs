@@ -7,8 +7,10 @@ using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.Services;
 using HalloDoc.utils;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Execution;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HalloDoc.Controllers
 {
@@ -249,8 +251,17 @@ namespace HalloDoc.Controllers
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
-            int adminId = _adminRepo.GetAdminId(AspId);
-            _adminRepo.ViewNotePost(reqClientId, adminNote, adminId);
+
+            if (adminNote != null)
+            {
+                int adminId = _adminRepo.GetAdminId(AspId);
+                _adminRepo.ViewNotePost(reqClientId, adminNote, adminId);
+                _notyf.Success("Updated");
+            }
+            else
+            {
+                _notyf.Error("Enter Note FIrst!!");
+            }
 
             return RedirectToAction("ViewNote", new { reqClientId = reqClientId });
         }
@@ -285,7 +296,7 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public object FilterPhysician(int Region, int phyid)
         {
-            return _adminRepo.FilterPhysician(Region,phyid);
+            return _adminRepo.FilterPhysician(Region, phyid);
         }
 
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
@@ -403,9 +414,19 @@ namespace HalloDoc.Controllers
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
-            _adminRepo.SendOrders(obj, AspId);
-
-            return RedirectToAction("SendOrders", new { reqClientId = obj.reqClientId });
+            if (ModelState.IsValid)
+            {
+                _adminRepo.SendOrders(obj, AspId);
+                _notyf.Success("Ordered Successfully.");
+                return RedirectToAction("SendOrders", new { reqClientId = obj.reqClientId });
+            }
+            else
+            {
+                var data = _adminRepo.SendOrders(obj.reqClientId);
+                obj.Healthprofessionaltype = data.Healthprofessionaltype;
+                _notyf.Error("Ordered Failed.");
+                return View(obj);
+            }
         }
 
 
@@ -430,7 +451,7 @@ namespace HalloDoc.Controllers
         }
 
 
-        [RoleAuth((int) enumsFile.adminRoles.AdminDashboard)]
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public void SendAgreement(int reqClientId, string email, string phone)
         {
 
@@ -472,7 +493,7 @@ namespace HalloDoc.Controllers
             _adminRepo.CloseToUnpaidCase(reqClientId);
             return RedirectToAction("Dashboard", new { status = 13 });
         }
-        
+
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult Encounter(int reqClientId, string option)
         {
@@ -515,8 +536,16 @@ namespace HalloDoc.Controllers
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
-    
-            _adminRepo.MyProfile(obj, AspId);
+
+            if (ModelState.IsValid)
+            {
+                _adminRepo.MyProfile(obj, AspId);
+                _notyf.Success("Updated");
+            }
+            else
+            {
+                _notyf.Error("Something went wrong");
+            }
 
             return RedirectToAction("MyProfile");
         }
@@ -558,8 +587,15 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult EncounterForm(Encounter obj)
         {
-
-            _adminRepo.Encounter(obj);
+            if (ModelState.IsValid)
+            {
+                _adminRepo.Encounter(obj);
+                _notyf.Success("Updated");
+            }
+            else
+            {
+                _notyf.Error("Failed");
+            }
             return View(obj);
         }
 
@@ -567,7 +603,7 @@ namespace HalloDoc.Controllers
         public IActionResult RequestSupport(string RequestNote)
         {
             var phy = _db.Physicians.Where(x => x.Status == 4).ToList();
-            foreach(var item in phy)
+            foreach (var item in phy)
             {
                 _loginRepo.SendEmail(item.Email, "Request Support", RequestNote);
             }
@@ -836,45 +872,56 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
             var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
+            if (ModelState.IsValid)
+            {
 
-            var pass = _loginRepo.GetHash(obj.Password);
-            var phyId = _adminRepo.CreateProvider(obj, pass, AspId, Region);
+                var pass = _loginRepo.GetHash(obj.Password);
+                var phyId = _adminRepo.CreateProvider(obj, pass, AspId, Region);
 
-            if (obj.PhySign != null)
-            {
-                _loginRepo.uploadFile(obj.PhySign, "ProviderData\\" + phyId, obj.PhySign.FileName.ToString());
-            }
-            if (obj.PhyPhoto != null)
-            {
-                _loginRepo.uploadFile(obj.PhyPhoto, "ProviderData\\" + phyId, obj.PhyPhoto.FileName.ToString());
-            }
-            if (obj.Isagreementdoc)
-            {
-                _loginRepo.uploadFile(obj.agreementdoc, "ProviderData\\" + phyId, obj.agreementdoc.FileName.ToString());
-                _adminRepo.UploadProviderFile(phyId, obj.agreementdoc.FileName.ToString(), 1);
-            }
-            if (obj.Isbackgrounddoc)
-            {
-                _loginRepo.uploadFile(obj.backgrounddoc, "ProviderData\\" + phyId, obj.backgrounddoc.FileName.ToString());
-                _adminRepo.UploadProviderFile(phyId, obj.backgrounddoc.FileName.ToString(), 2);
-            }
-            if (obj.Islicensedoc)
-            {
-                _loginRepo.uploadFile(obj.licensedoc, "ProviderData\\" + phyId, obj.licensedoc.FileName.ToString());
-                _adminRepo.UploadProviderFile(phyId, obj.licensedoc.FileName.ToString(), 3);
-            }
-            if (obj.Isnondisclosuredoc)
-            {
-                _loginRepo.uploadFile(obj.nondisclosuredoc, "ProviderData\\" + phyId, obj.nondisclosuredoc.FileName.ToString());
-                _adminRepo.UploadProviderFile(phyId, obj.nondisclosuredoc.FileName.ToString(), 4);
-            }
-            if (obj.Istrainingdoc)
-            {
-                _loginRepo.uploadFile(obj.trainingdoc, "ProviderData\\" + phyId, obj.trainingdoc.FileName.ToString());
-                _adminRepo.UploadProviderFile(phyId, obj.trainingdoc.FileName.ToString(), 5);
-            }
 
-            return RedirectToAction("CreateProvider");
+                if (obj.PhySign != null)
+                {
+                    _loginRepo.uploadFile(obj.PhySign, "ProviderData\\" + phyId, obj.PhySign.FileName.ToString());
+                }
+                if (obj.PhyPhoto != null)
+                {
+                    _loginRepo.uploadFile(obj.PhyPhoto, "ProviderData\\" + phyId, obj.PhyPhoto.FileName.ToString());
+                }
+                if (obj.Isagreementdoc)
+                {
+                    _loginRepo.uploadFile(obj.agreementdoc, "ProviderData\\" + phyId, obj.agreementdoc.FileName.ToString());
+                    _adminRepo.UploadProviderFile(phyId, obj.agreementdoc.FileName.ToString(), 1);
+                }
+                if (obj.Isbackgrounddoc)
+                {
+                    _loginRepo.uploadFile(obj.backgrounddoc, "ProviderData\\" + phyId, obj.backgrounddoc.FileName.ToString());
+                    _adminRepo.UploadProviderFile(phyId, obj.backgrounddoc.FileName.ToString(), 2);
+                }
+                if (obj.Islicensedoc)
+                {
+                    _loginRepo.uploadFile(obj.licensedoc, "ProviderData\\" + phyId, obj.licensedoc.FileName.ToString());
+                    _adminRepo.UploadProviderFile(phyId, obj.licensedoc.FileName.ToString(), 3);
+                }
+                if (obj.Isnondisclosuredoc)
+                {
+                    _loginRepo.uploadFile(obj.nondisclosuredoc, "ProviderData\\" + phyId, obj.nondisclosuredoc.FileName.ToString());
+                    _adminRepo.UploadProviderFile(phyId, obj.nondisclosuredoc.FileName.ToString(), 4);
+                }
+                if (obj.Istrainingdoc)
+                {
+                    _loginRepo.uploadFile(obj.trainingdoc, "ProviderData\\" + phyId, obj.trainingdoc.FileName.ToString());
+                    _adminRepo.UploadProviderFile(phyId, obj.trainingdoc.FileName.ToString(), 5);
+                }
+                return RedirectToAction("CreateProvider");
+            }
+            else
+            {
+                var errors = ModelState.ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToList());
+
+                return Json(new {success = false, errors = errors});
+            }
         }
 
         [RoleAuth((int)enumsFile.adminRoles.Accounts)]
@@ -928,10 +975,18 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
             var PageList = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedPage);
+            if (ModelState.IsValid)
+            {
+                _adminRepo.CreateRole(PageList, AspId, AccountType, obj.Name);
+                _notyf.Success("Role Created");
+                return RedirectToAction("Access");
+            }
+            else
+            {
+                _notyf.Error("Failed");
+                return View();
+            }
 
-            _adminRepo.CreateRole(PageList, AspId, AccountType, obj.Name);
-
-            return RedirectToAction("Access");
         }
         [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult EditRole(int id)
@@ -1016,7 +1071,7 @@ namespace HalloDoc.Controllers
 
             var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
 
-            _adminRepo.EditAdmin(obj,AspId, Region);
+            _adminRepo.EditAdmin(obj, AspId, Region);
             return View(obj.Adminid);
         }
 
@@ -1037,9 +1092,9 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public async Task<IActionResult> UserAccessTable(int accountType, int RoleId, int pageNumber)
         {
-            var data = _adminRepo.UserAccessTables(accountType, RoleId);    
+            var data = _adminRepo.UserAccessTables(accountType, RoleId);
 
-            if(pageNumber < 1)
+            if (pageNumber < 1)
             {
                 pageNumber = 1;
             }

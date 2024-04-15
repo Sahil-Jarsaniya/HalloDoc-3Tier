@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,15 +15,26 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public int AdminId { get; set; }
 
         public string? UserName { get; set; }
+
+        [Required]
         public string? Password { get; set; }
         public int Physicianid { get; set; }
 
         public string? Aspnetuserid { get; set; }
-
+        [Required(ErrorMessage = "Please Enter Name")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
+        [Column("firstname")]
+        [StringLength(100)]
         public string Firstname { get; set; } = null!;
-
+        [Column("lastname")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid Last Name")]
+        [StringLength(100)]
         public string? Lastname { get; set; }
 
+        [Required(ErrorMessage = "Field can't be empty")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
+        [Column("email")]
+        [StringLength(50)]
         public string Email { get; set; } = null!;
 
         public string? Mobile { get; set; }
@@ -57,8 +70,10 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public short? Status { get; set; }
 
+        [Required]
         public string Businessname { get; set; } = null!;
 
+        [Required]
         public string Businesswebsite { get; set; } = null!;
 
         public bool? Isdeleted { get; set; }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace HalloDoc.DataAccess.Models;
 
@@ -9,8 +11,15 @@ public partial class Encounter
 
     public int Requestid { get; set; }
 
+    [Required(ErrorMessage = "Please Enter Name")]
+    [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
+    [Column("firstname")]
+    [StringLength(100)]
     public string Firstname { get; set; } = null!;
 
+    [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid Last Name")]
+    [Column("lastname")]
+    [StringLength(100)]
     public string? LastName { get; set; }
 
     public string? Location { get; set; }
@@ -25,6 +34,10 @@ public partial class Encounter
 
     public string? Phonenumber { get; set; }
 
+    [Required(ErrorMessage = "Field can't be empty")]
+    [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
+    [Column("email")]
+    [StringLength(50)]
     public string? Email { get; set; }
 
     public string? PresentIllnessHistory { get; set; }

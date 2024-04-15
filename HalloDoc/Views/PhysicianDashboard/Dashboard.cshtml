@@ -196,9 +196,10 @@
                         <p>This request will be transfered to admin.</p>
                         <input value="" id="TransferClientId" hidden />
                         <div class="form-floating m-1 form-div">
-                            <textarea class="form-control" id="addTransferNote"
+                            <textarea class="form-control adminNote" id="addTransferNote"
                                       style="height: 100px"></textarea>
                             <label for="">Description</label>
+                            <span class="text-danger" id="transferNote"></span>
                         </div>
                     </form>
                 </div>
@@ -228,10 +229,13 @@
                         <input id="AgreementClientId" value="" hidden />
                         <input class="form-control w-100 mb-2" type="text" id="AgreementPhone" />
                         <label class="">Phone Number</label>
-                    </div><div class="form-floating">
-                        <input class="form-control w-100 mb-2" type="text" id="AgreementEmail" />
+                    </div>
+                    <span class="text-danger"></span>
+                    <div class="form-floating">
+                        <input class="form-control w-100 mb-2 emailInput" type="text" id="AgreementEmail" />
                         <label class="">Email</label>
                     </div>
+                    <span class="text-danger"></span>
                 </form>
             </div>
             <div class="modal-footer">
@@ -287,27 +291,31 @@
 
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <input type="text" name="FirstName" class="form-control" placeholder="">
+                                    <input type="text" name="FirstName" class="form-control firstnameInput" placeholder="">
                                     <label for="">First Name</label>
                                 </div>
+                                <span class="text-danger"></span>
                             </div>
                             <div class="col-md">
                                 <div class="form-floating">
-                                    <input type="text" name="LastName" class="form-control" placeholder="">
+                                    <input type="text" name="LastName" class="form-control firstnameInput" placeholder="">
                                     <label for="floatingSelectGrid">Last Name</label>
                                 </div>
+                                <span class="text-danger"></span>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-floating">
-                                    <input id="checkEmail" name="Email" type="email" class="form-control" placeholder="name@example.com">
+                                    <input id="checkEmail" name="Email" type="email" class="form-control emailInput" placeholder="name@example.com">
                                     <label for="">Email</label>
                                 </div>
+                                <span class="text-danger"></span>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-floating phone-div w-100 h-100 ">
                                     <input type="tel" name="PhoneNumber" class="patientPhone form-control w-100 h-100" placeholder="">
                                     <label for="">Phone</label>
                                 </div>
+                                <span class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -354,19 +362,24 @@
         $("#ConfirmTransferBtn1").click(function () {
             var addNote = $("#addTransferNote").val();
             var reqClientId = $("#TransferClientId").val();
-            $.ajax({
-                url: '/PhysicianDashboard/TransferCase',
-                type: 'POST',
-                data: { reqClientId: reqClientId, addNote: addNote },
-                success: function (result) {
-                    $(".CloseModal").click();
-                    location.reload();
-                },
-                error: function (error) {
-                    console.log(error);
-                    alert('error fetching details')
-                },
-            })
+            if (addNote != "") {
+
+                $.ajax({
+                    url: '/PhysicianDashboard/TransferCase',
+                    type: 'POST',
+                    data: { reqClientId: reqClientId, addNote: addNote },
+                    success: function (result) {
+                        $(".CloseModal").click();
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert('error fetching details')
+                    },
+                })
+            } else {
+                $("#transferNote").text("Enter Note");
+            }
         })
 
     </script>

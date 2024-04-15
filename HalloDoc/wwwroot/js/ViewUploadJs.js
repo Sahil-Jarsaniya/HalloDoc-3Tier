@@ -9,6 +9,9 @@ $("#selectAll").click(function () {
         }
     })
 })
+$(".selectFile").click(function () {
+    $("#selectAll").prop('checked', $('.selectFile:checked').length === $('.selectFile').length);
+})
 
 const actualBtn = document.getElementById('actualFileBtn');
 

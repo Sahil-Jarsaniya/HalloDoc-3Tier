@@ -44,20 +44,13 @@
             <input id="checkEmail" asp-for="Email" type="email" class="form-control emailInput" placeholder="name@example.com">
             <label for="">Email</label>
         </div>
+        <span asp-validation-for="Email" class="text-danger " id="emailError"></span>
     </div>
     <div class="col-md-6">
         <div class="form-floating phone-div w-100 h-100 ">
             <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
             <label for="">Phone</label>
         </div>
-
-    </div>
-</div>
-<div class="row g-2 m-1">
-    <div class="col-md-6">
-        <span asp-validation-for="Email" class="text-danger " id="emailError"></span>
-    </div>
-    <div class="col-md-6">
         <span asp-validation-for="Phonenumber" class="text-danger phoneError"></span>
     </div>
 </div>

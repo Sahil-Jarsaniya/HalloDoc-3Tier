@@ -16,6 +16,7 @@
                 font-size: small;
             }
     </style>
+    <link rel="stylesheet" href="~/css/validation.css">
 }
 <div class="tab-pane fade show">
     <div class=" d-flex container justify-content-between mt-4" style="max-width:1000px">
@@ -30,29 +31,7 @@
     </div>
     <div class="container" style="max-width: 1000px">
 
-        <div class="row g-3">
-            <div class="col-md-6 col-12">
-                <div class="border shadow rounded d-flex p-3">
-                    <div class="me-2">
-                        <img src="~/images/clock.svg" />
-                    </div>
-                    <div class="" style="width: 97%">
-                        <h6>Transfer Notes</h6>
-                        @foreach (var item in Model.Requeststatuslog)
-                        {
-                            @if (item.Notes != null)
-                            {
-                                <p> @item.Notes</p>
-                            }
-                            else
-                            {
-                                <p>-</p>
-                            }
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
         @foreach (var item in Model.Requestnote)
         {
@@ -94,15 +73,40 @@
                 </div>
             </div>
         }
+
+        <div class="row g-3 mt-1">
+            <div class="col-md-6 col-12">
+                <div class="border shadow rounded d-flex p-3">
+                    <div class="me-2">
+                        <img src="~/images/clock.svg" />
+                    </div>
+                    <div class="" style="width: 97%">
+                        <h6>Transfer Notes</h6>
+                        @foreach (var item in Model.Requeststatuslog)
+                        {
+                            @if (item.Notes != null)
+                            {
+                                <p> @item.Notes</p>
+                            }
+                            else
+                            {
+                                <p>-</p>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
         <form method="post" asp-action="ViewNote" class="form-floating viewCaseForm border rounded shadow p-2 mt-5">
             <div class="row g-3 mt-1 justify-content-end">
                 <div class="col-12">
                     <div class="form-floating m-1 form-div">
                         <input asp-for="reqClientId" value="@Model.reqClientId" hidden/>
-                        <textarea asp-for="adminNote" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                        <textarea asp-for="adminNote" class="form-control notesInput" placeholder="Leave a comment here" id="floatingTextarea2"
                                   style="height: 100px"></textarea>
                         <label for="">Admin Notes</label>
                     </div>
+                    <span asp-validation-for="adminNote" class="text-danger"></span>
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary form-floating w-100 h-100 float-end">Save Changes</button>
@@ -119,4 +123,5 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
     <script src="~/js/admin.js"></script>
+    <script src="~/js/Validation.js"></script>
 }

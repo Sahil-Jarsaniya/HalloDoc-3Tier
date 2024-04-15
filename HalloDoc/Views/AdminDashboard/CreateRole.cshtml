@@ -26,6 +26,7 @@
                         <input asp-for="Name" type="text" class="form-control" placeholder="">
                         <label for="">Role Name</label>
                     </div>
+                    <span class="text-danger" asp-validation-for="Name"></span>
                 </div>
                 <div class="col-md-6">
                     <div class="form-floating">
@@ -38,6 +39,7 @@
                         </select>
                         <label>Account Type</label>
                     </div>
+                    <span class="text-danger" asp-validation-for="AccountType"></span>
                 </div>
             </div>
             <div id="PageList" class="row ">
@@ -56,6 +58,9 @@
 </div>
 
 @section AdminScript {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
         $("#AccountType").change(function () {
             $("#PageList").empty();

@@ -16,12 +16,13 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public int? status { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please Enter Name")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
         [Column("firstname")]
         [StringLength(100)]
         public required string Firstname { get; set; }
 
-        [Column("lastname")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
         [StringLength(100)]
         public required string Lastname { get; set; }
 
@@ -33,6 +34,8 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         [StringLength(23)]
         public string? Phonenumber { get; set; }
 
+        [Required(ErrorMessage = "Field can't be empty")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         [Column("email")]
         [StringLength(50)]
         public required string Email { get; set; }

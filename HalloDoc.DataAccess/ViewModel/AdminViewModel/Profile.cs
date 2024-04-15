@@ -1,6 +1,8 @@
 ﻿using HalloDoc.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +14,29 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public int Adminid { get; set; }
 
         public string? Password { get; set; }
-        public string UserName { get; set; } = null!;
-        public string Firstname { get; set; } = null!;
+        public string? UserName { get; set; } = null!;
 
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
+        [Column("firstname")]
+        [StringLength(100)]
+        public string? Firstname { get; set; } = null!;
+
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid Last Name")]
+        [Column("lasttname")]
+        [StringLength(100)]
         public string? Lastname { get; set; }
 
-        public string Email { get; set; } = null!;
-        public string ConfirmEmail { get; set; } = null!;
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
+        [Column("Email")]
+        [StringLength(50)]
+        public string? Email { get; set; } = null!;
+
+        [NotMapped]
+        [Compare("Email", ErrorMessage ="Email does not match.")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
+        [Column("email")]
+        [StringLength(50)]
+        public string? ConfirmEmail { get; set; } = null!;
 
         public string? Mobile { get; set; }
 
@@ -42,8 +60,8 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public string? Altphone { get; set; }
 
-        public IEnumerable<CheckBoxData> Region { get; set; }
-        public IEnumerable<Role> Roles { get; set; }
-        public IEnumerable<PhysicianStatus> Statues{ get; set; }
+        public IEnumerable<CheckBoxData>? Region { get; set; }
+        public IEnumerable<Role>? Roles { get; set; }
+        public IEnumerable<PhysicianStatus>? Statues{ get; set; }
     }
 }
