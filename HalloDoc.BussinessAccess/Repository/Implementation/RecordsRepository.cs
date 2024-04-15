@@ -122,6 +122,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                        join t2 in _db.Roles on t1.Roleid equals t2.Roleid
                        select new EmailLogVM()
                        {
+                           id = t1.Emaillogid,
                            EmailId = t1.Emailid,
                            ConfirmationNumber = t1.Confirmationnumber == null? "-" : t1.Confirmationnumber,
                            CreateDate = t1.Createdate,
@@ -149,6 +150,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            sent = t1.Issmssent,
                            RoleId = t1.Roleid,
                            Rolename = t2.Name,
+                           id = (int)t1.Smslogid
                        };
 
             return data;

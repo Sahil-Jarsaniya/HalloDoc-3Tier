@@ -66,8 +66,8 @@
             </div>
         </div>
         <div class="collapse shadow m-1 p-2" id="@item.Physicianid">
-            <p>Role: </p>
-            <p>Status: </p>
+            <p>Role: @item.Roleid</p>
+            <p>Status: @item.Status</p>
             <div class="float-end">
                 <button type="button" class="btn btn-outline-primary ContactProvider" data-email="@item.Email" data-mobile="@item.Mobile">Contact</button>
                 <a asp-action="EditProvider" asp-controller="AdminDashboard" asp-route-Physicianid="@item.Physicianid" class="btn btn-outline-primary">Edit</a>

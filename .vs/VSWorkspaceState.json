@@ -3,14 +3,14 @@
     "",
     "\\HalloDoc",
     "\\HalloDoc\\Views",
-    "\\HalloDoc\\Views\\PartnersMenu",
     "\\HalloDoc\\Views\\Patient",
+    "\\HalloDoc\\Views\\PhysicianDashboard",
     "\\HalloDoc\\Views\\ProvidersMenu",
     "\\HalloDoc\\Views\\RecordsMenu",
     "\\HalloDoc\\Views\\Shared",
     "\\HalloDoc\\wwwroot",
     "\\HalloDoc\\wwwroot\\js"
   ],
-  "SelectedNode": "\\HalloDoc\\wwwroot\\js\\Validation.js",
+  "SelectedNode": "\\HalloDoc\\Views\\PhysicianDashboard\\_ViewShift.cshtml",
   "PreviewInSolutionExplorer": false
 }

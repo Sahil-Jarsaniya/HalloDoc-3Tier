@@ -8,6 +8,7 @@ namespace HalloDoc.DataAccess.ViewModel.RecordsMenu
 {
     public class EmailLogVM
     {
+        public int id { get; set; }
         public string? Recipient { get; set; }
 
         public string? Action { get; set; }

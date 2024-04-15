@@ -16,7 +16,7 @@
 </div>
 <div class="container  shadow mt-4" style="max-width:1700px">
 
-    <table class="table table-responsive">
+    <table class="table table-responsive d-none d-md-table">
         <thead>
             <tr class="table-secondary">
                 <td>Client/Member</td>
@@ -39,32 +39,83 @@
                     <td>@item.providerName</td>
                     <td>@item.ConcludedDate</td>
                     <td>@item.status</td>
-                        @if (item.isFinalize == true)
-                        {
-                            <td>
-                                <button class="btn btn-outline-primary">
-                                    View
-                                </button>
-                            </td>
-                        }
-                        else
-                        {
-                            <td> - </td>
-                        }
+                    @if (item.isFinalize == true)
+                    {
+                        <td>
+                            <button class="btn btn-outline-primary">
+                                View
+                            </button>
+                        </td>
+                    }
+                    else
+                    {
+                        <td> - </td>
+                    }
                     <td>
                         <a class="btn border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Actions
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li><a class="dropdown-item" href="@Url.Action("ViewCase", "AdminDashboard", new {reqClientId = item.reqClientId})">View Case</a></li>
-                            <li><a class="dropdown-item" href="#">Chat</a></li>
-                            <li><a class="dropdown-item" href="#">Document</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("ViewUpload", "AdminDashboard", new {reqClientId = item.reqClientId})">Document</a></li>
                         </ul>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
+    @*MobileView*@
+
+    <div class="d-md-none mobileView w-100">
+        @foreach (var item in Model.Items)
+        {
+            <div class="shadow m-1 p-2 w-100" data-bs-toggle="collapse" href="#@item.reqId" role="button" aria-expanded="false">
+                <p>
+                    @item.Client
+                </p>
+                <p>@item.confirmation</p>
+            </div>
+            <div class="collapse shadow m-1 p-2" id="@item.reqId">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                        <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
+                        <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                    </svg>
+                    Created Date: @item.createDate
+                </p>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                    </svg>
+                    Provider: @item.providerName
+                </p>
+                <P>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                        <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2M1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857z" />
+                        <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2m3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
+                    </svg>
+                    Conclude Date: @item.ConcludedDate
+                </P>
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                        <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05" />
+                    </svg>
+                    Status: @item.status
+                </p>
+                <div class="row">
+                    <div class="col-12">
+                        <a class="btn btn-outline-primary w-100 mb-1" href="@Url.Action("ViewCase", "AdminDashboard", new {reqClientId = item.reqClientId})">View Case</a>
+                    </div>
+                    <div class="col-12">
+                        <a class="btn btn-outline-primary w-100 mb-1" href="@Url.Action("ViewUpload", "AdminDashboard", new {reqClientId = item.reqClientId})">Document</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 
     @*Pagination*@
 
