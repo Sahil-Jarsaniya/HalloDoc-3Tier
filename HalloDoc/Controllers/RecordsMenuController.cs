@@ -251,7 +251,7 @@ namespace HalloDoc.Controllers
             {
                 pagenumber = 1;
             }
-            var pageSize = 2;
+            var pageSize = 10;
 
             var data = _recordsRepo.EmailLogs();
 

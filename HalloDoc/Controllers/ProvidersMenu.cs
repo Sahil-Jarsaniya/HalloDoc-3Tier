@@ -24,13 +24,11 @@ namespace HalloDoc.Controllers
     public class ProvidersMenu : Controller
     {
         private readonly IProviderMenuRepository _ProviderMenu;
-        private readonly ApplicationDbContext _db;
         private readonly INotyfService _noty;
 
-        public ProvidersMenu(IProviderMenuRepository providerMenuRepo, ApplicationDbContext db, INotyfService noty)
+        public ProvidersMenu(IProviderMenuRepository providerMenuRepo, INotyfService noty)
         {
             _ProviderMenu = providerMenuRepo;
-            _db = db;
             _noty = noty;
         }
         public string GetAdminName()
@@ -93,7 +91,7 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
         public PartialViewResult DayWiseScheduling(string date, int region)
         {
-           
+
             var data = _ProviderMenu.DayWiseScheduling(date);
 
             if (region != 0 && region != null)
@@ -195,36 +193,7 @@ namespace HalloDoc.Controllers
         public IActionResult ProviderOnCall()
         {
             ViewBag.AdminName = GetAdminName();
-            TimeOnly currentTime = TimeOnly.FromDateTime(DateTime.Now);
-            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
-            var data1 = from t1 in _db.Shiftdetails
-                        join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
-                        join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
-                        where t1.Starttime <= currentTime && t1.Endtime >= currentTime && t1.Shiftdate == currentDate
-                        select new ProviderOnCall()
-                        {
-                            Name = t3.Firstname + " " + t3.Lastname,
-                            profilePhoto = t3.Photo,
-                            shiftDetailId = t1.Shiftdetailid,
-                            providerId = t3.Physicianid
-                        };
-
-            var data2 = from t1 in _db.Physicians
-                        where t1.Status == 4
-                        select new ProviderOnCall()
-                        {
-                            Name = t1.Firstname + " " + t1.Lastname,
-                            profilePhoto = t1.Photo,
-                            providerId = t1.Physicianid
-                        };
-
-
-            var data = new Scheduling
-            {
-                Regions = _ProviderMenu.Regions(),
-                ProviderOnCall = data1,
-                ProviderOffDuty = data2
-            };
+            var data = _ProviderMenu.ProviderOnCall();
             return View(data);
         }
 
@@ -260,7 +229,7 @@ namespace HalloDoc.Controllers
         {
             ViewBag.AdminName = GetAdminName();
 
-            var data = _db.Physicianlocations;
+            var data = _ProviderMenu.Physicianlocation();
             return View(data);
         }
     }

@@ -28,6 +28,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return _db.Regions;
         }
 
+        public IEnumerable<Physicianlocation> Physicianlocation()
+        {
+            return _db.Physicianlocations;
+        }
+
         public void CreateShift(string selectedDays, CreateShift obj, string AspId)
         {
             var day = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedDays);
@@ -325,6 +330,42 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            Region = _db.Regions.FirstOrDefault(x => x.Regionid == t2.Regionid).Name ?? "-",
                            RegionId = t2.Regionid ?? 0
                        };
+            return data;
+        }
+
+        public Scheduling ProviderOnCall()
+        {
+            TimeOnly currentTime = TimeOnly.FromDateTime(DateTime.Now);
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+            var data1 = from t1 in _db.Shiftdetails
+                        join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
+                        join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
+                        where t1.Starttime <= currentTime && t1.Endtime >= currentTime && t1.Shiftdate == currentDate
+                        select new ProviderOnCall()
+                        {
+                            Name = t3.Firstname + " " + t3.Lastname,
+                            profilePhoto = t3.Photo,
+                            shiftDetailId = t1.Shiftdetailid,
+                            providerId = t3.Physicianid
+                        };
+
+            var data2 = from t1 in _db.Physicians
+                        where t1.Status == 4
+                        select new ProviderOnCall()
+                        {
+                            Name = t1.Firstname + " " + t1.Lastname,
+                            profilePhoto = t1.Photo,
+                            providerId = t1.Physicianid
+                        };
+
+
+            var data = new Scheduling
+            {
+                Regions = _db.Regions,
+                ProviderOnCall = data1,
+                ProviderOffDuty = data2
+            };
+
             return data;
         }
     }

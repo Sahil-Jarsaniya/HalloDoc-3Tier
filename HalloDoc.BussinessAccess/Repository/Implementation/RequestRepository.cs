@@ -26,7 +26,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             return confirmationNumber;
         }
-
+        public bool emailExist(string email)
+        {
+            return _db.Users.Any(u => u.Email == email);
+        }
         public void CreatePatientRequest(PatientViewModel obj)
         {
 

@@ -1,6 +1,7 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
+using HalloDoc.DataAccess.ViewModel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MimeKit;
@@ -31,9 +32,19 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
         }
 
-        public AspNetUser GetLoginData(AspNetUser obj, String hashPass)
+        public string GetAspId(string email)
         {
-            var myUser = _db.AspNetUsers.Where(x => x.UserName == obj.UserName && x.PasswordHash == hashPass).FirstOrDefault();
+            var myUser = _db.AspNetUsers.Where(x => x.Email == email).FirstOrDefault();
+            return myUser.Id;
+        }
+        public AspNetUser asp(string aspId)
+        {
+            return _db.AspNetUsers.FirstOrDefault(x => x.Id == aspId);
+        }
+
+        public AspNetUser GetLoginData(login obj, String hashPass)
+        {
+            var myUser = _db.AspNetUsers.Where(x => x.UserName == obj.Username && x.PasswordHash == hashPass).FirstOrDefault();
             if (myUser == null)
             {
                 return null;
@@ -46,26 +57,38 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public Admin isAdmin(string AspId)
         {
             var isAdmin = _db.Admins.FirstOrDefault(x => x.Aspnetuserid == AspId);
-            return isAdmin;
+            if (isAdmin != null)
+            {
+                var isRoleDeleted = _db.Roles.FirstOrDefault(x => x.Roleid == isAdmin.Roleid).Isdeleted;
+                if (!isRoleDeleted)
+                {
+                    return isAdmin;
+
+                }
+            }
+            return null;
         }
         public Physician isPhysician(string AspId)
         {
             var isPhysician = _db.Physicians.FirstOrDefault(x => x.Aspnetuserid == AspId);
+            if (isPhysician != null)
+            {
+                var isRoleDeleted = _db.Roles.FirstOrDefault(x => x.Roleid == isPhysician.Roleid).Isdeleted;
 
-            return isPhysician;
+                if (!isRoleDeleted)
+                {
+                    return isPhysician;
+
+                }
+            }
+            return null;
         }
-        public User PatientLogin(AspNetUser obj, String hashPass)
+
+        public User isPatient(string AspId)
         {
-            var myUser = _db.AspNetUsers.Include(x => x.Roles).Where(x => x.UserName == obj.UserName && x.PasswordHash == hashPass).FirstOrDefault();
-            if (myUser == null)
-            {
-                return null;
-            }
-            else
-            {
-                var userId = _db.Users.Where(x => x.Aspnetuserid == myUser.Id).FirstOrDefault();
-                return userId;
-            }
+            var isPatient = _db.Users.FirstOrDefault(x => x.Aspnetuserid == AspId);
+
+            return isPatient;
         }
 
         public void SendEmail(string email, string subject, string body)
@@ -98,7 +121,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     emailClient.Disconnect(true);
                 }
                 emailLog.Sentdate = DateTime.Now;
-                emailLog.Senttries = emailLog.Senttries == null? 1: emailLog.Senttries+1;
+                emailLog.Senttries = emailLog.Senttries == null ? 1 : emailLog.Senttries + 1;
                 emailLog.Isemailsent = true;
                 _db.Emaillogs.Update(emailLog);
                 _db.SaveChanges();
@@ -137,6 +160,20 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     file.CopyTo(stream);
                 }
             }
+        }
+
+        public void ResetPassword(ResetPassword obj)
+        {
+            var aspUser = _db.AspNetUsers.Where(x => x.Email == obj.email && x.Id == obj.Id).FirstOrDefault();
+            aspUser.PasswordHash = GetHash(obj.Password);
+            aspUser.ModifiedDate = DateTime.UtcNow;
+            _db.AspNetUsers.Update(aspUser);
+            _db.SaveChanges();
+        }
+
+        public List<Rolemenu> rolemenus(int roleId)
+        {
+            return _db.Rolemenus.Where(x => x.Roleid == roleId).ToList();
         }
     }
 }

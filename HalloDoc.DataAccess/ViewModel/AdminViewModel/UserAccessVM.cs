@@ -21,7 +21,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public string? UserName { get; set;}
         public string? Phone { get; set;}
         public string? status { get; set;}
-        public string? openReq { get; set;}
+        public int openReq { get; set;}
         public int? userId { get; set;}
     }
 }

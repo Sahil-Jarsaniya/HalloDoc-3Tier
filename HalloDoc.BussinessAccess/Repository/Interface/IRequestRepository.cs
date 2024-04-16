@@ -20,5 +20,6 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void CreateBusinessRequest(BussinessViewModel obj);
         public void CreateRequestByPhysician(PatientViewModel obj, int PhyId);
 
+        public bool emailExist(string email);
     }
 }

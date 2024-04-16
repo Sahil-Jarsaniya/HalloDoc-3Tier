@@ -12,6 +12,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
     public interface IProviderMenuRepository
     {
         public IEnumerable<Region> Regions();
+        public IEnumerable<Physicianlocation> Physicianlocation();
 
         public void CreateShift(string selectedDays, CreateShift obj, string AspId);
 
@@ -26,5 +27,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public bool UpdateShift(CreateShift obj, int id);
 
         public IQueryable<RequestedShiftVM> RequestedShiftTable();
+
+        public Scheduling ProviderOnCall();
     }
 }

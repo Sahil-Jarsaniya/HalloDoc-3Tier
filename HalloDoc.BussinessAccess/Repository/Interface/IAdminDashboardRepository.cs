@@ -7,6 +7,9 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
     public interface IAdminDashboardRepository
     {
         public int GetAdminId(string AspId);
+
+        public List<Menu> Menus();
+        public List<AccountType> AccountType();
         public AdminDashboardViewModel adminDashboard();
 
         public IQueryable<newReqViewModel> newReq();
@@ -43,6 +46,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public DocumentViewModel ViewUpload(int reqClientId);
 
+        public void ViewUploadFile(string file, int reqId, int adminId);
+
         public void DeleteFile(int ReqClientId, string FileName);
 
         public SendOrderViewModel SendOrders(int reqClientId);
@@ -61,6 +66,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void Encounter(Encounter obj);
 
         public int GetStatus(int reqClientId);
+
+        public List<Physician> RequestSupportDTY();
 
         public Profile MyProfile(string AspId);
         public void MyProfile(Profile obj, string AspId);

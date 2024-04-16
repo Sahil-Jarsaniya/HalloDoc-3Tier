@@ -1,16 +1,6 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\HalloDoc",
-    "\\HalloDoc\\Views",
-    "\\HalloDoc\\Views\\Patient",
-    "\\HalloDoc\\Views\\PhysicianDashboard",
-    "\\HalloDoc\\Views\\ProvidersMenu",
-    "\\HalloDoc\\Views\\RecordsMenu",
-    "\\HalloDoc\\Views\\Shared",
-    "\\HalloDoc\\wwwroot",
-    "\\HalloDoc\\wwwroot\\js"
+    ""
   ],
-  "SelectedNode": "\\HalloDoc\\Views\\PhysicianDashboard\\_ViewShift.cshtml",
   "PreviewInSolutionExplorer": false
 }

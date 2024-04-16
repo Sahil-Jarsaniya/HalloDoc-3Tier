@@ -25,5 +25,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void Agree(int reqClientId);
         public void DisAgree(AgreementViewModel obj);
 
+ 
+
     }
 }

@@ -16,14 +16,14 @@
             {   
             <tr>
                 <td>
-
+                    
                     @if (item.isNotiOff)
                     {
-                        <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" />
+                        <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" checked/>
                     }
                     else
                     {
-                        <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" checked />
+                        <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" />
                     }
                 </td>
                 <td>@item.Firstname @item.Lastname</td>

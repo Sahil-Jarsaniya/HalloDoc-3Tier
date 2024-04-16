@@ -23,6 +23,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             return _db.Healthprofessionaltypes;
         }
+
+   
         public PartnersViewModel Partners()
         {
 

@@ -10,6 +10,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
     {
         public int GetPhysicianId(string AspId);
 
+        public List<Region> GetRegion();
+        public List<Admin> GetAdminList();
         public bool PhysicianLocationUpdate(double latitude, double longitude, int phyId);
         public countRequestViewModel DashboardCount(int phyId);
         public IQueryable<pendingReqViewModel> newReq(searchViewModel? obj, int phyId);
@@ -38,5 +40,6 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public void ConcludeCare(CloseCaseViewModel obj, string aspId);
         
+        public void viewUplodPost(string file, int reqId,  int phyId);
     }
 }

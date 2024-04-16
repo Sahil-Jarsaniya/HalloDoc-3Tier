@@ -14,19 +14,16 @@ namespace HalloDoc.Controllers;
 
 public class RequestController : Controller
 {
-    private readonly ApplicationDbContext _db;
     private readonly IRequestRepository _requestRepo;
-    public RequestController(ApplicationDbContext db, IRequestRepository requestRepo)
+    public RequestController( IRequestRepository requestRepo)
     {
-        _db = db;
         _requestRepo = requestRepo;
     }
 
     [HttpPost]
     public JsonResult PatientCheckEmail(string email)
     {
-        bool emailExists = _db.Users.Any(u => u.Email == email);
-        return Json(new { exists = emailExists });
+        return Json(new { exists = _requestRepo.emailExist(email) });
     }
 
     public IActionResult submitRequestScreen()

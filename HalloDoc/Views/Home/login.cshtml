@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http.Extensions
-@model AspNetUser
+@model login
 @{
     ViewData["Title"] = "Login Page";
     Layout = "_login";
@@ -10,12 +10,10 @@
     <link rel="stylesheet" href="~/css/login.css">
 }
 
-<div class="bg-img position-fixed">
-</div>
 <div class="row" id="main-container">
-    @*  <div class="d-none d-md-block col-md-6">
+    <div class="d-none d-md-block col-md-6">
     <img src="~/images/11116016_415.jpg" id="login-img" class="img-fluid h-100" alt="">
-    </div>*@
+    </div>
     <div id="main" class="col-md position-relative">
         <button id="light-dark-btn" type="button" class="btn border border-black m-2 m-lg-4  float-end"
                 onclick="lightDark()">
@@ -34,23 +32,19 @@
 
             <form id="login-form" class="form-floating m-auto" asp-action="login" asp-controller="Home">
                 <h1 class=" mb-5">Login To Your Account</h1>
-                @if (ViewBag.message != null)
-                {
-                    <p class="float-left" style="color: red;">@ViewBag.message</p>
-                }
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="input-div form-floating mb-3 d-flex border rounded bg-transparent">
-                    <input asp-for="UserName" type="text" class="form-control" id="floatingInput" placeholder="username">
-                    <label asp-for="UserName" for="floatingInput" >Username</label>
+                    <input asp-for="Username" type="text" class="form-control" id="floatingInput" placeholder="username">
+                    <label asp-for="Username" for="floatingInput">Username</label>
                     <img src="~/images/user_circle.svg" class="pe-3" alt="">
                 </div>
-                <span asp-validation-for="UserName" class="text-danger fs-6"></span>
+                <span asp-validation-for="Username" class="text-danger fs-6"></span>
                 <div class="input-div form-floating mb-3 d-flex border rounded">
-                    <input asp-for="PasswordHash" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label asp-for="PasswordHash" for="floatingPassword">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                    <label asp-for="Password" for="floatingPassword">Password</label>
                     <img id="passImg" src="~/images/password_visibility_on.svg" onclick="showHidePassword()" class="pe-3" alt="">
                 </div>
-                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+                <span asp-validation-for="Password" class="text-danger"></span>
                 <div class="form-floating mb-3">
                     <button id="login-btn" type="submit" class="btn-primary border rounded border-2 w-100">Log in</button>
                 </div>

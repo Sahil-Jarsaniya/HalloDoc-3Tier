@@ -29,5 +29,15 @@
             Invoicing = 30,
             SMSLogs = 32
         }
+
+        public enum physicianRoles
+        {
+            Dashboard = 7,
+            History = 8,
+            MySchedule = 9,
+            MyProfile = 10,
+            SendOrders = 17,
+            Invoicing = 31
+        }
     }
 }

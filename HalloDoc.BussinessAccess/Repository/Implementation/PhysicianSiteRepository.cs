@@ -26,10 +26,20 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db = db;
         }
 
+        public List<Region> GetRegion()
+        {
+            return _db.Regions.ToList();
+        }
+        public List<Admin> GetAdminList()
+        {
+            return _db.Admins.ToList(); 
+        }
+
         public int GetPhysicianId(string AspId)
         {
             return _db.Physicians.FirstOrDefault(x => x.Aspnetuserid == AspId).Physicianid;
         }
+
 
         public bool PhysicianLocationUpdate(double latitude, double longitude, int phyId)
         {
@@ -494,5 +504,19 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.SaveChanges();
         }
 
+        public void viewUplodPost(string file, int reqId, int phyId)
+        {
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqId).FirstOrDefault();
+            Requestwisefile requestwisefile = new Requestwisefile
+            {
+                Filename = file,
+                Requestid = (int)reqClientRow.Requestid,
+                Createddate = DateTime.Now,
+                Physicianid = phyId
+            };
+
+            _db.Requestwisefiles.Add(requestwisefile);
+            _db.SaveChanges();
+        }
     }
 }

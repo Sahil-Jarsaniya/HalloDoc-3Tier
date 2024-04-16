@@ -26,6 +26,15 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             return _db.Admins.Where(x => x.Aspnetuserid == AspId).FirstOrDefault().Adminid;
         }
+
+        public List<Menu> Menus()
+        {
+            return _db.Menus.ToList();
+        }
+        public List<AccountType> AccountType()
+        {
+            return _db.AccountTypes.ToList();
+        }
         public AdminDashboardViewModel adminDashboard()
         {
             var newCount = (from t1 in _db.Requests
@@ -846,6 +855,20 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             return data;
         }
+        public void ViewUploadFile(string file, int reqId, int adminId)
+        {
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqId).FirstOrDefault();
+            Requestwisefile requestwisefile = new Requestwisefile
+            {
+                Filename = file,
+                Requestid = (int)reqClientRow.Requestid,
+                Createddate = DateTime.Now,
+                Adminid = adminId
+            };
+
+            _db.Requestwisefiles.Add(requestwisefile);
+            _db.SaveChanges();
+        }
 
         public void DeleteFile(int reqClientId, string FileName)
         {
@@ -1079,6 +1102,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return request.Status;
         }
 
+        public List<Physician> RequestSupportDTY()
+        {
+            return _db.Physicians.Where(x => x.Status == 4).ToList();
+        }
+
         public Profile MyProfile(string AspId)
         {
             Admin adminRow = _db.Admins.Where(x => x.Aspnetuserid == AspId).FirstOrDefault();
@@ -1196,9 +1224,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var region = from t1 in _db.Regions select t1;
             var phy = from t1 in _db.Physicians
-                      join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
-                      join t3 in _db.Roles on t1.Roleid equals t3.Roleid
-                      join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId
+                      join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid 
+                      join t3 in _db.Roles on t1.Roleid equals t3.Roleid 
+                      join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId 
                       select new ProviderTableViewModel
                       {
                           Firstname = t1.Firstname,
@@ -1302,7 +1330,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var phynoty = new Physiciannotification
                 {
                     Physicianid = Physicianid,
-                    Isnotificationstopped = true
+                    Isnotificationstopped = false
                 };
 
                 _db.Physiciannotifications.Update(phynoty);
@@ -1924,6 +1952,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 data = from t1 in _db.Physicians
                        join t2 in _db.Roles on t1.Roleid equals t2.Roleid
                        join t3 in _db.AccountTypes on t2.Accounttype equals t3.Id
+                       join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId into s
+                       from T4 in s.DefaultIfEmpty()
                        where t2.Roleid == RoleId
                        select new UserAccessTable
                        {
@@ -1931,7 +1961,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            UserName = t1.Firstname + " " + t1.Lastname,
                            AccountType = t3.Name,
                            AccountTypeId = t3.Id,
-                           Phone = t1.Mobile
+                           Phone = t1.Mobile,
+                           status = T4.StatusName ?? "",
+                           openReq = _db.Requests.Where(x => x.Physicianid == t1.Physicianid).Count()
                        };
             }
             else if (accountType == 1)
@@ -1939,6 +1971,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 data = from t2 in _db.Admins
                        join t3 in _db.Roles on t2.Roleid equals t3.Roleid
                        join t4 in _db.AccountTypes on t3.Accounttype equals t4.Id
+                       join t5 in _db.PhysicianStatuses on t2.Status equals t5.StatusId into s
+                       from T5 in s.DefaultIfEmpty()
                        where t3.Roleid == RoleId
                        select new UserAccessTable
                        {
@@ -1947,6 +1981,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            AccountType = t4.Name,
                            AccountTypeId = t4.Id,
                            Phone = t2.Mobile,
+                           status = T5.StatusName,
+                            openReq = 0
                        };
             }
             else
@@ -1954,6 +1990,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 data = (from t1 in _db.Physicians
                         join t2 in _db.Roles on t1.Roleid equals t2.Roleid
                         join t3 in _db.AccountTypes on t2.Accounttype equals t3.Id
+                        join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId into s
+                        from T4 in s.DefaultIfEmpty()
                         select new UserAccessTable
                         {
                             userId = t1.Physicianid,
@@ -1961,10 +1999,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                             AccountType = t3.Name,
                             AccountTypeId = t3.Id,
                             Phone = t1.Mobile,
+                            status = T4.StatusName,
+                            openReq = _db.Requests.Where(x => x.Physicianid == t1.Physicianid).Count()
 
                         }).Union(from t2 in _db.Admins
                                  join t3 in _db.Roles on t2.Roleid equals t3.Roleid
                                  join t4 in _db.AccountTypes on t3.Accounttype equals t4.Id
+                                 join t5 in _db.PhysicianStatuses on t2.Status equals t5.StatusId into s
+                                 from T5 in s.DefaultIfEmpty()
                                  select new UserAccessTable
                                  {
                                      userId = t2.Adminid,
@@ -1972,6 +2014,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                      AccountType = t4.Name,
                                      AccountTypeId = t4.Id,
                                      Phone = t2.Mobile,
+                                     status = T5.StatusName,
+                                     openReq = 0
                                  }
                                           );
             }

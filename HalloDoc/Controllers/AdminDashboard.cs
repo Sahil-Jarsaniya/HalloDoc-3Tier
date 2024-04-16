@@ -21,16 +21,14 @@ namespace HalloDoc.Controllers
         private readonly IRequestRepository _requestRepo;
         private readonly ILoginRepository _loginRepo;
         private readonly ICommonRepository _common;
-        private readonly ApplicationDbContext _db;
         private readonly IJwtService _jwtService;
         private readonly INotyfService _notyf;
         private readonly ISMSSender _sms;
 
-        public AdminDashboard(IAdminDashboardRepository adminRepo, ApplicationDbContext db, IJwtService jwtService, INotyfService notyf, ILoginRepository loginRepo, IRequestRepository requestRepo, ISMSSender sms, ICommonRepository common)
+        public AdminDashboard(IAdminDashboardRepository adminRepo, IJwtService jwtService, INotyfService notyf, ILoginRepository loginRepo, IRequestRepository requestRepo, ISMSSender sms, ICommonRepository common)
         {
             _notyf = notyf;
             _adminRepo = adminRepo;
-            _db = db;
             _jwtService = jwtService;
             _loginRepo = loginRepo;
             _requestRepo = requestRepo;
@@ -337,30 +335,15 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult UploadDocument(UploadFileViewModel obj)
         {
-            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == obj.reqId).FirstOrDefault();
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            int adminId = _adminRepo.GetAdminId(AspId);
 
             if (obj.formFile != null && obj.formFile.Length > 0)
             {
-                //get file name
-                var fileName = Path.GetFileName(obj.formFile.FileName);
-
-                //define path
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
-
-                // Copy the file to the desired location
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    obj.formFile.CopyTo(stream);
-                }
-                Requestwisefile requestwisefile = new Requestwisefile
-                {
-                    Filename = fileName,
-                    Requestid = (int)reqClientRow.Requestid,
-                    Createddate = DateTime.Now
-                };
-
-                _db.Requestwisefiles.Add(requestwisefile);
-                _db.SaveChanges();
+                _loginRepo.uploadFile(obj.formFile, "RequestData\\" + obj.reqId, obj.formFile.FileName.ToString());
+                _adminRepo.ViewUploadFile(obj.formFile.FileName.ToString(), obj.reqId, adminId);
                 _notyf.Success("File uploaded.");
             }
             else
@@ -369,7 +352,6 @@ namespace HalloDoc.Controllers
             }
             return RedirectToAction("ViewUpload", new { reqClientId = obj.reqId });
         }
-
 
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult DeleteFile(int reqClientId, string FileName)
@@ -494,25 +476,25 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Dashboard", new { status = 13 });
         }
 
-        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
-        public IActionResult Encounter(int reqClientId, string option)
-        {
+        //[RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
+        //public IActionResult Encounter(int reqClientId, string option)
+        //{
 
-            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
-            var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
-            if (option == "Consult")
-            {
-                reqRow.Status = 4;
-            }
-            else
-            {
-                reqRow.Status = 15;
-            }
-            _db.Requests.Update(reqRow);
-            _db.SaveChanges();
+        //    var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
+        //    var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
+        //    if (option == "Consult")
+        //    {
+        //        reqRow.Status = 4;
+        //    }
+        //    else
+        //    {
+        //        reqRow.Status = 15;
+        //    }
+        //    _db.Requests.Update(reqRow);
+        //    _db.SaveChanges();
 
-            return RedirectToAction("Dashboard", new { status = reqRow.Status });
-        }
+        //    return RedirectToAction("Dashboard", new { status = reqRow.Status });
+        //}
 
         [RoleAuth((int)enumsFile.adminRoles.MyProfile)]
         public IActionResult MyProfile()
@@ -599,10 +581,12 @@ namespace HalloDoc.Controllers
             return View(obj);
         }
 
+
+        //Request DTY Support
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult RequestSupport(string RequestNote)
         {
-            var phy = _db.Physicians.Where(x => x.Status == 4).ToList();
+            var phy = _adminRepo.RequestSupportDTY();
             foreach (var item in phy)
             {
                 _loginRepo.SendEmail(item.Email, "Request Support", RequestNote);
@@ -688,7 +672,7 @@ namespace HalloDoc.Controllers
 
             return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sheet.xlsx");
         }
-
+            
 
         [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult Provider()
@@ -951,8 +935,8 @@ namespace HalloDoc.Controllers
 
             var data = new CreateRole
             {
-                Menu = _db.Menus,
-                accountTypes = _db.AccountTypes
+                Menu = _adminRepo.Menus(),
+                accountTypes = _adminRepo.AccountType()
             };
 
             return View(data);

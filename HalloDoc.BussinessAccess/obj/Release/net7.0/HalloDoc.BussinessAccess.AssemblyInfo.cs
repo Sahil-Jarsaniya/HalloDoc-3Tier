@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HalloDoc.BussinessAccess")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1bb6680a9dd7712878bc5158c5c2758adaa7a7ee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("HalloDoc.BussinessAccess")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HalloDoc.BussinessAccess")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

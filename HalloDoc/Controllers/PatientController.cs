@@ -18,12 +18,10 @@ namespace HalloDoc.Controllers
     [CustomAuth("patient")]
     public class PatientController : Controller
     {
-        private readonly ApplicationDbContext _db;
         private readonly IPatientRepository _patientrepo;
         private readonly INotyfService _notyf;
-        public PatientController(ApplicationDbContext db, IPatientRepository patientrepo, INotyfService notyf)
+        public PatientController( IPatientRepository patientrepo, INotyfService notyf)
         {
-            _db = db;
             _patientrepo = patientrepo;
             _notyf = notyf;
         }
@@ -144,49 +142,49 @@ namespace HalloDoc.Controllers
         }
 
 
-        public async Task<IActionResult> DownloadAllFiles(int requestId)
-        {
-            try
-            {
-                // Fetch all document details for the given request:
-                var documentDetails = _db.Requestwisefiles.Where(m => m.Requestid == requestId).ToList();
+        //public async Task<IActionResult> DownloadAllFiles(int requestId)
+        //{
+        //    try
+        //    {
+        //        // Fetch all document details for the given request:
+        //        var documentDetails = _db.Requestwisefiles.Where(m => m.Requestid == requestId).ToList();
 
-                if (documentDetails == null || documentDetails.Count == 0)
-                {
-                    return NotFound("No documents found for download");
-                }
+        //        if (documentDetails == null || documentDetails.Count == 0)
+        //        {
+        //            return NotFound("No documents found for download");
+        //        }
 
-                // Create a unique zip file name
-                var zipFileName = $"Documents_{DateTime.Now:yyyyMMddHHmmss}.zip";
-                var zipFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", zipFileName);
+        //        // Create a unique zip file name
+        //        var zipFileName = $"Documents_{DateTime.Now:yyyyMMddHHmmss}.zip";
+        //        var zipFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", zipFileName);
 
-                // Create the directory if it doesn't exist
-                var zipDirectory = Path.GetDirectoryName(zipFilePath);
-                if (!Directory.Exists(zipDirectory))
-                {
-                    Directory.CreateDirectory(zipDirectory);
-                }
+        //        // Create the directory if it doesn't exist
+        //        var zipDirectory = Path.GetDirectoryName(zipFilePath);
+        //        if (!Directory.Exists(zipDirectory))
+        //        {
+        //            Directory.CreateDirectory(zipDirectory);
+        //        }
 
-                // Create a new zip archive
-                using (var zipArchive = ZipFile.Open(zipFilePath, ZipArchiveMode.Create))
-                {
-                    // Add each document to the zip archive
-                    foreach (var document in documentDetails)
-                    {
-                        var documentPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", document.Filename);
-                        zipArchive.CreateEntryFromFile(documentPath, document.Filename);
-                    }
-                }
+        //        // Create a new zip archive
+        //        using (var zipArchive = ZipFile.Open(zipFilePath, ZipArchiveMode.Create))
+        //        {
+        //            // Add each document to the zip archive
+        //            foreach (var document in documentDetails)
+        //            {
+        //                var documentPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", document.Filename);
+        //                zipArchive.CreateEntryFromFile(documentPath, document.Filename);
+        //            }
+        //        }
 
-                // Return the zip file for download
-                var zipFileBytes = await System.IO.File.ReadAllBytesAsync(zipFilePath);
-                return File(zipFileBytes, "application/zip", zipFileName);
-            }
-            catch
-            {
-                return BadRequest("Error downloading files");
-            }
-        }
+        //        // Return the zip file for download
+        //        var zipFileBytes = await System.IO.File.ReadAllBytesAsync(zipFilePath);
+        //        return File(zipFileBytes, "application/zip", zipFileName);
+        //    }
+        //    catch
+        //    {
+        //        return BadRequest("Error downloading files");
+        //    }
+        //}
 
 
 

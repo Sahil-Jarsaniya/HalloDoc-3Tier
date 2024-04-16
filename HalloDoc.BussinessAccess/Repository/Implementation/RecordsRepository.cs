@@ -119,7 +119,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public IQueryable<EmailLogVM> EmailLogs()
         {
             var data = from t1 in _db.Emaillogs
-                       join t2 in _db.Roles on t1.Roleid equals t2.Roleid
+                       join t2 in _db.Roles on t1.Roleid equals t2.Roleid into r
+                       from T2 in r.DefaultIfEmpty()
+                       join t3 in _db.Requestclients on t1.Requestid equals t3.Requestid into rc
+                       from T3 in rc.DefaultIfEmpty()
+                       join t4 in _db.Admins on t1.Adminid equals t4.Adminid into a
+                       from T4 in a.DefaultIfEmpty()
+                       join t5 in _db.Physicians on t1.Physicianid equals t5.Physicianid into phy
+                       from T5 in phy.DefaultIfEmpty()
                        select new EmailLogVM()
                        {
                            id = t1.Emaillogid,
@@ -130,7 +137,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            sentTries = t1.Senttries,
                            sent = t1.Isemailsent,
                            RoleId = t1.Roleid,
-                           Rolename = t2.Name,
+                           Rolename = T2.Name,
+                           Recipient = (T3 == null) ? (T4 == null) ? (T5 == null) ? null : T5.Firstname + T5.Lastname :T4.Firstname + T4.Lastname : T3.Firstname + T3.Lastname,
                        };
 
             return data;
@@ -139,7 +147,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public IQueryable<EmailLogVM> SmsLogs()
         {
             var data = from t1 in _db.Smslogs
-                       join t2 in _db.Roles on t1.Roleid equals t2.Roleid
+                       join t2 in _db.Roles on t1.Roleid equals t2.Roleid into r
+                       from T2 in r.DefaultIfEmpty()
+                       join t3 in _db.Requestclients on t1.Requestid equals t3.Requestid into rc
+                       from T3 in rc.DefaultIfEmpty()
+                       join t4 in _db.Admins on t1.Adminid equals t4.Adminid into a
+                       from T4 in a.DefaultIfEmpty()
+                       join t5 in _db.Physicians on t1.Physicianid equals t5.Physicianid into phy
+                       from T5 in phy.DefaultIfEmpty()
                        select new EmailLogVM()
                        {
                            PhoneNumber = t1.Mobilenumber,
@@ -149,8 +164,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            sentTries = t1.Senttries,
                            sent = t1.Issmssent,
                            RoleId = t1.Roleid,
-                           Rolename = t2.Name,
-                           id = (int)t1.Smslogid
+                           Rolename = T2.Name,
+                           id = (int)t1.Smslogid,
+                           Recipient = (T3 == null) ? (T4 == null) ? (T5 == null) ? null : T5.Firstname + T5.Lastname : T4.Firstname + T4.Lastname : T3.Firstname + T3.Lastname,
                        };
 
             return data;
