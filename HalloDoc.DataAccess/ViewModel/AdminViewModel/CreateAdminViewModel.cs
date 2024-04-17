@@ -53,6 +53,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public IEnumerable<Region>? Regions { get; set; }
         public IEnumerable<CheckBoxData>? CheckedRegion { get; set; }
 
+        public List<int>? SelectedRegion { get; set; }
         public IEnumerable<Role> Rolemenus { get; set; }
 
     }

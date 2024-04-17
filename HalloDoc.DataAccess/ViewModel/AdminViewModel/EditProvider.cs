@@ -110,6 +110,8 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public IFormFile? PhyPhoto { get; set; }
 
         public IEnumerable<CheckBoxData>? Region { get; set; }
+
+        public List<int>? selectedRegion { get; set; }    
         public IEnumerable<Role>? Role { get; set; }
         public IEnumerable<PhysicianStatus>? Statuses { get; set; }
     }

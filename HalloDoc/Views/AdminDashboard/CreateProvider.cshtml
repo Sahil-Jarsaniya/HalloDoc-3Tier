@@ -3,6 +3,7 @@
     ViewData["Title"] = "Create Provider";
     Layout = "_adminLayout";
 }
+
 <div class="">
     <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
         <h4>
@@ -96,11 +97,12 @@
                         <span class="text-danger" asp-validation-for="Npinumber"></span>
                     </div>
                     <div class="col-md-6">
-                        @foreach (var item in Model.Region)
-                        {
-                            <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.value" />
-                            <label for="@item.Id">@item.value</label>
-                        }
+                        <select class="form-select selectpicker m-0 p-0" asp-for="selectedRegion" data-live-search="true" multiple>
+                            @foreach (var i in Model.Region)
+                            {
+                                <option value="@i.Id" >@i.value</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <h5>Mailing & Billing Information</h5>
@@ -279,7 +281,7 @@
                     </div>
                 </div>
                 <hr />
-                <button type="button" id="CreateAccountBtn" class="btn btn-success float-end">Create Account</button>
+                <button type="submit"@* id="CreateAccountBtn"*@ class="btn btn-success float-end">Create Account</button>
             </form>
         </div>
     </div>
@@ -289,32 +291,34 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
+
+ 
     <script>
-        $("#CreateAccountBtn").click(function () {
-            var selectedRegion = [];
-            $(".regionCheckbox").each(function () {
+        //$("#CreateAccountBtn").click(function () {
+        //    var selectedRegion = [];
+        //    $(".regionCheckbox").each(function () {
 
-                var checkboxdata = {
-                    Id: parseInt($(this).attr('id')),
-                    value: $(this).val(),
-                    Checked: $(this).is(':checked')
-                };
+        //        var checkboxdata = {
+        //            Id: parseInt($(this).attr('id')),
+        //            value: $(this).val(),
+        //            Checked: $(this).is(':checked')
+        //        };
 
-                selectedRegion.push(checkboxdata);
-            })
+        //        selectedRegion.push(checkboxdata);
+        //    })
 
-            var formdata = new FormData($("#CreateProviderForm")[0]);
+        //    var formdata = new FormData($("#CreateProviderForm")[0]);   
 
-            formdata.append('selectedRegion', JSON.stringify(selectedRegion));
+        //    formdata.append('selectedRegion', JSON.stringify(selectedRegion));
 
-            $.ajax({
-                url: '/AdminDashboard/CreateProvider',
-                type: 'POST',
-                data: formdata,
-                processData: false,
-                contentType: false,
-            })
-        })
+        //    $.ajax({
+        //        url: '/AdminDashboard/CreateProvider',
+        //        type: 'POST',
+        //        data: formdata,
+        //        processData: false,
+        //        contentType: false,
+        //    })
+        //})
 
 
         $(document).ready(function () {

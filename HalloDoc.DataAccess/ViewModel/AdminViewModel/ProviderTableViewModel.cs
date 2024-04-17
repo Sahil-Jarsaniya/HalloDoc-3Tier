@@ -22,6 +22,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public string? Status { get; set; }
 
+        public string onCallStatus { get; set; }
 
         public string? Roleid { get; set; }
 

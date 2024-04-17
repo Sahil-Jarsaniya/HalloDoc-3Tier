@@ -73,7 +73,7 @@
                             <label for="">Phone</label>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                @*    <div class="col-md-6">
                         @foreach (var item in Model.CheckedRegion)
                         {
                             if (item.Checked)
@@ -87,6 +87,21 @@
                                 <label for="@item.Id">@item.value</label>
                             }
                         }
+                    </div>*@
+                    <div class="col-md-6">
+                        <select class="form-select selectpicker m-0 p-0" asp-for="SelectedRegion" data-live-search="true" multiple>
+                            @foreach (var i in Model.CheckedRegion)
+                            {
+                                if (i.Checked)
+                                {
+                                    <option value="@i.Id" selected>@i.value</option>
+                                }
+                                else
+                                {
+                                    <option value="@i.Id">@i.value</option>
+                                }
+                            }
+                        </select>
                     </div>
                 </div>
                 <h5>Mailing & Billing Information</h5>
@@ -133,7 +148,7 @@
                     </div>
                 </div>
 
-                <button type="button" id="CreateAdminBtn" class="btn btn-success float-end">Save</button>
+                <button type="submit" id="CreateAdminBtn" class="btn btn-success float-end">Save</button>
             </form>
         </div>
     </div>
@@ -144,34 +159,34 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
     <script>
-        $("#CreateAdminBtn").click(function () {
-            var selectedRegion = [];
-            $(".regionCheckbox").each(function () {
+        //$("#CreateAdminBtn").click(function () {
+        //    var selectedRegion = [];
+        //    $(".regionCheckbox").each(function () {
 
-                var checkboxdata = {
-                    Id: parseInt($(this).attr('id')),
-                    value: $(this).val(),
-                    Checked: $(this).is(':checked')
-                };
+        //        var checkboxdata = {
+        //            Id: parseInt($(this).attr('id')),
+        //            value: $(this).val(),
+        //            Checked: $(this).is(':checked')
+        //        };
 
-                selectedRegion.push(checkboxdata);
-            })
+        //        selectedRegion.push(checkboxdata);
+        //    })
 
-            var formdata = new FormData($("#CreateProviderForm")[0]);
+        //    var formdata = new FormData($("#CreateProviderForm")[0]);
 
-            formdata.append('selectedRegion', JSON.stringify(selectedRegion));
+        //    formdata.append('selectedRegion', JSON.stringify(selectedRegion));
 
-            $.ajax({
-                url: '/AdminDashboard/EditAdmin',
-                type: 'POST',
-                data: formdata,
-                processData: false,
-                contentType: false,
-                success: function () {
-                    window.location.href("/AdminDashboard/EditAdmin");
-                }
-            })
+        //    $.ajax({
+        //        url: '/AdminDashboard/EditAdmin',
+        //        type: 'POST',
+        //        data: formdata,
+        //        processData: false,
+        //        contentType: false,
+        //        success: function () {
+        //            window.location.href("/AdminDashboard/EditAdmin");
+        //        }
+        //    })
 
-        })
+        //})
     </script>
 }

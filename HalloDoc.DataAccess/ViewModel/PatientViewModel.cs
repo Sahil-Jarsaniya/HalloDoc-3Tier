@@ -32,6 +32,7 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(23)]
         public string? Phonenumber { get; set; }
 
+        public string? countryCode { get; set; } = "+91";
 
         [Required(ErrorMessage = "Field can't be empty")]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]

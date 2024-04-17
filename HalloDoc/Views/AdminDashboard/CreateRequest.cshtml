@@ -80,4 +80,11 @@
 @section AdminScript {
    @* <script src="~/js/site.js" asp-append-version="true"></script>*@
     <script src="~/js/Validation.js" asp-append-version="true"></script>
+    <script>
+
+        $("#submitBtn").click(function () {
+            console.log($(".iti__selected-dial-code").text());
+            $("#patientCountryCode").val($(".iti__selected-dial-code").text());
+        })
+    </script>
 }

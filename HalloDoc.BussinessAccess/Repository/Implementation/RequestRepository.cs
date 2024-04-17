@@ -49,7 +49,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     PasswordHash = hashPass,
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
-                    PhoneNumber = obj.Phonenumber,
+                    PhoneNumber = obj.countryCode + obj.Phonenumber,
                     Email = obj.Email,
                 };
                 _db.AspNetUsers.Add(aspNetUser);
@@ -63,7 +63,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                         Id = guid.ToString(),
                         UserName = obj.Email,
                         CreatedDate = DateTime.UtcNow,
-                        PhoneNumber = obj.Phonenumber,
+                        PhoneNumber = obj.countryCode + obj.Phonenumber,
                         Email = obj.Email,
                     };
                     _db.AspNetUsers.Add(aspNetUser);
@@ -80,7 +80,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Firstname = obj.Firstname,
                     Lastname = obj.Lastname,
                     Email = obj.Email,
-                    Mobile = obj.Phonenumber,
+                    Mobile = obj.countryCode + obj.Phonenumber,
                     Street = obj.Street,
                     City = obj.City,
                     State = obj.State,
@@ -110,7 +110,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Status = 1,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
-                Phonenumber = obj.Phonenumber,
+                Phonenumber = obj.countryCode + obj.Phonenumber,
                 Confirmationnumber = GetConfirmationNumber(DateTime.Now, obj.Lastname, obj.Firstname)
             };
             _db.Requests.Add(request);
@@ -122,7 +122,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,
-                Phonenumber = obj.Phonenumber,
+                Phonenumber = obj.countryCode[2] + obj.Phonenumber,
                 Strmonth = obj.Strmonth,
                 Street = obj.Street,
                 City = obj.City,
@@ -167,7 +167,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
                 _db.Requestwisefiles.Add(requestwisefile);
                 _db.SaveChanges();
-            }
+            }   
         }
 
         public void CreateFamilyfriendRequest(FamilyViewModel obj)
@@ -175,6 +175,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;
+
+            string[] contryCode = obj.familyCountryFlag.Split("+");
 
             if (existUser == null)
             {
@@ -184,7 +186,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Id = guid.ToString(),
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
-                    PhoneNumber = obj.Phonenumber,
+                    PhoneNumber ="+"+contryCode[2]+ obj.Phonenumber,
                     Email = obj.Email,
                 };
                 _db.AspNetUsers.Add(aspNetUser);
@@ -196,7 +198,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Firstname = obj.Firstname,
                     Lastname = obj.Lastname,
                     Email = obj.Email,
-                    Mobile = obj.Phonenumber,
+                    Mobile = "+" + contryCode[2] + obj.Phonenumber,
                     Street = obj.Street,
                     City = obj.City,
                     State = obj.State,
@@ -229,7 +231,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Status = 1,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
-                Phonenumber = obj.FamilyPhonenumber,
+                Phonenumber = "+" + contryCode[1] + obj.FamilyPhonenumber,
                 Confirmationnumber = GetConfirmationNumber(DateTime.Now, obj.Lastname, obj.Firstname)
             };
             _db.Requests.Add(request);
@@ -242,7 +244,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,
-                Phonenumber = obj.Phonenumber,
+                Phonenumber = "+" + contryCode[2] + obj.Phonenumber,
                 Strmonth = obj.Strmonth,
                 Street = obj.Street,
                 City = obj.City,
@@ -295,6 +297,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;
+
+            string[] contryCode = obj.ConciergeCountryCode.Split("+");
+
             if (existUser == null)
             {
 
@@ -303,7 +308,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Id = guid.ToString(),
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
-                    PhoneNumber = obj.Phonenumber,
+                    PhoneNumber = "+" + contryCode[2] + obj.Phonenumber,
                     Email = obj.Email,
                 };
                 _db.AspNetUsers.Add(aspNetUser);
@@ -315,7 +320,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Firstname = obj.Firstname,
                     Lastname = obj.Lastname,
                     Email = obj.Email,
-                    Mobile = obj.Phonenumber,
+                    Mobile = "+" + contryCode[2] + obj.Phonenumber,
                     Street = obj.Street,
                     City = obj.City,
                     State = obj.State,
@@ -362,7 +367,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Status = 1,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
-                Phonenumber = obj.ConciergePhonenumber,
+                Phonenumber ="+"+ contryCode[1] + obj.ConciergePhonenumber,
                 Confirmationnumber = GetConfirmationNumber(DateTime.Now, obj.Lastname, obj.Firstname)
             };
             _db.Requests.Add(request);
@@ -375,7 +380,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,
-                Phonenumber = obj.Phonenumber,
+                Phonenumber = "+" + contryCode[2] + obj.Phonenumber,
                 Strmonth = obj.Strmonth,
                 Street = obj.Street,
                 City = obj.City,
@@ -410,6 +415,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;
+
+            string[] contryCode = obj.businessCountryFlag.Split("+");
+
             if (existUser == null)
             {
                 AspNetUser aspNetUser = new AspNetUser
@@ -417,7 +425,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Id = guid.ToString(),
                     UserName = obj.Email,
                     CreatedDate = DateTime.UtcNow,
-                    PhoneNumber = obj.Phonenumber,
+                    PhoneNumber = "+"+ contryCode[2] +obj.Phonenumber,
                     Email = obj.Email,
                 };
                 _db.AspNetUsers.Add(aspNetUser);
@@ -429,7 +437,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Firstname = obj.Firstname,
                     Lastname = obj.Lastname,
                     Email = obj.Email,
-                    Mobile = obj.Phonenumber,
+                    Mobile = "+" + contryCode[2]+ obj.Phonenumber,
                     Street = obj.Street,
                     City = obj.City,
                     State = obj.State,
@@ -462,7 +470,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Status = 1,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
-                Phonenumber = obj.bussinessPhonenumber,
+                Phonenumber = "+" + contryCode[1]+obj.bussinessPhonenumber,
                 Confirmationnumber = GetConfirmationNumber(DateTime.Now, obj.Lastname, obj.Firstname)
             };
             _db.Requests.Add(request);
@@ -475,7 +483,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,
-                Phonenumber = obj.Phonenumber,
+                Phonenumber = "+" + contryCode[2]+ obj.Phonenumber,
                 Strmonth = obj.Strmonth,
                 Street = obj.Street,
                 City = obj.City,
@@ -511,6 +519,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             Guid guid = Guid.NewGuid();
             var uid = 0;
 
+
             if (existUser == null)
             {
                 if (obj.Password != null)
@@ -523,7 +532,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                         PasswordHash = hashPass,
                         UserName = obj.Email,
                         CreatedDate = DateTime.UtcNow,
-                        PhoneNumber = obj.Phonenumber,
+                        PhoneNumber = obj.countryCode+obj.Phonenumber,
                         Email = obj.Email,
                     };
                     _db.AspNetUsers.Add(aspNetUser);
@@ -537,7 +546,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                         Id = guid.ToString(),
                         UserName = obj.Email,
                         CreatedDate = DateTime.UtcNow,
-                        PhoneNumber = obj.Phonenumber,
+                        PhoneNumber = obj.countryCode + obj.Phonenumber,
                         Email = obj.Email,
                     };
                     _db.AspNetUsers.Add(aspNetUser);
@@ -554,7 +563,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Firstname = obj.Firstname,
                     Lastname = obj.Lastname,
                     Email = obj.Email,
-                    Mobile = obj.Phonenumber,
+                    Mobile = obj.countryCode + obj.Phonenumber,
                     Street = obj.Street,
                     City = obj.City,
                     State = obj.State,
@@ -585,7 +594,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Status = 2,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
-                Phonenumber = obj.Phonenumber,
+                Phonenumber = obj.countryCode + obj.Phonenumber,
                 Confirmationnumber = GetConfirmationNumber(DateTime.Now, obj.Lastname, obj.Firstname)
             };
             _db.Requests.Add(request);
@@ -597,7 +606,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,
-                Phonenumber = obj.Phonenumber,
+                Phonenumber = obj.countryCode + obj.Phonenumber,
                 Strmonth = obj.Strmonth,
                 Street = obj.Street,
                 City = obj.City,

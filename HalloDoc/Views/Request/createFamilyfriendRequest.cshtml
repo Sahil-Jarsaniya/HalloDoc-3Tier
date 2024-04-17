@@ -77,6 +77,7 @@
             </div>
             <div class="col-md-6">
                 <div class="form-floating phone-div w-100 h-100 ">
+                    <input asp-for="familyCountryFlag" id="familyCountryFlag" hidden />
                     <input asp-for="FamilyPhonenumber" type="tel" class="friendPhone form-control w-100 h-100" id="otherPhone" placeholder="">
                     <label for=""></label>
                 </div>
@@ -120,6 +121,13 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/pop up.js" asp-append-version="true"></script>
     <script src="~/js/Validation.js" asp-append-version="true"></script>
+    <script>
+        $("#submitBtn").click(function () {
+            console.log($(".iti__selected-dial-code").text());
+            $("#patientCountryCode").val($(".iti__selected-dial-code").text());
+            $("#familyCountryFlag").val($(".iti__selected-dial-code").text());
+        })
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

@@ -21,6 +21,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(23)]
         public string? FamilyPhonenumber { get; set; }
 
+        public string? familyCountryFlag { get; set; }
+
         [Required(ErrorMessage = "Field can't be empty")]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]
         [Column("bussinessEmail")]
@@ -48,6 +50,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [Column("phonenumber")]
         [StringLength(23)]
         public string? Phonenumber { get; set; }
+
+        public string? patientCountryFlag { get; set; }
 
         [Required(ErrorMessage = "Field can't be empty")]
         [DataType(DataType.EmailAddress, ErrorMessage = "E-mail is not valid")]

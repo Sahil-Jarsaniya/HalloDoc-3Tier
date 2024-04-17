@@ -28,7 +28,7 @@
                 </td>
                 <td>@item.Firstname @item.Lastname</td>
                 <td>@item.Roleid</td>
-                <td>active</td>
+                    <td>@item.onCallStatus</td>
                 <td>@item.Status</td>
                 <td>
                     <button type="button" class="btn btn-outline-primary ContactProvider" data-email="@item.Email" data-mobile="@item.Mobile">Contact</button>
@@ -61,7 +61,7 @@
             </div>
             <div class="d-flex justify-content-between">
                 <span class="w-50">
-                    On Call Status: Active
+                    On Call Status: @item.onCallStatus
                 </span>
             </div>
         </div>

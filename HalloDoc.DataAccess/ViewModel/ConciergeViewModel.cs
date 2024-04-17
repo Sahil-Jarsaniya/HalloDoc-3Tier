@@ -69,7 +69,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(23)]
         public string? Phonenumber { get; set; }
 
-        
+        public string? patientCountryFlag { get; set; }
+
         public string? ConciergeCountryCode { get; set; }
 
         [Required(ErrorMessage = "Field can't be empty")]

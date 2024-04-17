@@ -38,7 +38,7 @@
 
         <h4 class="mt-4 mb-4 ms-2">(Optional) Upload Photo or Document</h4>
         <div class="input-group m-1 mb-3">
-            <input asp-for="formFile" type="file" id="actualFileBtn" class="form-control"  hidden>
+            <input asp-for="formFile" type="file" id="actualFileBtn" class="form-control" hidden>
             <span asp-validation-for="formFile" id="fileChoosen" class="form-control">No file chosen</span>
             <label class="input-group-text" id="uploadFileLabel" for="actualFileBtn">
                 <img src="~/images/cloud_upload.svg" alt="">
@@ -59,6 +59,12 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/pop up.js" asp-append-version="true"></script>
     <script src="~/js/Validation.js" asp-append-version="true"></script>
+    <script>
+        $("#submitBtn").click(function () {
+            console.log($(".iti__selected-dial-code").text());
+            $("#patientCountryCode").val($(".iti__selected-dial-code").text());
+        })
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }

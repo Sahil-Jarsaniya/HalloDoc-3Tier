@@ -4,6 +4,7 @@ using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop.Implementation;
 using Org.BouncyCastle.Ocsp;
 using System.Linq;
@@ -135,7 +136,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                      City = rc.City,
                                      State = rc.State,
                                      Zipcode = rc.Zipcode,
-                                     Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid ).OrderByDescending(x => x.Createddate).Select(x=> x.Notes).FirstOrDefault() ?? "-",
+                                     Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid).OrderByDescending(x => x.Createddate).Select(x => x.Notes).FirstOrDefault() ?? "-",
                                      reqTypeId = req.Requesttypeid,
                                      physicianName = phy.Firstname + " " + phy.Lastname,
                                      Physicianid = phy.Physicianid,
@@ -472,7 +473,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                    City = rc.City,
                                    State = rc.State,
                                    Zipcode = rc.Zipcode,
-                                   Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid ).OrderByDescending(x => x.Createddate).Select(x => x.Notes).FirstOrDefault() ?? "-",
+                                   Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid).OrderByDescending(x => x.Createddate).Select(x => x.Notes).FirstOrDefault() ?? "-",
                                    reqTypeId = req.Requesttypeid,
                                    physicianName = phy.Firstname + " " + phy.Lastname,
                                    Regionid = rc.Regionid,
@@ -1092,7 +1093,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 _db.Encounters.Update(encounter);
                 _db.SaveChanges();
             }
-            }
+        }
 
         public int GetStatus(int reqClientId)
         {
@@ -1151,7 +1152,27 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             int adminId = obj.Adminid;
             Admin? adminRow = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault();
 
+            if (obj.selectedRegion.Count != 0)
+            {
+                var adminRegion = _db.Adminregions.Where(x => x.Adminid == obj.Adminid);
 
+                foreach (var item in adminRegion)
+                {
+                    _db.Adminregions.Remove(item);
+                }
+
+                for (int i = 0; i < obj.selectedRegion.Count; i++)
+                {
+                    var region = new Adminregion()
+                    {
+                        Regionid = obj.selectedRegion[i],
+                        Adminid = obj.Adminid
+                    };
+                    _db.Adminregions.Add(region);
+                    _db.SaveChanges();
+                }
+
+            }
 
             if (obj.Firstname == null)
             {
@@ -1222,11 +1243,21 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public ProviderViewModel Provider()
         {
+            TimeOnly current = TimeOnly.FromDateTime(DateTime.Now);
+            DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+
+            var shiftData = _db.Shifts.Include(x => x.Shiftdetails.Where(u => u.Shiftdate == date && u.Starttime <= current && u.Endtime >= current)).Where(x => x.Physicianid == 31 && x.Shiftdetails.Any()).OrderBy(x => x.Createddate).ToList();
             var region = from t1 in _db.Regions select t1;
-            var phy = from t1 in _db.Physicians
-                      join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid 
-                      join t3 in _db.Roles on t1.Roleid equals t3.Roleid 
-                      join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId 
+            var phy = (from t1 in _db.Physicians
+                      join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
+                      join t3 in _db.Roles on t1.Roleid equals t3.Roleid
+                      join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId
+                      join t5 in _db.Shifts.Where(x => x.Startdate == date).OrderBy(x=> x.Createddate)
+                      on t1.Physicianid equals t5.Physicianid into shift
+                      from T5 in shift.DefaultIfEmpty()
+                      join t6 in _db.Shiftdetails.Where(x => x.Shiftdate == date && x.Isdeleted != true).OrderBy(x => x.Starttime)
+                      on T5.Shiftid equals t6.Shiftid into shiftdetail
+                      from T6 in shiftdetail.DefaultIfEmpty()
                       select new ProviderTableViewModel
                       {
                           Firstname = t1.Firstname,
@@ -1237,13 +1268,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                           Status = t4.StatusName,
                           Roleid = t3.Name,
                           Physicianid = t1.Physicianid,
-                          isDeleted = t1.Isdeleted
-                      };
+                          isDeleted = t1.Isdeleted,
+                          onCallStatus = /*(T6.Starttime <= current && T6.Endtime >= current && T6 != null && T6.Shiftdate == date) ? "OnDuty" : "OffDuty"*/
+                          _db.Shifts.Include(x => x.Shiftdetails.Where(u => u.Shiftdate == date && u.Starttime <= current && u.Endtime >= current)).Where(x =>x.Physicianid ==t1.Physicianid && x.Shiftdetails.Any()).OrderBy(x => x.Createddate).ToList().Count == 0? "OffDuty": "OnDuty"
+        }).ToList();
 
             var provider = new ProviderViewModel
             {
-
-                providerTableViewModels = phy,
+                providerTableViewModels = phy.DistinctBy(x => x.Physicianid),
                 Region = region
             };
 
@@ -1455,6 +1487,27 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.Physicians.Update(phy);
             _db.SaveChanges();
 
+            if(obj.selectedRegion.Count != 0)
+            {
+                var phyRegion = _db.Physicianregions.Where(x => x.Physicianid == phy.Physicianid);
+                foreach(var item in phyRegion)
+                {
+                    _db.Physicianregions.Remove(item);
+                }
+
+                for(int i=0; i<obj.selectedRegion.Count; i++)
+                {
+                    var region = new Physicianregion()
+                    {
+                        Physicianid = phy.Physicianid,
+                        Regionid = obj.selectedRegion[i]
+                    };
+                    _db.Physicianregions.Add(region);
+                    _db.SaveChanges();
+                }
+            }
+
+
         }
         public void ProviderMailingInfoEdit(EditProvider obj)
         {
@@ -1555,7 +1608,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return data;
         }
 
-        public int CreateProvider(EditProvider obj, string pass, string AspId, IEnumerable<CheckBoxData> selectedRegion)
+        public int CreateProvider(EditProvider obj, string pass, string AspId)
         {
             Guid guid = Guid.NewGuid();
 
@@ -1596,7 +1649,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Isnondisclosuredoc = obj.Isnondisclosuredoc,
                 Istrainingdoc = obj.Istrainingdoc,
                 Roleid = obj.Roleid,
-                Status = obj.Status
+                Status = 1
             };
             _db.Physicians.Add(provider);
             _db.SaveChanges();
@@ -1609,18 +1662,16 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.Physiciannotifications.Add(phyNoty);
             _db.SaveChanges();
 
-            foreach (var item in selectedRegion)
+
+            for (int i = 0; i < obj.selectedRegion.Count; i++)
             {
-                if (item.Checked)
+                var phyRegion = new Physicianregion
                 {
-                    var phyRegion = new Physicianregion
-                    {
-                        Physicianid = provider.Physicianid,
-                        Regionid = item.Id,
-                    };
-                    _db.Physicianregions.Add(phyRegion);
-                    _db.SaveChanges();
-                }
+                    Physicianid = provider.Physicianid,
+                    Regionid = obj.selectedRegion[i],
+                };
+                _db.Physicianregions.Add(phyRegion);
+                _db.SaveChanges();
             }
 
             return provider.Physicianid;
@@ -1800,7 +1851,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return data;
         }
 
-        public void CreateAdmin(CreateAdminViewModel obj, string password, string AspId, IEnumerable<CheckBoxData> selectedRegion)
+        public void CreateAdmin(CreateAdminViewModel obj, string password, string AspId)
         {
             Guid guid = Guid.NewGuid();
             var asp = new AspNetUser()
@@ -1830,23 +1881,20 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Createddate = DateTime.Now,
                 Status = obj.Status,
                 Zip = obj.Zip,
-                Roleid = obj.Roleid 
+                Roleid = obj.Roleid
             };
             _db.Admins.Add(admin);
             _db.SaveChanges();
 
-            foreach (var item in selectedRegion)
+            for (int i = 0; i < obj.SelectedRegion.Count; i++)
             {
-                if (item.Checked == true)
+                var region = new Adminregion()
                 {
-                    var region = new Adminregion()
-                    {
-                        Adminid = admin.Adminid,
-                        Regionid = item.Id
-                    };
-                    _db.Adminregions.Add(region);
-                    _db.SaveChanges();
-                }
+                    Adminid = admin.Adminid,
+                    Regionid = obj.SelectedRegion[i]
+                };
+                _db.Adminregions.Add(region);
+                _db.SaveChanges();
             }
         }
 
@@ -1887,7 +1935,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return data;
         }
 
-        public void EditAdmin(CreateAdminViewModel obj, string AspId, IEnumerable<CheckBoxData> selectedRegion)
+        public void EditAdmin(CreateAdminViewModel obj, string AspId)
         {
             var asp = _db.AspNetUsers.First(x => x.Id == AspId);
             var admin = _db.Admins.FirstOrDefault(x => x.Adminid == obj.Adminid);
@@ -1906,31 +1954,23 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             _db.Admins.Update(admin);
 
-            foreach (var item in selectedRegion)
+            if (obj.SelectedRegion.Count != 0)
             {
-                var adminRegion = _db.Adminregions.FirstOrDefault(x => x.Adminid == obj.Adminid && x.Regionid == item.Id);
-
-                if (adminRegion == null)
+                var adminRegion = _db.Adminregions.Where(x => x.Adminid == obj.Adminid);
+                foreach(var item in adminRegion)
                 {
-                    if (item.Checked)
-                    {
-
-                        var region = new Adminregion()
-                        {
-                            Adminid = admin.Adminid,
-                            Regionid = item.Id
-                        };
-                        _db.Adminregions.Add(region);
-                        _db.SaveChanges();
-                    }
+                    _db.Adminregions.Remove(item);
                 }
-                else
+
+                for(int i=0; i<obj.SelectedRegion.Count; i++)
                 {
-                    if (!item.Checked)
+                    var region = new Adminregion()
                     {
-                        _db.Adminregions.Remove(adminRegion);
-                        _db.SaveChanges();
-                    }
+                        Adminid = admin.Adminid,
+                        Regionid = obj.SelectedRegion[i]
+                    };
+                    _db.Adminregions.Add(region);
+                    _db.SaveChanges();
                 }
             }
         }
@@ -1982,7 +2022,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            AccountTypeId = t4.Id,
                            Phone = t2.Mobile,
                            status = T5.StatusName,
-                            openReq = 0
+                           openReq = 0
                        };
             }
             else

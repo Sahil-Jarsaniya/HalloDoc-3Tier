@@ -3,6 +3,8 @@
     ViewData["Title"] = "Edit Provider";
     Layout = "_adminLayout";
 }
+
+
 <div class="">
     <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
         <h4>
@@ -84,7 +86,8 @@
                 <button type="submit" id="saveBtn0" class="btn btn-outline-primary float-end me-1 d-none">Save </button><br />
             </form>
 
-            <form method="post" id="EditProviderForm" asp-action="EditProvider" asp-route-formid="2" asp-controller="AdminDashboard" class="viewCaseForm form-floating  patient-request-form p-3">
+            <form method="post" id="EditProviderForm" asp-action="EditProvider" asp-controller="AdminDashboard" class="viewCaseForm form-floating  patient-request-form p-3">
+                @*asp-route-formid="2"*@
                 <h5>Physician Information</h5>
                 <input id="Physicianid" asp-for="Physicianid" hidden />
                 <fieldset id="fieldset1" disabled>
@@ -139,25 +142,25 @@
                             <span class="text-danger" asp-validation-for="Syncemailaddress"></span>
                         </div>
                         <div class="col-md-6">
-                            @foreach (var item in Model.Region)
-                            {
-                                if (item.Checked)
+                            <select class="form-select selectpicker m-0 p-0" asp-for="selectedRegion" data-live-search="true" multiple>
+                                @foreach (var i in Model.Region)
                                 {
-                                    <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.value" checked />
-                                    <label for="@item.Id">@item.value</label>
+                                    if (i.Checked)
+                                    {
+                                        <option value="@i.Id" selected>@i.value</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i.Id">@i.value</option>
+                                    }
                                 }
-                                else
-                                {
-                                    <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.value" />
-                                    <label for="@item.Id">@item.value</label>
-                                }
-                            }
+                            </select>
                         </div>
                     </div>
                 </fieldset>
                 <button type="reset" id="editBtn1" class="btn btn-primary float-end m-1">Edit</button>
                 <button type="reset" id="cancelBtn1" class="btn btn-outline-danger float-end me-1 d-none">Cancel</button>
-                <button type="button" id="saveBtn1" class="btn btn-outline-primary float-end me-1 d-none">Save</button><br />
+                <button type="submit" id="saveBtn1" class="btn btn-outline-primary float-end me-1 d-none">Save</button><br />
             </form>
 
             <form method="post" asp-action="EditProvider" asp-route-formid="3" asp-controller="AdminDashboard" class="viewCaseForm form-floating  patient-request-form p-3">
@@ -430,6 +433,8 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
+
+
     <script>
 
         // file upload
@@ -565,29 +570,29 @@
             })
         })
 
-        //Region Updation
-        $("#saveBtn1").click(function () {
-            var selectedRegion = [];
-            var Physicianid = $("#Physicianid").val();
-            $(".regionCheckbox").each(function () {
+        ////Region Updation
+        //$("#saveBtn1").click(function () {
+        //    var selectedRegion = [];
+        //    var Physicianid = $("#Physicianid").val();
+        //    $(".regionCheckbox").each(function () {
 
-                var checkboxdata = {
-                    Id: $(this).attr('id'),
-                    value: $(this).val(),
-                    Checked: $(this).is(':checked')
-                };
+        //        var checkboxdata = {
+        //            Id: $(this).attr('id'),
+        //            value: $(this).val(),
+        //            Checked: $(this).is(':checked')
+        //        };
 
-                selectedRegion.push(checkboxdata);
-            })
+        //        selectedRegion.push(checkboxdata);
+        //    })
 
-            $.ajax({
-                url: '/AdminDashboard/PhysicianRegionUpdate',
-                type: 'POST',
-                data: { selectedRegion: selectedRegion, Physicianid: Physicianid },
-            })
+        //    $.ajax({
+        //        url: '/AdminDashboard/PhysicianRegionUpdate',
+        //        type: 'POST',
+        //        data: { selectedRegion: selectedRegion, Physicianid: Physicianid },
+        //    })
 
-            $("#EditProviderForm").submit();
-        })
+        //    $("#EditProviderForm").submit();
+        //})
 
 
 

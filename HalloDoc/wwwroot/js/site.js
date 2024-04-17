@@ -1,14 +1,14 @@
 ﻿
 //dark mode
 
-document.getElementById('light-dark-btn').addEventListener('click',()=>{
+document.getElementById('light-dark-btn').addEventListener('click', () => {
     if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
         localStorage.setItem("PageTheme", "light");
-        document.documentElement.setAttribute('data-bs-theme','light')
+        document.documentElement.setAttribute('data-bs-theme', 'light')
     }
     else {
         localStorage.setItem("PageTheme", "dark");
-        document.documentElement.setAttribute('data-bs-theme','dark')
+        document.documentElement.setAttribute('data-bs-theme', 'dark')
     }
 })
 
@@ -77,32 +77,36 @@ function showHideConfirmPassword() {
 //        preferredCountries: ["in"],
 //        separateDialCode: true,
 //        initialCountry: "in",
-       
+
 //    });
 
-const patientPhoneInputElement = document.getElementById("patientPhone");
-let patientIntlInput = window.intlTelInput(patientPhoneInputElement, {
-    utilsScript:
-        "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-    preferredCountries: ["in"],
-    separateDialCode: true,
-    initialCountry: "in"
-});
+$(document).ready(function () {
 
 
-const otherPhoneInputElement = document.getElementById("otherPhone");
-let otherIntlInput;
-
-if (otherPhoneInputElement != null) {
-    otherIntlInput = window.intlTelInput(otherPhoneInputElement, {
+    const patientPhoneInputElement = document.getElementById("patientPhone");
+    let patientIntlInput = window.intlTelInput(patientPhoneInputElement, {
         utilsScript:
             "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
         preferredCountries: ["in"],
         separateDialCode: true,
         initialCountry: "in"
     });
-}
 
+
+    const otherPhoneInputElement = document.getElementById("otherPhone");
+    let otherIntlInput;
+
+    if (otherPhoneInputElement != null) {
+        otherIntlInput = window.intlTelInput(otherPhoneInputElement, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            preferredCountries: ["in"],
+            separateDialCode: true,
+            initialCountry: "in"
+        });
+    }
+
+})
 // alert box 
 $(window).on('load', function () {
     $('#myModal').modal('show');

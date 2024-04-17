@@ -16,7 +16,7 @@
     </div>
     <div class="d-grid justify-content-center mt-4">
         <div class="shadow">
-            <form method="post" asp-action="CreateProvider" asp-controller="AdminDashboard" id="CreateProviderForm" class="viewCaseForm form-floating  patient-request-form p-3">
+            <form method="post" asp-action="CreateAdmin" asp-controller="AdminDashboard" id="CreateProviderForm" class="viewCaseForm form-floating  patient-request-form p-3">
                 <h5>Account Information</h5>
                 <div class="row g-2 m-1">
                     <div class="col-md">
@@ -78,12 +78,20 @@
                             <label for="">Phone</label>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                   @* <div class="col-md-6">
                         @foreach (var item in Model.Regions)
                         {
                                 <input class="regionCheckbox" type="checkbox" id="@item.Regionid" name="@item.Regionid" value="@item.Regionid" />
                                 <label for="@item.Regionid">@item.Abbreviation</label>
                         }
+                    </div>*@
+                    <div class="col-md-6">
+                        <select class="form-select selectpicker m-0 p-0" asp-for="SelectedRegion" data-live-search="true" multiple>
+                            @foreach (var i in Model.Regions)
+                            {
+                                    <option value="@i.Regionid">@i.Name</option>
+                            }
+                        </select>
                     </div>
                 </div>
                 <h5>Mailing & Billing Information</h5>
@@ -130,7 +138,7 @@
                     </div>
                 </div>
 
-                <button type="button" id="CreateAdminBtn" class="btn btn-success float-end">Create Account</button>
+                <button type="submit" id="CreateAdminBtn" class="btn btn-success float-end">Create Account</button>
             </form>
         </div>
     </div>
@@ -141,34 +149,34 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
     <script>
-        $("#CreateAdminBtn").click(function () {
-            var selectedRegion = [];
-            $(".regionCheckbox").each(function () {
+        //$("#CreateAdminBtn").click(function () {
+        //    var selectedRegion = [];
+        //    $(".regionCheckbox").each(function () {
 
-                var checkboxdata = {
-                    Id: parseInt($(this).attr('id')),
-                    value: $(this).val(),
-                    Checked: $(this).is(':checked')
-                };
+        //        var checkboxdata = {
+        //            Id: parseInt($(this).attr('id')),
+        //            value: $(this).val(),
+        //            Checked: $(this).is(':checked')
+        //        };
 
-                selectedRegion.push(checkboxdata);
-            })
+        //        selectedRegion.push(checkboxdata);
+        //    })
 
-            var formdata = new FormData($("#CreateProviderForm")[0]);
+        //    var formdata = new FormData($("#CreateProviderForm")[0]);
 
-            formdata.append('selectedRegion', JSON.stringify(selectedRegion));
+        //    formdata.append('selectedRegion', JSON.stringify(selectedRegion));
 
-            $.ajax({
-                url: '/AdminDashboard/CreateAdmin',
-                type: 'POST',
-                data: formdata,
-                processData: false,
-                contentType: false,
-                success: function(){
-                    window.location.href("/AdminDashboard/CreateAdmin");
-                }
-            })
+        //    $.ajax({
+        //        url: '/AdminDashboard/CreateAdmin',
+        //        type: 'POST',
+        //        data: formdata,
+        //        processData: false,
+        //        contentType: false,
+        //        success: function(){
+        //            window.location.href("/AdminDashboard/CreateAdmin");
+        //        }
+        //    })
 
-        })
+        //})
     </script>
 }

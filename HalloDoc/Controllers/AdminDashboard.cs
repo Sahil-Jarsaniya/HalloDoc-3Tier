@@ -532,11 +532,11 @@ namespace HalloDoc.Controllers
             return RedirectToAction("MyProfile");
         }
 
-        [RoleAuth((int)enumsFile.adminRoles.MyProfile)]
-        public void AdminRegionUpdate(List<CheckBoxData> selectedRegion, int adminId)
-        {
-            _adminRepo.AdminRegionUpdate(selectedRegion, adminId);
-        }
+        //[RoleAuth((int)enumsFile.adminRoles.MyProfile)]
+        //public void AdminRegionUpdate(List<CheckBoxData> selectedRegion, int adminId)
+        //{
+        //    _adminRepo.AdminRegionUpdate(selectedRegion, adminId);
+        //}
 
         [RoleAuth((int)enumsFile.adminRoles.MyProfile)]
         public IActionResult ResetPass(string pass, int adminId)
@@ -747,7 +747,7 @@ namespace HalloDoc.Controllers
                 case 1:
                     _adminRepo.ProviderAccountEdit(obj);
                     break;
-                case 2:
+                case 0:
                     _adminRepo.ProviderInfoEdit(obj);
                     break;
                 case 3:
@@ -849,21 +849,20 @@ namespace HalloDoc.Controllers
         [HttpPost]
 
         [RoleAuth((int)enumsFile.adminRoles.Provider)]
-        public IActionResult CreateProvider(string selectedRegion, EditProvider obj)
+        public IActionResult CreateProvider( EditProvider obj)
         {
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
-            var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
             if (ModelState.IsValid)
             {
 
                 var pass = _loginRepo.GetHash(obj.Password);
-                var phyId = _adminRepo.CreateProvider(obj, pass, AspId, Region);
+                var phyId = _adminRepo.CreateProvider(obj, pass, AspId);
 
 
-                if (obj.PhySign != null)
+                if (obj.PhySign != null)    
                 {
                     _loginRepo.uploadFile(obj.PhySign, "ProviderData\\" + phyId, obj.PhySign.FileName.ToString());
                 }
@@ -1020,16 +1019,16 @@ namespace HalloDoc.Controllers
         }
         [HttpPost]
         [RoleAuth((int)enumsFile.adminRoles.Accounts)]
-        public IActionResult CreateAdmin(string selectedRegion, CreateAdminViewModel obj)
+        public IActionResult CreateAdmin(CreateAdminViewModel obj)
         {
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
-            var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
+            //var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
 
             var pass = _loginRepo.GetHash(obj.Password);
-            _adminRepo.CreateAdmin(obj, pass, AspId, Region);
+            _adminRepo.CreateAdmin(obj, pass, AspId);
             return RedirectToAction("CreateAdmin");
         }
 
@@ -1047,16 +1046,15 @@ namespace HalloDoc.Controllers
         }
         [HttpPost]
         [RoleAuth((int)enumsFile.adminRoles.Accounts)]
-        public IActionResult EditAdmin(string selectedRegion, CreateAdminViewModel obj)
+        public IActionResult EditAdmin( CreateAdminViewModel obj)
         {
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
-            var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
 
-            _adminRepo.EditAdmin(obj, AspId, Region);
-            return View(obj.Adminid);
+            _adminRepo.EditAdmin(obj, AspId);
+            return RedirectToAction("EditAdmin",obj.Adminid);
         }
 
         [RoleAuth((int)enumsFile.adminRoles.Accounts)]

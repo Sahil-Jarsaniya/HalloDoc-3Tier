@@ -131,7 +131,7 @@
                         </div>
                         <span asp-validation-for="Mobile" class="text-danger"></span>
                     </div>
-                    <div class="col-md-6">
+                 @*   <div class="col-md-6">
                         @foreach (var item in Model.Region)
                         {
                             if (item.Checked)
@@ -145,12 +145,27 @@
                                 <label for="@item.Id">@item.value</label>
                             }
                         }
+                    </div>*@
+                    <div class="col-md-6">
+                        <select class="form-select selectpicker m-0 p-0" asp-for="selectedRegion" data-live-search="true" multiple>
+                            @foreach (var i in Model.Region)
+                            {
+                                if (i.Checked)
+                                {
+                                    <option value="@i.Id" selected>@i.value</option>
+                                }
+                                else
+                                {
+                                    <option value="@i.Id">@i.value</option>
+                                }
+                            }
+                        </select>
                     </div>
                 </div>
             </fieldset>
             <button type="reset" id="editBtn1" class="btn btn-primary float-end m-1">Edit</button>
             <button type="reset" id="cancelBtn1" class="btn btn-outline-danger float-end me-1 d-none">Cancel</button>
-            <button type="button" id="saveBtn1" class="btn btn-outline-primary float-end me-1 d-none">Save</button><br />
+            <button type="submit" id="saveBtn1" class="btn btn-outline-primary float-end me-1 d-none">Save</button><br />
 
             <h5>Mailing & Billing Information</h5>
             <fieldset disabled id="fieldset2">
@@ -292,27 +307,27 @@
             })
         })
 
-        $("#saveBtn1").click(function () {
-            var selectedRegion = [];
-            var adminId = $("#adminId").val();
-            $(".regionCheckbox").each(function () {
+        //$("#saveBtn1").click(function () {
+        //    var selectedRegion = [];
+        //    var adminId = $("#adminId").val();
+        //    $(".regionCheckbox").each(function () {
 
-                var checkboxdata = {
-                    Id : $(this).attr('id'),
-                    value: $(this).val(),
-                    Checked: $(this).is(':checked')
-                };
+        //        var checkboxdata = {
+        //            Id : $(this).attr('id'),
+        //            value: $(this).val(),
+        //            Checked: $(this).is(':checked')
+        //        };
 
-                selectedRegion.push(checkboxdata);
-            })
+        //        selectedRegion.push(checkboxdata);
+        //    })
 
-            $.ajax({
-                url: '/AdminDashboard/AdminRegionUpdate',
-                type: 'POST',
-                data: { selectedRegion: selectedRegion, adminId: adminId },
-            })
+        //    $.ajax({
+        //        url: '/AdminDashboard/AdminRegionUpdate',
+        //        type: 'POST',
+        //        data: { selectedRegion: selectedRegion, adminId: adminId },
+        //    })
 
-            $("#MyProfileForm").submit();
-        })
+        //    $("#MyProfileForm").submit();
+        //})
     </script>
 }
