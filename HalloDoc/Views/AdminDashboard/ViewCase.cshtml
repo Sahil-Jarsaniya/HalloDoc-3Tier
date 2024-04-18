@@ -30,7 +30,7 @@
         <form method="post" asp-action="ViewCase" class="viewCaseForm form-floating shadow patient-request-form p-3">
 
             <h5>Patient Information</h5>
-            <input name="Requestclientid" value="@Model.Requestclientid" type="hidden" disabled />
+            <input name="Requestclientid" value="@Model.Requestclientid" type="hidden" />
             <div>
                 <span style="font-size: 10px;">Confirmation Number</span><br />
                 <span class="fw-bold" style="color: #10bce9">@Model.confirmationNumber</span>
@@ -67,6 +67,7 @@
                 </div>
                 <div class="col-md-5">
                     <div class="form-floating phone-div w-100 h-100 ">
+                        <input asp-for="countryCode" id="CountryFlag" hidden />
                         <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100 inputDis" id="patientPhone" placeholder="" disabled>
                         <label for=""></label>
                     </div>
@@ -259,6 +260,9 @@
         });
     </script>
     <script>
+        $("#submitBtn").click(function(){
+            $("#CountryFlag").val($(".iti__selected-dial-code").text());
+        })
         // Edit Details buttons
         var submitBtn = document.getElementById("submitBtn");
         var editBtn = document.getElementById("editBtn");

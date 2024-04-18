@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Serialization;
+using HalloDoc.DataAccess.Models;
 
 namespace HalloDoc.DataAccess.ViewModel
 {
@@ -67,6 +68,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(100)]
         public string? State { get; set; }
 
+        public int regionId { get; set; }
+
         [Column("zipcode")]
         [StringLength(10)]
         public string? Zipcode { get; set; }
@@ -74,5 +77,7 @@ namespace HalloDoc.DataAccess.ViewModel
         public IFormFile? formFile { get; set; }
 
         public string? Relationname { get; set; }
+
+        public List<Region>? Regions { get; set; }
     }
 }

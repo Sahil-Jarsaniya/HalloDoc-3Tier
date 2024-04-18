@@ -14,5 +14,7 @@ namespace HalloDoc.DataAccess.ViewModel.ProvidersMenu
         public string? Name { get; set; }
 
         public string? profilePhoto { get; set; }
+
+        public bool isOnDuty { get; set; }
     }
 }

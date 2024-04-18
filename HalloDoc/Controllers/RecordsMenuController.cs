@@ -3,7 +3,7 @@ using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.DataAccess.ViewModel.RecordsMenu;
 using HalloDoc.Services;
-using HalloDoc.utils;
+using HalloDoc.DataAccess.utils;
 using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
 using System.Drawing.Printing;

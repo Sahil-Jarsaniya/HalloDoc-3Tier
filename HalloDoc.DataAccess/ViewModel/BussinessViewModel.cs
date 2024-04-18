@@ -42,7 +42,7 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(50)]
         public string? CaseNumber { get; set; }
 
-
+        public int regionId { get; set; }
 
         [Required(ErrorMessage = "Please Enter Note")]
         [Column("notes")]
@@ -97,5 +97,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [Column("zipcode")]
         [StringLength(10)]
         public string? Zipcode { get; set; }
+
+        public string? countryCode { get; set; }
+        public List<Region> Regions { get; set; }
     }
 }

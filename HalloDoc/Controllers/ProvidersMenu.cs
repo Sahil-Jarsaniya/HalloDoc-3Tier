@@ -6,7 +6,7 @@ using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using HalloDoc.Services;
-using HalloDoc.utils;
+using HalloDoc.DataAccess.utils;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

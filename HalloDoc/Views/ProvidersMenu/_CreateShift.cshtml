@@ -24,7 +24,7 @@
                         <div class="row g-2">
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input asp-for="Startdate" type="date" class="form-control" placeholder="">
+                                    <input asp-for="Startdate" type="date" class="form-control" min="@DateTime.Now.ToShortDateString()" placeholder="">
                                     <label for="">ShiftDate</label>
                                 </div>
                             </div>

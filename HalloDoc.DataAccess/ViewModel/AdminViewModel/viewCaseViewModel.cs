@@ -18,7 +18,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public string? Lastname { get; set; }
 
         public string? Phonenumber { get; set; }
-
+        public string? countryCode { get; set; }    
         public string? Address { get; set; }
 
         public int? Regionid { get; set; }

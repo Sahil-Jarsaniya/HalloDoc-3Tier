@@ -1,14 +1,8 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
+using HalloDoc.DataAccess.utils;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
-using Microsoft.AspNetCore.Http;
-using MimeKit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
@@ -175,22 +169,20 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return existUser.Aspnetuserid;
         }
 
-        public String CreateReqMeOrElse(PatientViewModel obj, int uid)
+        public String CreateReqMeOrElse(PatientViewModel obj, string aspId)
         {
-            
-                
 
-                var aspId = _db.Users.Where(x => x.Userid == uid).FirstOrDefault().Aspnetuserid;
+                var uid= _db.Users.Where(x => x.Aspnetuserid == aspId).FirstOrDefault().Userid;
 
                 //Inserting into Request
                 Request request = new Request
                 {
-                    Requesttypeid = 1,
+                    Requesttypeid = (int)enumsFile.RequestType.patient,
                     Userid = uid,
                     Firstname = obj.Firstname,
                     Lastname = obj.Lastname,
                     Email = obj.Email,
-                    Status = 1,
+                    Status = (int)enumsFile.requestStatus.Unassigned,
                     Createddate = DateTime.Now,
                     Isurgentemailsent = false,
                     Relationname = obj.Relationname
@@ -262,7 +254,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
             var reqRow = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
 
-            reqRow.Status = 8;
+            reqRow.Status = (int)enumsFile.requestStatus.Consult;
             _db.Requests.Update(reqRow);
             _db.SaveChanges();
         }
@@ -271,7 +263,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var reqId = _db.Requestclients.Where(x => x.Requestclientid == obj.Requestclientid).FirstOrDefault();
             var reqRow = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
 
-            reqRow.Status = 5;
+            reqRow.Status = (int)enumsFile.requestStatus.CancelledByPatient;
             reqRow.Casetag = obj.CancelNote;
             _db.Requests.Update(reqRow);
             _db.SaveChanges();
@@ -281,7 +273,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Requestid = reqRow.Requestid,
                 Notes = obj.CancelNote,
                 Createddate = DateTime.Now,
-                Status = 11
+                Status = (int)enumsFile.requestStatus.CancelledByPatient
             };
             _db.Requeststatuslogs.Add(reqStatusLog);
             _db.SaveChanges();

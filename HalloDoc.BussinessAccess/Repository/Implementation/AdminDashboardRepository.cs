@@ -1,8 +1,10 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
+using HalloDoc.DataAccess.utils;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop.Implementation;
@@ -86,9 +88,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public IQueryable<newReqViewModel> newReq()
         {
+
             var newReqData = (from req in _db.Requests
-                              join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                              where req.Status == 1
+                              join rc in _db.Requestclients
+                              on req.Requestid equals rc.Requestid
+                              where req.Status == (int)enumsFile.requestStatus.Unassigned
                               select new newReqViewModel
                               {
                                   reqClientId = rc.Requestclientid,
@@ -110,7 +114,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                   reqTypeId = req.Requesttypeid,
                                   Regionid = rc.Regionid,
                                   Email = rc.Email,
-                              });
+                              }) ;
             return newReqData;
         }
         public IQueryable<pendingReqViewModel> pendingReq()
@@ -118,7 +122,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var pendingReqData = from req in _db.Requests
                                  join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                  join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                                 where req.Status == 2
+                                 where req.Status == (int)enumsFile.requestStatus.Accepted
                                  select new pendingReqViewModel
                                  {
                                      reqClientId = rc.Requestclientid,
@@ -150,7 +154,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var activeReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                 join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                                where req.Status == 8 || req.Status == 15
+                                where req.Status == (int)enumsFile.requestStatus.Consult || req.Status == (int)enumsFile.requestStatus.MdOnHouseCall
                                 select new activeReqViewModel
                                 {
                                     reqClientId = rc.Requestclientid,
@@ -181,7 +185,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var concludeReqData = from req in _db.Requests
                                   join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                   join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                                  where req.Status == 4
+                                  where req.Status == (int)enumsFile.requestStatus.Concluded
                                   select new concludeReqViewModel
                                   {
                                       reqClientId = rc.Requestclientid,
@@ -212,7 +216,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var closeReqData = from req in _db.Requests
                                join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                               where req.Status == 5
+                               where req.Status == (int)enumsFile.requestStatus.Closed
                                select new closeReqViewModel
                                {
                                    reqClientId = rc.Requestclientid,
@@ -244,7 +248,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var unpaidReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                 join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                                where req.Status == 13
+                                where req.Status == (int)enumsFile.requestStatus.Unpaid
                                 select new unpaidReqViewModel
                                 {
                                     reqClientId = rc.Requestclientid,
@@ -275,7 +279,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var newReqData = (from req in _db.Requests
                               join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                              where req.Status == 1
+                              where req.Status == (int)enumsFile.requestStatus.Unassigned
                               select new newReqViewModel
                               {
                                   reqClientId = rc.Requestclientid,
@@ -320,7 +324,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var pendingReqData = from req in _db.Requests
                                  join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                  join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                                 where req.Status == 2
+                                 where req.Status == (int)enumsFile.requestStatus.Accepted
                                  select new pendingReqViewModel
                                  {
                                      reqClientId = rc.Requestclientid,
@@ -366,7 +370,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var activeReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                 join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                                where req.Status == 8 || req.Status == 15
+                                where req.Status == (int)enumsFile.requestStatus.Consult || req.Status == (int)enumsFile.requestStatus.MdOnHouseCall
                                 select new activeReqViewModel
                                 {
                                     reqClientId = rc.Requestclientid,
@@ -411,7 +415,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var concludeReqData = from req in _db.Requests
                                   join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                   join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                                  where req.Status == 4
+                                  where req.Status == (int)enumsFile.requestStatus.Concluded
                                   select new concludeReqViewModel
                                   {
                                       reqClientId = rc.Requestclientid,
@@ -455,7 +459,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var closeReqData = from req in _db.Requests
                                join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                               where req.Status == 5
+                               where req.Status == (int)enumsFile.requestStatus.Closed
                                select new closeReqViewModel
                                {
                                    reqClientId = rc.Requestclientid,
@@ -500,7 +504,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var unpaidReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
                                 join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
-                                where req.Status == 13
+                                where req.Status == (int)enumsFile.requestStatus.Unpaid
                                 select new unpaidReqViewModel
                                 {
                                     reqClientId = rc.Requestclientid,
@@ -539,7 +543,6 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             return unpaidReqData;
         }
-
 
         public viewCaseViewModel viewCase(int reqClientId)
         {
@@ -588,14 +591,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
 
                 uRow.Email = obj.Email;
-                uRow.Mobile = obj.Phonenumber;
+                uRow.Mobile = obj.countryCode+obj.Phonenumber;
 
                 _db.Users.Update(uRow);
                 _db.SaveChanges();
 
 
                 aspRow.Email = obj.Email;
-                aspRow.PhoneNumber = obj.Phonenumber;
+                aspRow.PhoneNumber = obj.countryCode + obj.Phonenumber;
                 aspRow.ModifiedDate = DateTime.UtcNow;
 
                 _db.AspNetUsers.Update(aspRow);
@@ -604,7 +607,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 _db.Requestclients.Where(x => x.Email == email).ToList().ForEach(item =>
                 {
                     item.Email = obj.Email;
-                    item.Phonenumber = obj.Phonenumber;
+                    item.Phonenumber = obj.countryCode + obj.Phonenumber;
                     _db.Requestclients.Update(item);
                     _db.SaveChanges();
                 });
@@ -612,8 +615,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 _db.Requests.Where(x => x.Email == email).ToList().ForEach(item =>
                 {
                     item.Email = obj.Email;
-                    item.Phonenumber = obj.Phonenumber;
-                    item.Modifieddate = DateTime.UtcNow;
+                    item.Phonenumber = obj.countryCode + obj.Phonenumber;
+                    item.Modifieddate = DateTime.Now;
                     _db.Requests.Update(item);
                     _db.SaveChanges();
                 });
@@ -698,7 +701,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var reqId = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
             var reqCol = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
 
-            reqCol.Status = 5;
+            reqCol.Status = (int)enumsFile.requestStatus.Closed;
             reqCol.Casetag = _db.Casetags.Where(x => x.Casetagid == CaseTag).FirstOrDefault().Name;
             _db.Requests.Update(reqCol);
             _db.SaveChanges();
@@ -709,7 +712,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Notes = addNote,
                 Createddate = DateTime.Now,
                 Adminid = adminId,
-                Status = 5
+                Status = (int)enumsFile.requestStatus.Closed
             };
             _db.Requeststatuslogs.Add(reqStatuslog);
             _db.SaveChanges();
@@ -721,7 +724,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var reqCol = _db.Requests.Where(x => x.Requestid == reqId.Requestid).FirstOrDefault();
             var userRow = _db.Users.FirstOrDefault(x => x.Userid == reqCol.Userid);
 
-            reqCol.Status = 14;
+            reqCol.Status = (int)enumsFile.requestStatus.Block;
             _db.Requests.Update(reqCol);
             _db.SaveChanges();
 
@@ -731,7 +734,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Notes = addNote,
                 Createddate = DateTime.Now,
                 Adminid = adminId,
-                Status = 14
+                Status = (int)enumsFile.requestStatus.Block
             };
             _db.Requeststatuslogs.Add(reqStatuslog);
             _db.SaveChanges();
@@ -778,7 +781,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
             var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
-            reqRow.Status = 1;
+            reqRow.Status = (int)enumsFile.requestStatus.Unassigned;
             reqRow.Physicianid = PhysicianSelect;
             reqRow.Modifieddate = DateTime.Now;
             _db.Requests.Update(reqRow);
@@ -814,7 +817,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Requestid = reqRow.Requestid,
                 Adminid = adminId,
                 Notes = addNote,
-                Status = 2
+                Status = (int)enumsFile.requestStatus.Accepted
             };
             _db.Requeststatuslogs.Add(reqStatusLog);
             _db.SaveChanges();
@@ -1118,7 +1121,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                              select new CheckBoxData
                              {
                                  Id = t1.Regionid,
-                                 value = t1.Abbreviation,
+                                 value = t1.Name,
                                  Checked = _db.Adminregions.Any(x => x.Adminid == adminRow.Adminid && x.Regionid == t1.Regionid)
                              };
 
@@ -1151,54 +1154,60 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             int adminId = obj.Adminid;
             Admin? adminRow = _db.Admins.Where(x => x.Adminid == adminId).FirstOrDefault();
+            string[] contryCode = obj.CountryFlag.Split("+");
 
-            if (obj.selectedRegion.Count != 0)
-            {
-                var adminRegion = _db.Adminregions.Where(x => x.Adminid == obj.Adminid);
-
-                foreach (var item in adminRegion)
-                {
-                    _db.Adminregions.Remove(item);
-                }
-
-                for (int i = 0; i < obj.selectedRegion.Count; i++)
-                {
-                    var region = new Adminregion()
-                    {
-                        Regionid = obj.selectedRegion[i],
-                        Adminid = obj.Adminid
-                    };
-                    _db.Adminregions.Add(region);
-                    _db.SaveChanges();
-                }
-
-            }
 
             if (obj.Firstname == null)
             {
-                adminRow.Altphone = obj.Altphone;
+                adminRow.Altphone = "+" + contryCode[2] + obj.Altphone;
                 adminRow.Address1 = obj.Address1;
                 adminRow.Address2 = obj.Address2;
                 adminRow.Status = obj.Status;
                 adminRow.Zip = obj.Zip;
                 adminRow.City = obj.City;
+                adminRow.Regionid = obj.Regionid; 
                 adminRow.Modifieddate = DateTime.Now;
                 adminRow.Modifiedby = AspId;
+
+                _db.Admins.Update(adminRow);
+                _db.SaveChanges();
             }
             else
             {
                 adminRow.Firstname = obj.Firstname;
                 adminRow.Lastname = obj.Lastname;
                 adminRow.Email = obj.Email;
-                adminRow.Mobile = obj.Mobile;
+                adminRow.Mobile = "+" + contryCode[1] + obj.Mobile;
                 adminRow.Regionid = obj.Regionid;
                 adminRow.Roleid = obj.Roleid;
                 adminRow.Status = obj.Status;
                 adminRow.Modifieddate = DateTime.Now;
                 adminRow.Modifiedby = AspId;
+                _db.Admins.Update(adminRow);
+                _db.SaveChanges();
+                if (obj.selectedRegion.Count != 0 && obj.selectedRegion != null)
+                {
+                    var adminRegion = _db.Adminregions.Where(x => x.Adminid == obj.Adminid);
+
+                    foreach (var item in adminRegion)
+                    {
+                        _db.Adminregions.Remove(item);
+                    }
+
+                    for (int i = 0; i < obj.selectedRegion.Count; i++)
+                    {
+                        var region = new Adminregion()
+                        {
+                            Regionid = obj.selectedRegion[i],
+                            Adminid = obj.Adminid
+                        };
+                        _db.Adminregions.Add(region);
+                    }
+                        _db.SaveChanges();
+
+                }
             }
-            _db.Admins.Update(adminRow);
-            _db.SaveChanges();
+           
         }
 
         public void ResetAdminPass(string pass, int adminId)
@@ -1246,36 +1255,35 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             TimeOnly current = TimeOnly.FromDateTime(DateTime.Now);
             DateOnly date = DateOnly.FromDateTime(DateTime.Now);
 
-            var shiftData = _db.Shifts.Include(x => x.Shiftdetails.Where(u => u.Shiftdate == date && u.Starttime <= current && u.Endtime >= current)).Where(x => x.Physicianid == 31 && x.Shiftdetails.Any()).OrderBy(x => x.Createddate).ToList();
             var region = from t1 in _db.Regions select t1;
-            var phy = (from t1 in _db.Physicians
-                      join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
-                      join t3 in _db.Roles on t1.Roleid equals t3.Roleid
-                      join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId
-                      join t5 in _db.Shifts.Where(x => x.Startdate == date).OrderBy(x=> x.Createddate)
-                      on t1.Physicianid equals t5.Physicianid into shift
-                      from T5 in shift.DefaultIfEmpty()
-                      join t6 in _db.Shiftdetails.Where(x => x.Shiftdate == date && x.Isdeleted != true).OrderBy(x => x.Starttime)
-                      on T5.Shiftid equals t6.Shiftid into shiftdetail
-                      from T6 in shiftdetail.DefaultIfEmpty()
-                      select new ProviderTableViewModel
-                      {
-                          Firstname = t1.Firstname,
-                          Lastname = t1.Lastname,
-                          Email = t1.Email,
-                          Mobile = t1.Mobile,
-                          isNotiOff = t2.Isnotificationstopped,
-                          Status = t4.StatusName,
-                          Roleid = t3.Name,
-                          Physicianid = t1.Physicianid,
-                          isDeleted = t1.Isdeleted,
-                          onCallStatus = /*(T6.Starttime <= current && T6.Endtime >= current && T6 != null && T6.Shiftdate == date) ? "OnDuty" : "OffDuty"*/
-                          _db.Shifts.Include(x => x.Shiftdetails.Where(u => u.Shiftdate == date && u.Starttime <= current && u.Endtime >= current)).Where(x =>x.Physicianid ==t1.Physicianid && x.Shiftdetails.Any()).OrderBy(x => x.Createddate).ToList().Count == 0? "OffDuty": "OnDuty"
-        }).ToList();
+
+            var data1 = from t1 in _db.Shiftdetails
+                        join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
+                        join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
+                        where t1.Starttime <= current && t1.Endtime >= current && t1.Shiftdate == date && t1.Isdeleted != true
+                        select t2.Physicianid;
+
+            var data = (from t1 in _db.Physicians
+                        join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
+                        join t3 in _db.Roles on t1.Roleid equals t3.Roleid
+                        join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId
+                        select new ProviderTableViewModel
+                        {
+                            Firstname = t1.Firstname,
+                            Lastname = t1.Lastname,
+                            Email = t1.Email,
+                            Mobile = t1.Mobile,
+                            isNotiOff = t2.Isnotificationstopped,
+                            Status = t4.StatusName,
+                            Roleid = t3.Name,
+                            Physicianid = t1.Physicianid,
+                            isDeleted = t1.Isdeleted,
+                            onCallStatus = data1.FirstOrDefault(x => x == t1.Physicianid) == 0 ? "offDuty": "OnDuty"
+                        }).ToList();
 
             var provider = new ProviderViewModel
             {
-                providerTableViewModels = phy.DistinctBy(x => x.Physicianid),
+                providerTableViewModels = data,
                 Region = region
             };
 
@@ -1474,12 +1482,13 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public void ProviderInfoEdit(EditProvider obj)
         {
+            string[] contryCode = obj.CountryFlag.Split("+");
             var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == obj.Physicianid);
 
             phy.Firstname = obj.Firstname;
             phy.Lastname = obj.Lastname;
             phy.Email = obj.Email;
-            phy.Mobile = obj.Mobile;
+            phy.Mobile = "+" + contryCode[1] + obj.Mobile;
             phy.Medicallicense = obj.Medicallicense;
             phy.Npinumber = obj.Npinumber;
             phy.Syncemailaddress = obj.Syncemailaddress;
@@ -1487,15 +1496,15 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.Physicians.Update(phy);
             _db.SaveChanges();
 
-            if(obj.selectedRegion.Count != 0)
+            if (obj.selectedRegion.Count != 0)
             {
                 var phyRegion = _db.Physicianregions.Where(x => x.Physicianid == phy.Physicianid);
-                foreach(var item in phyRegion)
+                foreach (var item in phyRegion)
                 {
                     _db.Physicianregions.Remove(item);
                 }
 
-                for(int i=0; i<obj.selectedRegion.Count; i++)
+                for (int i = 0; i < obj.selectedRegion.Count; i++)
                 {
                     var region = new Physicianregion()
                     {
@@ -1512,12 +1521,15 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public void ProviderMailingInfoEdit(EditProvider obj)
         {
             var phy = _db.Physicians.FirstOrDefault(x => x.Physicianid == obj.Physicianid);
-
+            string[] contryCode = obj.CountryFlag.Split("+");
             phy.Address1 = obj.Address1;
             phy.Address2 = obj.Address2;
             phy.City = obj.City;
             phy.Zip = obj.Zip;
-            phy.Altphone = obj.Altphone;
+            if (obj.Altphone != null)
+            {
+                phy.Altphone = "+" + contryCode[2] + obj.Altphone;
+            }
 
 
             _db.Physicians.Update(phy);
@@ -1611,7 +1623,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public int CreateProvider(EditProvider obj, string pass, string AspId)
         {
             Guid guid = Guid.NewGuid();
-
+            string[] contryCode = obj.CountryFlag.Split("+");
             var asp = new AspNetUser
             {
                 Id = guid.ToString(),
@@ -1629,14 +1641,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,
-                Mobile = obj.Mobile,
+                Mobile = "+" + contryCode[1] + obj.Mobile,
                 Medicallicense = obj.Medicallicense,
                 Npinumber = obj.Npinumber,
                 Address1 = obj.Address1,
                 Address2 = obj.Address2,
                 City = obj.City,
                 Zip = obj.Zip,
-                Altphone = obj.Altphone,
+                Altphone = "+" + contryCode[2] + obj.Altphone,
                 Businessname = obj.Businessname,
                 Businesswebsite = obj.Businesswebsite,
                 Photo = obj.Photo,
@@ -1853,6 +1865,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public void CreateAdmin(CreateAdminViewModel obj, string password, string AspId)
         {
+            string[] contryCode = obj.CountryFlag.Split("+");
             Guid guid = Guid.NewGuid();
             var asp = new AspNetUser()
             {
@@ -1861,7 +1874,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 CreatedDate = DateTime.UtcNow,
                 Email = obj.Email,
                 Id = guid.ToString(),
-                PhoneNumber = obj.Mobile,
+                PhoneNumber = "+" + contryCode[1] + obj.Mobile,
             };
             _db.AspNetUsers.Add(asp);
             _db.SaveChanges();
@@ -1873,15 +1886,16 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Email = obj.Email,
                 Address1 = obj.Address1,
                 Address2 = obj.Address2,
-                Mobile = obj.Mobile,
-                Altphone = obj.Altphone,
+                Mobile = "+" + contryCode[1] + obj.Mobile,
+                Altphone = "+" + contryCode[2] + obj.Altphone,
                 City = obj.City,
                 Aspnetuserid = guid.ToString(),
                 Createdby = AspId,
                 Createddate = DateTime.Now,
                 Status = obj.Status,
                 Zip = obj.Zip,
-                Roleid = obj.Roleid
+                Roleid = obj.Roleid,
+                Regionid = obj.Regionid
             };
             _db.Admins.Add(admin);
             _db.SaveChanges();
@@ -1937,6 +1951,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public void EditAdmin(CreateAdminViewModel obj, string AspId)
         {
+            string[] contryCode = obj.CountryFlag.Split("+");
             var asp = _db.AspNetUsers.First(x => x.Id == AspId);
             var admin = _db.Admins.FirstOrDefault(x => x.Adminid == obj.Adminid);
 
@@ -1944,25 +1959,25 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             admin.Lastname = obj.Lastname;
             admin.Address1 = obj.Address1;
             admin.Address2 = obj.Address2;
-            admin.Mobile = obj.Mobile;
-            admin.Altphone = obj.Altphone;
+            admin.Mobile = "+" + contryCode[1] + obj.Mobile;
+            admin.Altphone = "+" + contryCode[2] + obj.Altphone;
             admin.City = obj.City;
             admin.Zip = obj.Zip;
             admin.Status = obj.Status;
             admin.Email = obj.Email;
             admin.Roleid = obj.Roleid;
-
+            admin.Regionid = obj.Regionid;
             _db.Admins.Update(admin);
 
             if (obj.SelectedRegion.Count != 0)
             {
                 var adminRegion = _db.Adminregions.Where(x => x.Adminid == obj.Adminid);
-                foreach(var item in adminRegion)
+                foreach (var item in adminRegion)
                 {
                     _db.Adminregions.Remove(item);
                 }
 
-                for(int i=0; i<obj.SelectedRegion.Count; i++)
+                for (int i = 0; i < obj.SelectedRegion.Count; i++)
                 {
                     var region = new Adminregion()
                     {
@@ -2022,7 +2037,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            AccountTypeId = t4.Id,
                            Phone = t2.Mobile,
                            status = T5.StatusName,
-                           openReq = 0
+                           openReq = _db.Requestclients.Count()
                        };
             }
             else
@@ -2055,7 +2070,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                      AccountTypeId = t4.Id,
                                      Phone = t2.Mobile,
                                      status = T5.StatusName,
-                                     openReq = 0
+                                     openReq = _db.Requestclients.Count()
                                  }
                                           );
             }

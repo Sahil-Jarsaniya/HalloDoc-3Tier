@@ -18,7 +18,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public String PatientProfile(ProfileEditViewModel obj);
 
-        public String CreateReqMeOrElse(PatientViewModel obj, int uid);
+        public String CreateReqMeOrElse(PatientViewModel obj, string aspId);
 
         public AgreementViewModel ReviewAgreement(String reqClientId);
 

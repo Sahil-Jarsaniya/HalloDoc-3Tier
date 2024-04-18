@@ -17,6 +17,7 @@
     <div class="d-grid justify-content-center mt-4">
         <div class="shadow">
             <form method="post" asp-action="EditAdmin" asp-controller="AdminDashboard" id="CreateProviderForm" class="viewCaseForm form-floating  patient-request-form p-3">
+                 <input asp-for="CountryFlag" id="CountryFlag" hidden />
                 <h5>Account Information</h5>
                 <div class="row g-2 m-1">
                     <div class="col-md">
@@ -69,7 +70,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating phone-div w-100 h-100 ">
-                            <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                            <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
                     </div>
@@ -126,10 +127,11 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating phone-div w-100 h-100 ">
-                            <select class="form-select">
-                                <option>guj</option>
-                                <option>raj</option>
-                                <option>md</option>
+                            <select class="form-select" asp-for="Regionid">
+                                @foreach (var i in Model.Regions)
+                                {
+                                    <option value="@i.Regionid">@i.Name</option>
+                                }
                             </select>
                             <label for="">State</label>
                         </div>
@@ -142,7 +144,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating phone-div w-100 h-100 ">
-                            <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                            <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" id="otherPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
                     </div>
@@ -159,6 +161,9 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
     <script>
+        $("#CreateAdminBtn").click(function () {
+            $("#CountryFlag").val($(".iti__selected-dial-code").text());
+        })
         //$("#CreateAdminBtn").click(function () {
         //    var selectedRegion = [];
         //    $(".regionCheckbox").each(function () {

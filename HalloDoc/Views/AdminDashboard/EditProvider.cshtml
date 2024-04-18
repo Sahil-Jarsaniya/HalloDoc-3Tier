@@ -44,14 +44,14 @@
                             <select asp-for="Status" class="form-select mb-3" id="status" disabled>
                                 @foreach (var item in Model.Statuses)
                                 {
-                                        if (Model.Status == item.StatusId)
-                                        {
-                                            <option value="@item.StatusId" selected>@item.StatusName</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@item.StatusId">@item.StatusName</option>
-                                        }
+                                    if (Model.Status == item.StatusId)
+                                    {
+                                        <option value="@item.StatusId" selected>@item.StatusName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.StatusId">@item.StatusName</option>
+                                    }
                                 }
                             </select>
                             <label for="">status</label>
@@ -87,9 +87,9 @@
             </form>
 
             <form method="post" id="EditProviderForm" asp-action="EditProvider" asp-controller="AdminDashboard" class="viewCaseForm form-floating  patient-request-form p-3">
-                @*asp-route-formid="2"*@
+                <input asp-for="CountryFlag" class="CountryFlag" hidden />
                 <h5>Physician Information</h5>
-                <input id="Physicianid" asp-for="Physicianid" hidden />
+                <input asp-for="Physicianid" hidden />
                 <fieldset id="fieldset1" disabled>
 
                     <div class="row g-2 m-1">
@@ -116,7 +116,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating phone-div w-100 h-100 ">
-                                <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                                <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                                 <label for="">Phone</label>
                             </div>
                             <span class="text-danger" asp-validation-for="Mobile"></span>
@@ -165,7 +165,8 @@
 
             <form method="post" asp-action="EditProvider" asp-route-formid="3" asp-controller="AdminDashboard" class="viewCaseForm form-floating  patient-request-form p-3">
                 <h5>Mailing & Billing Information</h5>
-                <input id="Physicianid" asp-for="Physicianid" hidden />
+                <input asp-for="Physicianid" hidden />
+                <input asp-for="CountryFlag" class="CountryFlag" hidden />
                 <fieldset disabled id="fieldset2">
 
                     <div class="row g-2 m-1">
@@ -205,7 +206,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating phone-div w-100 h-100 ">
-                                <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+                                <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" id="otherPhone" placeholder="">
                                 <label for="">Phone</label>
                             </div>
                         </div>
@@ -220,7 +221,7 @@
 
             <form method="post" asp-action="EditProvider" asp-route-formid="4" asp-controller="AdminDashboard" enctype="multipart/form-data" class="viewCaseForm form-floating  patient-request-form p-3">
                 <h5>Proivder Profile</h5>
-                <input id="Physicianid" asp-for="Physicianid" hidden />
+                <input asp-for="Physicianid" hidden />
                 <fieldset disabled id="fieldset3">
 
                     <div class="row g-2 m-1">
@@ -297,7 +298,7 @@
 
             <form method="post" asp-action="EditProvider" asp-route-formid="5" asp-controller="AdminDashboard" enctype="multipart/form-data" class="viewCaseForm form-floating  patient-request-form p-3">
                 <h5>Onboarding</h5>
-                <input id="Physicianid" asp-for="Physicianid" hidden />
+                <input  asp-for="Physicianid" hidden />
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
@@ -436,7 +437,13 @@
 
 
     <script>
-
+        $("#saveBtn1").click(function () {
+            $(".CountryFlag").val($(".iti__selected-dial-code").text());
+        })
+        $("#saveBtn2").click(function () {
+            console.log($(".iti__selected-dial-code").text())
+            $(".CountryFlag").val($(".iti__selected-dial-code").text());
+        })
         // file upload
         const actualBtn1 = document.getElementById('actualFileBtn1');
 

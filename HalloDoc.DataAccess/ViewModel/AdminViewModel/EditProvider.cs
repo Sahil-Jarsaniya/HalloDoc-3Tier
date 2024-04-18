@@ -60,6 +60,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public string? Altphone { get; set; }
 
+        public string? CountryFlag { get; set; }
         public string? Createdby { get; set; }
 
         public DateTime Createddate { get; set; }

@@ -20,10 +20,12 @@ namespace HalloDoc.Controllers
     {
         private readonly IPatientRepository _patientrepo;
         private readonly INotyfService _notyf;
-        public PatientController( IPatientRepository patientrepo, INotyfService notyf)
+        private readonly IRequestRepository _requestRepo;
+        public PatientController( IPatientRepository patientrepo, INotyfService notyf, IRequestRepository requestRepo)
         {
             _patientrepo = patientrepo;
             _notyf = notyf;
+            _requestRepo = requestRepo;
         }
 
         public IActionResult Dashboard()
@@ -108,8 +110,11 @@ namespace HalloDoc.Controllers
             string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             ViewBag.Data = fname + " " + lname;
-
-            return View();
+            var data = new PatientViewModel()
+            {
+                Regions = _requestRepo.Regions()
+            };
+            return View(data);
         }
 
         public IActionResult CreateRequestForElse(int? reqId)
@@ -119,7 +124,11 @@ namespace HalloDoc.Controllers
             string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             ViewBag.Data = fname + " " + lname;
-            return View();
+            var data = new FamilyViewModel()
+            {
+                Regions = _requestRepo.Regions()
+            };
+            return View(data);
         }
 
         [HttpPost]
@@ -132,9 +141,8 @@ namespace HalloDoc.Controllers
             ViewBag.Data = fname + " " + lname;
             if (ModelState.IsValid)
             {
-                int uid = (int)HttpContext.Session.GetInt32("userId");
-
-                var aspId = _patientrepo.CreateReqMeOrElse(obj, uid);
+                string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+                var aspId = _patientrepo.CreateReqMeOrElse(obj, AspId);
 
                 return RedirectToAction("Dashboard", new { AspId = aspId });
             }
@@ -185,8 +193,6 @@ namespace HalloDoc.Controllers
         //        return BadRequest("Error downloading files");
         //    }
         //}
-
-
 
         public IActionResult Back()
         {

@@ -1,4 +1,4 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
+﻿    using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
@@ -6,7 +6,7 @@ using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using HalloDoc.Services;
-using HalloDoc.utils;
+using HalloDoc.DataAccess.utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Options;
 using NuGet.Protocol;
@@ -65,6 +65,8 @@ namespace HalloDoc.Controllers
             bool x = _phyRepo.PhysicianLocationUpdate(latitude, longitude, _phyRepo.GetPhysicianId(GetAspID()));    
         }
 
+        #region PhysicianDashboard
+
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
         public IActionResult Dashboard(int? status)
         {
@@ -93,23 +95,23 @@ namespace HalloDoc.Controllers
                 pageNumber = 1;
             }
             int pageSize = 2;
-            if (status == 1)
+            if (status == (int)enumsFile.DashboardStatus.newStatus)
             {
                 var parseData = _phyRepo.newReq(obj, phyId);
                 //return PartialView("_newRequestView", parseData);
                 return PartialView("_newRequestView", await PaginatedList<pendingReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
-            else if (status == 2)
+            else if (status == (int)enumsFile.DashboardStatus.pending)
             {
                 var parseData = _phyRepo.pendingReq(obj, phyId);
                 return PartialView("_PendingRequestView", await PaginatedList<pendingReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
-            else if (status == 8)
+            else if (status == (int)enumsFile.DashboardStatus.active)
             {
                 var parseData = _phyRepo.activeReq(obj, phyId);
                 return PartialView("_activeRequestView", await PaginatedList<pendingReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
-            else if (status == 4)
+            else if (status == (int)enumsFile.DashboardStatus.conclude)
             {
                 var parseData = _phyRepo.concludeReq(obj, phyId);
                 return PartialView("_concludeReqView", await PaginatedList<pendingReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
@@ -117,6 +119,48 @@ namespace HalloDoc.Controllers
 
             return View();
         }
+
+
+        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
+        public IActionResult SendEmailToPatient(string FirstName, string LastName, string Email, string PhoneNumber)
+        {
+            var subject = "Send your request";
+            var body = "<a href='/HomeController/Index+'>HalloDoc</a>";
+            _loginRepo.SendEmail(Email, subject, body);
+            Task<bool> val = _sms.SendSmsAsync("+91" + PhoneNumber, body);
+
+            return RedirectToAction("Dashboard");
+        }
+
+        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
+        public IActionResult CreateRequest()
+        {
+            string AspId = GetAspID();
+            ViewBag.AdminName = GetName();
+            var data = new PatientViewModel()
+            {
+                Regions = _requestRepo.Regions()
+            };
+            return View(data);
+        }
+
+        [HttpPost]
+        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
+        public IActionResult CreateRequest(PatientViewModel obj)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _requestRepo.CreateRequestByPhysician(obj, _phyRepo.GetPhysicianId(GetAspID()));
+
+                return RedirectToAction("Dashboard");
+            }
+            return View();
+        }
+
+        #endregion
+
+        #region DashboardAction
 
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
         public IActionResult AcceptRequest(int id)
@@ -320,38 +364,25 @@ namespace HalloDoc.Controllers
         }
 
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
-        public IActionResult SendEmailToPatient(string FirstName, string LastName, string Email, string PhoneNumber)
-        {
-            var subject = "Send your request";
-            var body = "<a href='/HomeController/Index+'>HalloDoc</a>";
-            _loginRepo.SendEmail(Email, subject, body);
-            Task<bool> val = _sms.SendSmsAsync("+91" + PhoneNumber, body);
-
-            return RedirectToAction("Dashboard");
-        }
-
-        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
-        public IActionResult CreateRequest()
+        public IActionResult ConcludeCare(int reqClientId)
         {
             string AspId = GetAspID();
             ViewBag.AdminName = GetName();
-
-            return View();
+            var data = _adminRepo.CloseCase(reqClientId);
+            return View(data);
         }
-
         [HttpPost]
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
-        public IActionResult CreateRequest(PatientViewModel obj)
+        public IActionResult ConcludeCare(CloseCaseViewModel obj)
         {
-
-            if (ModelState.IsValid)
-            {
-                _requestRepo.CreateRequestByPhysician(obj, _phyRepo.GetPhysicianId(GetAspID()));
-
-                return RedirectToAction("Dashboard");
-            }
-            return View();
+            _phyRepo.ConcludeCare(obj, GetAspID());
+            _loginRepo.uploadFile(obj.fileName, "RequestData\\" + obj.ReqClientId, obj.fileName.FileName.ToString());
+            return RedirectToAction("Dashboard");
         }
+
+        #endregion
+
+        #region Scheduling
 
         [RoleAuth((int)enumsFile.physicianRoles.MySchedule)]
         public IActionResult Scheduling()
@@ -460,6 +491,10 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Scheduling");
         }
         [RoleAuth((int)enumsFile.physicianRoles.MyProfile)]
+
+        #endregion
+
+        #region MyProfile
         public IActionResult MyProfile()
         {
             ViewBag.AdminName = GetName();
@@ -481,22 +516,7 @@ namespace HalloDoc.Controllers
 
             return Ok(new { success = true });
         }
+        #endregion
 
-        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
-        public IActionResult ConcludeCare(int reqClientId)
-        {
-            string AspId = GetAspID();
-            ViewBag.AdminName = GetName();
-            var data = _adminRepo.CloseCase(reqClientId);
-            return View(data);
-        }
-        [HttpPost]
-        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
-        public IActionResult ConcludeCare(CloseCaseViewModel obj)
-        {
-            _phyRepo.ConcludeCare(obj, GetAspID());
-            _loginRepo.uploadFile(obj.fileName, "RequestData\\"+ obj.ReqClientId, obj.fileName.FileName.ToString());
-            return RedirectToAction("Dashboard");
-        }   
     }
 }

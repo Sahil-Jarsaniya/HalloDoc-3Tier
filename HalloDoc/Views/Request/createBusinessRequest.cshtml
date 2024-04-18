@@ -99,7 +99,106 @@
             </div>
         </div>
 
-        <partial name="_PatientForm" />
+        <h4 class="mt-4 mb-4 ms-2">Patient Information</h4>
+        <div class="row g-2 m-1">
+
+            <div class="form-floating m-1 form-div">
+                <textarea asp-for="Notes" class="form-control notesInput" placeholder="Leave a comment here" id="floatingTextarea2"
+                          style="height: 100px"></textarea>
+                <label for="">Enter Brief Details Of Symptoms</label>
+            </div>
+            <span asp-validation-for="Notes" class="text-danger"></span>
+        </div>
+        <div class="row g-2 m-1">
+            <div class="col-md">
+                <div class="form-floating">
+                    <input asp-for="Firstname" type="text" class="form-control firstnameInput" placeholder="">
+                    <label asp-for="Firstname" for="">First Name</label>
+                </div>
+                <span asp-validation-for="Firstname" class="text-danger"></span>
+            </div>
+            <div class="col-md">
+                <div class="form-floating">
+                    <input asp-for="Lastname" type="text" class="form-control firstnameInput" placeholder="">
+                    <label for="floatingSelectGrid">Last Name</label>
+                </div>
+                <span asp-validation-for="Lastname" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row g-2 m-1 ">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input asp-for="Strmonth" type="date" class="form-control dobInput" placeholder="">
+                    <label for="">Date Of Birth</label>
+                </div>
+                <span asp-validation-for="Strmonth" class="text-danger"></span>
+            </div>
+        </div>
+
+        <h4 class="mt-4 mb-4 ms-2">Patient Contact Information</h4>
+        <div class="row g-2 m-1">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input id="checkEmail" asp-for="Email" type="email" class="form-control emailInput" placeholder="name@example.com">
+                    <label for="">Email</label>
+                </div>
+                <span asp-validation-for="Email" class="text-danger " id="emailError"></span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating phone-div w-100 h-100 ">
+                    <input asp-for="countryCode" id="patientCountryCode" hidden />
+                    <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
+                    <label for="">Phone</label>
+                </div>
+                <span asp-validation-for="Phonenumber" class="text-danger phoneError"></span>
+            </div>
+        </div>
+        <h4 class="mt-4 mb-4 ms-2">Patient Location</h4>
+        <div class="row g-2 m-1">
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input asp-for="Street" type="text" class="form-control" placeholder="">
+                    <label for="">Street</label>
+                </div>
+                <span asp-validation-for="Street" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input asp-for="City" type="text" class="form-control" placeholder="">
+                    <label for="">City</label>
+                </div>
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    @*   <input asp-for="State" type="text" class="form-control" placeholder="">
+                    <label for="">State</label>*@
+                    <select class="form-select" asp-for="regionId" aria-label="Select State">
+                        @foreach (var item in Model.Regions)
+                        {
+                            <option value="@item.Regionid">@item.Name</option>
+                        }
+                    </select>
+                    <label for="">Select State</label>
+                </div>
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input asp-for="Zipcode" type="text" class="form-control zipcode" placeholder="">
+                    <label for="">Zip Code</label>
+                </div>
+                <span asp-validation-for="Zipcode" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" placeholder="">
+                    <label for="">Room #/ Suite(Optional)</label>
+                </div>
+            </div>
+        </div>
+
 
         <button type="submit" id="cancelBtn" class="btn btn-primary float-end m-1">Cancel</button>
         <button type="submit" id="submitBtn" class="btn btn-primary float-end m-1">Submit</button>

@@ -32,7 +32,11 @@ public class RequestController : Controller
     }
     public IActionResult createPatientRequest()
     {
-        return View();
+        var data = new PatientViewModel()
+        {
+            Regions = _requestRepo.Regions()
+        };
+        return View(data);
     }
     [HttpPost]
     public IActionResult createPatientRequest(PatientViewModel obj)
@@ -54,7 +58,11 @@ public class RequestController : Controller
 
     public IActionResult createFamilyfriendRequest()
     {
-        return View();
+        var data = new FamilyViewModel()
+        {
+            Regions = _requestRepo.Regions()
+        };
+        return View(data);
     }
     [HttpPost]
     public IActionResult createFamilyfriendRequest(FamilyViewModel obj)
@@ -71,7 +79,11 @@ public class RequestController : Controller
     }
     public IActionResult createConciergeRequest()
     {
-        return View();
+        var data = new ConciergeViewModel()
+        {
+            Regions = _requestRepo.Regions()
+        };
+        return View(data);
     }
     [HttpPost]
     public IActionResult createConciergeRequest(ConciergeViewModel obj)
@@ -88,7 +100,11 @@ public class RequestController : Controller
     }
     public IActionResult createBusinessRequest()
     {
-        return View();
+        var data = new BussinessViewModel()
+        {
+            Regions = _requestRepo.Regions()
+        };
+        return View(data);
     }
     [HttpPost]
     public IActionResult createBusinessRequest(BussinessViewModel obj)

@@ -1,4 +1,4 @@
-﻿    @model Scheduling;
+﻿@model Scheduling;
 @{
     ViewData["Title"] = "Provider On Call";
     Layout = "_adminLayout";
@@ -48,7 +48,7 @@
             {
                 <div class="col-md-3 col-lg-4">
                     <img width="100vh" height="100vh" src="~/uploadedFiles/ProviderData/@item.providerId/@item.profilePhoto" />
-                    @item.Name 
+                    @item.Name
                 </div>
             }
         </div>
@@ -56,10 +56,14 @@
         <div class="row g-2 m-1">
             @foreach (var item in Model.ProviderOffDuty)
             {
-                <div class="col-md-3 col-lg-4">
-                    <img width="100vh" height="100vh" src="~/uploadedFiles/ProviderData/@item.providerId/@item.profilePhoto" />
-                    @item.Name 
-                </div>
+                if (!item.isOnDuty)
+                {
+
+                    <div class="col-md-3 col-lg-4">
+                        <img width="100vh" height="100vh" src="~/uploadedFiles/ProviderData/@item.providerId/@item.profilePhoto" />
+                        @item.Name
+                    </div>
+                }
             }
         </div>
     </div>

@@ -5,7 +5,7 @@ using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.Services;
-using HalloDoc.utils;
+using HalloDoc.DataAccess.utils;    
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Execution;
 using System.IdentityModel.Tokens.Jwt;
@@ -35,6 +35,9 @@ namespace HalloDoc.Controllers
             _sms = sms;
             _common = common;
         }
+
+
+        #region Dashboard
 
 
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
@@ -76,7 +79,11 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public async Task<IActionResult> PartialTable(int status, searchViewModel? obj, int pageNumber)
         {
-            var data = _adminRepo.adminDashboard();
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             if (pageNumber < 1)
             {
                 pageNumber = 1;
@@ -86,27 +93,27 @@ namespace HalloDoc.Controllers
             if (obj.Name != null || obj.reqType != 0 || obj.RegionId != 0)
             {
 
-                if (status == 1)
+                if (status == (int)enumsFile.DashboardStatus.newStatus)
                 {
                     var parseData = _adminRepo.newReq(obj);
                     return PartialView("_newRequestView", await PaginatedList<newReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
-                else if (status == 2)
+                else if (status == (int)enumsFile.DashboardStatus.pending)
                 {
                     var parseData = _adminRepo.pendingReq(obj);
                     return PartialView("_PendingRequestView", await PaginatedList<pendingReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
-                else if (status == 8)
+                else if (status == (int)enumsFile.DashboardStatus.active)
                 {
                     var parseData = _adminRepo.activeReq(obj);
                     return PartialView("_activeRequestView", await PaginatedList<activeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
-                else if (status == 4)
+                else if (status == (int)enumsFile.DashboardStatus.conclude)
                 {
                     var parseData = _adminRepo.concludeReq(obj);
                     return PartialView("_concludeReqView", await PaginatedList<concludeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
                 }
-                else if (status == 5)
+                else if (status == (int)enumsFile.DashboardStatus.close)
                 {
                     var parseData = _adminRepo.closeReq(obj);
                     return PartialView("_closeReqView", await PaginatedList<closeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
@@ -118,27 +125,27 @@ namespace HalloDoc.Controllers
                 }
             }
 
-            if (status == 1)
+            if (status == (int)enumsFile.DashboardStatus.newStatus)
             {
                 var parseData = _adminRepo.newReq();
                 return PartialView("_newRequestView", await PaginatedList<newReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
-            else if (status == 2)
+            else if (status == (int)enumsFile.DashboardStatus.pending)
             {
                 var parseData = _adminRepo.pendingReq();
                 return PartialView("_PendingRequestView", await PaginatedList<pendingReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
-            else if (status == 8)
+            else if (status == (int)enumsFile.DashboardStatus.active)
             {
                 var parseData = _adminRepo.activeReq();
                 return PartialView("_activeRequestView", await PaginatedList<activeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
-            else if (status == 4)
+            else if (status == (int)enumsFile.DashboardStatus.conclude)
             {
                 var parseData = _adminRepo.concludeReq();
                 return PartialView("_concludeReqView", await PaginatedList<concludeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
             }
-            else if (status == 5)
+            else if (status == (int)enumsFile.DashboardStatus.close)
             {
                 var parseData = _adminRepo.closeReq();
                 return PartialView("_closeReqView", await PaginatedList<closeReqViewModel>.CreateAsync(parseData, pageNumber, pageSize));
@@ -161,7 +168,12 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
 
-            return View();
+            var data = new PatientViewModel()
+            {
+                Regions = _requestRepo.Regions()
+            };
+
+            return View(data);
         }
 
         [HttpPost]
@@ -190,6 +202,107 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Dashboard");
         }
 
+        [HttpPost]
+        public FileResult Export(int status, searchViewModel obj)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            byte[] excelBytes;
+
+            if (status == (int)enumsFile.DashboardStatus.active)
+            {
+                IEnumerable<activeReqViewModel> data = _adminRepo.activeReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == (int)enumsFile.DashboardStatus.pending)
+            {
+                IEnumerable<pendingReqViewModel> data = _adminRepo.pendingReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == (int)enumsFile.DashboardStatus.conclude)
+            {
+                IEnumerable<concludeReqViewModel> data = _adminRepo.concludeReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == (int)enumsFile.DashboardStatus.close)
+            {
+                IEnumerable<closeReqViewModel> data = _adminRepo.closeReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == (int)enumsFile.DashboardStatus.unpaid)
+            {
+                IEnumerable<unpaidReqViewModel> data = _adminRepo.unpaidReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else
+            {
+                IEnumerable<newReqViewModel> data = _adminRepo.newReq(obj).ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+
+
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sheet.xlsx");
+        }
+
+        public FileResult ExportAll(int status)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            byte[] excelBytes;
+
+            if (status == (int)enumsFile.DashboardStatus.active)
+            {
+                IEnumerable<activeReqViewModel> data = _adminRepo.activeReq().ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == (int)enumsFile.DashboardStatus.pending)
+            {
+                IEnumerable<pendingReqViewModel> data = _adminRepo.pendingReq().ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == (int)enumsFile.DashboardStatus.conclude)
+            {
+                IEnumerable<concludeReqViewModel> data = _adminRepo.concludeReq().ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == (int)enumsFile.DashboardStatus.close)
+            {
+                IEnumerable<closeReqViewModel> data = _adminRepo.closeReq().ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else if (status == (int)enumsFile.DashboardStatus.unpaid)
+            {
+                IEnumerable<unpaidReqViewModel> data = _adminRepo.unpaidReq().ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+            else
+            {
+                IEnumerable<newReqViewModel> data = _adminRepo.newReq().ToList();
+                excelBytes = _common.fileToExcel(data);
+            }
+
+
+            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sheet.xlsx");
+        }
+
+        //Request DTY Support
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
+        public IActionResult RequestSupport(string RequestNote)
+        {
+            var phy = _adminRepo.RequestSupportDTY();
+            foreach (var item in phy)
+            {
+                _loginRepo.SendEmail(item.Email, "Request Support", RequestNote);
+            }
+            return RedirectToAction("Dashboard");
+        }
+
+        #endregion
+
+
+        #region DashboardAction
 
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult ViewCase(int reqClientId)
@@ -476,6 +589,31 @@ namespace HalloDoc.Controllers
             return RedirectToAction("Dashboard", new { status = 13 });
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
+        public IActionResult EncounterForm(int reqClientId)
+        {
+            var obj = _adminRepo.Encounter(reqClientId);
+            ViewBag.status = _adminRepo.GetStatus(reqClientId);
+            return View(obj);
+        }
+        [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
+        public IActionResult EncounterForm(Encounter obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _adminRepo.Encounter(obj);
+                _notyf.Success("Updated");
+            }
+            else
+            {
+                _notyf.Error("Failed");
+            }
+            return View(obj);
+        }
+
+        #endregion
+
         //[RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         //public IActionResult Encounter(int reqClientId, string option)
         //{
@@ -495,6 +633,9 @@ namespace HalloDoc.Controllers
 
         //    return RedirectToAction("Dashboard", new { status = reqRow.Status });
         //}
+
+
+        #region AdminProfile
 
         [RoleAuth((int)enumsFile.adminRoles.MyProfile)]
         public IActionResult MyProfile()
@@ -557,122 +698,10 @@ namespace HalloDoc.Controllers
             return RedirectToAction("MyProfile", "AdminDashboard");
         }
 
-
-        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
-        public IActionResult EncounterForm(int reqClientId)
-        {
-            var obj = _adminRepo.Encounter(reqClientId);
-            ViewBag.status = _adminRepo.GetStatus(reqClientId);
-            return View(obj);
-        }
-        [HttpPost]
-        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
-        public IActionResult EncounterForm(Encounter obj)
-        {
-            if (ModelState.IsValid)
-            {
-                _adminRepo.Encounter(obj);
-                _notyf.Success("Updated");
-            }
-            else
-            {
-                _notyf.Error("Failed");
-            }
-            return View(obj);
-        }
+        #endregion
 
 
-        //Request DTY Support
-        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
-        public IActionResult RequestSupport(string RequestNote)
-        {
-            var phy = _adminRepo.RequestSupportDTY();
-            foreach (var item in phy)
-            {
-                _loginRepo.SendEmail(item.Email, "Request Support", RequestNote);
-            }
-            return RedirectToAction("Dashboard");
-        }
-
-        [HttpPost]
-        public FileResult Export(int status, searchViewModel obj)
-        {
-            byte[] excelBytes;
-
-            if (status == 8)
-            {
-                IEnumerable<activeReqViewModel> data = _adminRepo.activeReq(obj).ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-            else if (status == 2)
-            {
-                IEnumerable<pendingReqViewModel> data = _adminRepo.pendingReq(obj).ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-            else if (status == 4)
-            {
-                IEnumerable<concludeReqViewModel> data = _adminRepo.concludeReq(obj).ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-            else if (status == 5)
-            {
-                IEnumerable<closeReqViewModel> data = _adminRepo.closeReq(obj).ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-            else if (status == 13)
-            {
-                IEnumerable<unpaidReqViewModel> data = _adminRepo.unpaidReq(obj).ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-            else
-            {
-                IEnumerable<newReqViewModel> data = _adminRepo.newReq(obj).ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-
-
-            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sheet.xlsx");
-        }
-
-        public FileResult ExportAll(int status)
-        {
-            byte[] excelBytes;
-
-            if (status == 8)
-            {
-                IEnumerable<activeReqViewModel> data = _adminRepo.activeReq().ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-            else if (status == 2)
-            {
-                IEnumerable<pendingReqViewModel> data = _adminRepo.pendingReq().ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-            else if (status == 4)
-            {
-                IEnumerable<concludeReqViewModel> data = _adminRepo.concludeReq().ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-            else if (status == 5)
-            {
-                IEnumerable<closeReqViewModel> data = _adminRepo.closeReq().ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-            else if (status == 13)
-            {
-                IEnumerable<unpaidReqViewModel> data = _adminRepo.unpaidReq().ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-            else
-            {
-                IEnumerable<newReqViewModel> data = _adminRepo.newReq().ToList();
-                excelBytes = _common.fileToExcel(data);
-            }
-
-
-            return File(excelBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "sheet.xlsx");
-        }
-            
+        #region ProivderMenu    
 
         [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult Provider()
@@ -797,11 +826,11 @@ namespace HalloDoc.Controllers
         }
 
 
-        [RoleAuth((int)enumsFile.adminRoles.Provider)]
-        public void PhysicianRegionUpdate(List<CheckBoxData> selectedRegion, int Physicianid)
-        {
-            _adminRepo.PhysicianRegionUpdate(selectedRegion, Physicianid);
-        }
+        //[RoleAuth((int)enumsFile.adminRoles.Provider)]
+        //public void PhysicianRegionUpdate(List<CheckBoxData> selectedRegion, int Physicianid)
+        //{
+        //    _adminRepo.PhysicianRegionUpdate(selectedRegion, Physicianid);
+        //}
 
         [RoleAuth((int)enumsFile.adminRoles.Provider)]
         public IActionResult ResetPhysicianPass(string pass, int Physicianid)
@@ -906,6 +935,11 @@ namespace HalloDoc.Controllers
                 return Json(new {success = false, errors = errors});
             }
         }
+
+        #endregion
+
+
+        #region AccesMenu
 
         [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult Access()
@@ -1085,5 +1119,7 @@ namespace HalloDoc.Controllers
             return PartialView("_UserAccessTable", await PaginatedList<UserAccessTable>.CreateAsync(data, pageNumber, pageSize));
         }
 
+
+        #endregion
     }
 }

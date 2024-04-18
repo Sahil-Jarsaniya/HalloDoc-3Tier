@@ -29,6 +29,7 @@
         }
         <form method="post" id="MyProfileForm" asp-action="MyProfile" class="viewCaseForm form-floating shadow patient-request-form p-3">
             <input id="adminId" asp-for="Adminid" hidden />
+             <input asp-for="CountryFlag" id="CountryFlag" hidden />
             <h5>Account Information</h5>
             <div class="row g-2 m-1">
                 <div class="col-md">
@@ -126,6 +127,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating phone-div w-100 h-100 ">
+                           
                             <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
@@ -193,11 +195,12 @@
                         <span asp-validation-for="City  " class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating ">
                             <select asp-for="Regionid" class="form-select">
-                                <option value="1">guj</option>
-                                <option value="2">raj</option>
-                                <option value="3">md</option>
+                                @foreach (var i in Model.Region)
+                                {
+                                        <option value="@i.Id">@i.value</option>
+                                }
                             </select>
                             <label for="">State</label>
                         </div>
@@ -233,6 +236,12 @@
     </script>
     <script src="~/js/Validation.js"></script>
     <script>
+        $("#saveBtn1").click(function () {
+            $("#CountryFlag").val($(".iti__selected-dial-code").text());
+        });
+        $("#saveBtn2").click(function () {
+            $("#CountryFlag").val($(".iti__selected-dial-code").text());
+        });
 
         var editBtn1 = document.getElementById("editBtn1");
         var saveBtn1 = document.getElementById("saveBtn1");
@@ -307,27 +316,5 @@
             })
         })
 
-        //$("#saveBtn1").click(function () {
-        //    var selectedRegion = [];
-        //    var adminId = $("#adminId").val();
-        //    $(".regionCheckbox").each(function () {
-
-        //        var checkboxdata = {
-        //            Id : $(this).attr('id'),
-        //            value: $(this).val(),
-        //            Checked: $(this).is(':checked')
-        //        };
-
-        //        selectedRegion.push(checkboxdata);
-        //    })
-
-        //    $.ajax({
-        //        url: '/AdminDashboard/AdminRegionUpdate',
-        //        type: 'POST',
-        //        data: { selectedRegion: selectedRegion, adminId: adminId },
-        //    })
-
-        //    $("#MyProfileForm").submit();
-        //})
     </script>
 }

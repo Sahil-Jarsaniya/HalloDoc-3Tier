@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Http;
+using HalloDoc.DataAccess.Models;
 
 namespace HalloDoc.DataAccess.ViewModel
 {
@@ -37,6 +38,7 @@ namespace HalloDoc.DataAccess.ViewModel
         [Column("notes")]
         [StringLength(500)]
         public string? Notes { get; set; }
+        public int regionId { get; set; }
 
         [Required(ErrorMessage = "Please Enter Name")]
         [Column("firstname")]
@@ -88,6 +90,9 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(10)]
         public string? Zipcode { get; set; }
 
+        public string? countryCode { get; set; }
+
         public IFormFile? formFile { get; set; }
+        public List<Region>? Regions { get; set; }
     }
 }

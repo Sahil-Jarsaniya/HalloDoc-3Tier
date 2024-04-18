@@ -4,7 +4,7 @@ using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel.PartnersMenu;
 using HalloDoc.Services;
-using HalloDoc.utils;
+using HalloDoc.DataAccess.utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;

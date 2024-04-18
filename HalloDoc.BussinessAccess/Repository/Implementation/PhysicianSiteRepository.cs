@@ -1,26 +1,15 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
-using HalloDoc.DataAccess.ViewModel;
+using HalloDoc.DataAccess.utils;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage;
-using Org.BouncyCastle.Bcpg;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
     public class PhysicianSiteRepository : IPhysicianSiteRepository
     {
         private readonly ApplicationDbContext _db;
-        private readonly LoginRepository _login;
-        //private readonly RequestRepository _request;
         public PhysicianSiteRepository(ApplicationDbContext db)
         {
             _db = db;
@@ -77,19 +66,19 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public countRequestViewModel DashboardCount(int phyId)
         {
             var newCount = (from t1 in _db.Requests
-                            where t1.Status == 1 && t1.Physicianid == phyId
+                            where t1.Status == (int)enumsFile.requestStatus.Unassigned && t1.Physicianid == phyId
                             select t1
                             ).Count();
             var pendingCount = (from t1 in _db.Requests
-                                where t1.Status == 2 && t1.Physicianid == phyId
+                                where t1.Status == (int)enumsFile.requestStatus.Accepted && t1.Physicianid == phyId
                                 select t1
                             ).Count();
             var activeCount = (from t1 in _db.Requests
-                               where t1.Status == 8 || t1.Status == 15 && t1.Physicianid == phyId
+                               where t1.Status == (int)enumsFile.requestStatus.Consult || t1.Status == (int)enumsFile.requestStatus.MdOnHouseCall && t1.Physicianid == phyId
                                select t1
                             ).Count();
             var concludeCount = (from t1 in _db.Requests
-                                 where t1.Status == 4 && t1.Physicianid == phyId
+                                 where t1.Status == (int)enumsFile.requestStatus.Concluded && t1.Physicianid == phyId
                                  select t1
                             ).Count();
             var count = new countRequestViewModel
@@ -106,7 +95,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var newReqData = (from req in _db.Requests
                               join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                              where req.Status == 1 && req.Physicianid == phyId
+                              where req.Status == (int)enumsFile.requestStatus.Unassigned && req.Physicianid == phyId
                               select new pendingReqViewModel
                               {
                                   reqClientId = rc.Requestclientid,
@@ -140,7 +129,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var pendingReqData = from req in _db.Requests
                                  join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                                 where req.Status == 2 && req.Physicianid == phyId
+                                 where req.Status == (int)enumsFile.requestStatus.Accepted && req.Physicianid == phyId
                                  select new pendingReqViewModel
                                  {
                                      reqClientId = rc.Requestclientid,
@@ -175,7 +164,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var activeReqData = from req in _db.Requests
                                 join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                                where (req.Status == 8 || req.Status == 15) && req.Physicianid == phyId
+                                where (req.Status == (int)enumsFile.requestStatus.Consult || req.Status == (int)enumsFile.requestStatus.MdOnHouseCall) && req.Physicianid == phyId
                                 select new pendingReqViewModel
                                 {
                                     reqClientId = rc.Requestclientid,
@@ -211,7 +200,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var concludeReqData = from req in _db.Requests
                                   join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                                  where req.Status == 4 && req.Physicianid == phyId
+                                  where req.Status == (int)enumsFile.requestStatus.Concluded && req.Physicianid == phyId
                                   select new pendingReqViewModel
                                   {
                                       reqClientId = rc.Requestclientid,
@@ -318,7 +307,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 try
                 {
-                    reqRow.Status = 2;
+                    reqRow.Status = (int)enumsFile.requestStatus.Accepted;
                     _db.Requests.Update(reqRow);
                     _db.SaveChanges();
                     return true;
@@ -339,13 +328,13 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
                 if (option == "Consult")
                 {
-                    reqRow.Status = 4;
-                    reqRow.Calltype = 1;
+                    reqRow.Status = (int)enumsFile.requestStatus.Concluded;
+                    reqRow.Calltype = (int)enumsFile.PhysicianCalltype.HouseCall;
                 }
                 else
                 {
-                    reqRow.Status = 15;
-                    reqRow.Calltype = 2;
+                    reqRow.Status = (int)enumsFile.requestStatus.MdOnHouseCall;
+                    reqRow.Calltype = (int)enumsFile.PhysicianCalltype.Consult;
                 }
                 _db.Requests.Update(reqRow);
                 _db.SaveChanges();
@@ -365,7 +354,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == id).FirstOrDefault();
                 var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
-                reqRow.Status = 4;
+                reqRow.Status = (int)enumsFile.requestStatus.Concluded;
                 _db.Requests.Update(reqRow);
                 _db.SaveChanges();
                 return true;
@@ -402,7 +391,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Createddate = DateTime.Now,
                     Transtoadmin = true,
                 };
-                reqRow.Status = 1;
+                reqRow.Status = (int)enumsFile.requestStatus.Unassigned;
                 reqRow.Physicianid = null;
                 _db.Requeststatuslogs.Add(reqstatuslog); _db.SaveChanges();
                 _db.Requests.Update(reqRow);

@@ -1,6 +1,9 @@
 //First Name 
 document.querySelectorAll(".firstnameInput").forEach(function (input) {
-    input.addEventListener("input", function () {
+    input.addEventListener("change", function () {
+        validateFirstName(this.value, this.parentNode.nextElementSibling, this.parentNode);
+    });
+    input.addEventListener("blur", function () {
         validateFirstName(this.value, this.parentNode.nextElementSibling, this.parentNode);
     });
 });
@@ -103,6 +106,27 @@ function validateNotes(notes, errorSpan, div){
     }
 };
 
+//Zip Code
+
+document.querySelectorAll(".zipcode").forEach(function (input) {
+    input.addEventListener("keyup", function () {
+        validateZipCode(this.value, this.parentNode.nextElementSibling, this.parentNode);
+    })
+    input.addEventListener("blur", function () {
+        validateZipCode(this.value, this.parentNode.nextElementSibling, this.parentNode);
+    })
+})
+function validateZipCode(zipcode, errorSpan, dic) {
+    var zipRegex = /^[1-9][0-9]{5}$/;
+    if (zipRegex.test(zipcode)) {
+        errorSpan.textContent = "";
+        div.classList.remove("invalidInput");
+    } else {
+        errorSpan.textContent = "Please enter a valid Zip Code";
+        div.classList.add("invalidInput");
+    }
+}
+
 
 
 //Admin Dashboard
@@ -186,3 +210,4 @@ document.querySelectorAll(".OrderDetail").forEach(function (input) {
         }
     })
 })
+

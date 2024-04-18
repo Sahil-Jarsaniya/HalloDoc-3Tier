@@ -41,12 +41,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
-//var path = window.location.pathname;
-//var abc = path.split("/");
-//var controller = abc[1];
-//var action = abc[2];
-//console.log(controller);
-//console.log(action);
+var path = window.location.pathname;
+var abc = path.split("/");
+var controller = abc[1];
+var action = abc[2];
+console.log(controller);
+console.log(action);
 
 $(document).ready(function () {
 

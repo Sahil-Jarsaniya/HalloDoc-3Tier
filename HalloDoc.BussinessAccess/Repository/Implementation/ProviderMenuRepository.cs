@@ -340,30 +340,30 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var data1 = from t1 in _db.Shiftdetails
                         join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
                         join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
-                        where t1.Starttime <= currentTime && t1.Endtime >= currentTime && t1.Shiftdate == currentDate
+                        where t1.Starttime <= currentTime && t1.Endtime >= currentTime && t1.Shiftdate == currentDate && t1.Isdeleted != true
                         select new ProviderOnCall()
                         {
                             Name = t3.Firstname + " " + t3.Lastname,
                             profilePhoto = t3.Photo,
                             shiftDetailId = t1.Shiftdetailid,
-                            providerId = t3.Physicianid
+                            providerId = t3.Physicianid,
+                            isOnDuty = true,
                         };
 
-            var data2 = from t1 in _db.Physicians
-                        where t1.Status == 4
+            var data3 = from t1 in _db.Physicians   
                         select new ProviderOnCall()
                         {
                             Name = t1.Firstname + " " + t1.Lastname,
                             profilePhoto = t1.Photo,
-                            providerId = t1.Physicianid
-                        };
-
+                            providerId = t1.Physicianid,
+                            isOnDuty = data1.Where(x => x.providerId == t1.Physicianid).Any(),
+                        };  
 
             var data = new Scheduling
             {
                 Regions = _db.Regions,
                 ProviderOnCall = data1,
-                ProviderOffDuty = data2
+                ProviderOffDuty = data3
             };
 
             return data;

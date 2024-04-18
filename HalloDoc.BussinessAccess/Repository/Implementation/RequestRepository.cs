@@ -1,6 +1,7 @@
 ﻿using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
+using HalloDoc.DataAccess.utils;
 using HalloDoc.DataAccess.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _loginRepo = loginRepository;
         }
 
+        public List<DataAccess.Models.Region> Regions()
+        {
+            return _db.Regions.ToList();
+        }
+
         public string GetConfirmationNumber(DateTime createtime, String lastName, string firstName)
         {
             String confirmationNumber = "AM" + createtime.ToString("yyMM") + lastName.ToUpper().Substring(0, Math.Min(2, lastName.Length)) + firstName.ToUpper().Substring(0, Math.Min(2, firstName.Length)) + "0001";
@@ -33,7 +39,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public void CreatePatientRequest(PatientViewModel obj)
         {
 
-            var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
+            var existUser = _db.Users.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;
 
@@ -83,7 +89,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Mobile = obj.countryCode + obj.Phonenumber,
                     Street = obj.Street,
                     City = obj.City,
-                    State = obj.State,
+                    State = _db.Regions.Where(x => x.Regionid == obj.regionId).FirstOrDefault().Name,
                     Zipcode = obj.Zipcode,
                     Createddate = DateTime.Now,
                     Strmonth = obj.Strmonth,
@@ -95,19 +101,18 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             else
             {
-                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
-                uid = user.Userid;
+                uid = existUser.Userid;
             }
 
             //Inserting into Request
             Request request = new Request
             {
-                Requesttypeid = 1,
+                Requesttypeid = (int)enumsFile.RequestType.patient,
                 Userid = uid,
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,
-                Status = 1,
+                Status = (int)enumsFile.requestStatus.Unassigned,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
                 Phonenumber = obj.countryCode + obj.Phonenumber,
@@ -126,9 +131,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Strmonth = obj.Strmonth,
                 Street = obj.Street,
                 City = obj.City,
-                State = obj.State,
+                State = _db.Regions.Where(x => x.Regionid == obj.regionId).FirstOrDefault().Name,
                 Zipcode = obj.Zipcode,
-                Notes = obj.Notes
+                Notes = obj.Notes,
+                Address = obj.Street +", "+obj.City+", "+obj.State+", "+obj.Zipcode,
+                Regionid = obj.regionId
             };
             _db.Requestclients.Add(requestclient);
             _db.SaveChanges();
@@ -137,7 +144,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             Requeststatuslog requeststatuslog = new Requeststatuslog
             {
                 Requestid = request.Requestid,
-                Status = 1,
+                Status = (int)enumsFile.requestStatus.Unassigned,
                 Createddate = DateTime.Now
             };
             _db.Requeststatuslogs.Add(requeststatuslog);
@@ -201,7 +208,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Mobile = "+" + contryCode[2] + obj.Phonenumber,
                     Street = obj.Street,
                     City = obj.City,
-                    State = obj.State,
+                    State = _db.Regions.Where(x => x.Regionid == obj.regionId).FirstOrDefault().Name,
                     Zipcode = obj.Zipcode,
                     Createddate = DateTime.Now,
                     Strmonth = obj.Strmonth,
@@ -223,12 +230,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             //Inserting into request table
             Request request = new Request
             {
-                Requesttypeid = 2,
+                Requesttypeid = (int)enumsFile.RequestType.family,
                 Userid = uid,
                 Firstname = obj.FamilyFirstname,
                 Lastname = obj.FamilyLastname,
                 Email = obj.FamilyEmail,
-                Status = 1,
+                Status = (int)enumsFile.requestStatus.Unassigned,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
                 Phonenumber = "+" + contryCode[1] + obj.FamilyPhonenumber,
@@ -248,9 +255,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Strmonth = obj.Strmonth,
                 Street = obj.Street,
                 City = obj.City,
-                State = obj.State,
+                State = _db.Regions.Where(x => x.Regionid == obj.regionId).FirstOrDefault().Name,
                 Zipcode = obj.Zipcode,
-                Notes = obj.Notes
+                Notes = obj.Notes,
+                Address = obj.Street + ", " + obj.City + ", " + obj.State + ", " + obj.Zipcode,
+                Regionid = obj.regionId
             };
             _db.Requestclients.Add(requestclient);
             _db.SaveChanges();
@@ -260,7 +269,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             Requeststatuslog requeststatuslog = new Requeststatuslog
             {
                 Requestid = request.Requestid,
-                Status = 1,
+                Status = (int)enumsFile.requestStatus.Unassigned,
                 Createddate = DateTime.Now
             };
             _db.Requeststatuslogs.Add(requeststatuslog);
@@ -323,7 +332,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Mobile = "+" + contryCode[2] + obj.Phonenumber,
                     Street = obj.Street,
                     City = obj.City,
-                    State = obj.State,
+                    State = _db.Regions.Where(x => x.Regionid == obj.regionId).FirstOrDefault().Name,
                     Zipcode = obj.Zipcode,
                     Createddate = DateTime.Now,
                     Strmonth = obj.Strmonth,
@@ -345,10 +354,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             Concierge concierge = new Concierge
             {
                 Conciergename = obj.ConciergeFirstname + " " + obj.ConciergeLastname,
-                Street = obj.Street,
-                City = obj.City,
-                State = obj.State,
-                Zipcode = obj.Zipcode,
+                Street = obj.ConciergeCity,
+                City = obj.ConciergeCity,
+                State = obj.ConciergeState,
+                Zipcode = obj.ConciergeZipcode,
                 Createddate = DateTime.Now,
                 Regionid = 1 // region table refernce
             };
@@ -359,12 +368,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             //Inserting into request table
             Request request = new Request
             {
-                Requesttypeid = 3,
+                Requesttypeid = (int)enumsFile.RequestType.Concierge,
                 Userid = uid,
                 Firstname = obj.ConciergeFirstname,
                 Lastname = obj.ConciergeLastname,
                 Email = obj.ConciergeEmail,
-                Status = 1,
+                Status = (int)enumsFile.requestStatus.Unassigned,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
                 Phonenumber ="+"+ contryCode[1] + obj.ConciergePhonenumber,
@@ -384,9 +393,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Strmonth = obj.Strmonth,
                 Street = obj.Street,
                 City = obj.City,
-                State = obj.State,
+                State = _db.Regions.Where(x => x.Regionid == obj.regionId).FirstOrDefault().Name,
                 Zipcode = obj.Zipcode,
-                Notes = obj.Notes
+                Notes = obj.Notes,
+                Address = obj.Street + ", " + obj.City + ", " + obj.State + ", " + obj.Zipcode,
+                Regionid = obj.regionId
             };
             _db.Requestclients.Add(requestclient);
             _db.SaveChanges();
@@ -395,7 +406,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             Requeststatuslog requeststatuslog = new Requeststatuslog
             {
                 Requestid = request.Requestid,
-                Status = 1,
+                Status = (int)enumsFile.requestStatus.Unassigned,
                 Createddate = DateTime.Now
             };
             _db.Requeststatuslogs.Add(requeststatuslog);
@@ -440,7 +451,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Mobile = "+" + contryCode[2]+ obj.Phonenumber,
                     Street = obj.Street,
                     City = obj.City,
-                    State = obj.State,
+                    State = _db.Regions.Where(x => x.Regionid == obj.regionId).FirstOrDefault().Name,
                     Zipcode = obj.Zipcode,
                     Createddate = DateTime.Now,
                     Strmonth = obj.Strmonth,
@@ -462,12 +473,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             Request request = new Request
             {
-                Requesttypeid = 4,
+                Requesttypeid = (int)enumsFile.RequestType.Business,
                 Userid = uid,
                 Firstname = obj.bussinessFirstname,
                 Lastname = obj.bussinessLastname,
                 Email = obj.bussinessEmail,
-                Status = 1,
+                Status = (int)enumsFile.requestStatus.Unassigned,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
                 Phonenumber = "+" + contryCode[1]+obj.bussinessPhonenumber,
@@ -487,9 +498,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Strmonth = obj.Strmonth,
                 Street = obj.Street,
                 City = obj.City,
-                State = obj.State,
+                State = _db.Regions.Where(x => x.Regionid == obj.regionId).FirstOrDefault().Name,
                 Zipcode = obj.Zipcode,
-                Notes = obj.Notes
+                Notes = obj.Notes,
+                Address = obj.Street + ", " + obj.City + ", " + obj.State + ", " + obj.Zipcode,
+                Regionid = obj.regionId
             };
             _db.Requestclients.Add(requestclient);
             _db.SaveChanges();
@@ -505,7 +518,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             Requeststatuslog requeststatuslog = new Requeststatuslog
             {
                 Requestid = request.Requestid,
-                Status = 1,
+                Status = (int)enumsFile.requestStatus.Unassigned,
                 Createddate = DateTime.Now
             };
             _db.Requeststatuslogs.Add(requeststatuslog);
@@ -566,7 +579,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     Mobile = obj.countryCode + obj.Phonenumber,
                     Street = obj.Street,
                     City = obj.City,
-                    State = obj.State,
+                    State = _db.Regions.Where(x => x.Regionid == obj.regionId).FirstOrDefault().Name,
                     Zipcode = obj.Zipcode,
                     Createddate = DateTime.Now,
                     Strmonth = obj.Strmonth,
@@ -586,12 +599,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             Request request = new Request
             {
                 Physicianid = PhyId,
-                Requesttypeid = 1,
+                Requesttypeid = (int)enumsFile.RequestType.patient,
                 Userid = uid,
                 Firstname = obj.Firstname,
                 Lastname = obj.Lastname,
                 Email = obj.Email,
-                Status = 2,
+                Status = (int)enumsFile.requestStatus.Accepted,
                 Createddate = DateTime.Now,
                 Isurgentemailsent = false,
                 Phonenumber = obj.countryCode + obj.Phonenumber,
@@ -610,9 +623,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Strmonth = obj.Strmonth,
                 Street = obj.Street,
                 City = obj.City,
-                State = obj.State,
+                State = _db.Regions.Where(x => x.Regionid == obj.regionId).FirstOrDefault().Name,
                 Zipcode = obj.Zipcode,
-                Notes = obj.Notes
+                Notes = obj.Notes,
+                Address = obj.Street + ", " + obj.City + ", " + obj.State + ", " + obj.Zipcode,
+                Regionid = obj.regionId
             };
             _db.Requestclients.Add(requestclient);
             _db.SaveChanges();
@@ -621,8 +636,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             Requeststatuslog requeststatuslog = new Requeststatuslog
             {
                 Requestid = request.Requestid,
-                Status = 1,
-                Createddate = DateTime.Now
+                Status = (int)enumsFile.requestStatus.Accepted,
+                Createddate = DateTime.Now,
+                Physicianid = PhyId
             };
             _db.Requeststatuslogs.Add(requeststatuslog);
             _db.SaveChanges();
