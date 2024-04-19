@@ -1,52 +1,113 @@
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Get all the anchor tags inside the nav
-    var navLinks = document.querySelectorAll('#adminNav .nav-link');
-
-    // Function to remove 'active' class from all links
-
-    function removeAllActive() {
-        navLinks.forEach(function (link) {
-            link.classList.remove('active');
-        });
-    }
-
-    // Function to set the 'active' class to the clicked link and store it in localStorage
-    function setActiveLink(link) {
-        link.classList.add('active');
-        localStorage.setItem('activeLink', link.getAttribute('href'));
-    }
-
-    // Check if there's an active link stored in localStorage
-    var activeLink = localStorage.getItem('activeLink');
-
-    // If there's an active link, set it as active
-    if (activeLink) {
-        navLinks.forEach(function (link) {
-            if (link.getAttribute('href') === activeLink) {
-                setActiveLink(link);
-            }
-        });
-    } else {
-        document.getElementById("DashboardLink").classList.add('active');
-    }
-
-    // Add click event listeners to all links
+var navLinks = document.querySelectorAll('#adminNav .nav-link');
+function removeAllActive() {
     navLinks.forEach(function (link) {
-        link.addEventListener('click', function () {
-            removeAllActive(); // Remove 'active' class from all links
-            setActiveLink(this); // Set 'active' class to the clicked link
-        });
+        link.classList.remove('active');
     });
-
-});
-
+}
+function setActiveLink(link) {
+    link.classList.add('active');
+}
 var path = window.location.pathname;
 var abc = path.split("/");
 var controller = abc[1];
 var action = abc[2];
 console.log(controller);
 console.log(action);
+
+var ul = document.getElementById("togglebar").children;
+
+switch (controller) {
+    case "AdminDashboard":
+        switch (action) {
+            case "MyProfile":
+                removeAllActive();
+                setActiveLink(ul[2].children[0]);
+                break;
+            case "Provider":
+                removeAllActive();
+                setActiveLink(ul[3].children[0]);
+                break;
+            case "UserAccess":
+                removeAllActive();
+                setActiveLink(ul[5].children[0]);
+                break;
+            case "Access":
+                removeAllActive();
+                setActiveLink(ul[5].children[0]);
+                break;
+            case "EditRole":
+                removeAllActive();
+                setActiveLink(ul[5].children[0]);
+                break;
+            case "CreateRole":
+                removeAllActive();
+                setActiveLink(ul[5].children[0]);
+                break;
+            case "EditProvider":
+                removeAllActive();
+                setActiveLink(ul[3].children[0]);
+                break;
+            case "CreateProvider":
+                removeAllActive();
+                setActiveLink(ul[3].children[0]);
+                break;
+            default:
+                removeAllActive();
+                setActiveLink(ul[0].children[0]);
+                break;
+        }
+        break;
+    case "ProvidersMenu":
+        switch (action) {
+            case "ProviderLocation":
+                removeAllActive();
+                setActiveLink(ul[1].children[0]);
+                break;
+            default:
+                removeAllActive();
+                setActiveLink(ul[3].children[0]);
+                break;
+        }
+        break;
+    case "PartnersMenu":
+        removeAllActive();
+        setActiveLink(ul[4].children[0]);
+        break;
+    case "RecordsMenu":
+        removeAllActive();
+        setActiveLink(ul[6].children[0]);
+        break;
+    case "PhysicianDashboard":
+        switch (action) {
+            case "MyProfile":
+                removeAllActive();
+                setActiveLink(ul[1].children[0]);
+                break;
+            case "Scheduling":
+                removeAllActive();
+                setActiveLink(ul[2].children[0]);
+                break;
+            default:
+                removeAllActive();
+                setActiveLink(ul[0].children[0]);
+                break;
+        }
+        break;
+    case "Patient":
+        switch (action) {
+            case "MyProfile":
+                removeAllActive();
+                setActiveLink(ul[1].children[0]);
+                break;
+            default:
+                removeAllActive();
+                setActiveLink(ul[0].children[0]);
+                break;
+        }
+}
+
+
 
 $(document).ready(function () {
 
@@ -71,5 +132,49 @@ $(document).ready(function () {
             separateDialCode: true,
             initialCountry: "in"
         });
+    }
+    var div = document.getElementById("phoneDiv");
+    $("#patientPhone").on("input", function () {
+        console.log(patientIntlInput.isValidNumber());
+        if (!patientIntlInput.isValidNumber()) {
+            div.nextElementSibling.textContent = "Please Enter Valid Number";
+            this.parentNode.classList.add("invalidInput");
+        } else {
+            div.nextElementSibling.textContent = "";
+            this.parentNode.classList.remove("invalidInput");
+        }
+    })
+    $("#patientPhone").blur(function () {
+        console.log(patientIntlInput.isValidNumber());
+        if (!patientIntlInput.isValidNumber()) {
+            div.nextElementSibling.textContent = "Please Enter Valid Number";
+            this.parentNode.classList.add("invalidInput");
+        } else {
+            div.nextElementSibling.textContent = "";
+            this.parentNode.classList.remove("invalidInput");
+        }
+    })
+    if (otherPhoneInputElement != null) {
+        var div2 = document.getElementById("phoneDiv2");
+        $("#otherPhone").on("input", function () {
+            console.log(otherIntlInput.isValidNumber());
+            if (!otherIntlInput.isValidNumber()) {
+                div2.nextElementSibling.textContent = "Please Enter Valid Number";
+                this.parentNode.classList.add("invalidInput");
+            } else {
+                div2.nextElementSibling.textContent = "";
+                this.parentNode.parentNode.classList.remove("invalidInput");
+            }
+        })
+        $("#otherPhone").blur(function () {
+            console.log(otherIntlInput.isValidNumber());
+            if (!otherIntlInput.isValidNumber()) {
+                this.parentNode.parentNode.nextElementSibling.textContent = "Please Enter Valid Number";
+                this.parentNode.parentNode.classList.add("invalidInput");
+            } else {
+                this.parentNode.parentNode.nextElementSibling.textContent = "";
+                this.parentNode.parentNode.classList.remove("invalidInput");
+            }
+        })
     }
 });

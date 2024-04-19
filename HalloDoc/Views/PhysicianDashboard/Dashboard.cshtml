@@ -213,7 +213,6 @@
 </div>
 
 
-@*Send Agreement *@
 <div class="modal fade" id="SendAgreementModel" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" id="modalContent">
@@ -381,6 +380,33 @@
                 $("#transferNote").text("Enter Note");
             }
         })
+
+        //Send Agreement
+
+        $("#AgreementConfirmBtn").click(function () {
+            var id = $("#AgreementClientId").val();
+            var phone = $("#AgreementPhone").val();
+            var email = $("#AgreementEmail").val();
+            if (phone != "" && email != "") {
+
+                $.ajax({
+                    url: '/PhysicianDashboard/SendAgreement',
+                    type: 'POST',
+                    data: {
+                        reqClientId: id, phone: phone, email: email
+                    },
+                    success: function () {
+                        $(".CloseModal").click();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        alert('error fetching details')
+                    },
+                })
+            } else {
+                $("#errorBox").text("Enter Valid Details");
+            }
+        });
 
     </script>
     @await Component.InvokeAsync("Notyf")

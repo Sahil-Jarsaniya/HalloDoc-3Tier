@@ -177,6 +177,18 @@ namespace HalloDoc.Controllers
                 return RedirectToAction("Dashboard");
             }
         }
+        [HttpPost]
+        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
+        public void SendAgreement(int reqClientId, string email, string phone)
+        {
+
+            var callBackUrl = Url.Action("ReviewAgreement", "Home", new { reqClientId }, protocol: HttpContext.Request.Scheme, host: "localhost:44349");
+
+            string subject = "Regarding Agreement";
+            string body = "<a href=" + callBackUrl + ">Review</a>";
+
+            _loginRepo.SendEmail(email, subject, body);
+        }
 
         [HttpPost]
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]

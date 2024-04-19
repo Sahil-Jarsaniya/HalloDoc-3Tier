@@ -17,16 +17,16 @@
     <div class="d-grid justify-content-center mt-4">
         <div class="shadow">
             <form method="post" asp-action="EditAdmin" asp-controller="AdminDashboard" id="CreateProviderForm" class="viewCaseForm form-floating  patient-request-form p-3">
-                 <input asp-for="CountryFlag" id="CountryFlag" hidden />
+                <input asp-for="CountryFlag" id="CountryFlag" hidden />
                 <h5>Account Information</h5>
                 <div class="row g-2 m-1">
                     <div class="col-md">
                         <div class="form-floating">
-                            <input asp-for="Adminid" hidden/>
+                            <input asp-for="Adminid" hidden />
                             <input asp-for="Username" type="text" class="form-control" id="userName" placeholder="" disabled>
                             <label for="">User Name</label>
                         </div>
-                        <span></span>
+                        <span asp-validation-for="Username"></span>
                     </div>
                     <div class="col-md">
                         <div class="form-floating phone-div w-100 h-100 ">
@@ -38,6 +38,7 @@
                             </select>
                             <label for="">Role</label>
                         </div>
+                        <span asp-validation-for="Roleid" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -46,84 +47,81 @@
                 <div class="row g-2 m-1">
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Firstname" type="text" class="form-control" placeholder="">
+                            <input asp-for="Firstname" type="text" class="form-control firstnameInput" placeholder="">
                             <label for="">First Name</label>
                         </div>
+                        <span asp-validation-for="Firstname" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Lastname" type="text" class="form-control" placeholder="">
+                            <input asp-for="Lastname" type="text" class="form-control firstnameInput" placeholder="">
                             <label for="">Last Name</label>
                         </div>
+                        <span asp-validation-for="Lastname" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+                            <input asp-for="Email" type="email" class="form-control emailInput" placeholder="name@example.com">
                             <label for="">Email</label>
                         </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+                            <input asp-for="Email" type="email" class="form-control emailInput" placeholder="name@example.com">
                             <label for="">Confirm Email</label>
                         </div>
+                        <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating phone-div w-100 h-100" id="phoneDiv">
                             <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
                     </div>
-                @*    <div class="col-md-6">
-                        @foreach (var item in Model.CheckedRegion)
-                        {
-                            if (item.Checked)
-                            {
-                                <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.Id" checked />
-                                <label for="@item.Id">@item.value</label>
-                            }
-                            else
-                            {
-                                <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.Id" />
-                                <label for="@item.Id">@item.value</label>
-                            }
-                        }
-                    </div>*@
                     <div class="col-md-6">
-                        <select class="form-select selectpicker m-0 p-0" asp-for="SelectedRegion" data-live-search="true" multiple>
-                            @foreach (var i in Model.CheckedRegion)
-                            {
-                                if (i.Checked)
+                        <div class="form-floating">
+
+                            <select class="form-select selectpicker m-0 p-0" asp-for="SelectedRegion" data-live-search="true" multiple>
+                                @foreach (var i in Model.CheckedRegion)
                                 {
-                                    <option value="@i.Id" selected>@i.value</option>
+                                    if (i.Checked)
+                                    {
+                                        <option value="@i.Id" selected>@i.value</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i.Id">@i.value</option>
+                                    }
                                 }
-                                else
-                                {
-                                    <option value="@i.Id">@i.value</option>
-                                }
-                            }
-                        </select>
+                            </select>
+                        </div>
+                        <span asp-validation-for="SelectedRegion" class="text-danger"></span>
                     </div>
-                </div>
+                </div><br />
                 <h5>Mailing & Billing Information</h5>
                 <div class="row g-2 m-1">
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input asp-for="Address1" type="text" class="form-control" placeholder="">
                             <label for="">Address1</label>
-                        </div>
+                        </div> 
+                        <span asp-validation-for="Address1" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input asp-for="Address2" type="text" class="form-control" placeholder="">
                             <label for="floatingSelectGrid">Address2</label>
                         </div>
+                        <span asp-validation-for="Address2" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input asp-for="City" type="text" class="form-control" placeholder="">
                             <label for="">City</label>
                         </div>
+                        <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating phone-div w-100 h-100 ">
@@ -135,22 +133,26 @@
                             </select>
                             <label for="">State</label>
                         </div>
+                        <span asp-validation-for="Regionid" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Zip" type="text" class="form-control" placeholder="">
+                            <input asp-for="Zip" type="text" class="form-control zipcode" placeholder="">
                             <label for="">Zip</label>
                         </div>
+                        <span asp-validation-for="Zip" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating phone-div w-100 h-100 " id="phoneDiv2">
                             <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" id="otherPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
+                        <span asp-validation-for="Altphone" class="text-danger"></span>
                     </div>
                 </div>
-
+                <br />
                 <button type="submit" id="CreateAdminBtn" class="btn btn-success float-end">Save</button>
+                <br />
             </form>
         </div>
     </div>
@@ -163,35 +165,6 @@
     <script>
         $("#CreateAdminBtn").click(function () {
             $("#CountryFlag").val($(".iti__selected-dial-code").text());
-        })
-        //$("#CreateAdminBtn").click(function () {
-        //    var selectedRegion = [];
-        //    $(".regionCheckbox").each(function () {
-
-        //        var checkboxdata = {
-        //            Id: parseInt($(this).attr('id')),
-        //            value: $(this).val(),
-        //            Checked: $(this).is(':checked')
-        //        };
-
-        //        selectedRegion.push(checkboxdata);
-        //    })
-
-        //    var formdata = new FormData($("#CreateProviderForm")[0]);
-
-        //    formdata.append('selectedRegion', JSON.stringify(selectedRegion));
-
-        //    $.ajax({
-        //        url: '/AdminDashboard/EditAdmin',
-        //        type: 'POST',
-        //        data: formdata,
-        //        processData: false,
-        //        contentType: false,
-        //        success: function () {
-        //            window.location.href("/AdminDashboard/EditAdmin");
-        //        }
-        //    })
-
-        //})
+        })  
     </script>
 }

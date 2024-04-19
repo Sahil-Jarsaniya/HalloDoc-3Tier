@@ -2,24 +2,24 @@
     <div class="col-md-12">
         <nav>
             <ul class="pagination justify-content-end">
-                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
-                    <a class="btn pageBtn page-link text-black" data-page="1">
-                        first
+                <li class="page-item m-1 ">
+                    <a class="btn pageBtn btn-outline-primary @(Model.PageIndex == 1 ? "disabled" : "")" data-page="1">
+                        <<
                     </a>
                 </li>
-                <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
-                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex - 1)">
-                        Previous
+                <li class="page-item m-1 ">
+                    <a class="btn pageBtn btn-outline-primary @(Model.HasPreviousPage ? "" : "disabled")" data-page="@(Model.PageIndex - 1)">
+                        <
                     </a>
                 </li>
-                <li class="page-item @(Model.HasNextPage ? "": "disabled")">
-                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex + 1)">
-                        next
+                <li class="page-item m-1 ">
+                    <a class="btn btn-outline-primary pageBtn @(Model.HasNextPage ? "": "disabled")" data-page="@(Model.PageIndex + 1)">
+                        >
                     </a>
                 </li>
-                <li class="page-item @(Model.PageIndex >= Model.TotalPages ? "disabled" : "")">
-                    <a class="btn pageBtn page-link text-black" data-page="@(Model.TotalPages)">
-                        Last
+                <li class="page-item m-1 ">
+                    <a class="btn pageBtn btn-outline-primary @(Model.PageIndex >= Model.TotalPages ? "disabled" : "")" data-page="@(Model.TotalPages)">
+                        >>
                     </a>
                 </li>
             </ul>

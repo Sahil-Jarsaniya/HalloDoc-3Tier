@@ -47,7 +47,7 @@
         <span asp-validation-for="Email" class="text-danger " id="emailError"></span>
     </div>
     <div class="col-md-6">
-        <div class="form-floating phone-div w-100 h-100 ">
+        <div class="form-floating phone-div w-100 h-100" id="phoneDiv" style="max-height: 58px">
             <input asp-for="countryCode" id="patientCountryCode" hidden/>
             <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
             <label for="">Phone</label>

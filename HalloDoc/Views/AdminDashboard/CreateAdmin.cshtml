@@ -23,18 +23,19 @@
                     <div class="col-md">
                         <div class="form-floating">
                             <input asp-for="Username" type="text" class="form-control" id="userName" placeholder="" disabled>
-                            <label for="">User Name</label>
+                            <label for="userName">User Name</label>
                         </div>
-                        <span></span>
+                        <span asp-validation-for="Username" class="text-danger"></span>
                     </div>
                     <div class="col-md">
                         <div class="input-div form-floating mb-3 d-flex border rounded">
                             <input asp-for="Password" type="password" class="form-control" id="Password" placeholder="Password">
                             <label for="floatingPassword">Password</label>
                         </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
                     <div class="col-md">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating w-100 h-100 " >
                             <select asp-for="Roleid" class="form-select mb-3" id="role">
                                 @foreach (var item in  Model.Rolemenus)
                                                     {
@@ -43,6 +44,7 @@
                             </select>
                             <label for="">Role</label>
                         </div>
+                        <span asp-validation-for="Roleid" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -51,50 +53,52 @@
                 <div class="row g-2 m-1">
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Firstname" type="text" class="form-control" placeholder="">
+                            <input asp-for="Firstname" type="text" class="form-control firstnameInput" placeholder="">
                             <label for="">First Name</label>
                         </div>
+                        <span asp-validation-for="Firstname" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Lastname" type="text" class="form-control" placeholder="">
+                            <input asp-for="Lastname" type="text" class="form-control firstnameInput" placeholder="">
                             <label for="">Last Name</label>
                         </div>
+                        <span asp-validation-for="Lastname" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+                            <input asp-for="Email" type="email" class="form-control emailInput" placeholder="name@example.com">
                             <label for="">Email</label>
                         </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+                            <input asp-for="ConfirmEmail" type="email" class="form-control emailInput" placeholder="name@example.com">
                             <label for="">Confirm Email</label>
                         </div>
+                        <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating phone-div w-100 h-100" id="phoneDiv">
                             <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
                     </div>
-                   @* <div class="col-md-6">
-                        @foreach (var item in Model.Regions)
-                        {
-                                <input class="regionCheckbox" type="checkbox" id="@item.Regionid" name="@item.Regionid" value="@item.Regionid" />
-                                <label for="@item.Regionid">@item.Abbreviation</label>
-                        }
-                    </div>*@
-                    <div class="col-md-6">
+                    <div class="col-md-6"> 
+                        <div class="form-floating">
+                            
                         <select class="form-select selectpicker m-0 p-0" asp-for="SelectedRegion" data-live-search="true" multiple>
                             @foreach (var i in Model.Regions)
                             {
                                     <option value="@i.Regionid">@i.Name</option>
                             }
                         </select>
+                        </div>
+                        <span asp-validation-for="SelectedRegion" class="text-danger"></span>
                     </div>
-                </div>
+                </div><br />
                 <h5>Mailing & Billing Information</h5>
                 <div class="row g-2 m-1">
                     <div class="col-md-6">
@@ -102,21 +106,24 @@
                             <input asp-for="Address1" type="text" class="form-control" placeholder="">
                             <label for="">Address1</label>
                         </div>
+                        <span asp-validation-for="Address1" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input asp-for="Address2" type="text" class="form-control" placeholder="">
                             <label for="floatingSelectGrid">Address2</label>
                         </div>
+                        <span asp-validation-for="Address2" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
                             <input asp-for="City" type="text" class="form-control" placeholder="">
                             <label for="">City</label>
                         </div>
+                        <span asp-validation-for="City" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating w-100 h-100 ">
                             <select class="form-select" asp-for="Regionid">
                                 @foreach (var i in Model.Regions)
                                 {
@@ -125,22 +132,26 @@
                             </select>
                             <label for="">State</label>
                         </div>
+                        <span asp-validation-for="Regionid" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Zip" type="text" class="form-control" placeholder="">
+                            <input asp-for="Zip" type="text" class="form-control zipcode" placeholder="">
                             <label for="">Zip</label>
                         </div>
+                        <span asp-validation-for="Zip" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
-                            <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" id="otherPhone" placeholder="">
+                        <div class="form-floating phone-div w-100 h-100 " id="phoneDiv2">
+                            <input asp-for="Altphone" type="tel" class="form-control w-100 h-100" id="otherPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
+                        <span asp-validation-for="Altphone" class="text-danger"></span>
                     </div>
                 </div>
-
+                <br />
                 <button type="submit" id="CreateAdminBtn" class="btn btn-success float-end">Create Account</button>
+                <br />
             </form>
         </div>
     </div>

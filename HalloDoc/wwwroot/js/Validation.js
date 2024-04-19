@@ -85,6 +85,9 @@ function validateEmail(email, errorSpan, div) {
     }
 }
 
+
+
+
 //Notes
 document.querySelectorAll(".notesInput").forEach(function (input) {
     input.addEventListener("keyup", function () {
@@ -202,6 +205,16 @@ document.querySelectorAll(".proffesionDD").forEach(function (input) {
 })
 
 document.querySelectorAll(".OrderDetail").forEach(function (input) {
+    input.addEventListener("input", function () {
+        if (this.value == "") {
+            this.parentNode.nextElementSibling.textContent = "Enter Prescription!!";
+        } else {
+            this.parentNode.nextElementSibling.textContent = "";
+        }
+    })
+})
+
+document.querySelectorAll(".businessDetail").forEach(function (input) {
     input.addEventListener("input", function () {
         if (this.value == "") {
             this.parentNode.nextElementSibling.textContent = "Enter Prescription!!";

@@ -36,7 +36,7 @@
                         <span class="text-danger" asp-validation-for="Password"></span>
                     </div>
                     <div class="col-md">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating w-100 h-100 ">
                             <select asp-for="Roleid" class="form-select mb-3" id="role">
                                 @foreach (var item in Model.Role)
                                 {
@@ -56,27 +56,27 @@
                 <div class="row g-2 m-1">
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Firstname" type="text" class="form-control" placeholder="">
+                            <input asp-for="Firstname" type="text" class="form-control firstnameInput" placeholder="">
                             <label for="">First Name</label>
                         </div>
                         <span class="text-danger" asp-validation-for="Firstname"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Lastname" type="text" class="form-control" placeholder="">
+                            <input asp-for="Lastname" type="text" class="form-control firstnameInput" placeholder="">
                             <label for="">Last Name</label>
                         </div>
                         <span class="text-danger" asp-validation-for="Lastname"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Email" type="email" class="form-control" placeholder="name@example.com">
+                            <input asp-for="Email" type="email" class="form-control emailInput" placeholder="name@example.com">
                             <label for="">Email</label>
                         </div>
                         <span class="text-danger" asp-validation-for="Email"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating phone-div w-100 h-100 " id="phoneDiv">
                             <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
@@ -130,24 +130,25 @@
                         <span class="text-danger" asp-validation-for="City"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
-                            <select asp-for="State" class="form-select">
-                                <option>guj</option>
-                                <option>raj</option>
-                                <option>md</option>
+                        <div class="form-floating  w-100 h-100 ">
+                            <select asp-for="Regionid" class="form-select">
+                                @foreach (var i in Model.Region)
+                                {
+                                    <option value="@i.Id">@i.value</option>
+                                }
                             </select>
                             <label for="">State</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Zip" type="text" class="form-control" placeholder="">
+                            <input asp-for="Zip" type="text" class="form-control zipcode" placeholder="">
                             <label for="">Zip</label>
                         </div>
                         <span class="text-danger" asp-validation-for="Zip"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating phone-div w-100 h-100 " id="phoneDiv">
                             <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" id="otherPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
@@ -160,14 +161,14 @@
                 <div class="row g-2 m-1">
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Businessname" type="text" class="form-control" placeholder="">
+                            <input asp-for="Businessname" type="text" class="form-control businessDetail" placeholder="">
                             <label for="">Business Name</label>
                         </div>
                         <span class="text-danger" asp-validation-for="Businessname"></span>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating">
-                            <input asp-for="Businesswebsite" type="text" class="form-control" placeholder="">
+                            <input asp-for="Businesswebsite" type="text" class="form-control businessDetail" placeholder="">
                             <label for="floatingSelectGrid">Business website</label>
                         </div>
                         <span class="text-danger" asp-validation-for="Businesswebsite"></span>
@@ -187,7 +188,7 @@
                     </div>
                     <div class="col-md-12">
                         <div class="form-floating m-1 form-div">
-                            <textarea asp-for="Adminnotes" class="form-control" placeholder="Leave a comment here" id="addNote"
+                            <textarea asp-for="Adminnotes" class="form-control adminNote" placeholder="Leave a comment here" id="addNote"
                                       style="height: 100px"></textarea>
                             <label for="">Admin Notes</label>
                         </div>
