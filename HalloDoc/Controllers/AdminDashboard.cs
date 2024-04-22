@@ -5,7 +5,7 @@ using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using HalloDoc.Services;
-using HalloDoc.DataAccess.utils;    
+using HalloDoc.DataAccess.utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Execution;
 using System.IdentityModel.Tokens.Jwt;
@@ -420,15 +420,19 @@ namespace HalloDoc.Controllers
 
             if (PhysicianSelect == 0 || string.IsNullOrEmpty(RegionSelect))
             {
-                _notyf.Warning("Login Failed");
+                _notyf.Warning("Failed!!");
                 return BadRequest(new { error = "Invalid data provided" });
             }
+            else
+            {
 
-            _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId, AspId);
 
-            //return RedirectToAction("Dashboard");
-            _notyf.Success("Physician Assigned Successfully.");
-            return Ok(new { success = true });
+                _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId, AspId);
+
+                //return RedirectToAction("Dashboard");
+                _notyf.Success("Physician Assigned Successfully.");
+                return Ok(new { success = true });
+            }
         }
 
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
@@ -452,18 +456,19 @@ namespace HalloDoc.Controllers
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             int adminId = _adminRepo.GetAdminId(AspId);
-
+            int id = _adminRepo.GetReqId(obj.reqId);
             if (obj.formFile != null && obj.formFile.Length > 0)
             {
                 _loginRepo.uploadFile(obj.formFile, "RequestData\\" + obj.reqId, obj.formFile.FileName.ToString());
-                _adminRepo.ViewUploadFile(obj.formFile.FileName.ToString(), obj.reqId, adminId);
+                var reqid = _adminRepo.ViewUploadFile(obj.formFile.FileName.ToString(), obj.reqId, adminId);
                 _notyf.Success("File uploaded.");
+                return RedirectToAction("ViewUpload", new { reqClientId = id });
             }
             else
             {
                 _notyf.Error("Select File First.");
+                return RedirectToAction("ViewUpload", new { reqClientId = id });
             }
-            return RedirectToAction("ViewUpload", new { reqClientId = obj.reqId });
         }
 
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
@@ -878,7 +883,7 @@ namespace HalloDoc.Controllers
         [HttpPost]
 
         [RoleAuth((int)enumsFile.adminRoles.Provider)]
-        public IActionResult CreateProvider( EditProvider obj)
+        public IActionResult CreateProvider(EditProvider obj)
         {
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
@@ -891,7 +896,7 @@ namespace HalloDoc.Controllers
                 var phyId = _adminRepo.CreateProvider(obj, pass, AspId);
 
 
-                if (obj.PhySign != null)    
+                if (obj.PhySign != null)
                 {
                     _loginRepo.uploadFile(obj.PhySign, "ProviderData\\" + phyId, obj.PhySign.FileName.ToString());
                 }
@@ -932,7 +937,7 @@ namespace HalloDoc.Controllers
                     kvp => kvp.Key,
                     kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToList());
 
-                return Json(new {success = false, errors = errors});
+                return Json(new { success = false, errors = errors });
             }
         }
 
@@ -1080,7 +1085,7 @@ namespace HalloDoc.Controllers
         }
         [HttpPost]
         [RoleAuth((int)enumsFile.adminRoles.Accounts)]
-        public IActionResult EditAdmin( CreateAdminViewModel obj)
+        public IActionResult EditAdmin(CreateAdminViewModel obj)
         {
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
@@ -1088,7 +1093,7 @@ namespace HalloDoc.Controllers
 
 
             _adminRepo.EditAdmin(obj, AspId);
-            return RedirectToAction("EditAdmin",obj.Adminid);
+            return RedirectToAction("EditAdmin", obj.Adminid);
         }
 
         [RoleAuth((int)enumsFile.adminRoles.Accounts)]

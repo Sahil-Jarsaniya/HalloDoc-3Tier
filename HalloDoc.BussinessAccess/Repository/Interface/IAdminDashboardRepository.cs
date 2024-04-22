@@ -46,7 +46,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public DocumentViewModel ViewUpload(int reqClientId);
 
-        public void ViewUploadFile(string file, int reqId, int adminId);
+        public int ViewUploadFile(string file, int reqId, int adminId);
+        public int GetReqId(int reqId);
 
         public void DeleteFile(int ReqClientId, string FileName);
 
@@ -65,6 +66,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public Encounter Encounter(int reqClientId);
         public void Encounter(Encounter obj);
 
+        public void finalizedForm(int id);
         public int GetStatus(int reqClientId);
 
         public List<Physician> RequestSupportDTY();

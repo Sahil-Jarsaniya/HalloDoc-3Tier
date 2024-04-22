@@ -949,28 +949,24 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\11116016_415.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\11116016_415.jpg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\10\\Screenshot (3).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\10\\Screenshot (3).png"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\7768657_3763028.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\7768657_3763028.jpg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\11\\CreateProvider (1) (1) (1) (4).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\11\\CreateProvider (1) (1) (1) (4).png"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\Documents_20240226092436.zip",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Documents_20240226092436.zip"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\11\\Digital_Signature.png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\11\\Digital_Signature.png"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\Grid (1).xls",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Grid (1).xls"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\11\\HalloDoc - DB (2).xlsx",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\11\\HalloDoc - DB (2).xlsx"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\HalloDoc - DB (1).xlsx",
-      "PackagePath": "staticwebassets\\uploadedFiles\\HalloDoc - DB (1).xlsx"
-    },
-    {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\IMG-20231025-WA0006.jpg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\IMG-20231025-WA0006.jpg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\11\\Screenshot (3).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\11\\Screenshot (3).png"
     },
     {
       "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\14\\cloud_upload (1).svg",
@@ -1117,6 +1113,10 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\2\\7774236_3736765.jpg"
     },
     {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\2\\CreateProvider (1) (1) (1) (4).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\2\\CreateProvider (1) (1) (1) (4).png"
+    },
+    {
       "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\30\\box-arrow-right (1).svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\30\\box-arrow-right (1).svg"
     },
@@ -1147,6 +1147,74 @@
     {
       "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\list.svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\list.svg"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\CreateProvider (1) (1) (1).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\CreateProvider (1) (1) (1).png"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\CreateProvider (1) (1).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\CreateProvider (1) (1).png"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\FinalizedEncounterForm (4) (1) (2).pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\FinalizedEncounterForm (4) (1) (2).pdf"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\FinalizedEncounterForm (4) (2).pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\FinalizedEncounterForm (4) (2).pdf"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\HalloDoc - DB.xlsx",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\HalloDoc - DB.xlsx"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\MVC.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\MVC.pdf"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\Phase 1 - Training Plan .net.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\Phase 1 - Training Plan .net.pdf"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\SRS-23-24-Trainees-30Jan.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\SRS-23-24-Trainees-30Jan.pdf"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\SRS-23-24-Trainees.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\SRS-23-24-Trainees.pdf"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\Test Instructions (2).pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\Test Instructions (2).pdf"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\Test Instructions.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\Test Instructions.pdf"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\sheet (4).xlsx",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\sheet (4).xlsx"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\104\\sheet.xlsx",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\104\\sheet.xlsx"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\116\\.net-Whole-Plane-2024.pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\116\\.net-Whole-Plane-2024.pdf"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\116\\CreateProvider.png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\116\\CreateProvider.png"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\116\\Screenshot (2).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\116\\Screenshot (2).png"
+    },
+    {
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\117\\CreateProvider (1).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\117\\CreateProvider (1).png"
     },
     {
       "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\76\\Test Instructions.pdf",
@@ -1185,96 +1253,64 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\88\\FinalizedEncounterForm (1).pdf"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees-21Feb24.pdf",
-      "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees-21Feb24.pdf"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\CreateProvider (1) (1).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\90\\CreateProvider (1) (1).png"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\SRS-23-24-Trainees-8March24.pdf",
-      "PackagePath": "staticwebassets\\uploadedFiles\\SRS-23-24-Trainees-8March24.pdf"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\FinalizedEncounterForm (4) (1).pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\90\\FinalizedEncounterForm (4) (1).pdf"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\Test Instructions.pdf",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Test Instructions.pdf"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\FinalizedEncounterForm (4) (2).pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\90\\FinalizedEncounterForm (4) (2).pdf"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\Updated-Training-Plan-20March24.pdf",
-      "PackagePath": "staticwebassets\\uploadedFiles\\Updated-Training-Plan-20March24.pdf"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\FinalizedEncounterForm (4).pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\90\\FinalizedEncounterForm (4).pdf"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\SRS-23-24-Trainees-8March24 (5).pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\90\\SRS-23-24-Trainees-8March24 (5).pdf"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\box-arrow-right (1).svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\box-arrow-right (1).svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\Screenshot (2) (3).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\90\\Screenshot (2) (3).png"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\box-arrow-right.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\box-arrow-right.svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\box-arrow-right.svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\90\\box-arrow-right.svg"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\check-circle.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\check-circle.svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\cloud_upload (2).svg",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\90\\cloud_upload (2).svg"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\clock (3).svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\clock (3).svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\94\\CreateProvider (1).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\94\\CreateProvider (1).png"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\clock.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\clock.svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\94\\FinalizedEncounterForm (4).pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\94\\FinalizedEncounterForm (4).pdf"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\cloud-arrow-down.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\cloud-arrow-down.svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\96\\Screenshot (2).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\96\\Screenshot (2).png"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\cloud_upload (1).svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\cloud_upload (1).svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\96\\Screenshot (3).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\96\\Screenshot (3).png"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\cloud_upload.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\cloud_upload.svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\99\\CreateProvider (1).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\99\\CreateProvider (1).png"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\dark_mode_black_24dp.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\dark_mode_black_24dp.svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\99\\FinalizedEncounterForm (4) (1).pdf",
+      "PackagePath": "staticwebassets\\uploadedFiles\\RequestData\\99\\FinalizedEncounterForm (4) (1).pdf"
     },
     {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\database SCHEMA.ods",
-      "PackagePath": "staticwebassets\\uploadedFiles\\database SCHEMA.ods"
-    },
-    {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\exclamation.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\exclamation.svg"
-    },
-    {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\journal-medical.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\journal-medical.svg"
-    },
-    {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\list.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\list.svg"
-    },
-    {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\plus-lg.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\plus-lg.svg"
-    },
-    {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\plus.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\plus.svg"
-    },
-    {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\telephone.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\telephone.svg"
-    },
-    {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\user-doctor-solid.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\user-doctor-solid.svg"
-    },
-    {
-      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\user_circle.svg",
-      "PackagePath": "staticwebassets\\uploadedFiles\\user_circle.svg"
+      "Id": "G:\\h1\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\Screenshot (3).png",
+      "PackagePath": "staticwebassets\\uploadedFiles\\Screenshot (3).png"
     },
     {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.HalloDoc.Microsoft.AspNetCore.StaticWebAssets.props",

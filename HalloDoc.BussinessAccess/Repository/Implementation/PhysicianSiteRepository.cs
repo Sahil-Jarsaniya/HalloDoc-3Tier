@@ -495,11 +495,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public void viewUplodPost(string file, int reqId, int phyId)
         {
-            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqId).FirstOrDefault();
             Requestwisefile requestwisefile = new Requestwisefile
             {
                 Filename = file,
-                Requestid = (int)reqClientRow.Requestid,
+                Requestid = reqId,
                 Createddate = DateTime.Now,
                 Physicianid = phyId
             };

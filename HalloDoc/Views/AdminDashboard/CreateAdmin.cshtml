@@ -161,39 +161,11 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
+    <script src="~/js/Validation.js"></script>
     <script>
 
         $("#CreateAdminBtn").click(function () {
             $("#CountryFlag").val($(".iti__selected-dial-code").text());
         })
-        //$("#CreateAdminBtn").click(function () {
-        //    var selectedRegion = [];
-        //    $(".regionCheckbox").each(function () {
-
-        //        var checkboxdata = {
-        //            Id: parseInt($(this).attr('id')),
-        //            value: $(this).val(),
-        //            Checked: $(this).is(':checked')
-        //        };
-
-        //        selectedRegion.push(checkboxdata);
-        //    })
-
-        //    var formdata = new FormData($("#CreateProviderForm")[0]);
-
-        //    formdata.append('selectedRegion', JSON.stringify(selectedRegion));
-
-        //    $.ajax({
-        //        url: '/AdminDashboard/CreateAdmin',
-        //        type: 'POST',
-        //        data: formdata,
-        //        processData: false,
-        //        contentType: false,
-        //        success: function(){
-        //            window.location.href("/AdminDashboard/CreateAdmin");
-        //        }
-        //    })
-
-        //})
     </script>
 }

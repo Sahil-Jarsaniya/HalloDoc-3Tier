@@ -21,7 +21,7 @@ namespace HalloDoc.Controllers
         private readonly IPatientRepository _patientrepo;
         private readonly INotyfService _notyf;
         private readonly IRequestRepository _requestRepo;
-        public PatientController( IPatientRepository patientrepo, INotyfService notyf, IRequestRepository requestRepo)
+        public PatientController(IPatientRepository patientrepo, INotyfService notyf, IRequestRepository requestRepo)
         {
             _patientrepo = patientrepo;
             _notyf = notyf;
@@ -55,13 +55,13 @@ namespace HalloDoc.Controllers
         [HttpPost]
         public IActionResult Document(UploadFileViewModel obj)
         {
-            if(obj.formFile != null)
+            if (obj.formFile != null)
             {
 
-            var id = _patientrepo.Document(obj);
+                var id = _patientrepo.Document(obj);
 
-            _notyf.Success("Successfully Uploaded");
-            return RedirectToAction("Document", "Patient", new { reqId = id });
+                _notyf.Success("Successfully Uploaded");
+                return RedirectToAction("Document", "Patient", new { reqId = id });
             }
             else
             {

@@ -100,11 +100,11 @@ document.querySelectorAll(".notesInput").forEach(function (input) {
 });
 
 function validateNotes(notes, errorSpan, div){
-    if (notes.length >= 10) {
+    if (notes.length == 0) {
         errorSpan.textContent = "";
         div.classList.remove("invalidInput");
     } else {
-        errorSpan.textContent = "Notes must be at least 10 characters long";
+        errorSpan.textContent = "Notes cant be empty!";
         div.classList.add("invalidInput");
     }
 };

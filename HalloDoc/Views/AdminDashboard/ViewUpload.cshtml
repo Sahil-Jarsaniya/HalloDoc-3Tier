@@ -69,7 +69,7 @@
                         <span class="">@item.createdate</span><br />
                         <span class="">
                             <input value="@item.ReqClientId" class="ReqClientId" hidden>
-                            <a href="/uploadedFiles/RequestData/@item.ReqClientId/@item.Filename" class="btn btn-outline-primary" download>
+                            <a href="/uploadedFiles/RequestData/@item.RequestId/@item.Filename" class="btn btn-outline-primary" download>
                                 <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
                             </a>
                             <a class="btn btn-outline-primary DeleteFile">
@@ -105,7 +105,7 @@
                             <td>@item.createdate</td>
                             <td>
                                 <input value="@item.ReqClientId" class="ReqClientId" hidden>
-                                <a href="~/uploadedFiles/RequestData/@item.ReqClientId/@item.Filename" class="btn downloadFile"
+                                <a href="~/uploadedFiles/RequestData/@item.RequestId/@item.Filename" class="btn downloadFile"
                                    style="color: #01bce9; border: 1px solid #01bce9;" download>
                                     <img id="uploadFile" src="~/images/cloud-arrow-down.svg" />
                                 </a>

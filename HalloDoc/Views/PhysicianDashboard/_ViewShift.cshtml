@@ -47,11 +47,15 @@
                         </fieldset><br />
                         @if (Model.status != 2)
                         {
+                            @if (Model.Startdate >= DateOnly.FromDateTime(DateTime.Now))
+                            {
                             <button type="reset" class="btn btn-primary d-none me-1 float-end" id="cancelBtn" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary me-1 d-none float-end" id="saveBtn">Save</button>
                             <button type="button" class="btn btn-danger me-1 float-end" id="deleteBtn" data-id="@Model.ShiftDetailId">Delete</button>
                             <button type="button" class="btn btn-primary me-1 float-end" id="editBtn" data-id="@Model.ShiftDetailId">Edit</button>
-                            <button type="button" class="btn btn-primary me-1 float-end" id="reurnBtn" data-id="@Model.ShiftDetailId">Return</button>
+
+                                <button type="button" class="btn btn-primary me-1 float-end" id="reurnBtn" data-id="@Model.ShiftDetailId">Return</button>
+                            }
                         }
                     </form>
                 </div>

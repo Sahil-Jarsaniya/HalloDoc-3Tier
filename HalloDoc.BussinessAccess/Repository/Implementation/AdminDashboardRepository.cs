@@ -110,7 +110,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                   City = rc.City,
                                   State = rc.State,
                                   Zipcode = rc.Zipcode,
-                                  Notes = _db.Requeststatuslogs.Where(x => x.Requestid == req.Requestid).OrderByDescending(x => x.Createddate).Select(x => x.Notes).FirstOrDefault() ?? "-",
+                                  Notes =rc.Notes ?? "-",
                                   reqTypeId = req.Requesttypeid,
                                   Regionid = rc.Regionid,
                                   Email = rc.Email,
@@ -845,7 +845,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                               };
             var uploadData = new UploadFileViewModel
             {
-                reqId = reqClientId,
+                reqId = (int)reqId.Requestid,
                 formFile = null
             };
             var data = new DocumentViewModel
@@ -859,19 +859,25 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             return data;
         }
-        public void ViewUploadFile(string file, int reqId, int adminId)
+        public int ViewUploadFile(string file, int reqId, int adminId)
         {
-            var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqId).FirstOrDefault();
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestid == reqId).FirstOrDefault();
             Requestwisefile requestwisefile = new Requestwisefile
             {
                 Filename = file,
-                Requestid = (int)reqClientRow.Requestid,
+                Requestid = reqId,
                 Createddate = DateTime.Now,
                 Adminid = adminId
             };
 
             _db.Requestwisefiles.Add(requestwisefile);
             _db.SaveChanges();
+
+            return reqClientRow.Requestclientid;
+        }
+        public int GetReqId(int reqId)
+        {
+            return (int)_db.Requestclients.FirstOrDefault(X => X.Requestid == reqId).Requestclientid;
         }
 
         public void DeleteFile(int reqClientId, string FileName)
@@ -1098,6 +1104,13 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
         }
 
+        public void finalizedForm(int id)
+        {
+            Encounter encounter = _db.Encounters.FirstOrDefault(x => x.EncounterId == id);
+            encounter.Isfinalized = true;
+            _db.Encounters.Update(encounter);
+            _db.SaveChanges();
+        }
         public int GetStatus(int reqClientId)
         {
             Requestclient? requestclient = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();

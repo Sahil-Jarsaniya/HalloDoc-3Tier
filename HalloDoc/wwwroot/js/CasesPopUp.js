@@ -84,7 +84,7 @@ $("#ConfirmAssignBtn").click(function () {
             data: { reqClientId: reqClientId, addNote: addNote, PhysicianSelect: PhysicianSelect, RegionSelect: RegionSelect },
             success: function (result) {
                 $(".CloseModal").click();
-                location.reload();
+       /*         location.reload();*/
             },
             error: function (error) {
                 console.log(error);

@@ -16,7 +16,7 @@
     </div>
     <div class="container-fluid d-flex justify-content-center mt-4">
 
-        <form method="post" asp-action="EncounterForm" asp-controller="PhysicianDashboard" class="viewCaseForm form-floating shadow patient-request-form p-3">
+        <form method="post" asp-action="EncounterForm" asp-controller="PhysicianDashboard" id="EncounterForm" class="viewCaseForm form-floating shadow patient-request-form p-3">
             <span class="fs-2 m-auto" style="color:#01bce9">
                 Medical Report-Confidential
             </span>
@@ -287,7 +287,21 @@
             </div>
             <button type="reset" class="btn btn-outline-primary float-end m-1">Cancel</button>
             <button type="submit" class="btn btn-primary float-end m-1">Save Changes</button>
-            <button type="button" class="btn btn-secondary float-end m-1">Finalize</button>
+            <button type="button" id="finalizedBtn" data-id="@Model.EncounterId" class="btn btn-secondary float-end m-1">Finalize</button>
         </form>
     </div>
 </div>
+
+<script>
+    $("#finalizedBtn").click(function () {
+        $.ajax({
+            url: '/PhysicianDashboard/finalizedencounter',
+            type: 'POST',
+            data: { id: $(this).data('id') },
+            success: function (res) {
+                debugger;
+                $("#EncounterForm").submit();
+            }
+        })
+    })
+</script>

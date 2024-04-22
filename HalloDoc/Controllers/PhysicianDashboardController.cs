@@ -238,19 +238,20 @@ namespace HalloDoc.Controllers
 
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
         public IActionResult UploadDocument(UploadFileViewModel obj)
-        {
+            {
             var phyId = _phyRepo.GetPhysicianId(GetAspID());
+            int id = _adminRepo.GetReqId(obj.reqId);
             if (obj.formFile != null && obj.formFile.Length > 0)
             {
                 _loginRepo.uploadFile(obj.formFile, "RequestData\\" + obj.reqId, obj.formFile.FileName.ToString());
-                _phyRepo.viewUplodPost(obj.formFile.Name, obj.reqId, phyId);
+                _phyRepo.viewUplodPost(obj.formFile.FileName, obj.reqId, phyId);
                 _notyf.Success("File uploaded.");
             }
             else
             {
                 _notyf.Error("Select File First.");
             }
-            return RedirectToAction("ViewUpload", new { reqClientId = obj.reqId });
+            return RedirectToAction("ViewUpload", new { reqClientId = id });
         }
 
         [RoleAuth((int)enumsFile.physicianRoles.SendOrders)]
@@ -323,6 +324,13 @@ namespace HalloDoc.Controllers
                 return View(obj);
             }
             return View();
+        }
+        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
+        public IActionResult finalizedencounter(int id)
+        {
+            _phyRepo.FinalizeEncounter(id);
+
+            return Json(new { success = true });
         }
 
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]

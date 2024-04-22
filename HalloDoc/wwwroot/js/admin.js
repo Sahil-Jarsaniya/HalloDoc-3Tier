@@ -107,20 +107,22 @@ switch (controller) {
         }
 }
 
-
-
 $(document).ready(function () {
 
 
     const patientPhoneInputElement = document.getElementById("patientPhone");
-    let patientIntlInput = window.intlTelInput(patientPhoneInputElement, {
-        utilsScript:
-            "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
-        preferredCountries: ["in"],
-        separateDialCode: true,
-        initialCountry: "in"
-    });
+    let patientIntlInput;
+    if (patientPhoneInputElement != null) {
 
+        patientIntlInput = window.intlTelInput(patientPhoneInputElement, {
+            utilsScript:
+                "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            preferredCountries: ["in"],
+            separateDialCode: true,
+            initialCountry: "in"
+        });
+
+    }
     const otherPhoneInputElement = document.getElementById("otherPhone");
     let otherIntlInput;
 
@@ -133,27 +135,29 @@ $(document).ready(function () {
             initialCountry: "in"
         });
     }
-    var div = document.getElementById("phoneDiv");
-    $("#patientPhone").on("input", function () {
-        console.log(patientIntlInput.isValidNumber());
-        if (!patientIntlInput.isValidNumber()) {
-            div.nextElementSibling.textContent = "Please Enter Valid Number";
-            this.parentNode.classList.add("invalidInput");
-        } else {
-            div.nextElementSibling.textContent = "";
-            this.parentNode.classList.remove("invalidInput");
-        }
-    })
-    $("#patientPhone").blur(function () {
-        console.log(patientIntlInput.isValidNumber());
-        if (!patientIntlInput.isValidNumber()) {
-            div.nextElementSibling.textContent = "Please Enter Valid Number";
-            this.parentNode.classList.add("invalidInput");
-        } else {
-            div.nextElementSibling.textContent = "";
-            this.parentNode.classList.remove("invalidInput");
-        }
-    })
+    if (patientPhoneInputElement != null) {
+        var div = document.getElementById("phoneDiv");
+        $("#patientPhone").on("input", function () {
+            console.log(patientIntlInput.isValidNumber());
+            if (!patientIntlInput.isValidNumber()) {
+                div.nextElementSibling.textContent = "Please Enter Valid Number";
+                this.parentNode.classList.add("invalidInput");
+            } else {
+                div.nextElementSibling.textContent = "";
+                this.parentNode.classList.remove("invalidInput");
+            }
+        })
+        $("#patientPhone").blur(function () {
+            console.log(patientIntlInput.isValidNumber());
+            if (!patientIntlInput.isValidNumber()) {
+                div.nextElementSibling.textContent = "Please Enter Valid Number";
+                this.parentNode.classList.add("invalidInput");
+            } else {
+                div.nextElementSibling.textContent = "";
+                this.parentNode.classList.remove("invalidInput");
+            }
+        })
+    }
     if (otherPhoneInputElement != null) {
         var div2 = document.getElementById("phoneDiv2");
         $("#otherPhone").on("input", function () {

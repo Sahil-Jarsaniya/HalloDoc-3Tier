@@ -10,35 +10,49 @@
                 <div class="dropdown">
                     <form id="CreateShiftForm">
 
-                        <select asp-for="Regionid" class="form-select form-select mb-3  RegionSelect" aria-label="Large select example">
-                            <option>Select Region</option>
-                            @foreach (var item in Model.Regions)
-                            {
-                                <option value="@item.Regionid">@item.Name</option>
-                            }
-                        </select>
-                        <select asp-for="Physicianid" class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
-                            <option>Select Physician</option>
-                        </select>
+
+
 
                         <div class="row g-2">
                             <div class="col-12">
+                                <select asp-for="Regionid" class="form-select form-select mb-3  RegionSelect" id="RegionSelect" aria-label="Large select example">
+                                    <option value="0" disabled="disabled"> Select Region</option>
+                                    @foreach (var item in Model.Regions)
+                                    {
+                                        <option value="@item.Regionid">@item.Name</option>
+                                    }
+                                </select>
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-12">
+                                <select asp-for="Physicianid" class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
+                                    <option value="0">Select Physician</option>
+                                </select>
+                                <div class="text-danger"></div>
+                            </div>
+                            <div class="col-12">
                                 <div class="form-floating">
-                                    <input asp-for="Startdate" type="date" class="form-control" min="@DateTime.Now.ToShortDateString()" placeholder="">
+                                    <input asp-for="Startdate" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="">
                                     <label for="">ShiftDate</label>
                                 </div>
+                                <span class="text-danger" asp-validation-for="Startdate"></span>
                             </div>
                             <div class="col-6">
                                 <div class="form-floating">
-                                    <input asp-for="StartTime" type="time" class="form-control" placeholder="">
+                                    <input asp-for="StartTime" type="time" id="StartTime" class="form-control" placeholder="">
                                     <label for="">start</label>
                                 </div>
+                                <span class="text-danger" asp-validation-for="StartTime"></span>
                             </div>
                             <div class="col-6">
                                 <div class="form-floating">
-                                    <input asp-for="EndTime" type="time" class="form-control" placeholder="">
+                                    <input asp-for="EndTime" type="time" id="EndTime" class="form-control" placeholder="">
                                     <label for="">End</label>
                                 </div>
+                                <span class="text-danger" asp-validation-for="EndTime"></span>
+                            </div>
+                            <div class="col-12">
+                                <span class="text-danger" id="timeError"></span>
                             </div>
                         </div>
                         <div class="row g-2 m-1">
@@ -134,33 +148,73 @@
         })
     })
 
+    $("#StartTime").change(function () {
+        var EndTime = $(this).val();
+        var startTime = $("#EndTime").val();
+        if (startTime <= EndTime) {
+            $("#timeError").text("Select Proper Time!!");
+            $("#SaveShiftBtn").attr('disabled', 'disabled');
+            console.log("error")
+        } else {
+            console.log("error n")
+            $("#SaveShiftBtn").removeAttr('disabled');
+            $("#timeError").text("");
+        }
+    })
+    $("#EndTime").change(function () {
+        var EndTime = $(this).val();
+        var startTime = $("#StartTime").val();
+        if (startTime >= EndTime) {
+            $("#timeError").text("Select Proper Time!!");
+            $("#SaveShiftBtn").attr('disabled', 'disabled');
+            console.log("error")
+        } else {
+            console.log("error n")
+            $("#timeError").text("");
+            $("#SaveShiftBtn").removeAttr('disabled');
+        }
+    })
+
+
+
     $("#SaveShiftBtn").click(function () {
-        console.log("sds");
-        var selectedDays = [];
-        $(".DaysCheckbox").each(function () {
 
-            var checkboxdata = {
-                Id: parseInt($(this).attr('id')),
-                value: $(this).val(),
-                Checked: $(this).is(':checked')
-            };
+        if ($("#RegionSelect").val() == null || $("#RegionSelect").val() != null) {
+           document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!"
+        }
+        if ($("#PhysicianSelect").val() == null || $("#PhysicianSelect").val() != 0) {
+           document.getElementById("PhysicianSelect").nextElementSibling.textContent = "Select Physician!!"
+        }
 
-            selectedDays.push(checkboxdata);
-        })
+        if ($("#RegionSelect").val() != null && $("#RegionSelect").val() != 0 && $("#PhysicianSelect").val() != null && $("#PhysicianSelect").val() != 0) {
 
-        var formdata = new FormData($("#CreateShiftForm")[0]);
+            var selectedDays = [];
+            $(".DaysCheckbox").each(function () {
 
-        formdata.append('selectedDays', JSON.stringify(selectedDays));
-        $.ajax({
-            url: '/ProvidersMenu/CreateShift',
-            type: 'POST',
-            data: formdata,
-            processData: false,
-            contentType: false,
-            success: function () {
-                $("#CreateShiftModel").modal('toggle');
-                location.reload();
-            }
-        })
+                var checkboxdata = {
+                    Id: parseInt($(this).attr('id')),
+                    value: $(this).val(),
+                    Checked: $(this).is(':checked')
+                };
+
+                selectedDays.push(checkboxdata);
+            })
+
+            var formdata = new FormData($("#CreateShiftForm")[0]);
+
+            formdata.append('selectedDays', JSON.stringify(selectedDays));
+            $.ajax({
+                url: '/ProvidersMenu/CreateShift',
+                type: 'POST',
+                data: formdata,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    $("#CreateShiftModel").modal('toggle');
+                    location.reload();
+                }
+            })
+        }
+
     })
 </script>

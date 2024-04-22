@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating w-100 h-100 ">
                             <select asp-for="Roleid" class="form-select mb-3" id="role" disabled>
                                 @foreach (var item in Model.Role)
                                 {
@@ -115,7 +115,7 @@
                             <span class="text-danger" asp-validation-for="Email"></span>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-floating phone-div w-100 h-100 ">
+                            <div class="form-floating phone-div w-100 h-100 " id="phoneDiv">
                                 <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                                 <label for="">Phone</label>
                             </div>
@@ -189,7 +189,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-floating phone-div w-100 h-100 ">
+                            <div class="form-floating w-100 h-100 ">
                                 <select asp-for="State" class="form-select">
                                     <option>guj</option>
                                     <option>raj</option>
@@ -205,10 +205,11 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-floating phone-div w-100 h-100 ">
+                            <div class="form-floating phone-div w-100 h-100 " id="phoneDiv">
                                 <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" id="otherPhone" placeholder="">
                                 <label for="">Phone</label>
                             </div>
+                            <span asp-validation-for="Altphone" class="text-danger"></span>
                         </div>
                     </div>
 
@@ -272,12 +273,27 @@
                         <div class="col-md-2">
                             <div class="input-group m-1 mb-3">
 
-                                <button class="btn btn-primary">
+                                <button type="button" class="btn btn-primary" id="create-signature-btn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                         <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
                                     </svg>
                                     Create
                                 </button>
+
+                               
+
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div id="signature-div" style="display:none;">
+
+                                <canvas id="signature-pad" width="450" height="150" style="border: 1px solid #ddd;"></canvas>
+
+                                <div>
+                                    <button type="button" class="btn btn-outline-danger" id="clear-signature">Clear</button>
+                                    <button type="button" class="btn btn-outline-primary" id="save-signature">Save</button>
+                                </div>
+
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -298,11 +314,11 @@
 
             <form method="post" asp-action="EditProvider" asp-route-formid="5" asp-controller="AdminDashboard" enctype="multipart/form-data" class="viewCaseForm form-floating  patient-request-form p-3">
                 <h5>Onboarding</h5>
-                <input  asp-for="Physicianid" hidden />
+                <input asp-for="Physicianid" hidden />
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
-                        <input asp-for="Isagreementdoc" type="checkbox" id="Isagreementdoc" />
+                        <input asp-for="Isagreementdoc" type="checkbox" id="Isagreementdoc" value="@Model.Isagreementdoc"/>
                         <label asp-for="Isagreementdoc">Indeoendent Contractor Agreement </label>
                     </div>
                     <div class="col-auto">
@@ -323,7 +339,7 @@
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
-                        <input asp-for="Isbackgrounddoc" type="checkbox" id="Isbackgrounddoc" />
+                        <input asp-for="Isbackgrounddoc" type="checkbox" id="Isbackgrounddoc" value="@Model.Isbackgrounddoc"/>
                         <label asp-for="Isbackgrounddoc">Background Check </label>
                     </div>
                     <div class="col-auto">
@@ -344,7 +360,7 @@
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
-                        <input asp-for="Istrainingdoc" type="checkbox" id="Istrainingdoc" />
+                        <input asp-for="Istrainingdoc" type="checkbox" id="Istrainingdoc" value="@Model.Istrainingdoc"/>
                         <label asp-for="Istrainingdoc">Hippa Compliance</label>
                     </div>
                     <div class="col-auto">
@@ -365,7 +381,7 @@
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
-                        <input asp-for="Isnondisclosuredoc" type="checkbox" id="Isnondisclosuredoc" />
+                        <input asp-for="Isnondisclosuredoc" type="checkbox" id="Isnondisclosuredoc" value="@Model.Isnondisclosuredoc"/>
                         <label asp-for="Isnondisclosuredoc">Non Disclouser Agreement</label>
                     </div>
                     <div class="col-auto">
@@ -386,7 +402,7 @@
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
-                        <input asp-for="Islicensedoc" type="checkbox" id="Islicensedoc" />
+                        <input asp-for="Islicensedoc" type="checkbox" id="Islicensedoc" value="@Model.Islicensedoc"/>
                         <label asp-for="Islicensedoc">License Document  </label>
                     </div>
                     <div class="col-auto">
@@ -434,7 +450,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
-
+    <script src="~/js/Validation.js"></script>
 
     <script>
         $("#saveBtn1").click(function () {
@@ -577,31 +593,6 @@
             })
         })
 
-        ////Region Updation
-        //$("#saveBtn1").click(function () {
-        //    var selectedRegion = [];
-        //    var Physicianid = $("#Physicianid").val();
-        //    $(".regionCheckbox").each(function () {
-
-        //        var checkboxdata = {
-        //            Id: $(this).attr('id'),
-        //            value: $(this).val(),
-        //            Checked: $(this).is(':checked')
-        //        };
-
-        //        selectedRegion.push(checkboxdata);
-        //    })
-
-        //    $.ajax({
-        //        url: '/AdminDashboard/PhysicianRegionUpdate',
-        //        type: 'POST',
-        //        data: { selectedRegion: selectedRegion, Physicianid: Physicianid },
-        //    })
-
-        //    $("#EditProviderForm").submit();
-        //})
-
-
 
         $(document).ready(function () {
 
@@ -649,4 +640,60 @@
             $("#fileModal").modal('show');
         })
     </script>
+
+
+    @*Signature Script*@
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>  
+
+
+    <script>
+
+        function dataURLtoFile(dataurl, filename) {
+            var arr = dataurl.split(','),
+                mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[arr.length - 1]),
+                n = bstr.length,
+                u8arr = new Uint8Array(n);
+            while (n--) {
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, { type: mime });
+        }
+
+        $(document).ready(function ($) {
+
+            var canvas = document.getElementById("signature-pad");
+            var signaturePad = new SignaturePad(canvas);
+
+            $('#clear-signature').on('click', function () {
+                signaturePad.clear();
+            });
+
+            $('#save-signature').on('click', function () {
+                const signatureImage = signaturePad.toDataURL();
+                const fileName = "Digital_Signature.png";
+                console.log(signatureImage);
+                console.log(fileName);
+
+                let fileInputElement = document.getElementById('actualFileBtn2');
+
+                let container = new DataTransfer();
+                let data = new Blob();
+                let file = dataURLtoFile(signatureImage, fileName);
+                container.items.add(file);
+                console.log(container.files)
+                fileInputElement.files = container.files;
+
+                $('#signature-div').css("display", "none");
+
+            });
+
+            $('#create-signature-btn').click(function () {
+                $('#signature-div').css("display", "flex");
+            });
+
+        });
+
+    </script>
+
 }

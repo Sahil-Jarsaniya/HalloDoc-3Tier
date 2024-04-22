@@ -13,28 +13,28 @@
         @foreach (var item in Model.providerTableViewModels)
         {
             if (item.isDeleted == false || item.isDeleted == null)
-            {   
-            <tr>
-                <td>
-                    
-                    @if (item.isNotiOff)
-                    {
-                        <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" checked/>
-                    }
-                    else
-                    {
-                        <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" />
-                    }
-                </td>
-                <td>@item.Firstname @item.Lastname</td>
-                <td>@item.Roleid</td>
+            {
+                <tr>
+                    <td>
+
+                        @if (item.isNotiOff)
+                        {
+                            <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" checked />
+                        }
+                        else
+                        {
+                            <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" />
+                        }
+                    </td>
+                    <td>@item.Firstname @item.Lastname</td>
+                    <td>@item.Roleid</td>
                     <td>@item.onCallStatus</td>
-                <td>@item.Status</td>
-                <td>
-                    <button type="button" class="btn btn-outline-primary ContactProvider" data-email="@item.Email" data-mobile="@item.Mobile">Contact</button>
-                    <a asp-action="EditProvider" asp-controller="AdminDashboard" asp-route-Physicianid="@item.Physicianid" class="btn btn-outline-primary">Edit</a>
-                </td>
-            </tr>
+                    <td>@item.Status</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-primary ContactProvider" data-email="@item.Email" data-mobile="@item.Mobile">Contact</button>
+                        <a asp-action="EditProvider" asp-controller="AdminDashboard" asp-route-Physicianid="@item.Physicianid" class="btn btn-outline-primary">Edit</a>
+                    </td>
+                </tr>
             }
         }
     </tbody>
@@ -75,20 +75,22 @@
         </div>
     }
 </div>
+@section AdminScript{
 
-<script>
-    $(".ContactProvider").click(function () {
-        $("#Email").val($(this).data('email'));
-        $("#PhoneNumber").val($(this).data('mobile'));
-        $("#ContactProviderModal").modal('show');
-    });
-</script>
-<script>
-    function stopNoty(Physicianid) {
-        $.ajax({
-            url: '/AdminDashboard/StopNoty',
-            type: 'POST',
-            data: { Physicianid: Physicianid },
-        })
-    }
-</script>
+    <script>
+        $(".ContactProvider").click(function () {
+            $("#Email").val($(this).data('email'));
+            $("#PhoneNumber").val($(this).data('mobile'));
+            $("#ContactProviderModal").modal('show');
+        });
+    </script>
+    <script>
+        function stopNoty(Physicianid) {
+            $.ajax({
+                url: '/AdminDashboard/StopNoty',
+                type: 'POST',
+                data: { Physicianid: Physicianid },
+            })
+        }
+    </script>       
+}

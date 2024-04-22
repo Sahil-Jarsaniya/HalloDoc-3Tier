@@ -70,9 +70,9 @@
                 <span asp-validation-for="ConciergeLastname" class="text-danger"></span>
             </div>
             <div class="col-md-6">
-                <div class="form-floating phone-div w-100 h-100 ">
+                <div class="form-floating phone-div w-100 h-100 " id="phoneDiv2">
                     <input asp-for="ConciergeCountryCode" value="" id="ConciergeCountryCode" hidden />
-                    <input asp-for="ConciergePhonenumber" type="tel" class="bussinessPhone form-control w-100 h-100" placeholder="">
+                    <input asp-for="ConciergePhonenumber" type="tel" class="bussinessPhone form-control w-100 h-100 " style="max-height: 58px" id="otherPhone" placeholder="">
                     <label for=""></label>
                 </div>
                 <span asp-validation-for="ConciergePhonenumber" class="text-danger"></span>
@@ -173,7 +173,7 @@
                 <span asp-validation-for="Email" class="text-danger " id="emailError"></span>
             </div>
             <div class="col-md-6">
-                <div class="form-floating phone-div w-100 h-100 ">
+                <div class="form-floating phone-div w-100 h-100 " id="phoneDiv">
                     <input asp-for="countryCode" id="patientCountryCode" hidden />
                     <input asp-for="Phonenumber" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                     <label for="">Phone</label>

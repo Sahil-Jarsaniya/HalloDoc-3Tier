@@ -294,37 +294,11 @@
             integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous">
     </script>
 
- 
+    <script src="~/js/Validation.js"></script>
     <script>
         $("#CreateAccountBtn").click(function () {
             $("#CountryFlag").val($(".iti__selected-dial-code").text());
         })
-        //$("#CreateAccountBtn").click(function () {
-        //    var selectedRegion = [];
-        //    $(".regionCheckbox").each(function () {
-
-        //        var checkboxdata = {
-        //            Id: parseInt($(this).attr('id')),
-        //            value: $(this).val(),
-        //            Checked: $(this).is(':checked')
-        //        };
-
-        //        selectedRegion.push(checkboxdata);
-        //    })
-
-        //    var formdata = new FormData($("#CreateProviderForm")[0]);   
-
-        //    formdata.append('selectedRegion', JSON.stringify(selectedRegion));
-
-        //    $.ajax({
-        //        url: '/AdminDashboard/CreateProvider',
-        //        type: 'POST',
-        //        data: formdata,
-        //        processData: false,
-        //        contentType: false,
-        //    })
-        //})
-
 
         $(document).ready(function () {
 

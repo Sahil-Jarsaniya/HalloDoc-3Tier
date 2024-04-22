@@ -158,10 +158,18 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var fileName = Path.GetFileName(obj.formFile.FileName);
 
                 //define path
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", "RequestData\\" + request.Requestid);
+
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                    Console.WriteLine("Folder created successfully.");
+                }
+
+                var fileaaaa = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", "RequestData\\" + request.Requestid, fileName);
 
                 // Copy the file to the desired location
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var stream = new FileStream(fileaaaa, FileMode.Create))
                 {
                     obj.formFile.CopyTo(stream);
                 }
@@ -282,10 +290,18 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var fileName = Path.GetFileName(obj.formFile.FileName);
 
                 //define path
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", "RequestData\\" + request.Requestid);
+
+                if (!Directory.Exists(filePath))
+                {   
+                    Directory.CreateDirectory(filePath);
+                    Console.WriteLine("Folder created successfully.");
+                }
+
+                var fileaaaa = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", "RequestData\\" + request.Requestid, fileName);
 
                 // Copy the file to the desired location
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var stream = new FileStream(fileaaaa, FileMode.Create))
                 {
                     obj.formFile.CopyTo(stream);
                 }
@@ -651,10 +667,18 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var fileName = Path.GetFileName(obj.formFile.FileName);
 
                 //define path
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", "RequestData\\" + request.Requestid);
+
+                if (!Directory.Exists(filePath))
+                {
+                    Directory.CreateDirectory(filePath);
+                    Console.WriteLine("Folder created successfully.");
+                }
+
+                var fileaaaa = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles",  "RequestData\\" + request.Requestid, fileName);
 
                 // Copy the file to the desired location
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var stream = new FileStream(fileaaaa, FileMode.Create))
                 {
                     obj.formFile.CopyTo(stream);
                 }

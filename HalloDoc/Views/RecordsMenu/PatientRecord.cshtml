@@ -148,23 +148,25 @@
         </div>
     </div>
 </div>
+@section AdminScript{
 
-<script>
-    $(".pageBtn").click(function () {
-        var pageNumber = $(this).data('page');
-        $.ajax({
-            url: '/RecordsMenu/PatientRecord',
-            type: 'POST',
-            data: {
-                pagenumber: pageNumber
-            },
-            success: function (result) {
-                $('#blockTable').html(result);
-            },
-            error: function (error) {
-                console.log(error);
-                alert('error fetching details')
-            },
+    <script>
+        $(".pageBtn").click(function () {
+            var pageNumber = $(this).data('page');
+            $.ajax({
+                url: '/RecordsMenu/PatientRecord',
+                type: 'POST',
+                data: {
+                    pagenumber: pageNumber
+                },
+                success: function (result) {
+                    $('#blockTable').html(result);
+                },
+                error: function (error) {
+                    console.log(error);
+                    alert('error fetching details')
+                },
+            })
         })
-    })
-</script>
+    </script>
+}
