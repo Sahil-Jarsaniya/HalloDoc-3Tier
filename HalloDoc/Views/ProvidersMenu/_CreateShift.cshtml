@@ -133,6 +133,13 @@
 
     $(".RegionSelect").change(function () {
         var selectedRegion = $(this).val();
+
+        if (selectedRegion == null || selectedRegion == 0) {
+            document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!"
+        } else {
+            document.getElementById("RegionSelect").nextElementSibling.textContent = "";
+        }
+
         $.ajax({
             url: '/AdminDashboard/FilterPhysician',
             method: 'POST',
@@ -141,11 +148,21 @@
             },
             success: function (response) {
                 $(".PhysicianSelect").empty();
+                $(".PhysicianSelect").append($('<option>').text('Select Physician').val(0));
                 $.each(response, function (index, doctor) {
                     $(".PhysicianSelect").append($('<option>').text(doctor.physicians).val(doctor.physicianId));
                 })
             }
         })
+    })
+
+    $(".PhysicianSelect").change(function () {
+        console.log($("#PhysicianSelect").val())
+        if ($("#PhysicianSelect").val() == null || $("#PhysicianSelect").val() == 0) {
+            document.getElementById("PhysicianSelect").nextElementSibling.textContent = "Select Physician!!"
+        } else {
+            document.getElementById("PhysicianSelect").nextElementSibling.textContent = "";
+        }
     })
 
     $("#StartTime").change(function () {
@@ -179,11 +196,11 @@
 
     $("#SaveShiftBtn").click(function () {
 
-        if ($("#RegionSelect").val() == null || $("#RegionSelect").val() != null) {
-           document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!"
+        if ($("#RegionSelect").val() == null || $("#RegionSelect").val() == 0) {
+            document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!"
         }
-        if ($("#PhysicianSelect").val() == null || $("#PhysicianSelect").val() != 0) {
-           document.getElementById("PhysicianSelect").nextElementSibling.textContent = "Select Physician!!"
+        if ($("#PhysicianSelect").val() == null || $("#PhysicianSelect").val() == 0) {
+            document.getElementById("PhysicianSelect").nextElementSibling.textContent = "Select Physician!!"
         }
 
         if ($("#RegionSelect").val() != null && $("#RegionSelect").val() != 0 && $("#PhysicianSelect").val() != null && $("#PhysicianSelect").val() != 0) {

@@ -3,31 +3,39 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #01bce9; color:white;">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Shift</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">View Shift</h1>
                 <button type="button" class="btn-close closeBtn" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="dropdown">
                     <form id="ViewShiftForm" asp-action="UpdateShift" asp-controller="ProvidersMenu" asp-route-id="@Model.ShiftDetailId">
                         <fieldset id="fieldset" disabled>
-                            <select asp-for="Regionid" class="form-select form-select mb-3  RegionSelect" aria-label="Large select example">
-                                <option>Select Region</option>
-                                @foreach (var item in Model.Regions)
-                                {
-                                    if (item.Regionid == Model.Regionid)
-                                    {
-                                        <option value="@item.Regionid" selected>@item.Name</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Regionid">@item.Name</option>
-                                    }
-                                }
-                            </select>
-                            <select asp-for="Physicianid" class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
-                                <option value="@Model.Physicianid" selected>@Model.PhysicianName</option>
-                            </select>
+                          
                             <div class="row g-2">
+                                <div class="col-12">
+                                    <select asp-for="Regionid" class="form-select form-select mb-3  RegionSelect" id="RegionSelect" aria-label="Large select example">
+                                        <option value="0">Select Region</option>
+                                        @foreach (var item in Model.Regions)
+                                        {
+                                            if (item.Regionid == Model.Regionid)
+                                            {
+                                                <option value="@item.Regionid" selected>@item.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Regionid">@item.Name</option>
+                                            }
+                                        }
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="Regionid"></span>
+                                </div>
+                                <div class="col-12">
+
+                                    <select asp-for="Physicianid" class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
+                                        <option value="@Model.Physicianid" selected>@Model.PhysicianName</option>
+                                    </select>
+                                    <span class="text-danger" asp-validation-for="Physicianid"></span>
+                                </div>
                                 <div class="col-12">
                                     <div class="form-floating">
                                         <input asp-for="Startdate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" value="@Model.Startdate.ToString("yyyy-MM-dd")" class="form-control" placeholder="">
@@ -37,17 +45,20 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="form-floating">
-                                        <input asp-for="StartTime" type="time" class="form-control startTime" placeholder="">
+                                        <input asp-for="StartTime" type="time" class="form-control startTime" id="StartTime" placeholder="">
                                         <label for="">start</label>
                                     </div>
                                     <span asp-validation-for="StartTime" class="text-danger"></span>
                                 </div>
                                 <div class="col-6">
                                     <div class="form-floating">
-                                        <input asp-for="EndTime" type="time" class="form-control" placeholder="">
+                                        <input asp-for="EndTime" type="time" class="form-control" id="EndTime" placeholder="">
                                         <label for="">End</label>
                                     </div>
                                     <span asp-validation-for="EndTime" class="text-danger"></span>
+                                </div>
+                                <div class="col-12">
+                                    <span class="text-danger" id="timeError"></span>
                                 </div>
                             </div>
                         </fieldset><br />
@@ -72,6 +83,14 @@
 <script>
     $(".RegionSelect").change(function () {
         var selectedRegion = $(this).val();
+        if (selectedRegion == null || selectedRegion == 0) {
+            document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!";
+            $("#saveBtn").attr('disabled', 'disabled');
+        } else {
+            document.getElementById("RegionSelect").nextElementSibling.textContent = "";
+            $("#saveBtn").removeAttr('disabled');
+        }
+
         $.ajax({
             url: '/AdminDashboard/FilterPhysician',
             method: 'POST',
@@ -86,6 +105,19 @@
             }
         })
     })
+
+
+    $(".PhysicianSelect").change(function () {
+        console.log($("#PhysicianSelect").val())
+        if ($("#PhysicianSelect").val() == null || $("#PhysicianSelect").val() == 0) {
+            document.getElementById("PhysicianSelect").nextElementSibling.textContent = "Select Physician!!";
+            $("#saveBtn").attr('disabled', 'disabled');
+        } else {
+            document.getElementById("PhysicianSelect").nextElementSibling.textContent = "";
+            $("#saveBtn").removeAttr    ('disabled');
+        }
+    })
+
     $("#editBtn").click(function () {
         $("#fieldset").prop('disabled', false);
         $("#cancelBtn").removeClass('d-none');
@@ -140,4 +172,32 @@
     $(".closeBtn").click(function () {
         $("#CreateShiftModel").modal('toggle');
     })
+
+    $("#StartTime").change(function () {
+        var EndTime = $(this).val();
+        var startTime = $("#EndTime").val();
+        if (startTime <= EndTime) {
+            $("#timeError").text("Select Proper Time!!");
+            $("#saveBtn").attr('disabled', 'disabled');
+            console.log("error")
+        } else {
+            console.log("error n")
+            $("#saveBtn").removeAttr('disabled');
+            $("#timeError").text("");
+        }
+    })
+    $("#EndTime").change(function () {
+        var EndTime = $(this).val();
+        var startTime = $("#StartTime").val();
+        if (startTime >= EndTime) {
+            $("#timeError").text("Select Proper Time!!");
+            $("#saveBtn").attr('disabled', 'disabled');
+            console.log("error")
+        } else {
+            console.log("error n")
+            $("#timeError").text("");
+            $("#saveBtn").removeAttr('disabled');
+        }
+    })
+
 </script>

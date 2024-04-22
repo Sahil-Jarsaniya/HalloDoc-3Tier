@@ -619,26 +619,6 @@ namespace HalloDoc.Controllers
 
         #endregion
 
-        //[RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
-        //public IActionResult Encounter(int reqClientId, string option)
-        //{
-
-        //    var reqClientRow = _db.Requestclients.Where(x => x.Requestclientid == reqClientId).FirstOrDefault();
-        //    var reqRow = _db.Requests.Where(x => x.Requestid == reqClientRow.Requestid).FirstOrDefault();
-        //    if (option == "Consult")
-        //    {
-        //        reqRow.Status = 4;
-        //    }
-        //    else
-        //    {
-        //        reqRow.Status = 15;
-        //    }
-        //    _db.Requests.Update(reqRow);
-        //    _db.SaveChanges();
-
-        //    return RedirectToAction("Dashboard", new { status = reqRow.Status });
-        //}
-
 
         #region AdminProfile
 
