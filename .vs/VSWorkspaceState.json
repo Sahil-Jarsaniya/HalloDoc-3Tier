@@ -7,10 +7,11 @@
     "\\HalloDoc.BussinessAccess\\Repository\\Implementation",
     "\\HalloDoc\\Controllers",
     "\\HalloDoc\\Views",
+    "\\HalloDoc\\Views\\Home",
     "\\HalloDoc\\Views\\PhysicianDashboard",
     "\\HalloDoc\\wwwroot",
     "\\HalloDoc\\wwwroot\\js"
   ],
-  "SelectedNode": "\\HalloDoc.sln",
+  "SelectedNode": "\\HalloDoc\\Views\\Home\\ResetPassword.cshtml",
   "PreviewInSolutionExplorer": false
 }
