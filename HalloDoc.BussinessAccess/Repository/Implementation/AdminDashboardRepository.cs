@@ -1307,27 +1307,38 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public ProviderViewModel FilterProvider(int RegionId)
         {
+            TimeOnly current = TimeOnly.FromDateTime(DateTime.Now);
+            DateOnly date = DateOnly.FromDateTime(DateTime.Now);
             if (RegionId == 0)
             {
+
                 var region = from t1 in _db.Regions select t1;
-                var phy = from t1 in _db.Physicians
-                          join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
-                          join t3 in _db.Roles on t1.Roleid equals t3.Roleid
-                          join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId
-                          select new ProviderTableViewModel
-                          {
-                              Firstname = t1.Firstname,
-                              Lastname = t1.Lastname,
-                              Email = t1.Email,
-                              Mobile = t1.Mobile,
-                              isNotiOff = t2.Isnotificationstopped,
-                              Status = t4.StatusName,
-                              Roleid = t3.Name,
-                              Physicianid = t1.Physicianid
-                          };
+                var data1 = from t1 in _db.Shiftdetails
+                            join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
+                            join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
+                            where t1.Starttime <= current && t1.Endtime >= current && t1.Shiftdate == date && t1.Isdeleted != true
+                            select t2.Physicianid;
+
+                var data = (from t1 in _db.Physicians
+                            join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
+                            join t3 in _db.Roles on t1.Roleid equals t3.Roleid
+                            join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId
+                            select new ProviderTableViewModel
+                            {
+                                Firstname = t1.Firstname,
+                                Lastname = t1.Lastname,
+                                Email = t1.Email,
+                                Mobile = t1.Mobile,
+                                isNotiOff = t2.Isnotificationstopped,
+                                Status = t4.StatusName,
+                                Roleid = t3.Name,
+                                Physicianid = t1.Physicianid,
+                                isDeleted = t1.Isdeleted,
+                                onCallStatus = data1.FirstOrDefault(x => x == t1.Physicianid) == 0 ? "offDuty" : "OnDuty"
+                            }).ToList();
                 var provider = new ProviderViewModel
                 {
-                    providerTableViewModels = phy,
+                    providerTableViewModels = data,
                     Region = region
                 };
 
@@ -1336,26 +1347,34 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             else
             {
                 var region = from t1 in _db.Regions select t1;
-                var phy = from t1 in _db.Physicians
-                          join t3 in _db.Physiciannotifications on t1.Physicianid equals t3.Physicianid
-                          join t2 in _db.Physicianregions on t1.Physicianid equals t2.Physicianid
-                          join t4 in _db.Roles on t1.Roleid equals t4.Roleid
-                          join t5 in _db.PhysicianStatuses on t1.Status equals t5.StatusId
-                          where t2.Regionid == RegionId
-                          select new ProviderTableViewModel
-                          {
-                              Firstname = t1.Firstname,
-                              Lastname = t1.Lastname,
-                              Email = t1.Email,
-                              Mobile = t1.Mobile,
-                              isNotiOff = t3.Isnotificationstopped,
-                              Status = t5.StatusName,
-                              Roleid = t4.Name,
-                              Physicianid = t1.Physicianid
-                          };
+                var data1 = from t1 in _db.Shiftdetails
+                            join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
+                            join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
+                            where t1.Starttime <= current && t1.Endtime >= current && t1.Shiftdate == date && t1.Isdeleted != true
+                            select t2.Physicianid;
+
+                var data = (from t1 in _db.Physicians
+                            join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
+                            join t3 in _db.Roles on t1.Roleid equals t3.Roleid
+                            join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId
+                            join t5 in _db.Physicianregions on t1.Physicianid equals t5.Physicianid
+                            where t5.Regionid == RegionId
+                            select new ProviderTableViewModel
+                            {
+                                Firstname = t1.Firstname,
+                                Lastname = t1.Lastname,
+                                Email = t1.Email,
+                                Mobile = t1.Mobile,
+                                isNotiOff = t2.Isnotificationstopped,
+                                Status = t4.StatusName,
+                                Roleid = t3.Name,
+                                Physicianid = t1.Physicianid,
+                                isDeleted = t1.Isdeleted,
+                                onCallStatus = data1.FirstOrDefault(x => x == t1.Physicianid) == 0 ? "offDuty" : "OnDuty"
+                            }).ToList();
                 var provider = new ProviderViewModel
                 {
-                    providerTableViewModels = phy,
+                    providerTableViewModels = data,
                     Region = region
                 };
 
@@ -1402,7 +1421,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                              select new CheckBoxData
                              {
                                  Id = t1.Regionid,
-                                 value = t1.Abbreviation,
+                                 value = t1.Name,
                                  Checked = _db.Physicianregions.Any(x => x.Physicianid == phy.Physicianid && x.Regionid == t1.Regionid)
                              };
             var Role = _db.Roles.Where(x => x.Accounttype == 2);
@@ -1432,7 +1451,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Adminnotes = phy.Adminnotes,
                 Region = regionData,
                 Role = Role,
-                Statuses = status
+                Statuses = status,
+                Regionid = phy.Regionid
             };
 
             if (phy.Isagreementdoc == true)
@@ -1549,6 +1569,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             phy.Address2 = obj.Address2;
             phy.City = obj.City;
             phy.Zip = obj.Zip;
+            phy.Regionid = obj.Regionid;
             if (obj.Altphone != null)
             {
                 if (obj.Altphone.Contains("+"))
@@ -1691,7 +1712,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 Isnondisclosuredoc = obj.Isnondisclosuredoc,
                 Istrainingdoc = obj.Istrainingdoc,
                 Roleid = obj.Roleid,
-                Status = 1
+                Status = 1,
+                Regionid = obj.Regionid
             };
             _db.Physicians.Add(provider);
             _db.SaveChanges();

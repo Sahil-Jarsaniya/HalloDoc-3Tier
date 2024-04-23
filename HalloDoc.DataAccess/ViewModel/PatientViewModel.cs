@@ -68,6 +68,7 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(100)]
         public string? State { get; set; }
 
+        [Required(ErrorMessage = "You have to select State.")]
         public int regionId { get; set; }
 
         [Column("zipcode")]

@@ -162,7 +162,7 @@ namespace HalloDoc.Controllers
             bool x = _ProviderMenu.ReturnShift(shiftDetailId);
             if (x)
             {
-                _noty.Success("Shift Deleted");
+                _noty.Success("Shift Approved.");
                 return Ok(new { success = true });
             }
             else

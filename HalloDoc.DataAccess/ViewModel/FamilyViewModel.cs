@@ -38,6 +38,8 @@ namespace HalloDoc.DataAccess.ViewModel
         [Column("notes")]
         [StringLength(500)]
         public string? Notes { get; set; }
+
+        [Required(ErrorMessage = "You have to select State.")]
         public int regionId { get; set; }
 
         [Required(ErrorMessage = "Please Enter Name")]

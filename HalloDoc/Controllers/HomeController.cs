@@ -66,10 +66,10 @@ public class HomeController : Controller
     public IActionResult ResetPassword(ResetPassword obj)
     {
 
-        if (obj.Password != obj.ConfirmPassword && obj.Password == null && obj.ConfirmPassword == null)
+        if (obj.Password != obj.ConfirmPassword || obj.Password == null || obj.ConfirmPassword == null)
         {
             _notyf.Error("Enter Correct Password");
-            return View();
+            return View(obj);
         }
         else
         {

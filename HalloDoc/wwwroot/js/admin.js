@@ -12,8 +12,6 @@ var path = window.location.pathname;
 var abc = path.split("/");
 var controller = abc[1];
 var action = abc[2];
-console.log(controller);
-console.log(action);
 
 var ul = document.getElementById("togglebar").children;
 
@@ -189,12 +187,10 @@ $(document).ready(function () {
     $('#loader').hide();
 
     $(document).ajaxSend(function () {
-        console.log("ajax start")
         $('#loader').show();
         $('#loader').fadeIn(240);
     });
     $(document).ajaxComplete(function () {
-        console.log("ajax end")
         $('#loader').hide();
         $('#loader').addClass('d-none').fadeOut(230);
     });

@@ -42,6 +42,7 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(50)]
         public string? CaseNumber { get; set; }
 
+        [Required(ErrorMessage = "You have to select State.")]
         public int regionId { get; set; }
 
         [Required(ErrorMessage = "Please Enter Note")]

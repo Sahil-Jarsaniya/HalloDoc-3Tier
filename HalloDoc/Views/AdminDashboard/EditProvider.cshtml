@@ -191,10 +191,11 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating w-100 h-100 ">
-                                <select asp-for="State" class="form-select">
-                                    <option>guj</option>
-                                    <option>raj</option>
-                                    <option>md</option>
+                                <select asp-for="Regionid" class="form-select">
+                                    @foreach(var item in Model.Region)
+                                    {
+                                        <option value="@item.Id">@item.value</option>
+                                    }
                                 </select>
                                 <label for="">State</label>
                             </div>
