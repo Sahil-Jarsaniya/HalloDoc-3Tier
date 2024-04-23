@@ -12,7 +12,6 @@ namespace HalloDoc.DataAccess.ViewModel
 
         //public required Request request { get; set; }
         //public required Requestclient requestClient { get; set; }
-        [MinLength(10, ErrorMessage ="Short Descirption Please Specify more.")]
         [Required(ErrorMessage = "This field can't be empty.")]
         [Column("notes")]
         [StringLength(500)]
@@ -29,6 +28,7 @@ namespace HalloDoc.DataAccess.ViewModel
         [StringLength(100)]
         public string Lastname { get; set; }
 
+        [Required]
         [Column("phonenumber")]
         [StringLength(23)]
         public string? Phonenumber { get; set; }

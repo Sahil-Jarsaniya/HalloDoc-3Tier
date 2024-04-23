@@ -47,7 +47,7 @@
             Cancelled = 3,
             Concluded = 4,
             Closed = 5,
-            AcceptedByPhysician = 6,
+            Assigned = 6,
             Declined = 7,
             Consult = 8,
             Clear = 9,

@@ -132,3 +132,19 @@ $(".filterReqByType").click(function () {
 })
 
 
+
+$(document).ready(function () {
+    $('#loader').hide();
+
+    $(document).ajaxSend(function () {
+        console.log("ajax start")
+        $('#loader').show();
+        $('#loader').fadeIn(240);
+    });
+    $(document).ajaxComplete(function () {
+        console.log("ajax end")
+        $('#loader').hide();
+        $('#loader').addClass('d-none').fadeOut(230);
+    });
+
+})

@@ -10,8 +10,8 @@
                 <div class="dropdown">
                     <form id="CreateShiftForm">
                         <div class="col-12">
-                            <select asp-for="Regionid" id="Regionid" class="form-select form-select mb-3 " aria-label="Large select example">
-                                <option disabled>Select Region</option>
+                            <select asp-for="Regionid" id="RegionSelect" class="form-select form-select mb-3 " aria-label="Large select example">
+                                <option value="0">Select Region</option>
                                 @foreach (var item in Model.Regions)
                                 {
                                     <option value="@item.Regionid">@item.Name</option>
@@ -25,6 +25,7 @@
                                     <input asp-for="Startdate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" placeholder="">
                                     <label for="">ShiftDate</label>
                                 </div>
+                                <span class="text-danger" asp-validation-for="Startdate"></span>
                             </div>
                             <div class="col-6">
                                 <div class="form-floating">
@@ -146,18 +147,21 @@
             $("#SaveShiftBtn").removeAttr('disabled');
         }
     })
-    $(".RegionSelect").change(function () {
+    $("#RegionSelect").change(function () {
         var selectedRegion = $(this).val();
 
         if (selectedRegion == null || selectedRegion == 0) {
             document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!"
+            $("#SaveShiftBtn").attr('disabled', 'disabled');
         } else {
             document.getElementById("RegionSelect").nextElementSibling.textContent = "";
+            $("#SaveShiftBtn").removeAttr('disabled');
         }
     });
 
         $("#SaveShiftBtn").click(function () {
-        if ($("#RegionSelect").val() == null || $("#RegionSelect").val() != null) {
+            debugger;
+        if ($("#RegionSelect").val() == null || $("#RegionSelect").val() == 0) {
             document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!"
         }
         if ($("#RegionSelect").val() != null && $("#RegionSelect").val() != 0) {
@@ -185,7 +189,7 @@
                 contentType: false,
                 success: function () {
                     $("#CreateShiftModel").modal('toggle');
-                    //location.reload();
+                    location.reload();
                 }
             })
         }

@@ -34,7 +34,7 @@
                             <input asp-for="Password" type="password" class="form-control" id="Password" placeholder="Password" disabled>
                             <label asp-for="Password" for="floatingPassword">Password</label>
                         </div>
-                        <span class="text-danger" asp-validation-for="Password"></span>
+                        <span class="text-danger" id="passErrorSpan" asp-validation-for="Password"></span>
                     </div>
                 </div>
 
@@ -155,6 +155,7 @@
                                     }
                                 }
                             </select>
+                            <span class="text-danger" asp-validation-for="selectedRegion"> </span>
                         </div>
                     </div>
                 </fieldset>
@@ -280,7 +281,7 @@
                                     Create
                                 </button>
 
-                               
+
 
                             </div>
                         </div>
@@ -318,7 +319,7 @@
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
-                        <input asp-for="Isagreementdoc" type="checkbox" id="Isagreementdoc" value="@Model.Isagreementdoc"/>
+                        <input asp-for="Isagreementdoc" type="checkbox" id="Isagreementdoc" value="@Model.Isagreementdoc" />
                         <label asp-for="Isagreementdoc">Indeoendent Contractor Agreement </label>
                     </div>
                     <div class="col-auto">
@@ -339,7 +340,7 @@
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
-                        <input asp-for="Isbackgrounddoc" type="checkbox" id="Isbackgrounddoc" value="@Model.Isbackgrounddoc"/>
+                        <input asp-for="Isbackgrounddoc" type="checkbox" id="Isbackgrounddoc" value="@Model.Isbackgrounddoc" />
                         <label asp-for="Isbackgrounddoc">Background Check </label>
                     </div>
                     <div class="col-auto">
@@ -360,7 +361,7 @@
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
-                        <input asp-for="Istrainingdoc" type="checkbox" id="Istrainingdoc" value="@Model.Istrainingdoc"/>
+                        <input asp-for="Istrainingdoc" type="checkbox" id="Istrainingdoc" value="@Model.Istrainingdoc" />
                         <label asp-for="Istrainingdoc">Hippa Compliance</label>
                     </div>
                     <div class="col-auto">
@@ -381,7 +382,7 @@
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
-                        <input asp-for="Isnondisclosuredoc" type="checkbox" id="Isnondisclosuredoc" value="@Model.Isnondisclosuredoc"/>
+                        <input asp-for="Isnondisclosuredoc" type="checkbox" id="Isnondisclosuredoc" value="@Model.Isnondisclosuredoc" />
                         <label asp-for="Isnondisclosuredoc">Non Disclouser Agreement</label>
                     </div>
                     <div class="col-auto">
@@ -402,7 +403,7 @@
                 <div class="row g-2 m-1">
 
                     <div class="col-4">
-                        <input asp-for="Islicensedoc" type="checkbox" id="Islicensedoc" value="@Model.Islicensedoc"/>
+                        <input asp-for="Islicensedoc" type="checkbox" id="Islicensedoc" value="@Model.Islicensedoc" />
                         <label asp-for="Islicensedoc">License Document  </label>
                     </div>
                     <div class="col-auto">
@@ -580,17 +581,21 @@
         $("#saveBtn00").click(function () {
             var pass = $("#Password").val();
             var Physicianid = $("#Physicianid").val();
-
-            $.ajax({
-                url: '/AdminDashboard/ResetPhysicianPass',
-                type: 'POST',
-                data: {
-                    pass: pass, Physicianid: Physicianid
-                },
-                success: function () {
-                    location.reload();
-                }
-            })
+            if (pass.length != 0) {
+                $("#passErrorSpan").textContent = '';
+                $.ajax({
+                    url: '/AdminDashboard/ResetPhysicianPass',
+                    type: 'POST',
+                    data: {
+                        pass: pass, Physicianid: Physicianid
+                    },
+                    success: function () {
+                        location.reload();
+                    }
+                })
+            }else{
+                $("#passErrorSpan").text('Please Enter Password');
+            }
         })
 
 
@@ -643,7 +648,7 @@
 
 
     @*Signature Script*@
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
 
     <script>

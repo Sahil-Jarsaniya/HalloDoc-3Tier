@@ -97,7 +97,7 @@
          @*   <input asp-for="State" type="text" class="form-control" placeholder="">
             <label for="">State</label>*@
             <select class="form-select" asp-for="regionId" aria-label="Default select example">
-                <option selected value="null">All Regions</option>
+                <option selected value="null" disabled>All Regions</option>
                 @foreach (var item in Model.Regions)
                 {
                     <option value="@item.Regionid">@item.Name</option>

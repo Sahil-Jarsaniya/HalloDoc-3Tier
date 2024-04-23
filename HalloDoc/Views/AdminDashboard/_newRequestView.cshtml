@@ -35,7 +35,11 @@
             }
             <tr>
                 <td style="background-color: @bg;">
-                    @item.Firstname @item.Lastname
+                    @item.Firstname @item.Lastname <br />
+                    @if (item.Status == (int)enumsFile.requestStatus.Assigned)
+                        {
+                        <button class="btn btn-danger" disabled>Assigned</button>
+                    }
                 </td>
                 <td style="background-color: @bg;">
                     <a href="mailto: @item.Email" class="btn border rounded">

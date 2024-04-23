@@ -15,3 +15,11 @@ $("#RegionFilter2").change(function () {
         },
     })
 });
+
+function stopNoty(Physicianid) {
+    $.ajax({
+        url: '/AdminDashboard/StopNoty',
+        type: 'POST',
+        data: { Physicianid: Physicianid },
+    })
+}

@@ -60,7 +60,7 @@ function validateDateOfBirth(dateOfBirth, errorSpan, div) {
     }
     else {
         errorSpan.textContent = "Please enter a valid date of birth";
-        div.classList.add("invalidInput");;
+        div.classList.add("invalidInput");
     }
 }
 
@@ -100,7 +100,7 @@ document.querySelectorAll(".notesInput").forEach(function (input) {
 });
 
 function validateNotes(notes, errorSpan, div){
-    if (notes.length == 0) {
+    if (notes.length != 0) {
         errorSpan.textContent = "";
         div.classList.remove("invalidInput");
     } else {

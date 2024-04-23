@@ -185,8 +185,10 @@ namespace HalloDoc.Controllers
             {
                 _requestRepo.CreatePatientRequest(obj);
 
+                _notyf.Success("Request Created");
                 return RedirectToAction("Dashboard");
             }
+            _notyf.Error("Something went wrong!!");
             return View();
         }
 
@@ -199,6 +201,7 @@ namespace HalloDoc.Controllers
             _loginRepo.SendEmail(Email, subject, body);
             Task<bool> val = _sms.SendSmsAsync("+91" + PhoneNumber, body);
 
+            _notyf.Success("Email sent.");
             return RedirectToAction("Dashboard");
         }
 
@@ -296,6 +299,7 @@ namespace HalloDoc.Controllers
             {
                 _loginRepo.SendEmail(item.Email, "Request Support", RequestNote);
             }
+            _notyf.Success("Mail send to available Provider.");
             return RedirectToAction("Dashboard");
         }
 
@@ -386,9 +390,22 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             int adminId = _adminRepo.GetAdminId(AspId);
 
-            _adminRepo.CancelCase(CaseTag, addNote, reqClientId, adminId);
 
-            return RedirectToAction("Dashboard");
+            if (CaseTag == 0 || string.IsNullOrEmpty(addNote))
+            {
+                //_notyf.Warning("Failed!!");
+                return BadRequest(new { error = "Invalid data provided" });
+            }
+            else
+            {
+
+
+                _adminRepo.CancelCase(CaseTag, addNote, reqClientId, adminId);
+
+                //_notyf.Success("Case Cancelled.");
+                return Ok(new { success = true });
+            }
+
         }
         [HttpPost]
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
@@ -399,9 +416,19 @@ namespace HalloDoc.Controllers
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             int adminId = _adminRepo.GetAdminId(AspId);
 
-            _adminRepo.BlockCase(reqClientId, addNote, adminId);
+            if (string.IsNullOrEmpty(addNote))
+            {
+                //_notyf.Warning("Failed!!");
+                return BadRequest(new { error = "Invalid data provided" });
+            }
+            else
+            {
 
-            return RedirectToAction("Dashboard");
+                _adminRepo.BlockCase(reqClientId, addNote, adminId);
+                //_notyf.Success("Case Blocked.");
+                return Ok(new { success = true });
+            }
+
         }
 
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
@@ -425,11 +452,8 @@ namespace HalloDoc.Controllers
             }
             else
             {
-
-
                 _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId, AspId);
 
-                //return RedirectToAction("Dashboard");
                 _notyf.Success("Physician Assigned Successfully.");
                 return Ok(new { success = true });
             }
@@ -474,21 +498,34 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult DeleteFile(int reqClientId, string FileName)
         {
-            _adminRepo.DeleteFile(reqClientId, FileName);
-            //return RedirectToAction("ViewUpload", new { reqClientId = ReqClientId}); 
+            _adminRepo.DeleteFile(reqClientId, FileName); 
             _notyf.Success("File uploaded.");
             return Ok();
         }
 
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
-        public void TransferCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
+        public IActionResult TransferCase(int reqClientId, string addNote, int PhysicianSelect, string RegionSelect)
         {
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             int adminId = _adminRepo.GetAdminId(AspId);
 
-            _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId, AspId);
+            //_adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId, AspId);
+
+            if (PhysicianSelect == 0 || string.IsNullOrEmpty(RegionSelect) || string.IsNullOrEmpty(addNote))
+            {
+                //_notyf.Warning("Failed!!");
+                return BadRequest(new { error = "Invalid data provided" });
+            }
+            else
+            {
+                _adminRepo.AssignCase(reqClientId, addNote, PhysicianSelect, RegionSelect, adminId, AspId);
+
+                //_notyf.Success("Request Transfered Successfully.");
+                return Ok(new { success = true });
+            }
+
         }
 
 
@@ -1044,7 +1081,11 @@ namespace HalloDoc.Controllers
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
-            //var Region = JsonSerializer.Deserialize<List<CheckBoxData>>(selectedRegion);
+            if(obj.Password == null)
+            {
+                _notyf.Error("Enter Password");
+                return RedirectToAction("CreateAdmin");
+            }
 
             var pass = _loginRepo.GetHash(obj.Password);
             _adminRepo.CreateAdmin(obj, pass, AspId);

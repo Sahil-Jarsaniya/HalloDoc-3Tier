@@ -1,6 +1,8 @@
 ﻿using HalloDoc.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,13 +18,22 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public string? Aspnetuserid { get; set; }
 
+        [Required(ErrorMessage = "Please Enter Name")]
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid First Name")]
         public string Firstname { get; set; } = null!;
 
+        [RegularExpression(@"[a-zA-Z]*", ErrorMessage = "Invalid Last Name")]
         public string? Lastname { get; set; }
 
+        [Column("Email")]
+        [Required]
         public string Email { get; set; } = null!;
+
+        [Required]
+        [Compare("Email", ErrorMessage = "Email doest not match.")]
         public string ConfirmEmail { get; set; } = null!;
 
+        [Required]
         public string? Mobile { get; set; }
 
         public string? Address1 { get; set; }
@@ -56,6 +67,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
         public IEnumerable<Region>? Regions { get; set; }
         public IEnumerable<CheckBoxData>? CheckedRegion { get; set; }
 
+        [Required(ErrorMessage ="Please Select Region.")]
         public List<int>? SelectedRegion { get; set; }
         public IEnumerable<Role> Rolemenus { get; set; }
 

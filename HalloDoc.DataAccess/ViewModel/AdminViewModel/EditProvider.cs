@@ -112,6 +112,7 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
 
         public IEnumerable<CheckBoxData>? Region { get; set; }
 
+        [Required(ErrorMessage ="Please Select Region.")]
         public List<int>? selectedRegion { get; set; }    
         public IEnumerable<Role>? Role { get; set; }
         public IEnumerable<PhysicianStatus>? Statuses { get; set; }

@@ -19,11 +19,11 @@
 
                         @if (item.isNotiOff)
                         {
-                            <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" checked />
+                            <input class="isNotyBox" type="checkbox" onclick="stopNoty(@item.Physicianid)" checked />
                         }
                         else
                         {
-                            <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" />
+                            <input class="isNotyBox" type="checkbox" onclick="stopNoty(@item.Physicianid)" />
                         }
                     </td>
                     <td>@item.Firstname @item.Lastname</td>
@@ -51,11 +51,11 @@
             <div class="d-flex mb-2">
                 @if (item.isNotiOff)
                 {
-                    <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" />
+                    <input class="isNotyBox" type="checkbox" onclick="stopNoty(@item.Physicianid)" />
                 }
                 else
                 {
-                    <input class="isNotyBox" type="checkbox" onchange="stopNoty(@item.Physicianid)" checked />
+                    <input class="isNotyBox" type="checkbox" onclick="stopNoty(@item.Physicianid)" checked />
                 }
                 <span class="ms-1">@item.Firstname @item.Lastname</span>
             </div>
@@ -84,13 +84,4 @@
             $("#ContactProviderModal").modal('show');
         });
     </script>
-    <script>
-        function stopNoty(Physicianid) {
-            $.ajax({
-                url: '/AdminDashboard/StopNoty',
-                type: 'POST',
-                data: { Physicianid: Physicianid },
-            })
-        }
-    </script>       
 }

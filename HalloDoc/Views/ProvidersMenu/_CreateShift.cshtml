@@ -135,9 +135,11 @@
         var selectedRegion = $(this).val();
 
         if (selectedRegion == null || selectedRegion == 0) {
-            document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!"
+            document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!";
+            $("#SaveShiftBtn").removeAttr('disabled');
         } else {
             document.getElementById("RegionSelect").nextElementSibling.textContent = "";
+            $("#SaveShiftBtn").removeAttr('disabled');
         }
 
         $.ajax({

@@ -432,7 +432,7 @@ namespace HalloDoc.Controllers
         {
             var data = new CreateShift()
             {
-                Regions = (IEnumerable<DataAccess.Models.Region>)_phyRepo.CreateShiftRegion(_phyRepo.GetPhysicianId(GetAspID()))
+                Regions = _phyRepo.CreateShiftRegion(_phyRepo.GetPhysicianId(GetAspID()))
             };
             return PartialView("_CreateShift", data);
         }
