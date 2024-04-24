@@ -5,9 +5,9 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HalloDoc", "HalloDoc\HalloDoc.csproj", "{1BD99B7A-BB92-4635-83B1-88E366E1ADAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalloDoc.DataAccess", "HalloDoc.DataAccess\HalloDoc.DataAccess.csproj", "{180A79D3-34F0-4FA9-8466-3295B7573C11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HalloDoc.DataAccess", "HalloDoc.DataAccess\HalloDoc.DataAccess.csproj", "{180A79D3-34F0-4FA9-8466-3295B7573C11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HalloDoc.BussinessAccess", "HalloDoc.BussinessAccess\HalloDoc.BussinessAccess.csproj", "{38EF67F7-F4BC-49F6-A658-1C2F58C9A31E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HalloDoc.BussinessAccess", "HalloDoc.BussinessAccess\HalloDoc.BussinessAccess.csproj", "{38EF67F7-F4BC-49F6-A658-1C2F58C9A31E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

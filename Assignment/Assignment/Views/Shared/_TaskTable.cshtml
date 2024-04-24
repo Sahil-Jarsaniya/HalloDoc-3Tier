@@ -1,0 +1,134 @@
+﻿@model Assignment.ViewModel.PaginatedList<Assignment.Models.Task>
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <td>Task Id</td>
+            <td>Task Name</td>
+            <td>Asignee</td>
+            <td>Description</td>
+            <td>Due Date</td>
+            <td>Category</td>
+            <td>City</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            string[] month =
+            {
+        "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sep","Oct", "Nov", "Dec"
+        };
+        }
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.TaskName</td>
+                <td>@item.Assignee</td>
+                <td>@item.Description</td>
+                @if (item.DueDate != null)
+                {
+                    <td>
+                        @month[item.DueDate.Value.Month - 1] @item.DueDate.Value.Day
+                        , @item.DueDate.Value.Year
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                <td>@item.Category</td>
+                <td>@item.City</td>
+                <td>
+                    <button type="button" class="btn btn-success text-white" id="EditTaskBtn" onclick="EditTask(@item.Id)">Edit</button>
+                    <a class="btn btn-danger text-white" asp-action="DeleteTask" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div id="ModalDiv">
+</div>
+
+<div class="row pageMenu">
+    <div class="col-md-12">
+        <nav>
+            <ul class="pagination justify-content-end">
+                <li class="page-item">
+                    <input value="@Model.PageSize" hidden id="pageSizeInput" />
+                    <select id="pageSize" class="btn m-1 border border-1">
+                        @for (int i = 1; i < 4; i++)
+                        {
+                            if (Model.PageSize == i * 5)
+                            {
+                                <option value="@(i*5)" selected>@(i*5)</option>
+                            }
+                            else
+                            {
+                                <option value="@(i*5)">@(i*5)</option>
+                            }
+                        }
+
+                    </select>
+                </li>
+                <li class="page-item m-1 ">
+                    <a class="btn pageBtn btn-outline-primary @(Model.PageIndex == 1 ? "disabled" : "")" data-page="1">
+                        <<
+                    </a>
+                </li>
+                <li class="page-item m-1 ">
+                    <a class="btn pageBtn btn-outline-primary @(Model.HasPreviousPage ? "" : "disabled")" data-page="@(Model.PageIndex - 1)">
+                        <
+                    </a>
+                </li>
+                <li class="page-item m-1 ">
+                    <a class="btn btn-outline-primary pageBtn @(Model.HasNextPage ? "": "disabled")" data-page="@(Model.PageIndex + 1)">
+                        >
+                    </a>
+                </li>
+                <li class="page-item m-1 ">
+                    <a class="btn pageBtn btn-outline-primary @(Model.PageIndex >= Model.TotalPages ? "disabled" : "")" data-page="@(Model.TotalPages)">
+                        >>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<script>
+    $(".pageBtn").click(function () {
+        var Name = $("#Search").val();
+        var pageNumber = $(this).data('page');
+        var pageSize = $("#pageSize").val();
+        $.ajax({
+            url: "/Home/FilterTable",
+            type: 'POST',
+            data: { pageNumber: pageNumber, name: $("#Search").val(), pageSize: pageSize },
+            success: function (result) {
+                $('#TaskTable').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        });
+    })
+
+    $("#pageSize").change(function () {
+        var Name = $("#Search").val();
+        var pageSize = $("#pageSize").val();
+        $.ajax({
+            url: "/Home/FilterTable",
+            type: 'POST',
+            data: { name: $("#Search").val(), pageSize: pageSize },
+            success: function (result) {
+                $('#TaskTable').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        });
+    })
+</script>
