@@ -73,22 +73,22 @@
                     </select>
                 </li>
                 <li class="page-item m-1 ">
-                    <a class="btn pageBtn btn-outline-primary @(Model.PageIndex == 1 ? "disabled" : "")" data-page="1">
+                    <a class="btn pageBtn btn-outline-success @(Model.PageIndex == 1 ? "disabled" : "")" data-page="1">
                         <<
                     </a>
                 </li>
                 <li class="page-item m-1 ">
-                    <a class="btn pageBtn btn-outline-primary @(Model.HasPreviousPage ? "" : "disabled")" data-page="@(Model.PageIndex - 1)">
+                    <a class="btn pageBtn btn-outline-success @(Model.HasPreviousPage ? "" : "disabled")" data-page="@(Model.PageIndex - 1)">
                         <
                     </a>
                 </li>
                 <li class="page-item m-1 ">
-                    <a class="btn btn-outline-primary pageBtn @(Model.HasNextPage ? "": "disabled")" data-page="@(Model.PageIndex + 1)">
+                    <a class="btn btn-outline-success pageBtn @(Model.HasNextPage ? "": "disabled")" data-page="@(Model.PageIndex + 1)">
                         >
                     </a>
                 </li>
                 <li class="page-item m-1 ">
-                    <a class="btn pageBtn btn-outline-primary @(Model.PageIndex >= Model.TotalPages ? "disabled" : "")" data-page="@(Model.TotalPages)">
+                    <a class="btn pageBtn btn-outline-success @(Model.PageIndex >= Model.TotalPages ? "disabled" : "")" data-page="@(Model.TotalPages)">
                         >>
                     </a>
                 </li>
