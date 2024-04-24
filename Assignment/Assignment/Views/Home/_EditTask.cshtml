@@ -22,7 +22,7 @@
                                 <input type="text" id="Assignee" name="Assignee" asp-for="Assignee" class="form-control" placeholder="" />
                                 <label for="Assignee">Assignee</label>
                             </div>
-                            <span asp-validation-for="Assignee" class="text-danger"></span>
+                            <span asp-validation-for="Assignee" class="text-danger" id="AssigneeError"></span>
                         </div>
                     </div>
                     <div class="row g-2 m-1">
@@ -31,14 +31,14 @@
                                 <input type="text" id="Description" name="Description" asp-for="Description" class="form-control" placeholder="" />
                                 <label for="Description">Description</label>
                             </div>
-                            <span asp-validation-for="Description" class="text-danger"></span>
+                            <span asp-validation-for="Description" class="text-danger" id="DescriptionError"></span>
                         </div>
                         <div class="col-6">
                             <div class="form-floating">
                                 <input type="date" id="DueDate" name="DueDate" value="@Model.DueDate.ToString("yyyy-MM-dd")" asp-for="DueDate" class="form-control" placeholder="" />
                                 <label for="DueDate">DueDate</label>
                             </div>
-                            <span asp-validation-for="DueDate" class="text-danger"></span>
+                            <span asp-validation-for="DueDate" class="text-danger" id="DueDateError"></span>
                         </div>
                     </div>
                     <div class="row g-2 m-1">
@@ -47,7 +47,7 @@
                                 <input type="text" id="City" name="City" asp-for="City" class="form-control" placeholder="" />
                                 <label for="City">City</label>
                             </div>
-                            <span asp-validation-for="City" class="text-danger"></span>
+                            <span asp-validation-for="City" class="text-danger" id="CityError"></span>
                         </div>
                         <div class="col-6">
                             <div class="form-floating">
@@ -102,6 +102,15 @@
         }
         else if ($("#DueDate").val() == null || $("#DueDate").val() == '') {
             $("#DueDateError").text('Please Enter this value.');
+        }
+        else if($("#City").val().length== 0){
+            $("#CityError").text('Please Enter this value.');
+        }
+        else if ($("#Description").val().length == 0){
+            $("#DescriptionError").text('Please Enter this value.');
+        }
+        else if($("#Assignee").val().length == 0){
+            $("#AssigneeError").text('Please Enter this value.');
         }
         else {
             $("#EditTaskForm").submit();
