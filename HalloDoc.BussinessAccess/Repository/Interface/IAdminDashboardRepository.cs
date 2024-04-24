@@ -118,6 +118,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void CreateAdmin(CreateAdminViewModel obj, string password, string AspId);
 
         public CreateAdminViewModel EditAdmin(int id);
+        public string GetAdminEmail(int adminId);    
 
         public void EditAdmin(CreateAdminViewModel obj, string AspId);
 

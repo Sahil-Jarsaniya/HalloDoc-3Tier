@@ -23,8 +23,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             return _db.Healthprofessionaltypes;
         }
+        public string GetVendorEmail(int vendorId)
+        {
+            return _db.Healthprofessionals.FirstOrDefault(x => x.Vendorid == vendorId).Email;
+        }
 
-   
         public PartnersViewModel Partners()
         {
 

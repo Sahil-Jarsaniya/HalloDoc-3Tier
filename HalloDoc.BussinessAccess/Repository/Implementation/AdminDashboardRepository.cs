@@ -1174,7 +1174,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             if (obj.Firstname == null)
             {
-                adminRow.Altphone = "+" + contryCode[2] + obj.Altphone;
+                if (obj.Mobile.Contains("+"))
+                {
+                    adminRow.Altphone = obj.Altphone;
+                }
+                else
+                {
+                    adminRow.Altphone = "+" + contryCode[2] + obj.Altphone;
+                }
                 adminRow.Address1 = obj.Address1;
                 adminRow.Address2 = obj.Address2;
                 adminRow.Status = obj.Status;
@@ -1189,10 +1196,19 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             else
             {
+
+                if (obj.Mobile.Contains("+"))
+                {
+                    adminRow.Mobile = obj.Mobile;
+                }
+                else
+                {
+                    adminRow.Mobile = "+" + contryCode[1] + obj.Mobile;
+                }
+
                 adminRow.Firstname = obj.Firstname;
                 adminRow.Lastname = obj.Lastname;
                 adminRow.Email = obj.Email;
-                adminRow.Mobile = "+" + contryCode[1] + obj.Mobile;
                 adminRow.Regionid = obj.Regionid;
                 adminRow.Roleid = obj.Roleid;
                 adminRow.Status = obj.Status;
@@ -1276,7 +1292,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                         join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
                         join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
                         where t1.Starttime <= current && t1.Endtime >= current && t1.Shiftdate == date && t1.Isdeleted != true
-                        select t2.Physicianid;
+                        select t2.Physicianid;  
 
             var data = (from t1 in _db.Physicians
                         join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
@@ -2005,7 +2021,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             return data;
         }
-
+        public string GetAdminEmail(int adminId)
+        {
+            return _db.Admins.FirstOrDefault(x => x.Adminid == adminId).Email;
+        }
         public void EditAdmin(CreateAdminViewModel obj, string AspId)
         {
             string[] contryCode = obj.CountryFlag.Split("+");

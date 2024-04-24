@@ -12,6 +12,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 {
     public interface ILoginRepository
     {
+        public bool isEmailAvailable(string email);
         public string GetHash(string text);
 
         public AspNetUser GetLoginData(login obj, String hashPass);

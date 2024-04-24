@@ -11,6 +11,7 @@ using Microsoft.Build.Execution;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.JSInterop.Implementation;
 
 namespace HalloDoc.Controllers
 {
@@ -682,6 +683,12 @@ namespace HalloDoc.Controllers
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
+            if(obj.Firstname != null && _loginRepo.isEmailAvailable(obj.Email) && _adminRepo.GetAdminEmail(obj.Adminid)!= obj.Email)
+            {
+                _notyf.Error("Email is already registered.");
+                return RedirectToAction("MyProfile");
+            }
+
             if (ModelState.IsValid)
             {
                 _adminRepo.MyProfile(obj, AspId);
@@ -905,6 +912,16 @@ namespace HalloDoc.Controllers
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            if (_loginRepo.isEmailAvailable(obj.Email))
+            {
+                _notyf.Error("Email Already Registered");
+                var data = _adminRepo.CreateProvider();
+
+                obj.Region = data.Region;
+                obj.Role= data.Role;
+
+                return View(obj);   
+            }
 
             if (ModelState.IsValid)
             {
@@ -1084,7 +1101,18 @@ namespace HalloDoc.Controllers
             if(obj.Password == null)
             {
                 _notyf.Error("Enter Password");
-                return RedirectToAction("CreateAdmin");
+                var data = _adminRepo.CreateAdmin();
+                obj.Regions = data.Regions;
+                obj.Rolemenus = data.Rolemenus;
+                return View(obj);
+            }
+            if (_loginRepo.isEmailAvailable(obj.Email))
+            {
+                _notyf.Error("Email already Registered.");
+                var data = _adminRepo.CreateAdmin();
+                obj.Regions = data.Regions;
+                obj.Rolemenus = data.Rolemenus;
+                return View(obj);
             }
 
             var pass = _loginRepo.GetHash(obj.Password);
@@ -1111,7 +1139,15 @@ namespace HalloDoc.Controllers
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
-
+            if(_loginRepo.isEmailAvailable(obj.Email) && _adminRepo.GetAdminEmail(obj.Adminid) != obj.Email)
+            {
+                _notyf.Error("Email is already registered.");
+                var data = _adminRepo.EditAdmin(obj.Adminid);
+                obj.CheckedRegion = data.CheckedRegion;
+                obj.Rolemenus = data.Rolemenus;
+                obj.Regions = data.Regions;
+                return View(obj);
+            }
 
             _adminRepo.EditAdmin(obj, AspId);
             return RedirectToAction("EditAdmin", obj.Adminid);

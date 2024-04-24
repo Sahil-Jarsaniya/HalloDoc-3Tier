@@ -8,6 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = HalloDoc.DataAccess
-build_property.ProjectDir = C:\Users\Sahil\HalloDoc-3Tier\HalloDoc.DataAccess\
-build_property.EnableComHosting = 
-build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.ProjectDir = G:\h3\HalloDoc-3Tier\HalloDoc.DataAccess\

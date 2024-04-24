@@ -15,12 +15,14 @@ namespace HalloDoc.Controllers
     public class PartnersMenuController : Controller
     {
         private readonly IPartnersRepository _partnersRepo;
+        private readonly ILoginRepository _loginRepo;
         private readonly INotyfService _noty;
 
-        public PartnersMenuController(IPartnersRepository partnersRepo, INotyfService noty)
+        public PartnersMenuController(IPartnersRepository partnersRepo, INotyfService noty, ILoginRepository loginRepo)
         {
             _partnersRepo = partnersRepo;
             _noty = noty;
+            _loginRepo = loginRepo;
         }
 
         public string GetAdminName()
@@ -80,6 +82,15 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.adminRoles.Vendersinfo)]
         public IActionResult AddVendors(VendorFormViewModel obj)
         {
+
+            if (_loginRepo.isEmailAvailable(obj.Email))
+            {
+                _noty.Error("Email Already Registerd");
+                obj.Healthprofessionaltypes = _partnersRepo.healthprofessionaltypes();
+
+                return View(obj);
+            }
+
             bool x = _partnersRepo.AddVendors(obj);
 
             if (x)
@@ -106,6 +117,14 @@ namespace HalloDoc.Controllers
         public IActionResult UpdateVendors(VendorFormViewModel obj, int id)
         {
             ViewBag.AdminName = GetAdminName();
+
+            if(_partnersRepo.GetVendorEmail(id) != obj.Email && _loginRepo.isEmailAvailable(obj.Email))
+            {
+                _noty.Error("Email is already registered.");
+                obj.Healthprofessionaltypes = _partnersRepo.healthprofessionaltypes();
+                return View(obj);
+            }
+
             bool x = _partnersRepo.UpdateVendors(obj, id);
             if (x)
             {

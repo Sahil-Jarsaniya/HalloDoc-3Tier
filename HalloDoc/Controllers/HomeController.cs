@@ -41,15 +41,23 @@ public class HomeController : Controller
 
 
     [HttpPost]
-    public IActionResult forget_password_page(AspNetUser asp)
+    public IActionResult forget_password_page(string email)
     {
-        var AspId = _login.GetAspId(asp.Email);
+        if(email == null)
+        {
+            _notyf.Error("Please enter email.");
+            return View();      
+        }
+        else
+        {
+        var AspId = _login.GetAspId(email);
         string subject = "Reset Password";
         string body = "<a href='/Home/ResetPassword?AspId=" + AspId + "'>Reset Password link</a>";
 
-        _login.SendEmail(asp.Email, subject, body);
+        _login.SendEmail(email, subject, body);
 
         return RedirectToAction("login");
+        }
     }
 
     public IActionResult ResetPassword(string AspId)

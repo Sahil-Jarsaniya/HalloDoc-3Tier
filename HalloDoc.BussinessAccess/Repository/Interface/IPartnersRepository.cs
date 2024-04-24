@@ -20,5 +20,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public VendorFormViewModel UpdateVendors(int id);
         public bool UpdateVendors(VendorFormViewModel obj,int id);
         public bool DeleteVendors(int id);
+
+        public string GetVendorEmail(int vendorId);
     }
 }

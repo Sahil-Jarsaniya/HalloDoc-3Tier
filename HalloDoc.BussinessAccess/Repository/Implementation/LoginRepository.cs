@@ -20,6 +20,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db = db;
         }
 
+        public bool isEmailAvailable(string email)
+        {
+            return _db.AspNetUsers.Any(u=>u.Email == email);
+        }
+
         public string GetHash(string text)
         {
             // SHA512 is disposable by inheritance.  
