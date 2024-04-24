@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\HalloDocAdmin\\Assignment\\Assignment\\Assignment.csproj": {}
+    "G:\\h3\\HalloDoc-3Tier\\Assignment\\Assignment\\Assignment.csproj": {}
   },
   "projects": {
-    "G:\\HalloDocAdmin\\Assignment\\Assignment\\Assignment.csproj": {
+    "G:\\h3\\HalloDoc-3Tier\\Assignment\\Assignment\\Assignment.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\HalloDocAdmin\\Assignment\\Assignment\\Assignment.csproj",
+        "projectUniqueName": "G:\\h3\\HalloDoc-3Tier\\Assignment\\Assignment\\Assignment.csproj",
         "projectName": "Assignment",
-        "projectPath": "G:\\HalloDocAdmin\\Assignment\\Assignment\\Assignment.csproj",
+        "projectPath": "G:\\h3\\HalloDoc-3Tier\\Assignment\\Assignment\\Assignment.csproj",
         "packagesPath": "C:\\Users\\pca17\\.nuget\\packages\\",
-        "outputPath": "G:\\HalloDocAdmin\\Assignment\\Assignment\\obj\\",
+        "outputPath": "G:\\h3\\HalloDoc-3Tier\\Assignment\\Assignment\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\pca17\\AppData\\Roaming\\NuGet\\NuGet.Config",

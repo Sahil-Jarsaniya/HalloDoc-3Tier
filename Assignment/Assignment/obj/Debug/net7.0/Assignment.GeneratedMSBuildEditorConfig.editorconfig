@@ -9,45 +9,45 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Assignment
 build_property.RootNamespace = Assignment
-build_property.ProjectDir = G:\HalloDocAdmin\Assignment\Assignment\
+build_property.ProjectDir = G:\h3\HalloDoc-3Tier\Assignment\Assignment\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = G:\HalloDocAdmin\Assignment\Assignment
+build_property.MSBuildProjectDirectory = G:\h3\HalloDoc-3Tier\Assignment\Assignment
 build_property._RazorSourceGeneratorDebug = 
 
-[G:/HalloDocAdmin/Assignment/Assignment/Views/Home/Index.cshtml]
+[G:/h3/HalloDoc-3Tier/Assignment/Assignment/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/HalloDocAdmin/Assignment/Assignment/Views/Home/_AddTask.cshtml]
+[G:/h3/HalloDoc-3Tier/Assignment/Assignment/Views/Home/_AddTask.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfQWRkVGFzay5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/HalloDocAdmin/Assignment/Assignment/Views/Home/_EditTask.cshtml]
+[G:/h3/HalloDoc-3Tier/Assignment/Assignment/Views/Home/_EditTask.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxfRWRpdFRhc2suY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/HalloDocAdmin/Assignment/Assignment/Views/Shared/Error.cshtml]
+[G:/h3/HalloDoc-3Tier/Assignment/Assignment/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/HalloDocAdmin/Assignment/Assignment/Views/Shared/_TaskTable.cshtml]
+[G:/h3/HalloDoc-3Tier/Assignment/Assignment/Views/Shared/_TaskTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9UYXNrVGFibGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/HalloDocAdmin/Assignment/Assignment/Views/Shared/_ValidationScriptsPartial.cshtml]
+[G:/h3/HalloDoc-3Tier/Assignment/Assignment/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/HalloDocAdmin/Assignment/Assignment/Views/_ViewImports.cshtml]
+[G:/h3/HalloDoc-3Tier/Assignment/Assignment/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/HalloDocAdmin/Assignment/Assignment/Views/_ViewStart.cshtml]
+[G:/h3/HalloDoc-3Tier/Assignment/Assignment/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/HalloDocAdmin/Assignment/Assignment/Views/Shared/_Layout.cshtml]
+[G:/h3/HalloDoc-3Tier/Assignment/Assignment/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-y18fyt0aqx
