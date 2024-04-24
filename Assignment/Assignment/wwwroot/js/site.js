@@ -27,6 +27,3 @@ function AddTask() {
         }
     })
 }
-
-
-
