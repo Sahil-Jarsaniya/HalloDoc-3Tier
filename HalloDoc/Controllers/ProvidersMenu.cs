@@ -146,7 +146,27 @@ namespace HalloDoc.Controllers
             bool x = _ProviderMenu.DeleteShift(shiftDetailId);
             if (x)
             {
-                _noty.Success("Shift Deleted");
+                _noty.Success("Shift Deleted.");
+                return Ok(new { success = true });
+            }
+            else
+            {
+                _noty.Error("somthing went wrong");
+                return Ok(new { success = true });
+            }
+        }
+
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
+        public IActionResult DeleteSelectedShift(int[] shiftDetailId)
+        {
+            var flag = false;
+            for (var i = 0; i < shiftDetailId.Length; i++)
+            {
+                flag = _ProviderMenu.DeleteShift(shiftDetailId[i]);
+            }
+            if (flag)
+            {
+                _noty.Success("Shift Deleted.");
                 return Ok(new { success = true });
             }
             else
@@ -161,6 +181,25 @@ namespace HalloDoc.Controllers
         {
             bool x = _ProviderMenu.ReturnShift(shiftDetailId);
             if (x)
+            {
+                _noty.Success("Shift Approved.");
+                return Ok(new { success = true });
+            }
+            else
+            {
+                _noty.Error("somthing went wrong");
+                return Ok(new { success = true });
+            }
+        }
+        [RoleAuth((int)enumsFile.adminRoles.Scheduling)]
+        public IActionResult ReturnSelectedShift(int[] shiftDetailId)
+        {
+            var flag = false;
+            for (var i = 0; i < shiftDetailId.Length; i++)
+            {
+                flag = _ProviderMenu.ReturnShift(shiftDetailId[i]);
+            }
+            if (flag)
             {
                 _noty.Success("Shift Approved.");
                 return Ok(new { success = true });

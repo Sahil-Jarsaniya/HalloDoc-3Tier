@@ -118,6 +118,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                         .Where(x => x.Shiftdate.Month == date1.Month && x.Shiftdate.Day == date1.Day && x.Shiftdate.Year == date1.Year && x.Isdeleted != true)
                         on t2.Shiftid equals t3.Shiftid into shiftDetails
                         from t3 in shiftDetails.DefaultIfEmpty()
+                        where (t3 == null? t3.Isdeleted != true : true)
                         select new DayScheduling()
                         {
                             PhysicianId = t1.Physicianid,

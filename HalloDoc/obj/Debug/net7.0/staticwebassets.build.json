@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "i3fgzxlzzfnzZPjGUjt0rmOXqYZ/laBV+6xWAF7VlzE=",
+  "Hash": "6ng9SipZJa8UtuJ1W+CUxtcucE7dkAJHtvRNbcd1+UY=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -5676,6 +5676,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\99\\FinalizedEncounterForm (4) (1).pdf"
+    },
+    {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\99\\SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/99/SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\99\\SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf"
     },
     {
       "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\Screenshot (3).png",

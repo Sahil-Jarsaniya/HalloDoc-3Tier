@@ -1,121 +1,81 @@
 ﻿@model IEnumerable<DayScheduling>;
+@{
+    var groupedDoctors = Model.GroupBy(x => x.PhysicianName);
+}
+
 <table class="table table-bordered table-responsive">
     <tr class="table-secondary">
-        <td class="w-25 ">Staff</td>
-        <td>12A</td>
-        <td>1A</td>
-        <td>2A</td>
-        <td>3A</td>
-        <td>4A</td>
-        <td>5A</td>
-        <td>6A</td>
-        <td>7A</td>
-        <td>8A</td>
-        <td>9A</td>
-        <td>10A</td>
-        <td>11A</td>
-        <td>12P</td>
-        <td>1P</td>
-        <td>2P</td>
-        <td>3P</td>
-        <td>4P</td>
-        <td>5P</td>
-        <td>6P</td>
-        <td>7P</td>
-        <td>8P</td>
-        <td>9P</td>
-        <td>10P</td>
-        <td>11P</td>
-    </tr>
-    <tr>
-        <td class="w-25">Coverage</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td class="w-25">Staff</td>
+        @for (int hour = 0; hour < 24; hour++)
+        {
+            <td>@hour:00</td>
+        }
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var group in groupedDoctors)
     {
         var bg = "";
-        if (item.status == 2)
-        {
-            bg = "#90ee90";
-
-        }
-        else
-        {
-            bg = "#ffc0cb";
-        }
-        if (item.ShiftDate == item.SelectedDate || item.ShiftDate == null)
-        {
-
-            <tr>
-                <td class="w-25">@item.PhysicianName</td>
-                @for (var i = 0; i < 24; i++)
+        var item = group.First();
+     
+        <tr>
+            <td class="w-25">@item.PhysicianName</td>
+            @for (var hour = 0; hour < 24; hour++)
+            {
+                var currentHour = hour;
+                var slotFound = false;
+                var colspan = 1;
+                var id = 0;
+                var timeDisplay = "";
+                foreach (var schedule in group)
                 {
-
-                    if (i == 0)
+                    if (schedule.StartTime.HasValue && schedule.EndTime.HasValue &&
+                    currentHour >= schedule.StartTime.Value.Hour &&
+                    currentHour < schedule.EndTime.Value.Hour)
                     {
-                        i = 24;
-                    }
-                    if (item.StartTime.HasValue && item.EndTime.HasValue)
-                    {
-                        var Start = item.StartTime.Value;
-                        var StartMin = item.StartTime.Value.Minute;
-                        var End = item.EndTime.Value;
-                        var EndMin = item.EndTime.Value.Minute;
-                        var dif = item.EndTime.Value.Hour - item.StartTime.Value.Hour + (Convert.ToDouble(StartMin) / 60) + (Convert.ToDouble(EndMin) / 60);
-                        var startPercentage = StartMin * (100 / 60);
-                        var endPercentage = (60-EndMin) * (100 / 60);
-                        if (i >= Start.Hour && i <= End.Hour)
+                        var dif = schedule.EndTime.Value.Hour - schedule.StartTime.Value.Hour;
+                        var start = schedule.StartTime.Value.Hour;
+                        var end = schedule.EndTime.Value.Hour;
+                        var startMin = schedule.StartTime.Value.Minute;
+                        var endMin = schedule.EndTime.Value.Minute;
+                        var startHourString = start.ToString().PadLeft(2, '0');
+                        var endHourString = end.ToString().PadLeft(2, '0');
+                        var startMinString = startMin.ToString().PadLeft(2, '0');
+                        var endMinString = endMin.ToString().PadLeft(2, '0');
+                        timeDisplay = $"{startHourString}:{startMinString} - {endHourString}:{endMinString}";
+                        colspan = Math.Max(colspan, dif);
+                        currentHour += dif - 1; // Adjust currentHour to skip already covered hours
+                        slotFound = true;
+                        id = (int)schedule.shiftDetailId;
+                        if (schedule.status == 2)
                         {
-                            <td colspan="@dif" style="background-color: @bg;">
-                                <a class="btn viewShiftBtn"  data-id="@item.shiftDetailId">
-                                    @item.StartTime to @item.EndTime
-                                </a>
-                            </td>
-                            i = i + Convert.ToInt32(dif);
+                            bg = "#90ee90";
                         }
                         else
                         {
-                            <td></td>
+                            bg = "#ffc0cb";
                         }
-                    }
-                    else
-                    {
-                        <td></td>
-                    }
-                    if (i == 24)
-                    {
-                        i = 0;
+
+                        break;
                     }
                 }
-            </tr>
-        }
+                if (slotFound)
+                {
+                    <td colspan="@colspan" style="background-color: @bg;">
+                        <a class="btn viewShiftBtn" data-id="@id">
+                            @timeDisplay
+                        </a>
+                    </td>
+                    // Move to the next hour after the colspan
+                    hour += (colspan - 1);
+                }
+                else
+                {
+                    <td></td>
+                }
+            }
+        </tr>
     }
 </table>
-
 <script>
     $(".viewShiftBtn").click(function () {
         console.log($(this).data('id'));

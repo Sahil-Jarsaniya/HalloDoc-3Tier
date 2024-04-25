@@ -1,17 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\HalloDoc",
-    "\\HalloDoc.BussinessAccess",
-    "\\HalloDoc.BussinessAccess\\Repository",
-    "\\HalloDoc.BussinessAccess\\Repository\\Implementation",
-    "\\HalloDoc\\Controllers",
-    "\\HalloDoc\\Views",
-    "\\HalloDoc\\Views\\Home",
-    "\\HalloDoc\\Views\\PhysicianDashboard",
-    "\\HalloDoc\\wwwroot",
-    "\\HalloDoc\\wwwroot\\js"
+    ""
   ],
-  "SelectedNode": "\\HalloDoc.sln",
+  "SelectedNode": "\\Assignment.sln",
   "PreviewInSolutionExplorer": false
 }

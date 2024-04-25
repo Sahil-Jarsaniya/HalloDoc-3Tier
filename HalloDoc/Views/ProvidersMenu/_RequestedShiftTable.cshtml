@@ -26,35 +26,7 @@
 </table>
 
 @*Pagination*@
-
-<div class="row pageMenu">
-    <div class="col-md-12">
-        <nav>
-            <ul class="pagination justify-content-end">
-                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
-                    <a class="btn pageBtn page-link text-black" data-page="1">
-                        first
-                    </a>
-                </li>
-                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
-                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex - 1)">
-                        Previous
-                    </a>
-                </li>
-                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled": "")">
-                    <a class="btn pageBtn page-link text-black" data-page="@(Model.PageIndex + 1)">
-                        next
-                    </a>
-                </li>
-                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
-                    <a class="btn pageBtn page-link text-black" data-page="@(Model.TotalPages)">
-                        Last
-                    </a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
+<partial name="_PaginationPart" />
 
 <script>
     $(".pageBtn").click(function () {
@@ -96,35 +68,41 @@
     })
 
     $("#DeleteBtn").click(function () {
+        var shiftDetailId = new Array();
         $(".checkBox").each(function () {
             if ($(this).prop('checked')) {
-               $.ajax({
-                    url: '/ProvidersMenu/DeleteShift',
-                    type: 'POST',
-                    data: {
-                        shiftDetailId: $(this).data('id')
-                    },
-                    success: function(){
-                        $("#ShiftTable").load('/ProvidersMenu/RequestedShiftTable');
-                    }
-               })
+                shiftDetailId.push($(this).data('id'));
+            }
+        })
+
+        $.ajax({
+            url: '/ProvidersMenu/DeleteSelectedShift',
+            type: 'POST',
+            data: {
+                shiftDetailId: shiftDetailId
+            },
+            success: function () {
+                $("#ShiftTable").load('/ProvidersMenu/RequestedShiftTable');
             }
         })
     })
 
     $("#ApproveBtn").click(function () {
+        var shiftDetailId = new Array();
         $(".checkBox").each(function () {
             if ($(this).prop('checked')) {
-                $.ajax({
-                    url: '/ProvidersMenu/ReturnShift',
-                    type: 'POST',
-                    data: {
-                        shiftDetailId: $(this).data('id')
-                    },
-                    success: function () {
-                        $("#ShiftTable").load('/ProvidersMenu/RequestedShiftTable');
-                    }
-                })
+                shiftDetailId.push($(this).data('id'));
+            }
+        })
+
+        $.ajax({
+            url: '/ProvidersMenu/ReturnSelectedShift',
+            type: 'POST',
+            data: {
+                shiftDetailId: shiftDetailId
+            },
+            success: function () {
+                $("#ShiftTable").load('/ProvidersMenu/RequestedShiftTable');
             }
         })
     })
