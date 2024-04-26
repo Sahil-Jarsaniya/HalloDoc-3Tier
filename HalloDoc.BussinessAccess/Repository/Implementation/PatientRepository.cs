@@ -18,7 +18,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public DashboardViewModel PatientDashboard(String AspId)
         {
             var patientAspId = _db.Users.Where(x => x.Aspnetuserid == AspId).FirstOrDefault();
-                var userId = patientAspId.Userid;
+            var userId = patientAspId.Userid;
 
             var reqData = (from r in _db.Requests
                            where r.Userid == userId
@@ -26,7 +26,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            select new PatientDashboardViewModel
                            {
                                RequestId = r.Requestid,
-                               fileCount = _db.Requestwisefiles.Where(x=> x.Requestid == r.Requestid).Count(),
+                               fileCount = _db.Requestwisefiles.Where(x => x.Requestid == r.Requestid).Count(),
                                Status = s.Status,
                                Createddate = r.Createddate
                            }).ToList();
@@ -68,15 +68,19 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                               join t2 in _db.Requestwisefiles
                               on t1.Requestid equals t2.Requestid into files
                               from t2 in files.DefaultIfEmpty()
+                              join t4 in _db.Admins on t2.Adminid equals t4.Adminid into admin
+                              from t4 in admin.DefaultIfEmpty()
+                              join t5 in _db.Physicians on t2.Physicianid equals t5.Physicianid into physicians
+                              from t5 in physicians.DefaultIfEmpty()
                               where t1.Requestid == reqId
                               select new PatientDocumentViewModel
                               {
                                   RequestId = t1.Requestid,
-                                  Name = t1.Firstname + " " + t1.Lastname,
-                                  createdate = t1.Createddate,
+                                  Name = t4.Adminid != null ? (t4.Firstname + " " + t4.Lastname) : (t5.Physicianid != null? (t5.Firstname+" "+t5.Lastname): (t1.Firstname+" "+t1.Lastname)) ,
+                                  createdate = t2.Createddate,
                                   Filename = t2 != null ? t2.Filename : null
                               };
-            var reqClientRow = _db.Requestclients.Where(x =>x.Requestid == reqId).FirstOrDefault();
+            var reqClientRow = _db.Requestclients.Where(x => x.Requestid == reqId).FirstOrDefault();
             var uploadData = new UploadFileViewModel
             {
                 reqId = reqId,
@@ -107,7 +111,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 var fileName = Path.GetFileName(obj.formFile.FileName);
 
                 //define path
-                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", "RequestData\\" +id);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", "RequestData\\" + id);
 
                 if (!Directory.Exists(filePath))
                 {
@@ -130,7 +134,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 };
 
                 _db.Requestwisefiles.Add(requestwisefile);
-                    _db.SaveChanges();
+                _db.SaveChanges();
             }
 
             return id;
@@ -138,7 +142,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public String PatientProfile(ProfileEditViewModel obj)
         {
-          
+
             var existUser = _db.Users.FirstOrDefault(x => x.Userid == obj.UserId);
             var email = existUser.Email;
 
@@ -180,68 +184,68 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public String CreateReqMeOrElse(PatientViewModel obj, string aspId)
         {
 
-                var uid= _db.Users.Where(x => x.Aspnetuserid == aspId).FirstOrDefault().Userid;
+            var uid = _db.Users.Where(x => x.Aspnetuserid == aspId).FirstOrDefault().Userid;
 
-                //Inserting into Request
-                Request request = new Request
+            //Inserting into Request
+            Request request = new Request
+            {
+                Requesttypeid = (int)enumsFile.RequestType.patient,
+                Userid = uid,
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Status = (int)enumsFile.requestStatus.Unassigned,
+                Createddate = DateTime.Now,
+                Isurgentemailsent = false,
+                Relationname = obj.Relationname
+            };
+            _db.Requests.Add(request);
+            _db.SaveChanges();
+            //Insertung into RequestClient
+            Requestclient requestclient = new Requestclient
+            {
+                Requestid = request.Requestid,
+                Firstname = obj.Firstname,
+                Lastname = obj.Lastname,
+                Email = obj.Email,
+                Phonenumber = obj.Phonenumber,
+                Strmonth = obj.Strmonth,
+                Street = obj.Street,
+                City = obj.City,
+                State = obj.State,
+                Zipcode = obj.Zipcode,
+                Notes = obj.Notes
+            };
+            _db.Requestclients.Add(requestclient);
+            _db.SaveChanges();
+
+            //uploading files
+            if (obj.formFile != null && obj.formFile.Length > 0)
+            {
+                //get file name
+                var fileName = Path.GetFileName(obj.formFile.FileName);
+
+                //define path
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
+
+                // Copy the file to the desired location
+                using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                    Requesttypeid = (int)enumsFile.RequestType.patient,
-                    Userid = uid,
-                    Firstname = obj.Firstname,
-                    Lastname = obj.Lastname,
-                    Email = obj.Email,
-                    Status = (int)enumsFile.requestStatus.Unassigned,
-                    Createddate = DateTime.Now,
-                    Isurgentemailsent = false,
-                    Relationname = obj.Relationname
-                };
-                _db.Requests.Add(request);
-                _db.SaveChanges();
-                //Insertung into RequestClient
-                Requestclient requestclient = new Requestclient
-                {
-                    Requestid = request.Requestid,
-                    Firstname = obj.Firstname,
-                    Lastname = obj.Lastname,
-                    Email = obj.Email,
-                    Phonenumber = obj.Phonenumber,
-                    Strmonth = obj.Strmonth,
-                    Street = obj.Street,
-                    City = obj.City,
-                    State = obj.State,
-                    Zipcode = obj.Zipcode,
-                    Notes = obj.Notes
-                };
-                _db.Requestclients.Add(requestclient);
-                _db.SaveChanges();
-
-                //uploading files
-                if (obj.formFile != null && obj.formFile.Length > 0)
-                {
-                    //get file name
-                    var fileName = Path.GetFileName(obj.formFile.FileName);
-
-                    //define path
-                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", fileName);
-
-                    // Copy the file to the desired location
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        obj.formFile.CopyTo(stream);
-                    }
-                    Requestwisefile requestwisefile = new Requestwisefile
-                    {
-                        Filename = fileName,
-                        Requestid = request.Requestid,
-                        Createddate = DateTime.Now
-                    };
-
-                    _db.Requestwisefiles.Add(requestwisefile);
-                    _db.SaveChanges();
+                    obj.formFile.CopyTo(stream);
                 }
+                Requestwisefile requestwisefile = new Requestwisefile
+                {
+                    Filename = fileName,
+                    Requestid = request.Requestid,
+                    Createddate = DateTime.Now
+                };
 
-                return aspId;
+                _db.Requestwisefiles.Add(requestwisefile);
+                _db.SaveChanges();
             }
+
+            return aspId;
+        }
 
         public AgreementViewModel ReviewAgreement(String reqClientId)
         {

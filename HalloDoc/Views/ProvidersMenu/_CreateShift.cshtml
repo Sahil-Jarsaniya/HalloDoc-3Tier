@@ -14,15 +14,15 @@
 
 
                         <div class="row g-2">
-                            <div class="col-12">
-                                <select asp-for="Regionid" class="form-select form-select mb-3  RegionSelect" id="RegionSelect" aria-label="Large select example">
+                            <div class="col-12 mb-3">
+                                <select asp-for="Regionid" class="form-select form-select  RegionSelect" id="RegionSelect" aria-label="Large select example">
                                     <option value="0" disabled="disabled"> Select Region</option>
                                     @foreach (var item in Model.Regions)
                                     {
                                         <option value="@item.Regionid">@item.Name</option>
                                     }
                                 </select>
-                                <span class="text-danger"></span>
+                                <span class="text-danger "></span>
                             </div>
                             <div class="col-12">
                                 <select asp-for="Physicianid" class="form-select form-select mb-3 PhysicianSelect" id="PhysicianSelect" aria-label="Large select example">
@@ -32,10 +32,10 @@
                             </div>
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input asp-for="Startdate" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="">
+                                    <input asp-for="Startdate" type="date" class="form-control" min="@DateTime.Now.ToString("yyyy-MM-dd")" placeholder="" id="Startdate">
                                     <label for="">ShiftDate</label>
                                 </div>
-                                <span class="text-danger" asp-validation-for="Startdate"></span>
+                                <span class="text-danger" id="dateError" asp-validation-for="Startdate"></span>
                             </div>
                             <div class="col-6">
                                 <div class="form-floating">
@@ -168,12 +168,11 @@
     })
 
     $("#StartTime").change(function () {
-        var EndTime = $(this).val();
-        var startTime = $("#EndTime").val();
-        if (startTime <= EndTime) {
+        var startTime = $(this).val();
+        var EndTime = $("#EndTime").val();
+        if (EndTime <= startTime) {
             $("#timeError").text("Select Proper Time!!");
             $("#SaveShiftBtn").attr('disabled', 'disabled');
-            console.log("error")
         } else {
             console.log("error n")
             $("#SaveShiftBtn").removeAttr('disabled');
@@ -186,7 +185,6 @@
         if (startTime >= EndTime) {
             $("#timeError").text("Select Proper Time!!");
             $("#SaveShiftBtn").attr('disabled', 'disabled');
-            console.log("error")
         } else {
             console.log("error n")
             $("#timeError").text("");
@@ -194,18 +192,39 @@
         }
     })
 
+    $("#Startdate").on('change', function(){
+        var input = new Date($(this).val());
+        var currentDate  =new Date();
+     
 
+        if(input < currentDate){
+            $("#dateError").text("Select Proper Date!!");
+        }else{
+            $("#dateError").text("");
+        }
+        console.log(input);
+    })
 
     $("#SaveShiftBtn").click(function () {
-
+        var input = new Date($("#Startdate").val());
+        console.log($("#Startdate").val())
+        var currentDate = new Date();
         if ($("#RegionSelect").val() == null || $("#RegionSelect").val() == 0) {
             document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!"
         }
         if ($("#PhysicianSelect").val() == null || $("#PhysicianSelect").val() == 0) {
             document.getElementById("PhysicianSelect").nextElementSibling.textContent = "Select Physician!!"
         }
-
-        if ($("#RegionSelect").val() != null && $("#RegionSelect").val() != 0 && $("#PhysicianSelect").val() != null && $("#PhysicianSelect").val() != 0) {
+        var startTime = $("#StartTime").val();
+        var EndTime = $("#EndTime").val();
+        if (EndTime <= startTime) {
+            $("#timeError").text("Select Proper Time!!");
+            $("#SaveShiftBtn").attr('disabled', 'disabled');
+        }
+        if (input < currentDate || $("#Startdate").val() == "") {
+            $("#dateError").text("Select Proper Date!!");
+        }
+        if ($("#RegionSelect").val() != null && $("#RegionSelect").val() != 0 && $("#PhysicianSelect").val() != null && $("#PhysicianSelect").val() != 0 && input >= currentDate && EndTime > startTime) {
 
             var selectedDays = [];
             $(".DaysCheckbox").each(function () {

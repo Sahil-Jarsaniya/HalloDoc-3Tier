@@ -73,3 +73,27 @@ $("#DownloadAll").click(function () {
         }
     });
 });
+
+$("#sendEmailDoc").click(function () {
+    var files = [];
+    var reqClientId;
+    $(".selectFile").each(function () {
+        if ($(this).prop("checked")) {
+            reqClientId = $(this).closest("tr").find(".ReqClientId").val();
+            files.push($(this).val());
+        }
+    });
+
+    if (files.length == 0) {
+        toastr.error("Select File.");
+    } else {
+        $.ajax({
+            url: '/AdminDashboard/SendFileToPatient',
+            type: 'POST',
+            data: { files: files, reqClientId: reqClientId },
+            success: function () {
+                toastr.success("Mail Send");
+            }
+        })
+    }
+})

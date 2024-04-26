@@ -7,7 +7,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
     public interface IAdminDashboardRepository
     {
         public int GetAdminId(string AspId);
-
+        public string GetPatientEmail(int reqClientId);
         public List<Menu> Menus();
         public List<AccountType> AccountType();
         public AdminDashboardViewModel adminDashboard();

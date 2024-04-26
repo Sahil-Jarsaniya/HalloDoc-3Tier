@@ -54,7 +54,7 @@ public class HomeController : Controller
         string subject = "Reset Password";
         string body = "<a href='/Home/ResetPassword?AspId=" + AspId + "'>Reset Password link</a>";
 
-        _login.SendEmail(email, subject, body);
+        _login.SendEmail(email, subject, body, null);
 
         return RedirectToAction("login");
         }

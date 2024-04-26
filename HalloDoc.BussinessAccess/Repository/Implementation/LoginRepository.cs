@@ -2,6 +2,7 @@
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using MimeKit;
@@ -22,7 +23,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public bool isEmailAvailable(string email)
         {
-            return _db.AspNetUsers.Any(u=>u.Email == email);
+            return _db.AspNetUsers.Any(u => u.Email == email);
         }
 
         public string GetHash(string text)
@@ -96,7 +97,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return isPatient;
         }
 
-        public void SendEmail(string email, string subject, string body)
+        public void SendEmail(string email, string subject, string body, string[]? attachments)
         {
             var emailLog = new Emaillog()
             {
@@ -111,11 +112,23 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 var emailToSend = new MimeMessage();
 
+                var builder = new BodyBuilder();
+
                 emailToSend.From.Add(MailboxAddress.Parse("tatva.dotnet.sahiljarsaniya@outlook.com"));
                 emailToSend.To.Add(MailboxAddress.Parse(email));
                 emailToSend.Subject = subject;
                 emailToSend.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
-
+                System.Net.Mail.Attachment attachment;
+                if (attachments != null)
+                {
+                    for (int i = 0; i < attachments.Length; i++)
+                    {
+                        var folder= attachments[i].Split("/");
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", "RequestData",folder[0], folder[1]);
+                        builder.Attachments.Add(filePath);
+                    }
+                }
+                emailToSend.Body = builder.ToMessageBody(); 
                 //send mail
                 using (var emailClient = new MailKit.Net.Smtp.SmtpClient())
                 {

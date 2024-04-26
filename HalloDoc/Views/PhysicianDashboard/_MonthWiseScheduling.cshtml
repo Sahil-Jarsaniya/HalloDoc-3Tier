@@ -2,13 +2,13 @@
 <table class="table table-bordered table-responsive">
     <thead>
         <tr class="table-secondary">
-            <td>SUN</td>
-            <td>MON</td>
-            <td>TUE</td>
-            <td>WED</td>
-            <td>THU</td>
-            <td>FRI</td>
-            <td>SAT</td>
+            <td style="width: 10vw">SUN</td>
+            <td style="width: 10vw">MON</td>
+            <td style="width: 10vw">TUE</td>
+            <td style="width: 10vw">WED</td>
+            <td style="width: 10vw">THU</td>
+            <td style="width: 10vw"> FRI</td>
+            <td style="width: 10vw">SAT</td>
         </tr>
     </thead>
     <tbody>
@@ -34,7 +34,7 @@
                     {
                         day++;
 
-                        <td>
+                        <td style="width: 10vw">
                             @*@day*@
                         </td>
                     }
@@ -42,7 +42,7 @@
                     {
                         var appointment = Model.DaySchedulings.Where(x => x.Startdate == currentDate).ToList();
 
-                        <td>
+                        <td style="width: 10vw">
                             <span>
                                 <span class="float-end">
                                     @currentDate.Day

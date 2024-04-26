@@ -20,7 +20,7 @@
         <h4>@Model.PatientName (@Model.ConfirmationNo)</h4>
         <p>Check here to review and add files that you or client/Member has attached to the Request.</p>
 
-        <form class="form-floating p-2 viewCaseForm" method="post" asp-action="UploadDocument" asp-controller="AdminDashboard"
+        <form class="form-floating p-2" method="post" asp-action="UploadDocument" asp-controller="AdminDashboard"
               enctype="multipart/form-data">
             <input type="hidden" asp-for="UploadFileViewModel.reqId" name="reqId" value="@Model.UploadFileViewModel.reqId" />
             <div class="input-group m-1 mb-3">
@@ -61,7 +61,7 @@
                 {
                     <div>
                         <div>
-                            <input  type="checkbox" />
+                            <input type="checkbox" value="@item.RequestId/@item.Filename" />
                             <span class="FileName">
                                 @item.Filename
                             </span>
@@ -93,13 +93,19 @@
                 </tr>
             </thead>
             <tbody>
+                @if(Model.PatientDocumentViewModel.Count() == 0)
+                {
+                    <tr>
+                        <td>No data found.</td>
+                    </tr>
+                }
                 @foreach (var item in Model.PatientDocumentViewModel)
                 {
                     @if (item.IsDeleted != true)
                     {
                         <tr>
                             <td>
-                                <input class="selectFile" type="checkbox" />
+                                <input class="selectFile" value="@item.RequestId/@item.Filename" type="checkbox" />
                             </td>
                             <td class="FileName">@item.Filename</td>
                             <td>@item.createdate</td>

@@ -2,8 +2,7 @@
 @{
     var groupedDoctors = Model.GroupBy(x => x.PhysicianName);
 }
-
-<table class="table table-bordered table-responsive">
+<table class="table table-bordered ">
     <tr class="table-secondary">
         <td class="w-25">Staff</td>
         @for (int hour = 0; hour < 24; hour++)
@@ -75,7 +74,7 @@
             }
         </tr>
     }
-</table>
+    </table>
 <script>
     $(".viewShiftBtn").click(function () {
         console.log($(this).data('id'));

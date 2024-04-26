@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using HalloDoc.BussinessAccess.Repository.Implementation;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
@@ -9,8 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Org.BouncyCastle.Ocsp;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO.Compression;
+using System.Security.Claims;
 using System.Text;
 
 namespace HalloDoc.Controllers
@@ -21,11 +24,13 @@ namespace HalloDoc.Controllers
         private readonly IPatientRepository _patientrepo;
         private readonly INotyfService _notyf;
         private readonly IRequestRepository _requestRepo;
-        public PatientController(IPatientRepository patientrepo, INotyfService notyf, IRequestRepository requestRepo)
+        private readonly IJwtService _jwtService;
+        public PatientController(IPatientRepository patientrepo, INotyfService notyf, IRequestRepository requestRepo, IJwtService jwtService)
         {
             _patientrepo = patientrepo;
             _notyf = notyf;
             _requestRepo = requestRepo;
+            _jwtService = jwtService;
         }
 
         public IActionResult Dashboard()
@@ -81,6 +86,10 @@ namespace HalloDoc.Controllers
 
             var data = _patientrepo.PatientDashboard(AspId).ProfileEditViewModel;
 
+
+           
+
+
             return View(data);
         }
 
@@ -94,7 +103,22 @@ namespace HalloDoc.Controllers
                 var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
                 string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
                 string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
-                ViewBag.Data = fname + " " + lname;
+                string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+                string Email = jwt.Claims.First(c => c.Type == ClaimTypes.Email).Value;
+                Response.Cookies.Delete("jwt");
+                var user2 = new LoggedUser
+                {
+                    AspId = AspId,
+                    FirstName = obj.Firstname,
+                    LastName = obj.Lastname,
+                    Email = Email,
+                    Role = "patient",
+                    Roleid = "0",
+                };
+                var jwtToken = _jwtService.GenerateJwtToken(user2);
+                Response.Cookies.Append("jwt", jwtToken);
+                ViewBag.Data = obj.Firstname+ " " + obj.Lastname;
+
                 return RedirectToAction("MyProfile");
             }
             else

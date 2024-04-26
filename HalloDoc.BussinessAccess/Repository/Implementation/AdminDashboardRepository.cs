@@ -29,7 +29,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             return _db.Admins.Where(x => x.Aspnetuserid == AspId).FirstOrDefault().Adminid;
         }
-
+        public string GetPatientEmail(int reqClientId)
+        {
+            return _db.Requestclients.FirstOrDefault(x => x.Requestclientid == reqClientId).Email;
+        }
         public List<Menu> Menus()
         {
             return _db.Menus.ToList();
@@ -216,7 +219,8 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var closeReqData = from req in _db.Requests
                                join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                               join phy in _db.Physicians on req.Physicianid equals phy.Physicianid
+                               join phy in _db.Physicians on req.Physicianid equals phy.Physicianid into p1
+                               from phy in p1.DefaultIfEmpty()
                                where req.Status == (int)enumsFile.requestStatus.Closed
                                select new closeReqViewModel
                                {
@@ -862,7 +866,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return data;
         }
         public int ViewUploadFile(string file, int reqId, int adminId)
-        {
+            {
             var reqClientRow = _db.Requestclients.Where(x => x.Requestid == reqId).FirstOrDefault();
             Requestwisefile requestwisefile = new Requestwisefile
             {

@@ -17,7 +17,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public AspNetUser GetLoginData(login obj, String hashPass);
 
-        public void SendEmail(String email, string subject, string body);
+        public void SendEmail(String email, string subject, string body, string[]? attachments);
 
         public void uploadFile(IFormFile? fileName,string folder, string path);
 

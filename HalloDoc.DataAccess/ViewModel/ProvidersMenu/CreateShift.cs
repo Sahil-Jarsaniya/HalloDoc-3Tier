@@ -1,6 +1,7 @@
 ﻿using HalloDoc.DataAccess.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,14 +12,17 @@ namespace HalloDoc.DataAccess.ViewModel.ProvidersMenu
     {
         public int Shiftid { get; set; }
         public int ShiftDetailId { get; set; }
-        public int Regionid { get; set; }
 
+        [Required]
+        public int Regionid { get; set; }
+        [Required]
         public int Physicianid { get; set; }
         public string? PhysicianName { get; set; }
-
+        [Required]
         public DateOnly Startdate { get; set; }
-
+        [Required]
         public TimeOnly StartTime { get; set; }
+        [Required]
         public TimeOnly EndTime { get; set; }
 
         public bool Isrepeat { get; set; }

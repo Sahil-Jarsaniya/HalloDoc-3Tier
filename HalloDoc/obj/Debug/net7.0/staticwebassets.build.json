@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6ng9SipZJa8UtuJ1W+CUxtcucE7dkAJHtvRNbcd1+UY=",
+  "Hash": "3InPWdQhBTZS9KHDbJP+lmehNl3opZ6RxUER7FIoGso=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -5202,6 +5202,57 @@
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\104\\Test Instructions.pdf"
     },
     {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\105\\SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/105/SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\105\\SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf"
+    },
+    {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\108\\Dashboard_mobile_to-close_2.png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/108/Dashboard_mobile_to-close_2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\108\\Dashboard_mobile_to-close_2.png"
+    },
+    {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\111\\Physician_Dashboard_new_1.png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/111/Physician_Dashboard_new_1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\111\\Physician_Dashboard_new_1.png"
+    },
+    {
       "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\116\\.net-Whole-Plane-2024.pdf",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -5542,6 +5593,23 @@
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\90\\FinalizedEncounterForm (4).pdf"
     },
     {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\LoginController.cs",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/90/LoginController.cs",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\90\\LoginController.cs"
+    },
+    {
       "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\Screenshot (2) (3).png",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -5557,6 +5625,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\90\\Screenshot (2) (3).png"
+    },
+    {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/90/SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\90\\SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf"
     },
     {
       "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\90\\SRS-23-24-Trainees-8March24 (5).pdf",
@@ -5610,6 +5695,23 @@
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\94\\FinalizedEncounterForm (4).pdf"
     },
     {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\96\\Dashboard_mobile_to-close_2.png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/96/Dashboard_mobile_to-close_2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\96\\Dashboard_mobile_to-close_2.png"
+    },
+    {
       "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\96\\Screenshot (2).png",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -5661,6 +5763,23 @@
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\99\\CreateProvider (1).png"
     },
     {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\99\\Dashboard_mobile_pending_2.png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/99/Dashboard_mobile_pending_2.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\99\\Dashboard_mobile_pending_2.png"
+    },
+    {
       "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\99\\FinalizedEncounterForm (4) (1).pdf",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -5678,6 +5797,40 @@
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\99\\FinalizedEncounterForm (4) (1).pdf"
     },
     {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\99\\Screenshot (2).png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/99/Screenshot (2).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\99\\Screenshot (2).png"
+    },
+    {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\99\\Screenshot (3).png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/RequestData/99/Screenshot (3).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\99\\Screenshot (3).png"
+    },
+    {
       "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\RequestData\\99\\SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf",
       "SourceId": "HalloDoc",
       "SourceType": "Discovered",
@@ -5693,23 +5846,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\RequestData\\99\\SRS_23_24_Trainees_17April24_GoodToHave_f64f6bdd_13c0_420f_8bd1 (2).pdf"
-    },
-    {
-      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\Screenshot (3).png",
-      "SourceId": "HalloDoc",
-      "SourceType": "Discovered",
-      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
-      "BasePath": "_content/HalloDoc",
-      "RelativePath": "uploadedFiles/Screenshot (3).png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\uploadedFiles\\Screenshot (3).png"
     }
   ]
 }

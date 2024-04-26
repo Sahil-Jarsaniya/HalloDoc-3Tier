@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.JSInterop.Implementation;
+using System.Security.Claims;
 
 namespace HalloDoc.Controllers
 {
@@ -199,7 +200,7 @@ namespace HalloDoc.Controllers
         {
             var subject = "Send your request";
             var body = "<a href='/HomeController/Index+'>HalloDoc</a>";
-            _loginRepo.SendEmail(Email, subject, body);
+            _loginRepo.SendEmail(Email, subject, body, null);
             Task<bool> val = _sms.SendSmsAsync("+91" + PhoneNumber, body);
 
             _notyf.Success("Email sent.");
@@ -298,7 +299,7 @@ namespace HalloDoc.Controllers
             var phy = _adminRepo.RequestSupportDTY();
             foreach (var item in phy)
             {
-                _loginRepo.SendEmail(item.Email, "Request Support", RequestNote);
+                _loginRepo.SendEmail(item.Email, "Request Support", RequestNote, null);
             }
             _notyf.Success("Mail send to available Provider.");
             return RedirectToAction("Dashboard");
@@ -496,6 +497,13 @@ namespace HalloDoc.Controllers
             }
         }
 
+        public IActionResult SendFileToPatient(string[] files, int reqClientId)
+        {
+
+            _loginRepo.SendEmail(_adminRepo.GetPatientEmail(reqClientId) ,"Documents", "", files);
+            return Ok();
+        }
+
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult DeleteFile(int reqClientId, string FileName)
         {
@@ -598,7 +606,7 @@ namespace HalloDoc.Controllers
             string subject = "Regarding Agreement";
             string body = "<a href=" + callBackUrl + ">Review</a>";
 
-            _loginRepo.SendEmail(email, subject, body);
+            _loginRepo.SendEmail(email, subject, body, null);
         }
 
 
@@ -682,6 +690,8 @@ namespace HalloDoc.Controllers
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            string roleId = jwt.Claims.First(c => c.Type == "RoleId").Value;
+            string Email = jwt.Claims.First(c => c.Type == ClaimTypes.Email).Value;
 
             if(obj.Firstname != null && _loginRepo.isEmailAvailable(obj.Email) && _adminRepo.GetAdminEmail(obj.Adminid)!= obj.Email)
             {
@@ -691,6 +701,20 @@ namespace HalloDoc.Controllers
 
             if (ModelState.IsValid)
             {
+                Response.Cookies.Delete("jwt");
+                var user2 = new LoggedUser
+                {
+                    AspId = AspId,
+                    FirstName = obj.Firstname,
+                    LastName = obj.Lastname,
+                    Email = Email,
+                    Role = "Admin",
+                    Roleid = roleId,
+                };
+                var jwtToken = _jwtService.GenerateJwtToken(user2);
+                Response.Cookies.Append("jwt", jwtToken);
+                ViewBag.Data = obj.Firstname + " " + obj.Lastname;
+
                 _adminRepo.MyProfile(obj, AspId);
                 _notyf.Success("Updated");
             }
@@ -768,13 +792,13 @@ namespace HalloDoc.Controllers
             switch (contactType)
             {
                 case 2:
-                    _loginRepo.SendEmail(Email, sub, note);
+                    _loginRepo.SendEmail(Email, sub, note, null);
                     break;
                 case 1:
                     _sms.SendSmsAsync(Mobile, note);
                     break;
                 case 3:
-                    _loginRepo.SendEmail(Email, sub, note);
+                    _loginRepo.SendEmail(Email, sub, note, null);
                     _sms.SendSmsAsync(Mobile, note);
                     break;
             }

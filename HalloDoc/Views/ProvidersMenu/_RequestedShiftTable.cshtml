@@ -10,6 +10,12 @@
         </tr>
     </thead>
     <tbody>
+        @if (Model.Items.Count == 0)
+        {
+            <tr>
+                <td>No data found.</td>
+            </tr>
+        }
         @foreach (var item in Model.Items)
         {
             <tr>
@@ -68,6 +74,7 @@
     })
 
     $("#DeleteBtn").click(function () {
+        $(this).off('click');
         var shiftDetailId = new Array();
         $(".checkBox").each(function () {
             if ($(this).prop('checked')) {
@@ -83,11 +90,13 @@
             },
             success: function () {
                 $("#ShiftTable").load('/ProvidersMenu/RequestedShiftTable');
+               
             }
         })
     })
 
     $("#ApproveBtn").click(function () {
+        $(this).off('click');
         var shiftDetailId = new Array();
         $(".checkBox").each(function () {
             if ($(this).prop('checked')) {

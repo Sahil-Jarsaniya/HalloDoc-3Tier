@@ -9,8 +9,8 @@
             <div class="modal-body">
                 <div class="dropdown">
                     <form id="CreateShiftForm">
-                        <div class="col-12">
-                            <select asp-for="Regionid" id="RegionSelect" class="form-select form-select mb-3 " aria-label="Large select example">
+                        <div class="col-12 mb-3">
+                            <select asp-for="Regionid" id="RegionSelect" class="form-select form-select" aria-label="Large select example">
                                 <option value="0">Select Region</option>
                                 @foreach (var item in Model.Regions)
                                 {
@@ -22,10 +22,10 @@
                         <div class="row g-2">
                             <div class="col-12">
                                 <div class="form-floating">
-                                    <input asp-for="Startdate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" placeholder="">
+                                    <input asp-for="Startdate" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control" id="Startdate" placeholder="">
                                     <label for="">ShiftDate</label>
                                 </div>
-                                <span class="text-danger" asp-validation-for="Startdate"></span>
+                                <span class="text-danger" id="dateError" asp-validation-for="Startdate"></span>
                             </div>
                             <div class="col-6">
                                 <div class="form-floating">
@@ -159,12 +159,36 @@
         }
     });
 
-        $("#SaveShiftBtn").click(function () {
-            debugger;
+    $("#Startdate").on('change', function () {
+        var input = new Date($(this).val());
+        var currentDate = new Date();
+
+
+        if (input < currentDate) {
+            $("#dateError").text("Select Proper Date!!");
+        } else {
+            $("#dateError").text("");
+        }
+        console.log(input);
+    })
+    $("#SaveShiftBtn").click(function () {
+        var input = new Date($("#Startdate").val());
+        console.log(input);
+        var currentDate = new Date();
+        var startTime = $("#StartTime").val();
+        var EndTime = $("#EndTime").val();
         if ($("#RegionSelect").val() == null || $("#RegionSelect").val() == 0) {
             document.getElementById("RegionSelect").nextElementSibling.textContent = "Select Region!!"
         }
-        if ($("#RegionSelect").val() != null && $("#RegionSelect").val() != 0) {
+        if (EndTime <= startTime) {
+            $("#timeError").text("Select Proper Time!!");
+            $("#SaveShiftBtn").attr('disabled', 'disabled');
+        }
+        if ($("#Startdate").val() == "" || input < currentDate ) {
+            console.log($("#Startdate").val());
+            $("#dateError").text("Select Proper Date!!");
+        }
+        if ($("#RegionSelect").val() != null && $("#RegionSelect").val() != 0 && input >= currentDate && EndTime > startTime) {
 
             var selectedDays = [];
             $(".DaysCheckbox").each(function () {

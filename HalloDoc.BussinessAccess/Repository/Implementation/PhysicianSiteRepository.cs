@@ -74,7 +74,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                 select t1
                             ).Count();
             var activeCount = (from t1 in _db.Requests
-                               where t1.Status == (int)enumsFile.requestStatus.Consult || t1.Status == (int)enumsFile.requestStatus.MdOnHouseCall && t1.Physicianid == phyId
+                               where (t1.Status == (int)enumsFile.requestStatus.Consult || t1.Status == (int)enumsFile.requestStatus.MdOnHouseCall) && t1.Physicianid == phyId
                                select t1
                             ).Count();
             var concludeCount = (from t1 in _db.Requests

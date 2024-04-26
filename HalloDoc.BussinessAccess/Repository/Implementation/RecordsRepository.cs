@@ -77,6 +77,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public IQueryable<BlockHistoryVM> BlockHistory()
         {
             var data = from t1 in _db.Blockrequests
+                       where t1.Isactive != true
                        select new BlockHistoryVM()
                        {
                            PatientName = _db.Requestclients.FirstOrDefault(x => x.Requestid == t1.Requestid).Firstname

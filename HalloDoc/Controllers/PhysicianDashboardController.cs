@@ -126,7 +126,7 @@ namespace HalloDoc.Controllers
         {
             var subject = "Send your request";
             var body = "<a href='/HomeController/Index+'>HalloDoc</a>";
-            _loginRepo.SendEmail(Email, subject, body);
+            _loginRepo.SendEmail(Email, subject, body, null);
             Task<bool> val = _sms.SendSmsAsync("+91" + PhoneNumber, body);
 
             return RedirectToAction("Dashboard");
@@ -187,7 +187,7 @@ namespace HalloDoc.Controllers
             string subject = "Regarding Agreement";
             string body = "<a href=" + callBackUrl + ">Review</a>";
 
-            _loginRepo.SendEmail(email, subject, body);
+            _loginRepo.SendEmail(email, subject, body, null);
         }
 
         [HttpPost]
@@ -531,7 +531,7 @@ namespace HalloDoc.Controllers
 
             foreach(var admin in admins)
             {
-                _loginRepo.SendEmail(admin.Email, "Edit My Profile", Message);
+                _loginRepo.SendEmail(admin.Email, "Edit My Profile", Message, null);
             }
 
             return Ok(new { success = true });

@@ -76,7 +76,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     _db.SaveChanges();
                     string subject = "Registration Link";
                     string body = "link";
-                    _loginRepo.SendEmail(obj.Email, subject, body);
+                    _loginRepo.SendEmail(obj.Email, subject, body, null);
                 }
 
 
@@ -230,7 +230,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 string subject = "Registration Link";
                 string body = "link";
-                _loginRepo.SendEmail(obj.Email, subject, body);
+                _loginRepo.SendEmail(obj.Email, subject, body, null);
                 var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
                 uid = user.Userid;
             }
@@ -359,7 +359,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 uid = user.Userid;
                 string subject = "Registration Link";
                 string body = "link";
-                _loginRepo.SendEmail(obj.Email, subject, body);
+                _loginRepo.SendEmail(obj.Email, subject, body, null);
             }
             else
             {
@@ -479,7 +479,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
                 string subject = "Registration Link";
                 string body = "link";
-                _loginRepo.SendEmail(obj.Email, subject, body);
+                _loginRepo.SendEmail(obj.Email, subject, body, null);
             }
             else
             {
@@ -582,7 +582,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     _db.SaveChanges();
                     string subject = "Registration Link";
                     string body = "link";
-                    _loginRepo.SendEmail(obj.Email, subject, body);
+                    _loginRepo.SendEmail(obj.Email, subject, body, null);
                 }
 
 
