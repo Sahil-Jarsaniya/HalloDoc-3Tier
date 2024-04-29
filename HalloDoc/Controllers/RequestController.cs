@@ -9,15 +9,19 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Security.Cryptography;
 using HalloDoc.BussinessAccess.Repository.Interface;
+using Microsoft.AspNetCore.Routing.Matching;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace HalloDoc.Controllers;
 
 public class RequestController : Controller
 {
     private readonly IRequestRepository _requestRepo;
-    public RequestController( IRequestRepository requestRepo)
+    private readonly INotyfService _notyf;
+    public RequestController( IRequestRepository requestRepo, INotyfService notyf)
     {
         _requestRepo = requestRepo;
+        _notyf = notyf;
     }
 
     [HttpPost]
@@ -48,6 +52,7 @@ public class RequestController : Controller
                 return View();
             }
             _requestRepo.CreatePatientRequest(obj);
+            _notyf.Success("Request Submitted");
             return RedirectToAction("submitRequestScreen");
         }
         else
@@ -70,6 +75,7 @@ public class RequestController : Controller
         if (ModelState.IsValid)
         {
             _requestRepo.CreateFamilyfriendRequest(obj);
+            _notyf.Success("Request Submitted");
             return RedirectToAction("submitRequestScreen");
         }
         else
@@ -91,6 +97,7 @@ public class RequestController : Controller
         if (ModelState.IsValid)
         {
             _requestRepo.CreateConciergeRequest(obj);
+            _notyf.Success("Request Submitted");
             return RedirectToAction("submitRequestScreen");
         }
         else
@@ -112,6 +119,7 @@ public class RequestController : Controller
         if(ModelState.IsValid)
         {
             _requestRepo.CreateBusinessRequest(obj);
+            _notyf.Success("Request Submitted");
             return RedirectToAction("submitRequestScreen");
         }
         else

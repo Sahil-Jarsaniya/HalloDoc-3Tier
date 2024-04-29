@@ -254,7 +254,7 @@ namespace HalloDoc.Controllers
             {
                 pagenumber = 1;
             }
-            var pageSize = 2;
+            var pageSize = 5;
             var data = _ProviderMenu.RequestedShiftTable();
             if (RegionFilter != 0 && RegionFilter != null)
             {

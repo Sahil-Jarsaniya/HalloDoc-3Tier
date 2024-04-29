@@ -38,7 +38,7 @@
     $(".ShiftBtn").click(function () {
         console.log($(this).data('id'));
         $("#AllShiftModel").modal('toggle');
-        $("#modelDiv3").load('/ProvidersMenu/ViewShift?shiftDetailId=' + $(this).data('id'), function (response, status, xhr) {
+        $("#modelDiv").load('/ProvidersMenu/ViewShift?shiftDetailId=' + $(this).data('id'), function (response, status, xhr) {
             if (status == "success") {
                 $("#CreateShiftModel").modal('show');
             } else {

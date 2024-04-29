@@ -1127,7 +1127,26 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public List<Physician> RequestSupportDTY()
         {
-            return _db.Physicians.Where(x => x.Status == 4).ToList();
+            TimeOnly currentTime = TimeOnly.FromDateTime(DateTime.Now);
+            DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
+            var data1 = from t1 in _db.Shiftdetails
+                        join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
+                        join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
+                        where t1.Starttime <= currentTime && t1.Endtime >= currentTime && t1.Shiftdate == currentDate && t1.Isdeleted != true
+                        select new ProviderOnCall()
+                        {
+                            Name = t3.Firstname + " " + t3.Lastname,
+                            profilePhoto = t3.Photo,
+                            shiftDetailId = t1.Shiftdetailid,
+                            providerId = t3.Physicianid,
+                            isOnDuty = true,
+                        };
+
+            var data3 = from t1 in _db.Physicians
+                        where !data1.Any(x => x.providerId == t1.Physicianid)
+                        select t1;
+
+            return data3.ToList();
         }
 
         public Profile MyProfile(string AspId)
@@ -1178,7 +1197,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             if (obj.Firstname == null)
             {
-                if (obj.Mobile.Contains("+"))
+                if (obj.Altphone.Contains("+"))
                 {
                     adminRow.Altphone = obj.Altphone;
                 }

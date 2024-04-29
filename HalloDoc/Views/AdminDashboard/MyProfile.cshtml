@@ -29,7 +29,7 @@
         }
         <form method="post" id="MyProfileForm" asp-action="MyProfile" class="viewCaseForm form-floating shadow patient-request-form p-3">
             <input id="adminId" asp-for="Adminid" hidden />
-             <input asp-for="CountryFlag" id="CountryFlag" hidden />
+            <input asp-for="CountryFlag" id="CountryFlag" hidden />
             <h5>Account Information</h5>
             <div class="row g-2 m-1">
                 <div class="col-md">
@@ -44,7 +44,7 @@
                         <input asp-for="Password" type="password" class="form-control" id="Password" placeholder="Password" disabled>
                         <label asp-for="Password" for="floatingPassword">Password</label>
                     </div>
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <span class="text-danger" id="passErrorSpan" asp-validation-for="Password"></span>
                 </div>
             </div>
 
@@ -127,26 +127,26 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating phone-div w-100 h-100 ">
-                           
+
                             <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
                         <span asp-validation-for="Mobile" class="text-danger"></span>
                     </div>
-                 @*   <div class="col-md-6">
-                        @foreach (var item in Model.Region)
-                        {
-                            if (item.Checked)
-                            {
-                            <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.value" checked/>
-                                <label for="@item.Id">@item.value</label>
-                            }
-                            else
-                            {
-                                <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.value" />
-                                <label for="@item.Id">@item.value</label>
-                            }
-                        }
+                    @*   <div class="col-md-6">
+                    @foreach (var item in Model.Region)
+                    {
+                    if (item.Checked)
+                    {
+                    <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.value" checked/>
+                    <label for="@item.Id">@item.value</label>
+                    }
+                    else
+                    {
+                    <input class="regionCheckbox" type="checkbox" id="@item.Id" name="@item.Id" value="@item.value" />
+                    <label for="@item.Id">@item.value</label>
+                    }
+                    }
                     </div>*@
                     <div class="col-md-6">
                         <select class="form-select selectpicker m-0 p-0" asp-for="selectedRegion" data-live-search="true" multiple>
@@ -199,7 +199,7 @@
                             <select asp-for="Regionid" class="form-select">
                                 @foreach (var i in Model.Region)
                                 {
-                                        <option value="@i.Id">@i.value</option>
+                                    <option value="@i.Id">@i.value</option>
                                 }
                             </select>
                             <label for="">State</label>
@@ -303,17 +303,21 @@
         $("#saveBtn0").click(function () {
             var pass = $("#Password").val();
             var adminId = $("#adminId").val();
+            if (pass.length != 0) {
 
-            $.ajax({
-                url: '/AdminDashboard/ResetPass',
-                type: 'POST',
-                data: {
-                    pass: pass, adminId: adminId
-                },
-                success: function(){
-                    location.reload();
-                }
-            })
+                $.ajax({
+                    url: '/AdminDashboard/ResetPass',
+                    type: 'POST',
+                    data: {
+                        pass: pass, adminId: adminId
+                    },
+                    success: function () {
+                        location.reload();
+                    }
+                })
+            }else{
+                $("#passErrorSpan").text('Please Enter Password');
+            }
         })
 
     </script>

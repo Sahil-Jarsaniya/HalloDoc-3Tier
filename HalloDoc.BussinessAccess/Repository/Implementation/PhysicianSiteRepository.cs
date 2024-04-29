@@ -66,7 +66,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public countRequestViewModel DashboardCount(int phyId)
         {
             var newCount = (from t1 in _db.Requests
-                            where t1.Status == (int)enumsFile.requestStatus.Unassigned && t1.Physicianid == phyId
+                            where t1.Status == (int)enumsFile.requestStatus.Assigned && t1.Physicianid == phyId
                             select t1
                             ).Count();
             var pendingCount = (from t1 in _db.Requests
@@ -87,7 +87,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 pendingCount = pendingCount,
                 activeCount = activeCount,
                 concludeCount = concludeCount
-            };
+            };  
 
             return count;
         }
@@ -95,7 +95,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             var newReqData = (from req in _db.Requests
                               join rc in _db.Requestclients on req.Requestid equals rc.Requestid
-                              where req.Status == (int)enumsFile.requestStatus.Unassigned && req.Physicianid == phyId
+                              where req.Status == (int)enumsFile.requestStatus.Assigned && req.Physicianid == phyId
                               select new pendingReqViewModel
                               {
                                   reqClientId = rc.Requestclientid,

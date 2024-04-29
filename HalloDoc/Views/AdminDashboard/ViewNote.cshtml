@@ -82,15 +82,15 @@
                     </div>
                     <div class="" style="width: 97%">
                         <h6>Transfer Notes</h6>
+                        @if(Model.Requeststatuslog == null)
+                        {
+                            <p> - </p>
+                        }
                         @foreach (var item in Model.Requeststatuslog)
                         {
                             @if (item.Notes != null)
                             {
                                 <p> @item.Notes</p>
-                            }
-                            else
-                            {
-                                <p>-</p>
                             }
                         }
                     </div>

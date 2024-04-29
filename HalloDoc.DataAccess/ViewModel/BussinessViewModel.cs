@@ -100,6 +100,6 @@ namespace HalloDoc.DataAccess.ViewModel
         public string? Zipcode { get; set; }
 
         public string? countryCode { get; set; }
-        public List<Region> Regions { get; set; }
+        public List<Region>? Regions { get; set; }
     }
 }

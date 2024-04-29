@@ -76,7 +76,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating phone-div w-100 h-100 ">
-                            <input asp-for="Phonenumber" type="tel" id="Phone" class="Phone form-control w-100 h-100" placeholder="" disabled>
+                        <input asp-for="Phonenumber" type="tel" id="Phone" class="Phone  form-control w-100 h-100" placeholder="" disabled>
                             <label for=""></label>
                         </div>
                         <span asp-validation-for="Phonenumber" class="text-danger"></span>
@@ -130,7 +130,7 @@
 </div>
 @section Scripts {
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script>
+     <script>
         const Phone = document.getElementById("Phone");
         var phoneInput = window.intlTelInput(Phone,
             {

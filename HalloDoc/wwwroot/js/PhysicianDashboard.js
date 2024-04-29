@@ -1,22 +1,20 @@
 $(document).ready(function () {
 
 
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } 
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    }
     function showPosition(position) {
-      
-    var latitude = position.coords.latitude;
-    var longitude = position.coords.longitude;
-        console.log(latitude);
-        console.log(longitude);
-    $.ajax({
-        url: '/PhysicianDashboard/PhysicianLocationUpdate',
-        type: 'POST',
-        data: {
-            latitude: latitude, longitude: longitude
-        }
-    })
+
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        $.ajax({
+            url: '/PhysicianDashboard/PhysicianLocationUpdate',
+            type: 'POST',
+            data: {
+                latitude: latitude, longitude: longitude
+            }
+        })
     }
 
 })

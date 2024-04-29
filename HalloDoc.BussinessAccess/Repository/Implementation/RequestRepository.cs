@@ -187,7 +187,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public void CreateFamilyfriendRequest(FamilyViewModel obj)
         {
-            var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
+            var existUser = _db.Users.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;
 
@@ -231,7 +231,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 string subject = "Registration Link";
                 string body = "link";
                 _loginRepo.SendEmail(obj.Email, subject, body, null);
-                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
+                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Aspnetuserid);
                 uid = user.Userid;
             }
 
@@ -319,7 +319,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public void CreateConciergeRequest(ConciergeViewModel obj)
         {
-            var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
+            var existUser = _db.Users.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;
 
@@ -363,7 +363,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             else
             {
-                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
+                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Aspnetuserid);
                 uid = user.Userid;
             }
             //inserting into concierge table
@@ -544,7 +544,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public void CreateRequestByPhysician(PatientViewModel obj, int PhyId)
         {
 
-            var existUser = _db.AspNetUsers.FirstOrDefault(u => u.Email == obj.Email);
+            var existUser = _db.Users.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;
 
@@ -607,7 +607,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             else
             {
-                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Id);
+                var user = _db.Users.FirstOrDefault(u => u.Aspnetuserid == existUser.Aspnetuserid);
                 uid = user.Userid;
             }
 

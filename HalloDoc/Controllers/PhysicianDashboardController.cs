@@ -395,6 +395,13 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
         public IActionResult ConcludeCare(CloseCaseViewModel obj)
         {
+            if (obj.fileName == null)
+            {
+                _notyf.Error("Upload Encounter form");
+                var data = _adminRepo.CloseCase(obj.ReqClientId);
+                return View(data);
+            }
+
             _phyRepo.ConcludeCare(obj, GetAspID());
             _loginRepo.uploadFile(obj.fileName, "RequestData\\" + obj.ReqClientId, obj.fileName.FileName.ToString());
             return RedirectToAction("Dashboard");

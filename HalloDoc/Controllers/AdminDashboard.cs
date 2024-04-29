@@ -90,7 +90,7 @@ namespace HalloDoc.Controllers
             {
                 pageNumber = 1;
             }
-            int pageSize = 2;
+            int pageSize = 5;
 
             if (obj.Name != null || obj.reqType != 0 || obj.RegionId != 0)
             {
@@ -301,7 +301,7 @@ namespace HalloDoc.Controllers
             {
                 _loginRepo.SendEmail(item.Email, "Request Support", RequestNote, null);
             }
-            _notyf.Success("Mail send to available Provider.");
+            _notyf.Success("Mail send to Provider.");
             return RedirectToAction("Dashboard");
         }
 
@@ -500,14 +500,14 @@ namespace HalloDoc.Controllers
         public IActionResult SendFileToPatient(string[] files, int reqClientId)
         {
 
-            _loginRepo.SendEmail(_adminRepo.GetPatientEmail(reqClientId) ,"Documents", "", files);
+            _loginRepo.SendEmail(_adminRepo.GetPatientEmail(reqClientId), "Documents", "", files);
             return Ok();
         }
 
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
         public IActionResult DeleteFile(int reqClientId, string FileName)
         {
-            _adminRepo.DeleteFile(reqClientId, FileName); 
+            _adminRepo.DeleteFile(reqClientId, FileName);
             _notyf.Success("File uploaded.");
             return Ok();
         }
@@ -693,7 +693,7 @@ namespace HalloDoc.Controllers
             string roleId = jwt.Claims.First(c => c.Type == "RoleId").Value;
             string Email = jwt.Claims.First(c => c.Type == ClaimTypes.Email).Value;
 
-            if(obj.Firstname != null && _loginRepo.isEmailAvailable(obj.Email) && _adminRepo.GetAdminEmail(obj.Adminid)!= obj.Email)
+            if (obj.Firstname != null && _loginRepo.isEmailAvailable(obj.Email) && _adminRepo.GetAdminEmail(obj.Adminid) != obj.Email)
             {
                 _notyf.Error("Email is already registered.");
                 return RedirectToAction("MyProfile");
@@ -701,18 +701,22 @@ namespace HalloDoc.Controllers
 
             if (ModelState.IsValid)
             {
-                Response.Cookies.Delete("jwt");
-                var user2 = new LoggedUser
+                if (obj.Firstname != null)
                 {
-                    AspId = AspId,
-                    FirstName = obj.Firstname,
-                    LastName = obj.Lastname,
-                    Email = Email,
-                    Role = "Admin",
-                    Roleid = roleId,
-                };
-                var jwtToken = _jwtService.GenerateJwtToken(user2);
-                Response.Cookies.Append("jwt", jwtToken);
+
+                    Response.Cookies.Delete("jwt");
+                    var user2 = new LoggedUser
+                    {
+                        AspId = AspId,
+                        FirstName = obj.Firstname,
+                        LastName = obj.Lastname,
+                        Email = Email,
+                        Role = "Admin",
+                        Roleid = roleId,
+                    };
+                    var jwtToken = _jwtService.GenerateJwtToken(user2);
+                    Response.Cookies.Append("jwt", jwtToken);
+                }   
                 ViewBag.Data = obj.Firstname + " " + obj.Lastname;
 
                 _adminRepo.MyProfile(obj, AspId);
@@ -942,9 +946,9 @@ namespace HalloDoc.Controllers
                 var data = _adminRepo.CreateProvider();
 
                 obj.Region = data.Region;
-                obj.Role= data.Role;
+                obj.Role = data.Role;
 
-                return View(obj);   
+                return View(obj);
             }
 
             if (ModelState.IsValid)
@@ -1122,7 +1126,7 @@ namespace HalloDoc.Controllers
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
 
-            if(obj.Password == null)
+            if (obj.Password == null)
             {
                 _notyf.Error("Enter Password");
                 var data = _adminRepo.CreateAdmin();
@@ -1163,7 +1167,7 @@ namespace HalloDoc.Controllers
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
-            if(_loginRepo.isEmailAvailable(obj.Email) && _adminRepo.GetAdminEmail(obj.Adminid) != obj.Email)
+            if (_loginRepo.isEmailAvailable(obj.Email) && _adminRepo.GetAdminEmail(obj.Adminid) != obj.Email)
             {
                 _notyf.Error("Email is already registered.");
                 var data = _adminRepo.EditAdmin(obj.Adminid);
@@ -1200,7 +1204,7 @@ namespace HalloDoc.Controllers
             {
                 pageNumber = 1;
             }
-            var pageSize = 2;
+            var pageSize = 5;
 
             return PartialView("_UserAccessTable", await PaginatedList<UserAccessTable>.CreateAsync(data, pageNumber, pageSize));
         }

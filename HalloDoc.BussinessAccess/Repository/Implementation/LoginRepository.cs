@@ -123,12 +123,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 {
                     for (int i = 0; i < attachments.Length; i++)
                     {
-                        var folder= attachments[i].Split("/");
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", "RequestData",folder[0], folder[1]);
+                        var folder = attachments[i].Split("/");
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploadedFiles", "RequestData", folder[0], folder[1]);
                         builder.Attachments.Add(filePath);
                     }
+                    emailToSend.Body = builder.ToMessageBody();
                 }
-                emailToSend.Body = builder.ToMessageBody(); 
                 //send mail
                 using (var emailClient = new MailKit.Net.Smtp.SmtpClient())
                 {

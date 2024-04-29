@@ -1,16 +1,24 @@
 ﻿<div class="row pageMenu">
     <div class="col-md-12">
-        <nav>
+        <nav class="d-flex justify-content-between">
+            <ul class="pagination">
+                <li class="page-item">
+                    @Model.PageIndex of @Model.TotalPages
+                </li>
+            </ul>
             <ul class="pagination justify-content-end">
                 <li class="page-item m-1 ">
                     <a class="btn pageBtn btn-outline-primary @(Model.PageIndex == 1 ? "disabled" : "")" data-page="1">
-                        <<
+                        &lt&lt
                     </a>
                 </li>
                 <li class="page-item m-1 ">
                     <a class="btn pageBtn btn-outline-primary @(Model.HasPreviousPage ? "" : "disabled")" data-page="@(Model.PageIndex - 1)">
-                        <
+                        &lt
                     </a>
+                </li>
+                <li class="page-item m-auto p-1">
+                    @Model.PageIndex
                 </li>
                 <li class="page-item m-1 ">
                     <a class="btn btn-outline-primary pageBtn @(Model.HasNextPage ? "": "disabled")" data-page="@(Model.PageIndex + 1)">

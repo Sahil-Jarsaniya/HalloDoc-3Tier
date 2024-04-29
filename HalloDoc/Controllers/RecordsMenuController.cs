@@ -104,7 +104,7 @@ namespace HalloDoc.Controllers
             {
                 pagenumber = 1;
             }
-            var pageSize = 2;
+            var pageSize = 5;
 
             var data = _recordsRepo.SearchRecords();
 
@@ -176,7 +176,7 @@ namespace HalloDoc.Controllers
             {
                 pagenumber = 1;
             }
-            var pageSize = 2;
+            var pageSize = 5;
 
             var data = _recordsRepo.BlockHistory();
 
@@ -295,7 +295,7 @@ namespace HalloDoc.Controllers
             {
                 pagenumber = 1;
             }
-            var pageSize = 2;
+            var pageSize = 10;
 
             var data = _recordsRepo.SmsLogs();
 
@@ -346,7 +346,7 @@ namespace HalloDoc.Controllers
             {
                 pagenumber = 1;
             }
-            var pageSize = 2;
+            var pageSize = 5;
 
             var data = _recordsRepo.PatientHistory();
 
@@ -380,7 +380,7 @@ namespace HalloDoc.Controllers
             {
                 pagenumber = 1;
             }
-            var pageSize = 2;
+            var pageSize = 5;
 
             var data  = _recordsRepo.PatientRecord(reqId);
 
