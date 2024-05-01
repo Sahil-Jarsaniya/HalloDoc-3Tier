@@ -223,4 +223,3 @@ document.querySelectorAll(".businessDetail").forEach(function (input) {
         }
     })
 })
-

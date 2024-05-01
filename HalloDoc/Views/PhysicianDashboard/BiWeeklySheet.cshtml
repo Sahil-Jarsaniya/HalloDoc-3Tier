@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Invoicing";
+    Layout = "_PhysicianLayout";
+}
+<div>
+
+    <div class="container mt-4" style="max-width:1000px">
+        <a href="@Url.Action("Invoicing", "PhysicianDashboard")" class="btn btn-outline-primary  text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="container mt-2" style="max-width: 1000px">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Date</td>
+                    <td>On-call Status</td>
+                    <td>Total hours</td>
+                    <td>Weekend/ Holiday</td>
+                    <td>Number of HouseCalls</td>
+                    <td>Number of Phone Consults</td>
+                </tr>
+            </thead>
+            <tbody>
+                <form class="form-control">
+                <tr>
+                    <td>0/0/0000</td>
+                    <td>0</td>
+                    <td><input type="number" value="0" /></td>
+                    <td><input type="checkbox" /></td>
+                    <td><input type="number" value="0" /></td>
+                    <td><input type="number" value="0" /></td>
+                </tr>
+                </form>
+            </tbody>
+        </table>
+    </div>
+</div>
+@section AdminScript {
+}

@@ -23,6 +23,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             return _db.Healthprofessionaltypes;
         }
+
+        public IEnumerable<Region> regions()
+        {
+            return _db.Regions;
+        }
+
         public string GetVendorEmail(int vendorId)
         {
             return _db.Healthprofessionals.FirstOrDefault(x => x.Vendorid == vendorId).Email;
@@ -60,14 +66,16 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             try
             {
+
                 var vendor = new Healthprofessional()
                 {
                     Vendorname = obj.BusinessName,
                     Faxnumber = obj.FaxNumber,
-                    Phonenumber = obj.Phonenumber,
+                    Phonenumber = obj.CountryFlag+ " "+ obj.Phonenumber,
                     Email = obj.Email,
                     Businesscontact = obj.BusinessContact,
-                    State = obj.State,
+                    State = _db.Regions.FirstOrDefault(x => x.Regionid == obj.regionId).Name,
+                    Regionid = obj.regionId,
                     City = obj.City,
                     Address = obj.Street,
                     Zip = obj.Zipcode,
@@ -87,7 +95,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         public VendorFormViewModel UpdateVendors(int id)
         {
                 var vendor = _db.Healthprofessionals.Where(x => x.Vendorid == id).FirstOrDefault();
-                var data = new VendorFormViewModel()
+            var data = new VendorFormViewModel()
                 {
                     vendorId = id,
                     BusinessContact = vendor.Businesscontact,
@@ -97,10 +105,12 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     BusinessName = vendor.Vendorname,
                     FaxNumber = vendor.Faxnumber,
                     Email = vendor.Email,
+                    regionId = vendor.Regionid,
                     Street = vendor.Address,
                     Zipcode = vendor.Zip,
                     professionTypeId = (int)vendor.Profession,
-                    Healthprofessionaltypes = _db.Healthprofessionaltypes
+                    Healthprofessionaltypes = _db.Healthprofessionaltypes,
+                    regions = _db.Regions
                 };
             return data;
         }
@@ -113,13 +123,14 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 vendor.Vendorname = obj.BusinessName;
                 vendor.Profession = obj.professionTypeId;
                 vendor.Businesscontact = obj.BusinessContact;
-                vendor.State = obj.State;
+                vendor.State = _db.Regions.FirstOrDefault(x=>x.Regionid == obj.regionId).Name;
                 vendor.City = obj.City;
                 vendor.Address = obj.Street;
-                vendor.Phonenumber = obj.Phonenumber;
+                vendor.Phonenumber = obj.CountryFlag+" "+obj.Phonenumber;
                 vendor.Zip = obj.Zipcode;
                 vendor.Faxnumber = obj.FaxNumber;
                 vendor.Email = obj.Email;
+                vendor.Regionid = obj.regionId;
 
                 _db.Healthprofessionals.Update(vendor);
                 _db.SaveChanges();

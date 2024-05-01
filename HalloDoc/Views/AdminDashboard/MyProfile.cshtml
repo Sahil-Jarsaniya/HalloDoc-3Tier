@@ -126,7 +126,7 @@
                         <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating phone-div w-100 h-100 " id="phoneDiv">
 
                             <input asp-for="Mobile" type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="">
                             <label for="">Phone</label>
@@ -214,7 +214,7 @@
                         <span asp-validation-for="Zip" class="text-danger"></span>
                     </div>
                     <div class="col-md-6">
-                        <div class="form-floating phone-div w-100 h-100 ">
+                        <div class="form-floating phone-div w-100 h-100 " id="phoneDiv">
                             <input asp-for="Altphone" type="tel" class="patientPhone form-control w-100 h-100" id="otherPhone" placeholder="">
                             <label for="">Phone</label>
                         </div>
@@ -238,7 +238,7 @@
     <script>
         $("#saveBtn1").click(function () {
             $("#CountryFlag").val($(".iti__selected-dial-code").text());
-        });
+        });     
         $("#saveBtn2").click(function () {
             $("#CountryFlag").val($(".iti__selected-dial-code").text());
         });

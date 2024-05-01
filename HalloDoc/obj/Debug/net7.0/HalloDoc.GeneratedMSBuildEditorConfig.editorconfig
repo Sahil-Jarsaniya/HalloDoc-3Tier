@@ -188,6 +188,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF0aWVudFxNeVByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/BiWeeklySheet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXEJpV2Vla2x5U2hlZXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/ConcludeCare.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXENvbmNsdWRlQ2FyZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -202,6 +206,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/EncounterForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXEVuY291bnRlckZvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/Invoicing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXEludm9pY2luZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/MyProfile.cshtml]

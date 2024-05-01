@@ -1,0 +1,38 @@
+﻿@{
+    ViewData["Title"] = "Invoicing";
+    Layout = "_PhysicianLayout";
+}
+<div>
+
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Timesheets
+        </h4>
+        <a href="@Url.Action("Dashboard", "PhysicianDashboard")" class="btn btn-outline-primary  text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="container shadow mt-4" style="max-width:1000px">
+        <form asp-action="BiWeeklySheet" class="form-floating d-flex justify-content-between pt-4">
+                <div class="form-floating w-25">
+                    <input  type="date" class="form-control" name="selectedDate" placeholder="">
+                    <label for="">Search by Timesheetperiod</label>
+                </div>
+                <button type="submit" class="btn btn-outline-primary my-auto float-end">Finalize Timesheet</button>
+            </form>
+        <div>
+            <p> No records found</p>
+        </div>
+    </div>
+    <div class="container shadow pt-4 mt-2" style="max-width: 1000px">
+        <h4>
+            TimeSheet Reimbursement
+        </h4>
+        <p>No resords found</p>
+    </div>
+
+</div>
+@section AdminScript {
+}

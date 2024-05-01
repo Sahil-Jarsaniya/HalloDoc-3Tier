@@ -94,8 +94,6 @@
     </div>
     <div class="col-md-6">
         <div class="form-floating">
-         @*   <input asp-for="State" type="text" class="form-control" placeholder="">
-            <label for="">State</label>*@
             <select class="form-select" asp-for="regionId" aria-label="Default select example">
                 <option selected value="null" disabled>All Regions</option>
                 @foreach (var item in Model.Regions)

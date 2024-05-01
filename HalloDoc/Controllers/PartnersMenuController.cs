@@ -1,4 +1,4 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
+﻿    using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
@@ -64,6 +64,7 @@ namespace HalloDoc.Controllers
                 pageIndex = 1;
             }
             var pageSize = 4;
+            data = data.OrderBy(x => x.BusinessName);
             return PartialView("_Vendorstable", await PaginatedList<VendorFormViewModel>.CreateAsync(data, pageIndex, pageSize));
         }
 
@@ -73,7 +74,8 @@ namespace HalloDoc.Controllers
             ViewBag.AdminName = GetAdminName();
             var data = new VendorFormViewModel()
             {
-                Healthprofessionaltypes = _partnersRepo.healthprofessionaltypes()
+                Healthprofessionaltypes = _partnersRepo.healthprofessionaltypes(),
+                regions = _partnersRepo.regions()
             };
             return View(data);
         }

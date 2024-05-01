@@ -51,11 +51,14 @@ namespace HalloDoc.DataAccess.ViewModel.PartnersMenu
         public string? Zipcode { get; set; }
 
         public int vendorId { get; set; }
+
+        public string? CountryFlag { get; set; }
         public int professionTypeId { get; set; }
         public string? professionName { get; set; }
 
         public int? regionId { get; set; }
 
         public IEnumerable<Healthprofessionaltype>?  Healthprofessionaltypes { get; set; }
+        public IEnumerable<Region>? regions { get; set; }
     }
 }

@@ -30,7 +30,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
         public IEnumerable<Physicianlocation> Physicianlocation()
         {
-            return _db.Physicianlocations;
+            return _db.Physicianlocations.Include(x => x.Physician);
         }
 
         public void CreateShift(string selectedDays, CreateShift obj, string AspId)

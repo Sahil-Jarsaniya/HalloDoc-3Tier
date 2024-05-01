@@ -21,7 +21,7 @@
         container: "map",
         key: "yhlg1glArkACz8sjjj2AL3ZHD9KYWlJl",
         zoom: 10,
-        center: [73,23]
+        center: [73, 23]
     });
 
     var popupOffsets = {
@@ -33,17 +33,16 @@
         right: [-25, -35],
     }
 
-    var popup = new tt.Popup({ offset: popupOffsets });
-    @foreach(var item in Model)
+    @foreach (var item in Model)
     {
         <text>
-            var lon = parseFloat("@item.Longtitude");
-            var lat = parseFloat("@item.Latitude");
-            var Name = parseFloat("@item.Physicianname");
-            var Coordinates = [lon, lat];
-
+                var lon = parseFloat("@item.Longtitude");
+        var lat = parseFloat("@item.Latitude");
+        var Name = parseFloat("@item.Physicianname");
+        var Coordinates = [lon, lat];
         var marker = new tt.Marker().setLngLat(Coordinates).addTo(map);
-            marker.setPopup(popup.setHTML("<b>@item.Physicianname</b>").addTo(map));
+        var popup = new tt.Popup({ offset: popupOffsets });
+        marker.setPopup(popup.setHTML("<b>@item.Physicianname</b>").addTo(map));
         </text>
     }
 </script>

@@ -80,11 +80,15 @@ switch (controller) {
         switch (action) {
             case "MyProfile":
                 removeAllActive();
-                setActiveLink(ul[1].children[0]);
+                setActiveLink(ul[2].children[0]);
                 break;
             case "Scheduling":
                 removeAllActive();
-                setActiveLink(ul[2].children[0]);
+                setActiveLink(ul[3].children[0]);
+                break;
+            case "Invoicing":
+                removeAllActive();
+                setActiveLink(ul[1].children[0]);
                 break;
             default:
                 removeAllActive();

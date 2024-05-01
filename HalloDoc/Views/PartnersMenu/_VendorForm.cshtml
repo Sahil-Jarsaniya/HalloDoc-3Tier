@@ -1,88 +1,107 @@
 ﻿@model VendorFormViewModel;
 
-        <h4>Submit Information</h4>
-        <div class="row g-2 m-1">
-            <div class="col-md">
-                <div class="form-floating">
-                    <input asp-for="BusinessName" type="text" class="form-control" placeholder="">
-                    <label for="">Business Name</label>
-                </div>
-                <span asp-validation-for="BusinessName" class="text-danger"></span>
-            </div>
-            <div class="col-md">
-                <div class="form-floating">
-                    <select class="form-select mb-3 ProfType" id="ProfType" asp-for="professionTypeId">
-                        @foreach (var item in Model.Healthprofessionaltypes)
-                        {
-                            <option value="@item.Healthprofessionalid">@item.Professionname</option>    
-                        }
-                    </select>
-                </div>
-            </div>
+<h4>Submit Information</h4>
+<div class="row g-2 m-1">
+    <div class="col-md">
+        <div class="form-floating">
+            <input asp-for="BusinessName" type="text" class="form-control" placeholder="">
+            <label for="">Business Name</label>
         </div>
-        <div class="row g-2 m-1">
-            <div class="col-md">
-                <div class="form-floating">
-                    <input asp-for="FaxNumber" type="text" class="form-control" placeholder="">
-                    <label for="">Fax Number</label>
-                </div>
-                <span class="text-danger" asp-validation-for="FaxNumber"></span>
-            </div>
-            <div class="col-md-6">
-                <div class="form-floating phone-div w-100 h-100 " style="max-height: 58px">
-                    <input type="tel" class="patientPhone form-control w-100 h-100" placeholder="" asp-for="Phonenumber">
-                    <label for="">Phone</label>
-                </div>
-                <span class="text-danger" asp-validation-for="Phonenumber"></span>
-            </div>
+        <span asp-validation-for="BusinessName" class="text-danger"></span>
+    </div>
+    <div class="col-md">
+        <div class="form-floating">
+            <select class="form-select mb-3 ProfType" id="ProfType" asp-for="professionTypeId">
+                @foreach (var item in Model.Healthprofessionaltypes)
+                {
+                    <option value="@item.Healthprofessionalid">@item.Professionname</option>
+                }
+            </select>
         </div>
-        <div class="row g-2 m-1">
-            <div class="col-md-6">
-                <div class="form-floating">
-                    <input id="checkEmail" type="email" class="form-control" placeholder="name@example.com" asp-for="Email">
-                    <label for="">Email</label>
-                </div>
-                <span class="text-danger" asp-validation-for="Email"></span>
-            </div>
-            <div class="col-md-6">
+    </div>
+</div>
+<div class="row g-2 m-1">
+    <div class="col-md">
+        <div class="form-floating">
+            <input asp-for="FaxNumber" type="text" class="form-control" placeholder="">
+            <label for="">Fax Number</label>
+        </div>
+        <span class="text-danger" asp-validation-for="FaxNumber"></span>
+    </div>
+    <div class="col-md-6">
+        <div class="form-floating phone-div w-100 h-100 " style="max-height: 58px" id="phoneDiv">
+            <input asp-for="CountryFlag" id="CountryFlag" hidden />
+            <input type="tel" class="patientPhone form-control w-100 h-100" id="patientPhone" placeholder="" asp-for="Phonenumber">
+            <label for="patientPhone             ">Phone</label>
+        </div>
+        <span class="text-danger" asp-validation-for="Phonenumber"></span>
+    </div>
+</div>
+<div class="row g-2 m-1">
+    <div class="col-md-6">
+        <div class="form-floating">
+            <input id="checkEmail" type="email" class="form-control" placeholder="name@example.com" asp-for="Email">
+            <label for="">Email</label>
+        </div>
+        <span class="text-danger" asp-validation-for="Email"></span>
+    </div>
+    <div class="col-md-6">
         <div class="form-floating phone-div w-100 h-100 " style="max-height: 58px">
-                    <input asp-for="BusinessContact" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
-                    <label for="">Business Contact</label>
-                </div>
-                <span asp-validation-for="BusinessContact" class="text-danger"></span>
-            </div>
+            <input asp-for="BusinessContact" type="tel" class="patientPhone form-control w-100 h-100" placeholder="">
+            <label for="">Business Contact</label>
         </div>
-        <div class="row g-2 m-1">
-            <div class="col-md-6">
-                <div class="form-floating">
-                    <input asp-for="Street" type="text" class="form-control" placeholder="">
-                    <label for="">Street</label>
-                </div>
-                <span asp-validation-for="Street" class="text-danger"></span>
-            </div>
-            <div class="col-md-6">
-                <div class="form-floating">
-                    <input asp-for="City" type="text" class="form-control" placeholder="">
-                    <label for="">City</label>
-                </div>
-                <span asp-validation-for="City" class="text-danger"></span>
-            </div>
+        <span asp-validation-for="BusinessContact" class="text-danger"></span>
+    </div>
+</div>
+<div class="row g-2 m-1">
+    <div class="col-md-6">
+        <div class="form-floating">
+            <input asp-for="Street" type="text" class="form-control" placeholder="">
+            <label for="">Street</label>
         </div>
-        <div class="row g-2 m-1">
-            <div class="col-md-6">
-                <div class="form-floating">
-                    <input asp-for="State" type="text" class="form-control" placeholder="">
-                    <label for="">State</label>
-                </div>
-                <span asp-validation-for="State" class="text-danger"></span>
-            </div>
-            <div class="col-md-6">
-                <div class="form-floating">
-                    <input asp-for="Zipcode" type="text" class="form-control" placeholder="">
-                    <label for="">Zip Code</label>
-                </div>
-                <span asp-validation-for="Zipcode" class="text-danger"></span>
-            </div>
-        </div><br />
-        <button type="reset" class="btn btn-outline-primary float-end me-1">Cancel</button>
-        <button type="submit" class="btn btn-primary float-end me-1">Save</button>
+        <span asp-validation-for="Street" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <div class="form-floating">
+            <input asp-for="City" type="text" class="form-control" placeholder="">
+            <label for="">City</label>
+        </div>
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+</div>
+<div class="row g-2 m-1">
+    <div class="col-md-6">
+        <div class="form-floating">
+            <select class="form-select" asp-for="regionId" aria-label="Default select example">
+                <option selected value="null" disabled>All Regions</option>
+                @foreach (var item in Model.regions)
+                {
+                    @if (Model.regionId != null && Model.regionId == item.Regionid)
+                    {
+                        <option value="@item.Regionid" selected>@item.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Regionid">@item.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <span asp-validation-for="regionId" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <div class="form-floating">
+            <input asp-for="Zipcode" type="text" class="form-control" placeholder="">
+            <label for="">Zip Code</label>
+        </div>
+        <span asp-validation-for="Zipcode" class="text-danger"></span>
+    </div>
+</div>
+<br />
+<button type="reset" class="btn btn-outline-primary float-end me-1">Cancel</button>
+<button type="submit" id="saveBtn" class="btn btn-primary float-end me-1">Save</button>
+
+@section AdminScripts{
+
+
+}

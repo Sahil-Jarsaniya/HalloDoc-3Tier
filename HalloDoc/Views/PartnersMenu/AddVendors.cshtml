@@ -20,3 +20,14 @@
         </form>
     </div>
 </div>
+
+@section AdminScript{
+    <script src="~/js/Validation.js"></script>
+    <script>
+        $("#saveBtn").click(function () {
+            console.log($(".iti__selected-dial-code").text());
+            console.log("f");
+            $("#CountryFlag").val($(".iti__selected-dial-code").text());
+        });
+    </script>
+}

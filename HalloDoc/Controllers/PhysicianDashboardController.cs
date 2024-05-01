@@ -545,5 +545,33 @@ namespace HalloDoc.Controllers
         }
         #endregion
 
+        #region Invoicing
+
+        public IActionResult Invoicing()
+        {
+            return View();
+        }
+
+        public IActionResult BiWeeklySheet(string selectedDate)
+        {
+            var day = DateOnly.Parse(selectedDate).Day;
+            var month = DateOnly.Parse(selectedDate).Month;
+            var year= DateOnly.Parse(selectedDate).Year;
+
+            if(day >= 14)
+            {
+                var startDay = 1;
+                var endDay = 14;
+            }
+            else
+            {
+                var startDay = 15;
+                var endDay = DateTime.DaysInMonth(year, month);
+            }
+            
+            return View();
+        }
+
+        #endregion
     }
 }
