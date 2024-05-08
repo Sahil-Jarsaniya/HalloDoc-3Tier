@@ -1,0 +1,37 @@
+﻿@model PaginatedList<BiWeeklyReciept>;
+@if (Model.Items.Count == 0)
+{
+    <p>No Data Found</p>
+}
+else
+{
+
+    <table class="table table-responsive">
+        <thead>
+            <tr class="table-secondary">
+                <td>Date</td>
+                <td>Item</td>
+                <td>Amount</td>
+                <td>Bill</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.item</td>
+                    <td>@item.amount</td>
+                    <td>@item.bill</td>
+                    <td>
+                        <button class="btn btn-outline-primary">View</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <partial name="_PaginationPart" />
+}

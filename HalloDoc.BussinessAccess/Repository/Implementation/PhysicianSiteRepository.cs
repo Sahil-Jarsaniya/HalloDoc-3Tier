@@ -1,9 +1,12 @@
-﻿using HalloDoc.BussinessAccess.Repository.Interface;
+﻿using AspNetCore;
+using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.utils;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using HalloDoc.DataAccess.ViewModel.PhysicianDashboard;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HalloDoc.BussinessAccess.Repository.Implementation
 {
@@ -21,7 +24,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         }
         public List<Admin> GetAdminList()
         {
-            return _db.Admins.ToList(); 
+            return _db.Admins.ToList();
         }
 
         public int GetPhysicianId(string AspId)
@@ -58,9 +61,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     _db.SaveChanges();
                 }
                 return true;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                return false;   
+                return false;
             }
         }
         public countRequestViewModel DashboardCount(int phyId)
@@ -87,7 +91,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 pendingCount = pendingCount,
                 activeCount = activeCount,
                 concludeCount = concludeCount
-            };  
+            };
 
             return count;
         }
@@ -505,6 +509,216 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
 
             _db.Requestwisefiles.Add(requestwisefile);
             _db.SaveChanges();
+        }
+
+
+        public IQueryable<BiWeeklyReciept> ReceiptData(string date, int phyId)
+        {
+            var startDate = DateOnly.ParseExact(date, "d/M/yyyy");
+            var data = from t1 in _db.BiWeeklyReceipts
+                       where t1.Date == startDate && t1.Physicianid == phyId
+                       select new BiWeeklyReciept()
+                       {
+                           Date = (DateOnly)t1.Date,
+                           item = t1.Item ?? "",
+                           bill = t1.Bill,
+                           amount = t1.Amount ?? 0,
+                       };
+            return data;
+        }
+
+        public DateVM biweeklySheetVMs(string date, int phyId)
+        {
+            var startDate = DateOnly.ParseExact(date, "d/M/yyyy");
+            var day = startDate.Day;
+            var month = startDate.Month;
+            var year = startDate.Year;
+            var startDay = 0;
+            var endDay = 0;
+            if (day <= 14)
+            {
+                startDay = 1;
+                endDay = 14;
+            }
+            else
+            {
+                startDay = 15;
+                endDay = DateTime.DaysInMonth(year, month);
+            }
+            var endDate = startDate.AddDays(endDay - startDay);
+
+
+
+            var data = (from t1 in _db.Shiftdetails
+                        join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
+                        where t1.Shiftdate >= startDate && t1.Shiftdate <= endDate && t2.Physicianid == phyId
+                        select new BiweeklySheetVM()
+                        {
+                            Date = t1.Shiftdate,
+                            OnCallStatus = t1.Endtime - t1.Starttime,
+                            TotalHour = t1.Endtime - t1.Starttime
+                        }).OrderBy(x => x.Date).GroupBy(x => x.Date);
+
+            List<BiweeklySheetVM> list = new List<BiweeklySheetVM>();
+
+            for (int i = 0; i <= endDay - startDay; i++)
+            {
+                var currentDate = startDate.AddDays(i);
+                var totalHour = System.TimeSpan.Zero;
+                foreach (var group in data)
+                {
+                    if (group.Any(x => x.Date == currentDate))
+                    {
+                        foreach (var item in group)
+                        {
+                            totalHour += item.OnCallStatus;
+                        }
+                    }
+                }
+                var existObj = _db.BiWeeklySheets.FirstOrDefault(x => x.Date == currentDate && x.Physicianid == phyId);
+
+                if (existObj != null)
+                {
+                    var obj = new BiweeklySheetVM()
+                    {
+                        Date = currentDate,
+                        OnCallStatus = totalHour,
+                        TotalHour = existObj.Totalhour ?? TimeSpan.MinValue,
+                        Weekend = existObj.Weekend ?? false,
+                        NumberOfHouseCall = existObj.NumberOfHousecall ?? 0,
+                        NumberOfPhoneConsults = existObj.NumberOfPhoneConsult ?? 0
+                    };
+                    list.Add(obj);
+                }
+                else
+                {
+                    var obj = new BiweeklySheetVM()
+                    {
+                        Date = currentDate,
+                        OnCallStatus = totalHour,
+                        TotalHour = totalHour,
+                    };
+                    list.Add(obj);
+                }
+            }
+
+            List<BiWeeklyReciept> listofReciept = new List<BiWeeklyReciept>();
+            for (int i = 0; i <= endDay - startDay; i++)
+            {
+                var currentDate = startDate.AddDays(i);
+
+                var existObj = _db.BiWeeklyReceipts.FirstOrDefault(x => x.Date == currentDate && x.Physicianid == phyId);
+
+                if (existObj != null)
+                {
+
+                    var obj = new BiWeeklyReciept()
+                    {
+                        Date = currentDate,
+                        item = existObj.Item ?? "",
+                        amount = existObj.Amount ?? 0,
+                        bill = existObj.Bill
+                    };
+                    listofReciept.Add(obj);
+                }
+                else
+                {
+                    var obj = new BiWeeklyReciept()
+                    {
+                        Date = currentDate,
+                        item = "",
+                        amount = 0,
+                    };
+                    listofReciept.Add(obj);
+                }
+            }
+
+            var data1 = new DateVM()
+            {
+                StartDate = startDate,
+                EndDate = endDate,
+                biweeklySheetVMs = list,
+                biWeeklyReciepts = listofReciept
+            };
+            return data1;
+        }
+
+        public void biweeklySheetVMs(DateVM obj, int phyId)
+        {
+            var Sheet = _db.TimeSheets.Where(x => x.StartDate == obj.StartDate && x.EndDate == obj.EndDate && x.PhysicianId == phyId).FirstOrDefault();
+
+            if (Sheet != null)
+            {
+                foreach (var sheet in obj.biweeklySheetVMs)
+                {
+                    var biweeklySheet = _db.BiWeeklySheets.Where(x => x.Date == sheet.Date && x.Physicianid == phyId).FirstOrDefault();
+                    biweeklySheet.Date = sheet.Date;
+                    biweeklySheet.Physicianid = phyId;
+                    biweeklySheet.Weekend = sheet.Weekend;
+                    biweeklySheet.Totalhour = sheet.TotalHour;
+                    biweeklySheet.OnCallStatus = sheet.OnCallStatus;
+                    biweeklySheet.NumberOfHousecall = sheet.NumberOfHouseCall;
+                    biweeklySheet.NumberOfPhoneConsult = sheet.NumberOfPhoneConsults;
+
+                    _db.BiWeeklySheets.Update(biweeklySheet);
+                    _db.SaveChanges();
+                }
+            }
+            else
+            {
+                foreach (var sheet in obj.biweeklySheetVMs)
+                {
+                    var biweeklySheet = new BiWeeklySheet()
+                    {
+                        Date = sheet.Date,
+                        Physicianid = phyId,
+                        Weekend = sheet.Weekend,
+                        Totalhour = sheet.TotalHour,
+                        OnCallStatus = sheet.OnCallStatus,
+                        NumberOfHousecall = sheet.NumberOfHouseCall,
+                        NumberOfPhoneConsult = sheet.NumberOfPhoneConsults
+                    };
+                    _db.BiWeeklySheets.Add(biweeklySheet);
+                    _db.SaveChanges();
+                }
+
+                var TimeSheet = new TimeSheet()
+                {
+                    StartDate = obj.StartDate,
+                    EndDate = obj.EndDate,
+                    IsSheetCreated = true,
+                    PhysicianId = phyId
+                };
+                _db.TimeSheets.Add(TimeSheet);
+                _db.SaveChanges();
+            }
+        }
+
+
+        public void BiWeeklyReciept(DateVM obj, int phyId)
+        {
+            var existData = _db.BiWeeklyReceipts.FirstOrDefault(x => x.Date == obj.biWeeklyReciepts[0].Date && x.Physicianid == phyId);
+
+            if (existData != null)
+            {
+                existData.Item = obj.biWeeklyReciepts[0].item;
+                existData.Amount = obj.biWeeklyReciepts[0].amount;
+                existData.Bill = obj.biWeeklyReciepts[0].bill;
+                _db.BiWeeklyReceipts.Update(existData);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var data = new BiWeeklyReceipt()
+                {
+                    Date = obj.biWeeklyReciepts[0].Date,
+                    Item = obj.biWeeklyReciepts[0].item,
+                    Amount = obj.biWeeklyReciepts[0].amount,
+                    Bill = obj.biWeeklyReciepts[0].bill
+                };
+                _db.BiWeeklyReceipts.Add(data);
+                _db.SaveChanges();
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿    using AspNetCoreHero.ToastNotification.Abstractions;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
@@ -15,6 +15,9 @@ using System.Drawing;
 using System.IdentityModel.Tokens.Jwt;
 using Twilio.Rest.Taskrouter.V1.Workspace.TaskQueue;
 using Twilio.TwiML.Voice;
+using AspNetCore;
+using HalloDoc.DataAccess.ViewModel.PhysicianDashboard;
+using System.Drawing.Printing;
 
 namespace HalloDoc.Controllers
 {
@@ -62,7 +65,7 @@ namespace HalloDoc.Controllers
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
         public void PhysicianLocationUpdate(double latitude, double longitude)
         {
-            bool x = _phyRepo.PhysicianLocationUpdate(latitude, longitude, _phyRepo.GetPhysicianId(GetAspID()));    
+            bool x = _phyRepo.PhysicianLocationUpdate(latitude, longitude, _phyRepo.GetPhysicianId(GetAspID()));
         }
 
         #region PhysicianDashboard
@@ -195,7 +198,7 @@ namespace HalloDoc.Controllers
         public IActionResult TransferCase(string addNote, int reqClientId)
         {
             _phyRepo.TransferCase(reqClientId, addNote);
-            return Ok(new {success = true});    
+            return Ok(new { success = true });
         }
 
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
@@ -238,7 +241,7 @@ namespace HalloDoc.Controllers
 
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
         public IActionResult UploadDocument(UploadFileViewModel obj)
-            {
+        {
             var phyId = _phyRepo.GetPhysicianId(GetAspID());
             int id = _adminRepo.GetReqId(obj.reqId);
             if (obj.formFile != null && obj.formFile.Length > 0)
@@ -380,7 +383,7 @@ namespace HalloDoc.Controllers
             return new ViewAsPdf("PDF", obj)
             {
                 FileName = "FinalizedEncounterForm.pdf"
-            };  
+            };
         }
 
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
@@ -536,7 +539,7 @@ namespace HalloDoc.Controllers
             var phyId = _phyRepo.GetPhysicianId(GetAspID());
             var admins = _phyRepo.GetAdminList();
 
-            foreach(var admin in admins)
+            foreach (var admin in admins)
             {
                 _loginRepo.SendEmail(admin.Email, "Edit My Profile", Message, null);
             }
@@ -552,23 +555,52 @@ namespace HalloDoc.Controllers
             return View();
         }
 
+        public IActionResult SheetData(string date)
+        {
+            return PartialView("SheetData");
+        }
+
+        public async Task<IActionResult> ReceiptData(string date, int pageNumber)
+        {
+            if(pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            var pageSize = 1;
+            var data = _phyRepo.ReceiptData(date, _phyRepo.GetPhysicianId(GetAspID()));
+            return PartialView("_ReceiptData", await PaginatedList<BiWeeklyReciept>.CreateAsync(data, pageNumber, pageSize));
+        }
+
         public IActionResult BiWeeklySheet(string selectedDate)
         {
-            var day = DateOnly.Parse(selectedDate).Day;
-            var month = DateOnly.Parse(selectedDate).Month;
-            var year= DateOnly.Parse(selectedDate).Year;
+            if(selectedDate == "0")
+            {
+                _notyf.Error("Select Date");
+                return RedirectToAction("Invoicing");
+            }
+            var data = _phyRepo.biweeklySheetVMs(selectedDate, _phyRepo.GetPhysicianId(GetAspID()));
 
-            if(day >= 14)
-            {
-                var startDay = 1;
-                var endDay = 14;
-            }
-            else
-            {
-                var startDay = 15;
-                var endDay = DateTime.DaysInMonth(year, month);
-            }
-            
+            return View(data);
+        }
+        [HttpPost]
+        public IActionResult BiWeeklySheet(DateVM obj)
+        {
+            _phyRepo.biweeklySheetVMs(obj, _phyRepo.GetPhysicianId(GetAspID()));
+            var date = obj.StartDate.Day + "/" + obj.StartDate.Month + "/" + obj.StartDate.Year;
+
+            var data = _phyRepo.biweeklySheetVMs(date, _phyRepo.GetPhysicianId(GetAspID()));
+
+            return View(data);
+        }
+
+        [HttpPost]
+        public IActionResult BiWeeklyReciept(BiWeeklyReciept obj)
+        {
+
+            //_phyRepo.BiWeeklyReciept(obj, _phyRepo.GetPhysicianId(GetAspID()));
+            //var date = obj.StartDate.Day + "/" + obj.StartDate.Month + "/" + obj.StartDate.Year;
+            //return RedirectToAction("BiWeeklySheet", "PhysicianDashboard", date);
+
             return View();
         }
 

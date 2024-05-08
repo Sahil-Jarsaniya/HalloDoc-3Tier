@@ -75,6 +75,8 @@ public partial class Physician
 
     public virtual AspNetUser? Aspnetuser { get; set; }
 
+    public virtual ICollection<BiWeeklyReceipt> BiWeeklyReceipts { get; set; } = new List<BiWeeklyReceipt>();
+
     public virtual AspNetUser CreatedbyNavigation { get; set; } = null!;
 
     public virtual AspNetUser? ModifiedbyNavigation { get; set; }
@@ -96,4 +98,6 @@ public partial class Physician
     public virtual ICollection<Requestwisefile> Requestwisefiles { get; set; } = new List<Requestwisefile>();
 
     public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();
+
+    public virtual ICollection<TimeSheet> TimeSheets { get; set; } = new List<TimeSheet>();
 }

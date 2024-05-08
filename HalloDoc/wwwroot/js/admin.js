@@ -90,6 +90,10 @@ switch (controller) {
                 removeAllActive();
                 setActiveLink(ul[1].children[0]);
                 break;
+            case "BiWeeklySheet":
+                removeAllActive();
+                setActiveLink(ul[1].children[0]);
+                break;
             default:
                 removeAllActive();
                 setActiveLink(ul[0].children[0]);

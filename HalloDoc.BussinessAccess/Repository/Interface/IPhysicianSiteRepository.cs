@@ -1,6 +1,7 @@
 ﻿using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using HalloDoc.DataAccess.ViewModel.PhysicianDashboard;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,5 +42,13 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void ConcludeCare(CloseCaseViewModel obj, string aspId);
         
         public void viewUplodPost(string file, int reqId,  int phyId);
+
+        public IQueryable<BiWeeklyReciept> ReceiptData(string date, int phyId);
+
+        public DateVM biweeklySheetVMs(string date, int phyId);
+
+        public void biweeklySheetVMs(DateVM obj, int phyId);
+
+        public void BiWeeklyReciept(DateVM obj, int phyId);
     }
 }

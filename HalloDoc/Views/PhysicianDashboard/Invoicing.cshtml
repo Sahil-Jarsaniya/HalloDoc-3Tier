@@ -14,25 +14,83 @@
             Back
         </a>
     </div>
+    @{
+        var currentDate = DateTime.Now;
+        var day = currentDate.Day;
+        var month = currentDate.Month;
+        var year = currentDate.Year;
+    }
     <div class="container shadow mt-4" style="max-width:1000px">
-        <form asp-action="BiWeeklySheet" class="form-floating d-flex justify-content-between pt-4">
-                <div class="form-floating w-25">
-                    <input  type="date" class="form-control" name="selectedDate" placeholder="">
-                    <label for="">Search by Timesheetperiod</label>
-                </div>
-                <button type="submit" class="btn btn-outline-primary my-auto float-end">Finalize Timesheet</button>
-            </form>
-        <div>
+        <form asp-action="BiWeeklySheet" method="get" class="form-floating d-flex justify-content-between pt-4">
+            <div class="form-floating w-25">
+
+                <select class="form-select" name="selectedDate" id="selectedDate">
+                    <option value="0">Select Date range</option>
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        if (i % 2 != 0)
+                        {
+                            <option value="01/@month/@year">01/@month/@year - 14/@month/@year</option>
+                        }
+                        else
+                        {
+                            <option value="15/@month/@year">15/@month/@year - @DateTime.DaysInMonth(year, month)/@month/@year</option>
+                        }
+
+                        if (month == 1)
+                        {
+                            month = 12;
+                            year = year - 1;
+                        }
+                        else
+                        {
+                            month = month - 1;
+                        }
+                    }
+                </select>
+
+            </div>
+            <button type="submit" class="btn btn-outline-primary my-auto float-end">Finalize Timesheet</button>
+        </form>
+        <div id="SheetDiv" class="mt-4">
             <p> No records found</p>
         </div>
     </div>
-    <div class="container shadow pt-4 mt-2" style="max-width: 1000px">
+    <div class="container shadow pt-4 mt-2" style="max-width: 1000px" >
         <h4>
             TimeSheet Reimbursement
         </h4>
-        <p>No resords found</p>
+        <div id="ReceiptDiv">No resords found</div>
     </div>
 
 </div>
 @section AdminScript {
+    <script>
+        $("#selectedDate").change(function () {
+            var date = $(this).val();
+            $.ajax({
+                url: '/PhysicianDashboard/SheetData',
+                type: 'GET',
+                data: {
+                    date: date
+                },
+                success: function(res){
+                    console.log(res);
+                    $("#SheetDiv").html(res);
+                }
+
+            })
+
+            $.ajax({
+                url: '/PhysicianDashboard/ReceiptData',
+                type: 'GET',
+                data: {
+                    date: date
+                },
+                success: function(res){
+                    $("#ReceiptDiv").html(res);
+                }
+            })
+        })
+    </script>
 }

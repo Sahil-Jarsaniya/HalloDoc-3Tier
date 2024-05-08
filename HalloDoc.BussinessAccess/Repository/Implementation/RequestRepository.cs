@@ -38,7 +38,6 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         }
         public void CreatePatientRequest(PatientViewModel obj)
         {
-
             var existUser = _db.Users.FirstOrDefault(u => u.Email == obj.Email);
             Guid guid = Guid.NewGuid();
             var uid = 0;

@@ -26,6 +26,10 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
 
+    public virtual DbSet<BiWeeklyReceipt> BiWeeklyReceipts { get; set; }
+
+    public virtual DbSet<BiWeeklySheet> BiWeeklySheets { get; set; }
+
     public virtual DbSet<Blockrequest> Blockrequests { get; set; }
 
     public virtual DbSet<Business> Businesses { get; set; }
@@ -94,6 +98,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Smslog> Smslogs { get; set; }
 
+    public virtual DbSet<TimeSheet> TimeSheets { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -157,7 +163,7 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("lastname");
             entity.Property(e => e.Mobile)
-                .HasMaxLength(20)
+                .HasMaxLength(50)
                 .HasColumnName("mobile");
             entity.Property(e => e.Modifiedby)
                 .HasMaxLength(128)
@@ -239,6 +245,44 @@ public partial class ApplicationDbContext : DbContext
                         j.IndexerProperty<string>("UserId").HasMaxLength(128);
                         j.IndexerProperty<string>("RoleId").HasMaxLength(128);
                     });
+        });
+
+        modelBuilder.Entity<BiWeeklyReceipt>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("BiWeeklyReceipt_pkey");
+
+            entity.ToTable("BiWeeklyReceipt");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Amount).HasColumnName("amount");
+            entity.Property(e => e.Bill)
+                .HasColumnType("character varying")
+                .HasColumnName("bill");
+            entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.Item)
+                .HasColumnType("character varying")
+                .HasColumnName("item");
+            entity.Property(e => e.Physicianid).HasColumnName("physicianid");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.BiWeeklyReceipts)
+                .HasForeignKey(d => d.Physicianid)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("physicianId_fkey");
+        });
+
+        modelBuilder.Entity<BiWeeklySheet>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("BiWeeklySheet_pkey");
+
+            entity.ToTable("BiWeeklySheet");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IsFinal).HasColumnName("isFinal");
+            entity.Property(e => e.NumberOfHousecall).HasColumnName("numberOfHousecall");
+            entity.Property(e => e.NumberOfPhoneConsult).HasColumnName("numberOfPhoneConsult");
+            entity.Property(e => e.Physicianid).HasColumnName("physicianid");
+            entity.Property(e => e.Totalhour).HasColumnName("totalhour");
+            entity.Property(e => e.Weekend).HasColumnName("weekend");
         });
 
         modelBuilder.Entity<Blockrequest>(entity =>
@@ -1463,6 +1507,21 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Smstemplate)
                 .HasMaxLength(1)
                 .HasColumnName("smstemplate");
+        });
+
+        modelBuilder.Entity<TimeSheet>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("TimeSheet_pkey");
+
+            entity.ToTable("TimeSheet");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IsReceiptCreated).HasColumnName("isReceiptCreated");
+            entity.Property(e => e.IsSheetCreated).HasColumnName("isSheetCreated");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.TimeSheets)
+                .HasForeignKey(d => d.PhysicianId)
+                .HasConstraintName("physicianId_fkey");
         });
 
         modelBuilder.Entity<User>(entity =>
