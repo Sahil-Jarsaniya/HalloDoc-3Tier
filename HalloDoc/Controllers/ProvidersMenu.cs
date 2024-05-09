@@ -271,5 +271,26 @@ namespace HalloDoc.Controllers
             var data = _ProviderMenu.Physicianlocation();
             return View(data);
         }
+
+        public IActionResult Invoicing()
+        {
+            var data = new InvoicingVM()
+            {
+                physicians = _ProviderMenu.GetPhysicians()
+            };
+            return View(data);
+        }
+
+        public IActionResult PendingTimeSheet(string date, int phyId)
+        {
+            var data = _ProviderMenu.PendingTimeSheet(date, phyId);
+
+            if (data == null)
+            {
+                return Ok(new { success = false });
+            }
+
+            return PartialView("_PendingSheetTable", data);
+        }
     }
 }

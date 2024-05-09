@@ -1,0 +1,108 @@
+﻿@model InvoicingVM;
+@{
+    ViewData["Title"] = "Invoicing";
+    Layout = "_PhysicianLayout";
+}
+<div>
+
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            Timesheets
+        </h4>
+        <a href="@Url.Action("Dashboard", "AdminDashboard")" class="btn btn-outline-primary  text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    @{
+        var currentDate = DateTime.Now;
+        var day = currentDate.Day;
+        var month = currentDate.Month;
+        var year = currentDate.Year;
+    }
+    <div class="container shadow mt-4" style="max-width:1000px">
+        <form asp-action="BiWeeklySheet" method="get" class="form-floating d-flex  pt-4">
+            <div class="form-floating me-2">
+                <select class="form-select " name="selectedPhysician" id="selectedPhysician">
+                    <option value="0">Select Physician</option>
+                    @foreach (var item in Model.physicians)
+                    {
+                        <option value="@item.Physicianid">@item.Firstname @item.Lastname</option>
+                    }
+                </select>
+            </div>
+            <div class="form-floating">
+                <select class="form-select" name="selectedDate" id="selectedDate">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        if (i % 2 != 0)
+                        {
+                            <option value="01/@month/@year">01/@month/@year - 14/@month/@year</option>
+                        }
+                        else
+                        {
+                            <option value="15/@month/@year">15/@month/@year - @DateTime.DaysInMonth(year, month)/@month/@year</option>
+                        }
+
+                        if (month == 1)
+                        {
+                            month = 12;
+                            year = year - 1;
+                        }
+                        else
+                        {
+                            month = month - 1;
+                        }
+                    }
+                </select>
+
+            </div>
+        </form>
+    </div>
+    <div class="container shadow pt-4 mt-2" style="max-width: 1000px" id="pendingSheetDiv">
+        <h4>
+            Pending Bi-Weekly timesheet
+        </h4>
+    </div>
+
+</div>
+@section AdminScript {
+    <script>
+        $("#selectedPhysician").change(function () {
+            var phyId = $(this).val();
+            var date = $("#selectedDate").val();
+            $.ajax({
+                url: '/ProvidersMenu/PendingTimeSheet',
+                type: 'POST',
+                data: {
+                    date: date, phyId: phyId
+                },
+                success: function (res) {
+                    console.log(res);
+                    $("#pendingSheetDiv").html(res);
+                }
+            })
+
+        })
+        $("#selectedDate").change(function () {
+            var phyId = $("#selectedPhysician").val();
+            var date = $(this).val();
+            $.ajax({
+                url: '/ProvidersMenu/PendingTimeSheet',
+                type: 'POST',
+                data: {
+                    date: date, phyId: phyId
+                },
+                success: function (res) {
+                    if (res.success == false) {
+                        $("#pendingSheetDiv").html("<h5>Time Sheet is not FInalized</h5>");
+                    } else {
+                        $("#pendingSheetDiv").html(res);
+                    }
+                }
+            })
+
+        })
+    </script>
+}

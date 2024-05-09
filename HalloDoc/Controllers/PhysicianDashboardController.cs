@@ -552,6 +552,7 @@ namespace HalloDoc.Controllers
 
         public IActionResult Invoicing()
         {
+            ViewBag.AdminName = GetName();  
             return View();
         }
 
@@ -568,12 +569,18 @@ namespace HalloDoc.Controllers
             }
             var pageSize = 1;
             var data = _phyRepo.ReceiptData(date, _phyRepo.GetPhysicianId(GetAspID()));
-            return PartialView("_ReceiptData", await PaginatedList<BiWeeklyReciept>.CreateAsync(data, pageNumber, pageSize));
+            return PartialView("_ReceiptData", await PaginatedList<BiWeeklyRecieptVM>.CreateAsync(data, pageNumber, pageSize));
+        }
+
+        public bool isFinalizedSheet(string date)
+        {
+            return _phyRepo.isFinalizedSheet(date, _phyRepo.GetPhysicianId(GetAspID()));
         }
 
         public IActionResult BiWeeklySheet(string selectedDate)
         {
-            if(selectedDate == "0")
+            ViewBag.AdminName = GetName();
+            if (selectedDate == "0")
             {
                 _notyf.Error("Select Date");
                 return RedirectToAction("Invoicing");
@@ -594,14 +601,24 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
-        public IActionResult BiWeeklyReciept(BiWeeklyReciept obj)
+        public IActionResult BiWeeklyReciept(BiWeeklyRecieptVM obj)
         {
 
-            //_phyRepo.BiWeeklyReciept(obj, _phyRepo.GetPhysicianId(GetAspID()));
-            //var date = obj.StartDate.Day + "/" + obj.StartDate.Month + "/" + obj.StartDate.Year;
-            //return RedirectToAction("BiWeeklySheet", "PhysicianDashboard", date);
+            _phyRepo.BiWeeklyReciept(obj, _phyRepo.GetPhysicianId(GetAspID()));
+            _loginRepo.uploadFile(obj.bill, "ProviderData\\" + _phyRepo.GetPhysicianId(GetAspID()), obj.bill.FileName.ToString());
+            var day = 0;
+            if(obj.Date.Day <= 14)
+            {
+                day = 1;
+            }
+            else
+            {
+                day = 15;
+            }
 
-            return View();
+            var date = day + "/" + obj.Date.Month + "/" + obj.Date.Year;
+            return RedirectToAction("BiWeeklySheet", "PhysicianDashboard", new { selectedDate =  date });
+
         }
 
         #endregion

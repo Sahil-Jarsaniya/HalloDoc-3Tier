@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace HalloDoc.DataAccess.ViewModel.PhysicianDashboard
     public class DateVM
     {
         public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public DateOnly EndDate { get; set; } 
+        public bool isFinal { get; set; }
         public List<BiweeklySheetVM>? biweeklySheetVMs { get; set; }
 
-        public List<BiWeeklyReciept>? biWeeklyReciepts { get; set; }
+        public List<BiWeeklyRecieptVM>? biWeeklyReciepts { get; set; }
     }
 
     public class BiweeklySheetVM
@@ -30,7 +32,7 @@ namespace HalloDoc.DataAccess.ViewModel.PhysicianDashboard
         public int NumberOfPhoneConsults { get; set; }
     }
 
-    public class BiWeeklyReciept
+    public class BiWeeklyRecieptVM
     {
         public DateOnly Date { get; set; }
 
@@ -38,6 +40,12 @@ namespace HalloDoc.DataAccess.ViewModel.PhysicianDashboard
 
         public int amount { get; set; }
 
-        public string? bill { get; set; }
+        public IFormFile? bill { get; set; }
+
+        public string? billName { get; set; }
+
+        public bool isUploaded { get; set; }
+
+        public int PhysicianId { get; set; }
     }
 }

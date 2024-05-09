@@ -1516,8 +1516,10 @@ public partial class ApplicationDbContext : DbContext
             entity.ToTable("TimeSheet");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.IsFinal).HasColumnName("isFinal");
             entity.Property(e => e.IsReceiptCreated).HasColumnName("isReceiptCreated");
             entity.Property(e => e.IsSheetCreated).HasColumnName("isSheetCreated");
+            entity.Property(e => e.Status).HasColumnType("character varying");
 
             entity.HasOne(d => d.Physician).WithMany(p => p.TimeSheets)
                 .HasForeignKey(d => d.PhysicianId)

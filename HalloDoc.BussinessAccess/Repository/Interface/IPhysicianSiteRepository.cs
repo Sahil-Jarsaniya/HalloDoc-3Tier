@@ -43,12 +43,14 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         
         public void viewUplodPost(string file, int reqId,  int phyId);
 
-        public IQueryable<BiWeeklyReciept> ReceiptData(string date, int phyId);
+        public IQueryable<BiWeeklyRecieptVM> ReceiptData(string date, int phyId);
+
+        public bool isFinalizedSheet(string date, int phyId);
 
         public DateVM biweeklySheetVMs(string date, int phyId);
 
         public void biweeklySheetVMs(DateVM obj, int phyId);
 
-        public void BiWeeklyReciept(DateVM obj, int phyId);
+        public void BiWeeklyReciept(BiWeeklyRecieptVM obj, int phyId);
     }
 }

@@ -6,15 +6,15 @@
 <div>
 
     <div class="container mt-4 shadow" style="max-width: 1000px">
-        <a href="@Url.Action("Invoicing", "PhysicianDashboard")" class="btn btn-outline-primary  text-decoration-none float-end"
+        <a href="@Url.Action("Invoicing", "PhysicianDashboard")" class="btn btn-outline-primary mb-2 text-decoration-none float-end"
            id="back-btn">
             <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
             Back
         </a>
-        <form class="form-control border-0" asp-action="BiWeeklySheet" method="post">
+        <form class="form-control border-0" asp-action="BiWeeklySheet" id="BiWeeklySheetForm" method="post">
             <table class="table table-responsive">
                 <thead>
-                    <tr>
+                    <tr class="table-secondary">
                         <td>Date</td>
                         <td>On-call Status</td>
                         <td>Total hours</td>
@@ -26,16 +26,17 @@
                 <tbody>
                     <input asp-for="StartDate" value="@Model.StartDate" hidden />
                     <input asp-for="EndDate" value="@Model.EndDate" hidden />
+                    <input asp-for="isFinal" id="isFinalBox" type="checkbox" hidden />
                     @for (int i = 0; i < Model.biweeklySheetVMs.Count; i++)
                     {
                         <tr>
-                            <input asp-for="biweeklySheetVMs[i].Date" value="@Model.biweeklySheetVMs[i].Date" hidden />
+                            <input asp-for="biweeklySheetVMs[i].Date" class="form-control" value="@Model.biweeklySheetVMs[i].Date" hidden />
                             <td>@Model.biweeklySheetVMs[i].Date</td>
                             <td>@Model.biweeklySheetVMs[i].OnCallStatus</td>
-                            <td><input asp-for="biweeklySheetVMs[i].TotalHour" value="@Model.biweeklySheetVMs[i].TotalHour" /></td>
-                            <td><input asp-for="biweeklySheetVMs[i].Weekend" type="checkbox" /></td>
-                            <td><input asp-for="biweeklySheetVMs[i].NumberOfHouseCall" type="text" /></td>
-                            <td><input asp-for="biweeklySheetVMs[i].NumberOfPhoneConsults" type="text" /></td>
+                            <td><input asp-for="biweeklySheetVMs[i].TotalHour" class="form-control" value="@Model.biweeklySheetVMs[i].TotalHour" /></td>
+                            <td><input asp-for="biweeklySheetVMs[i].Weekend" class="form-check" type="checkbox" /></td>
+                            <td><input asp-for="biweeklySheetVMs[i].NumberOfHouseCall" class="form-control" type="text" /></td>
+                            <td><input asp-for="biweeklySheetVMs[i].NumberOfPhoneConsults" class="form-control" type="text" /></td>
                         </tr>
                     }
                 </tbody>
@@ -46,9 +47,9 @@
     </div>
     <div class="container mt-2 shadow" style="max-width: 1000px">
 
-        <table class="table " id="tableReciept">
+        <table class="table table-responsive" id="tableReciept">
             <thead>
-                <tr>
+                <tr class="table-secondary">
                     <td>Date</td>
                     <td>Item</td>
                     <td>Amount</td>
@@ -59,28 +60,13 @@
             <tbody>
                 @for (int i = 0; i < Model.biWeeklyReciepts.Count; i++)
                 {
-                    <tr>
-                        @{
-                            var guid = new Guid();
-                        }
-                        <form method="post" asp-action="BiWeeklyReciept">
-                            <input asp-for="biWeeklyReciepts[i].Date" id="date-guid" value="@Model.biWeeklyReciepts[i].Date" hidden />
-                        <td>@Model.biWeeklyReciepts[i].Date</td>
-                        <td><input id="item-@guid" asp-for="biWeeklyReciepts[i].item" /></td>
-                        <td><input id="amount-@guid" asp-for="biWeeklyReciepts[i].amount" /></td>
-                        <td><input id="bill-@guid" asp-for="biWeeklyReciepts[i].bill" type="file" /></td>
-                        <td>
-                            <button type="button" class="btn btn-outline-primary d-none">Edit</button>
-                            <button type="submit" class="btn btn-outline-primary d-none">Delete</button>
-                            <button type="button" class="btn btn-outline-primary d-none">View</button>
-                            <button type="button" data-id="@guid" class="btn btn-outline-primary submitBtn">Save</button>
-                            <button type="reset" class="btn btn-outline-danger">Cancel</button>
-                        </td>
-                        </form>
-                    </tr>
+                    <partial name="_BiWeeklyReceiptForm" model="Model.biWeeklyReciepts[i]" />
                 }
             </tbody>
         </table>
+        <div>
+            <button type="button" id="FinalizeSheetBtn" class="btn btn-primary float-end">Finalize</button>
+        </div>
     </div>
 </div>
 @section AdminScript {
@@ -89,26 +75,12 @@
             $("#tableReciept").toggle();
         })
         $(document).ready(function () {
-            $("#addRecieptBtn").click();
+            $("#addRecieptBtn").click();   
         })
 
-        $(".submitBtn").click(function(){
-            var guid = $(this).data('id');
-            var item = $("#item-" + guid).val();
-            var bill = $("#bill-" + guid).val();
-            var amount = $("#amount-" + guid).val();
-            var date = $("#date-" + guid).val();
-            debugger;
-            $.ajax({
-                url: '/PhysicianDashboard/BiWeeklyReciept',
-                type: 'POST',
-                data: {
-                    item: item, bill: bill, amount: amount, Date: date
-                },
-                success: function(){
-                    console.log("done");
-                }
-            })
+        $("#FinalizeSheetBtn").click(function(){
+            $("#isFinalBox").prop('checked', true);
+            $("#BiWeeklySheetForm").submit();
         })
     </script>
 }

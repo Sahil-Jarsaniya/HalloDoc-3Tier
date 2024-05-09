@@ -1,5 +1,6 @@
 ﻿using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.Compilation;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public IEnumerable<Region> Regions();
         public IEnumerable<Physicianlocation> Physicianlocation();
 
+        public IEnumerable<Physician> GetPhysicians();
         public void CreateShift(string selectedDays, CreateShift obj, string AspId);
 
         public IEnumerable<DayScheduling> DayWiseScheduling(string date);
@@ -27,7 +29,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public bool UpdateShift(CreateShift obj, int id);
 
         public IQueryable<RequestedShiftVM> RequestedShiftTable();
-
         public Scheduling ProviderOnCall();
+
+        public TimeSheet PendingTimeSheet(string date, int phyId);
     }
 }

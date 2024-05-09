@@ -27,7 +27,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         {
             return _db.Regions;
         }
-
+        public IEnumerable<Physician> GetPhysicians()
+        {
+            return _db.Physicians;
+        }
         public IEnumerable<Physicianlocation> Physicianlocation()
         {
             return _db.Physicianlocations.Include(x => x.Physician);
@@ -367,6 +370,30 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 ProviderOffDuty = data3
             };
 
+            return data;
+        }
+
+        public TimeSheet PendingTimeSheet(string date, int phyId)
+        {
+            var startDate = DateOnly.ParseExact(date, "d/M/yyyy");
+            var day = startDate.Day;
+            var month = startDate.Month;
+            var year = startDate.Year;
+            var startDay = 0;
+            var endDay = 0;
+            if (day <= 14)
+            {
+                startDay = 1;
+                endDay = 14;
+            }
+            else
+            {
+                startDay = 15;
+                endDay = DateTime.DaysInMonth(year, month);
+            }
+            var endDate = startDate.AddDays(endDay - startDay);
+
+            var data = _db.TimeSheets.FirstOrDefault(x => x.StartDate == startDate && x.EndDate == endDate && x.PhysicianId == phyId && x.IsFinal == true);
             return data;
         }
     }

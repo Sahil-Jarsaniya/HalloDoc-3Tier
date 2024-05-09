@@ -244,6 +244,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9hY3RpdmVSZXF1ZXN0Vmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/_BiWeeklyReceiptForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9CaVdlZWtseVJlY2VpcHRGb3JtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/_concludeReqView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9jb25jbHVkZVJlcVZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -280,6 +284,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9WaWV3U2hpZnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/Invoicing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxJbnZvaWNpbmcuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/ProviderLocation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxQcm92aWRlckxvY2F0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -306,6 +314,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_MonthWiseScheduling.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfTW9udGhXaXNlU2NoZWR1bGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_PendingSheetTable.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfUGVuZGluZ1NoZWV0VGFibGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_RequestedShiftTable.cshtml]

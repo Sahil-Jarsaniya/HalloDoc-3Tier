@@ -512,19 +512,62 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         }
 
 
-        public IQueryable<BiWeeklyReciept> ReceiptData(string date, int phyId)
+        public IQueryable<BiWeeklyRecieptVM> ReceiptData(string date, int phyId)
         {
             var startDate = DateOnly.ParseExact(date, "d/M/yyyy");
+            var day = startDate.Day;
+            var month = startDate.Month;
+            var year = startDate.Year;
+            var startDay = 0;
+            var endDay = 0;
+            if (day <= 14)
+            {
+                startDay = 1;
+                endDay = 14;
+            }
+            else
+            {
+                startDay = 15;
+                endDay = DateTime.DaysInMonth(year, month);
+            }
+            var endDate = startDate.AddDays(endDay - startDay);
+
             var data = from t1 in _db.BiWeeklyReceipts
-                       where t1.Date == startDate && t1.Physicianid == phyId
-                       select new BiWeeklyReciept()
+                       where t1.Date >= startDate && t1.Date <= endDate && t1.Physicianid == phyId
+                       select new BiWeeklyRecieptVM()
                        {
                            Date = (DateOnly)t1.Date,
                            item = t1.Item ?? "",
-                           bill = t1.Bill,
+                           billName = t1.Bill,
                            amount = t1.Amount ?? 0,
+                           PhysicianId = phyId,
                        };
             return data;
+        }
+
+        public bool isFinalizedSheet(string date, int phyId)
+        {
+            var startDate = DateOnly.ParseExact(date, "d/M/yyyy");
+            var day = startDate.Day;
+            var month = startDate.Month;
+            var year = startDate.Year;
+            var startDay = 0;
+            var endDay = 0;
+            if (day <= 14)
+            {
+                startDay = 1;
+                endDay = 14;
+            }
+            else
+            {
+                startDay = 15;
+                endDay = DateTime.DaysInMonth(year, month);
+            }
+            var endDate = startDate.AddDays(endDay - startDay);
+
+            var sheet = _db.TimeSheets.FirstOrDefault(x => x.StartDate == startDate && x.EndDate == endDate&& x.PhysicianId == phyId);
+
+            return sheet.IsFinal ?? false;
         }
 
         public DateVM biweeklySheetVMs(string date, int phyId)
@@ -602,7 +645,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 }
             }
 
-            List<BiWeeklyReciept> listofReciept = new List<BiWeeklyReciept>();
+            List<BiWeeklyRecieptVM> listofReciept = new List<BiWeeklyRecieptVM>();
             for (int i = 0; i <= endDay - startDay; i++)
             {
                 var currentDate = startDate.AddDays(i);
@@ -612,22 +655,26 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 if (existObj != null)
                 {
 
-                    var obj = new BiWeeklyReciept()
+                    var obj = new BiWeeklyRecieptVM()
                     {
                         Date = currentDate,
                         item = existObj.Item ?? "",
                         amount = existObj.Amount ?? 0,
-                        bill = existObj.Bill
+                        billName = existObj.Bill,
+                        isUploaded = true,
+                        PhysicianId = phyId
                     };
                     listofReciept.Add(obj);
                 }
                 else
                 {
-                    var obj = new BiWeeklyReciept()
+                    var obj = new BiWeeklyRecieptVM()
                     {
                         Date = currentDate,
                         item = "",
                         amount = 0,
+                        isUploaded = false,
+                        PhysicianId = phyId
                     };
                     listofReciept.Add(obj);
                 }
@@ -637,6 +684,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 StartDate = startDate,
                 EndDate = endDate,
+                isFinal = false,
                 biweeklySheetVMs = list,
                 biWeeklyReciepts = listofReciept
             };
@@ -663,6 +711,10 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     _db.BiWeeklySheets.Update(biweeklySheet);
                     _db.SaveChanges();
                 }
+                Sheet.IsFinal = obj.isFinal;
+                Sheet.Status = "Pending";
+                _db.TimeSheets.Update(Sheet);
+                _db.SaveChanges();
             }
             else
             {
@@ -687,7 +739,9 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     StartDate = obj.StartDate,
                     EndDate = obj.EndDate,
                     IsSheetCreated = true,
-                    PhysicianId = phyId
+                    PhysicianId = phyId,
+                    IsFinal = obj.isFinal,
+                    Status = "Pending"
                 };
                 _db.TimeSheets.Add(TimeSheet);
                 _db.SaveChanges();
@@ -695,15 +749,16 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
         }
 
 
-        public void BiWeeklyReciept(DateVM obj, int phyId)
+        public void BiWeeklyReciept(BiWeeklyRecieptVM obj, int phyId)
         {
-            var existData = _db.BiWeeklyReceipts.FirstOrDefault(x => x.Date == obj.biWeeklyReciepts[0].Date && x.Physicianid == phyId);
+            var existData = _db.BiWeeklyReceipts.FirstOrDefault(x => x.Date == obj.Date && x.Physicianid == phyId);
 
             if (existData != null)
             {
-                existData.Item = obj.biWeeklyReciepts[0].item;
-                existData.Amount = obj.biWeeklyReciepts[0].amount;
-                existData.Bill = obj.biWeeklyReciepts[0].bill;
+                existData.Item = obj.item;
+                existData.Amount = obj.amount;
+                existData.Bill = obj.bill.FileName.ToString();
+                existData.Physicianid = phyId;
                 _db.BiWeeklyReceipts.Update(existData);
                 _db.SaveChanges();
             }
@@ -711,10 +766,11 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             {
                 var data = new BiWeeklyReceipt()
                 {
-                    Date = obj.biWeeklyReciepts[0].Date,
-                    Item = obj.biWeeklyReciepts[0].item,
-                    Amount = obj.biWeeklyReciepts[0].amount,
-                    Bill = obj.biWeeklyReciepts[0].bill
+                    Date = obj.Date,
+                    Item = obj.item,
+                    Amount = obj.amount,
+                    Bill = obj.bill.FileName.ToString(),
+                    Physicianid = phyId
                 };
                 _db.BiWeeklyReceipts.Add(data);
                 _db.SaveChanges();

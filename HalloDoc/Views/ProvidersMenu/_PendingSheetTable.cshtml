@@ -1,0 +1,24 @@
+﻿@model TimeSheet;
+<h4>
+    Pending Bi-Weekly timesheet
+</h4>
+<table class="table table-responsive">
+    <thead>
+        <tr class="table-secondary">
+            <td>Start Date</td>
+            <td>End Date</td>
+            <td>Status</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.StartDate</td>
+            <td>@Model.EndDate</td>
+            <td>@Model.Status</td>
+            <td>
+                <button class="btn btn-outline-primary">Approve</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

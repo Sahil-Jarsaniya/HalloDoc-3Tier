@@ -1,4 +1,4 @@
-﻿@model PaginatedList<BiWeeklyReciept>;
+﻿@model PaginatedList<BiWeeklyRecieptVM>;
 @if (Model.Items.Count == 0)
 {
     <p>No Data Found</p>
@@ -24,9 +24,9 @@ else
                     <td>@item.Date</td>
                     <td>@item.item</td>
                     <td>@item.amount</td>
-                    <td>@item.bill</td>
+                    <td>@item.billName</td>
                     <td>
-                        <button class="btn btn-outline-primary">View</button>
+                        <a class="btn btn-outline-primary" target="_blank" href="/uploadedFiles/ProviderData/@item.PhysicianId/@item.billName">View</a>
                     </td>
                 </tr>
             }
@@ -35,3 +35,25 @@ else
 
     <partial name="_PaginationPart" />
 }
+
+<script>
+
+    $(".pageBtn").click(function () {
+        var pageNumber = $(this).data('page');
+        var date = $("#selectedDate").val();
+        $("#pagenumber").val(pageNumber);
+
+        $.ajax({
+            url: '/PhysicianDashboard/ReceiptData',
+            type: 'POST',
+            data: { pageNumber: pageNumber, date: date },
+            success: function (result) {
+                $('#ReceiptDiv').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        })
+    })
+</script>

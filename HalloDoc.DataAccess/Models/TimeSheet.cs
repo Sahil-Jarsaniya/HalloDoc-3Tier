@@ -17,5 +17,9 @@ public partial class TimeSheet
 
     public int? PhysicianId { get; set; }
 
+    public bool? IsFinal { get; set; }
+
+    public string? Status { get; set; }
+
     public virtual Physician? Physician { get; set; }
 }
