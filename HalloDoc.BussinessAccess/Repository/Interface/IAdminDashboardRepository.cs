@@ -122,8 +122,12 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
 
         public void EditAdmin(CreateAdminViewModel obj, string AspId);
 
+        public IEnumerable<PayRateVM> payrateCategories(int phyId);
+        public void PayRate(int phyId, int categoryId, int payrate);
+        
         public UserAccessVM UserAccess();
 
         public IQueryable<UserAccessTable> UserAccessTables(int accountType, int RoleId);
+
     }
 }

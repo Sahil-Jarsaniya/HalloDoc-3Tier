@@ -1,0 +1,136 @@
+﻿@model DateVM;
+@{
+    ViewData["Title"] = "Invoicing";
+    Layout = "_AdminLayout";
+}
+<div>
+
+    <div class="container mt-4 shadow" style="max-width: 1000px">
+        <a href="@Url.Action("Invoicing", "AdminDashboard")" class="btn btn-outline-primary mb-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+        <form class="form-control border-0" asp-action="BiWeeklySheet" id="BiWeeklySheetForm" method="post">
+            <table class="table table-responsive">
+                <thead>
+                    <tr class="table-secondary">
+                        <td>Date</td>
+                        <td>On-call Status</td>
+                        <td>Total hours</td>
+                        <td>Weekend/ Holiday</td>
+                        <td>Number of HouseCalls</td>
+                        <td>Number of Phone Consults</td>
+                        <td>Total</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <input asp-for="StartDate" value="@Model.StartDate" hidden />
+                    <input asp-for="EndDate" value="@Model.EndDate" hidden />
+                    <input asp-for="physicianId" value="@Model.physicianId" hidden />
+                    @{
+                        var totalHourSum = TimeSpan.Zero;
+                        var weekDaySum = 0;
+                        var houseCallSum = 0;
+                        var phoneConsultSum = 0;
+                    }
+                    @for (int i = 0; i < Model.biweeklySheetVMs.Count; i++)
+                    {
+                        totalHourSum += @Model.biweeklySheetVMs[i].TotalHour;
+                        houseCallSum += Model.biweeklySheetVMs[i].NumberOfHouseCall;
+                        phoneConsultSum += Model.biweeklySheetVMs[i].NumberOfPhoneConsults;
+                        if (Model.biweeklySheetVMs[i].Weekend)
+                        {
+                            weekDaySum++;
+                        }
+
+                        <tr>
+                            <input asp-for="biweeklySheetVMs[i].Date" class="form-control" value="@Model.biweeklySheetVMs[i].Date" hidden />
+                            <td>@Model.biweeklySheetVMs[i].Date</td>
+                            <td>@Model.biweeklySheetVMs[i].OnCallStatus</td>
+                            <td><input asp-for="biweeklySheetVMs[i].TotalHour" class="form-control" value="@Model.biweeklySheetVMs[i].TotalHour" /></td>
+                            <td><input asp-for="biweeklySheetVMs[i].Weekend" class="form-check" type="checkbox" /></td>
+                            <td><input asp-for="biweeklySheetVMs[i].NumberOfHouseCall" class="form-control" type="text" /></td>
+                            <td><input asp-for="biweeklySheetVMs[i].NumberOfPhoneConsults" class="form-control" type="text" /></td>
+                            <td></td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>PayRate</td>
+                        <td></td>
+                        <td><input class="form-control" value="@Model.payRates.TotalHour" disabled/></td>
+                        <td><input class="form-control" value="@Model.payRates.weekend" disabled /></td>
+                        <td><input class="form-control" value="@Model.payRates.HouseCall" disabled /></td>
+                        <td><input class="form-control" value="@Model.payRates.PhoneConsult" disabled /></td>
+                    </tr>
+                    <tr>
+                        @{
+                            var hourRate = totalHourSum.Hours * Model.payRates.TotalHour;
+                            var houseCallRate = houseCallSum * Model.payRates.HouseCall;
+                            var weekendRate = weekDaySum * Model.payRates.weekend;
+                            var phoneRate = phoneConsultSum * Model.payRates.PhoneConsult;
+                            var totalRate = hourRate + houseCallRate + weekendRate + phoneRate;
+                        }
+                        <td>Invoice Total</td>
+                        <td></td>
+                        <td><input value="@hourRate" class="form-control" disabled /></td>
+                        <td><input value="@weekendRate" class="form-control" disabled /></td>
+                        <td><input value="@houseCallRate" class="form-control" disabled /></td>
+                        <td><input value="@phoneRate" class="form-control" disabled /></td>
+                        <td><input value="@totalRate" class="form-control" id="totalRate" disabled/><td>
+                    </tr>
+                </tbody>
+            </table>
+            <button class="btn btn-primary" type="button" id="addRecieptBtn">Add Receipts</button>
+            <button type="submit" class="btn btn-primary float-end">Submit</button><br /><br />
+        </form>
+    </div>
+    <div class="container mt-2 shadow" style="max-width: 1000px">
+        <table class="table table-responsive" id="tableReciept">
+            <thead>
+                <tr class="table-secondary">
+                    <td>Date</td>
+                    <td>Item</td>
+                    <td>Amount</td>
+                    <td>Bill</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.biWeeklyReciepts.Count; i++)
+                {
+                    <partial name="_BiWeeklyReceiptForm" model="Model.biWeeklyReciepts[i]" />
+                }
+            </tbody>
+        </table>
+        <div class="d-flex m-2 container">
+            <input class="form-control float-end" id="Bonus" type="number" placeholder="Bonus Amount"/>
+            <input class="form-control float-end" type="text" id="adminNote" placeholder="Admin Description"/>
+            <button type="button" data-id="@Model.timesheetId" class="btn btn-primary float-end" id="ApproveSheetBtn">Approve</button>
+        </div>
+    </div>
+</div>
+@section AdminScript {
+    <script>
+        $("#addRecieptBtn").click(function () {
+            $("#tableReciept").toggle();
+        })
+        $(document).ready(function () {
+            $("#addRecieptBtn").click();
+        })
+        
+        $("#ApproveSheetBtn").click(function(){
+            var id = $(this).data('id');
+            var bonus = $("#Bonus").val();
+            var note = $("#adminNote").val();
+            var total = $("#totalRate").val();
+            $.ajax({
+                url: '/ProvidersMenu/ApproveTimeSheet',
+                type: 'POST',
+                data: {
+                    sheetId: id, bonus: bonus, note: note, total: total
+                }
+            })
+        })
+    </script>
+}

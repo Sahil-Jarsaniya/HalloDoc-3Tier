@@ -1,4 +1,5 @@
 ﻿using HalloDoc.DataAccess.Models;
+using HalloDoc.DataAccess.ViewModel.PhysicianDashboard;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor.Compilation;
@@ -32,5 +33,9 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public Scheduling ProviderOnCall();
 
         public TimeSheet PendingTimeSheet(string date, int phyId);
+
+        public DateVM BiweeklySheet(int id);
+
+        public void ApproveTimeSheet(int sheetId, int bonus, string note, int total);
     }
 }

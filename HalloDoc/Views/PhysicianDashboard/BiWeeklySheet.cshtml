@@ -82,5 +82,31 @@
             $("#isFinalBox").prop('checked', true);
             $("#BiWeeklySheetForm").submit();
         })
+
+        $(".editBtn").click(function () {
+            var uid = $(this).data('id');
+            $("#editReceiptBtn-"+ uid).addClass("d-none");
+            $("#submitBtn-"+ uid).removeClass("d-none");
+            $("#cancleBtn-" + uid).removeClass("d-none");
+            $("#deleteReceiptBtn-" + uid).addClass("d-none");
+            $("#viewReceiptBtn-" + uid).addClass("d-none");
+            $("#billName-"+uid).addClass("d-none");
+            $("#bill-"+uid).removeClass("d-none");
+        })
+
+        $(".deleteBtn").click(function () {
+            var uid = $(this).data('id');
+            var date = $("#Date-"+uid).val();
+            $.ajax({
+                url: '/PhysicianDashboard/DeleteBill',
+                type: 'POST',
+                data: {
+                    date: date
+                },
+                success: function(res){
+                    location.reload();
+                }
+            })
+        })
     </script>
 }

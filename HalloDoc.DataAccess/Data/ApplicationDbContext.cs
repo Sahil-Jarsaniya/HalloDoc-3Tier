@@ -50,6 +50,10 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Orderdetail> Orderdetails { get; set; }
 
+    public virtual DbSet<PayRate> PayRates { get; set; }
+
+    public virtual DbSet<PayrateCategory> PayrateCategories { get; set; }
+
     public virtual DbSet<Physician> Physicians { get; set; }
 
     public virtual DbSet<PhysicianStatus> PhysicianStatuses { get; set; }
@@ -703,6 +707,36 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Prescription).HasColumnName("prescription");
             entity.Property(e => e.Requestid).HasColumnName("requestid");
             entity.Property(e => e.Vendorid).HasColumnName("vendorid");
+        });
+
+        modelBuilder.Entity<PayRate>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PayRate_pkey");
+
+            entity.ToTable("PayRate");
+
+            entity.HasIndex(e => e.CategoryId, "fki_CategoryId");
+
+            entity.Property(e => e.PayRate1).HasColumnName("PayRate");
+
+            entity.HasOne(d => d.Category).WithMany(p => p.PayRates)
+                .HasForeignKey(d => d.CategoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("CategoryId");
+
+            entity.HasOne(d => d.Physician).WithMany(p => p.PayRates)
+                .HasForeignKey(d => d.PhysicianId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("physicianId_fkey");
+        });
+
+        modelBuilder.Entity<PayrateCategory>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PayrateCategory_pkey");
+
+            entity.ToTable("PayrateCategory");
+
+            entity.Property(e => e.Category).HasColumnType("character varying");
         });
 
         modelBuilder.Entity<Physician>(entity =>
@@ -1516,8 +1550,10 @@ public partial class ApplicationDbContext : DbContext
             entity.ToTable("TimeSheet");
 
             entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.AdminNote).HasColumnType("character varying");
+            entity.Property(e => e.Bonus).HasColumnName("bonus");
+            entity.Property(e => e.IsApproved).HasColumnName("isApproved");
             entity.Property(e => e.IsFinal).HasColumnName("isFinal");
-            entity.Property(e => e.IsReceiptCreated).HasColumnName("isReceiptCreated");
             entity.Property(e => e.IsSheetCreated).HasColumnName("isSheetCreated");
             entity.Property(e => e.Status).HasColumnType("character varying");
 

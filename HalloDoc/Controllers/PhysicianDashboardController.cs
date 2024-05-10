@@ -621,6 +621,13 @@ namespace HalloDoc.Controllers
 
         }
 
+        [HttpPost]
+        public IActionResult DeleteBill(string date)
+        {
+            _phyRepo.DeleteBill(date, _phyRepo.GetPhysicianId(GetAspID()));
+            return Ok(new {success = true});
+        }
+
         #endregion
     }
 }

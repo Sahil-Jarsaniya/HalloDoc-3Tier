@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lPsstKNQiGYCaMZS9BWEAWwV3S72psAg+MBqv4qt1Ek=",
+  "Hash": "/Nvt38uUeEMpfhoz/2uKSFHpgisHjehK1AlnU18X9p0=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -4401,6 +4401,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\ProviderData\\2\\CreateProvider (1) (1) (1) (4).png"
+    },
+    {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\2\\Dashboard_mobile_pending_1.png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/ProviderData/2/Dashboard_mobile_pending_1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\ProviderData\\2\\Dashboard_mobile_pending_1.png"
+    },
+    {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\2\\Dashboard_mobile_to-close_1.png",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/ProviderData/2/Dashboard_mobile_to-close_1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\ProviderData\\2\\Dashboard_mobile_to-close_1.png"
     },
     {
       "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\2\\Dashboard_mobile_to-close_2.png",

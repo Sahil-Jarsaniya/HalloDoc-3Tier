@@ -64,6 +64,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcTXlQcm9maWxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/AdminDashboard/PayRate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcUGF5UmF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/AdminDashboard/Provider.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcUHJvdmlkZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -284,6 +288,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXF9WaWV3U2hpZnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/BiWeeklySheet.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxCaVdlZWtseVNoZWV0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/Invoicing.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxJbnZvaWNpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -304,6 +312,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxTY2hlZHVsaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_BiWeeklyReceiptForm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfQmlXZWVrbHlSZWNlaXB0Rm9ybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_CreateShift.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfQ3JlYXRlU2hpZnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -320,8 +332,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfUGVuZGluZ1NoZWV0VGFibGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_ReceiptData.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfUmVjZWlwdERhdGEuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_RequestedShiftTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfUmVxdWVzdGVkU2hpZnRUYWJsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_SheetData.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJzTWVudVxfU2hlZXREYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/ProvidersMenu/_ViewAllShift.cshtml]

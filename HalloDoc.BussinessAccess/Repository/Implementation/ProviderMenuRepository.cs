@@ -2,9 +2,11 @@
 using HalloDoc.DataAccess.Data;
 using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
+using HalloDoc.DataAccess.ViewModel.PhysicianDashboard;
 using HalloDoc.DataAccess.ViewModel.ProvidersMenu;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto.Modes.Gcm;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -394,7 +396,97 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var endDate = startDate.AddDays(endDay - startDay);
 
             var data = _db.TimeSheets.FirstOrDefault(x => x.StartDate == startDate && x.EndDate == endDate && x.PhysicianId == phyId && x.IsFinal == true);
+
             return data;
+        }
+
+        public DateVM BiweeklySheet(int id)
+        {
+            var timesheet = _db.TimeSheets.FirstOrDefault(x => x.Id == id);
+
+            var biweek = (from t1 in _db.BiWeeklySheets
+                         where t1.Physicianid == timesheet.PhysicianId && t1.Date >= timesheet.StartDate && t1.Date <= timesheet.EndDate
+                         select new BiweeklySheetVM()
+                         {
+                             Date = t1.Date,
+                             NumberOfHouseCall = t1.NumberOfHousecall ?? 0,
+                             NumberOfPhoneConsults = t1.NumberOfPhoneConsult ?? 0,
+                             TotalHour = t1.Totalhour ?? TimeSpan.MinValue,
+                             OnCallStatus = t1.OnCallStatus ?? TimeSpan.MinValue,
+                             Weekend = t1.Weekend ?? false,
+                         }).OrderBy(x => x.Date).ToList();
+
+            List<BiWeeklyRecieptVM> listofReciept = new List<BiWeeklyRecieptVM>();
+            for (int i = 0; i <= timesheet.EndDate.Value.Day - timesheet.StartDate.Value.Day; i++)
+            {
+                var currentDate = timesheet.StartDate.Value.AddDays(i);
+
+                var existObj = _db.BiWeeklyReceipts.FirstOrDefault(x => x.Date == currentDate && x.Physicianid == timesheet.PhysicianId);
+
+                if (existObj != null)
+                {
+
+                    var obj = new BiWeeklyRecieptVM()
+                    {
+                        Date = currentDate,
+                        item = existObj.Item ?? "",
+                        amount = existObj.Amount ?? 0,
+                        billName = existObj.Bill,
+                        isUploaded = true,
+                        PhysicianId = timesheet.PhysicianId ?? 0
+                    };
+                    listofReciept.Add(obj);
+                }
+                else
+                {
+                    var obj = new BiWeeklyRecieptVM()
+                    {
+                        Date = currentDate,
+                        item = "",
+                        amount = 0,
+                        isUploaded = false,
+                        PhysicianId = timesheet.PhysicianId ?? 0
+                    };
+                    listofReciept.Add(obj);
+                }
+            }
+            var prize = from t1 in _db.PayRates
+                        where t1.PhysicianId == timesheet.PhysicianId
+                        select t1;
+            var payRate = new PayRateValueVM()
+                          {
+                              HouseCall = prize.FirstOrDefault(x => x.CategoryId == 7) != null ? prize.FirstOrDefault(x => x.CategoryId == 7).PayRate1 : 0,
+                              TotalHour = prize.FirstOrDefault(x => x.CategoryId == 7) != null ? prize.FirstOrDefault(x => x.CategoryId == 1).PayRate1 : 0,
+                              weekend= prize.FirstOrDefault(x => x.CategoryId == 7) != null ? prize.FirstOrDefault(x => x.CategoryId == 2).PayRate1 : 0,
+                              PhoneConsult = prize.FirstOrDefault(x => x.CategoryId == 7) != null ? prize.FirstOrDefault(x => x.CategoryId == 4).PayRate1 : 0,
+
+                          };
+
+            var data = new DateVM()
+            {
+                biweeklySheetVMs = biweek,
+                biWeeklyReciepts = listofReciept,
+                payRates = payRate,
+                EndDate = (DateOnly)timesheet.EndDate,
+                StartDate = (DateOnly)timesheet.StartDate,
+                physicianId = timesheet.PhysicianId ?? 0,
+                timesheetId = timesheet.Id
+            };
+
+            return data;    
+        }
+
+        public void ApproveTimeSheet(int sheetId, int bonus, string note, int total)
+        {
+            var sheet = _db.TimeSheets.FirstOrDefault(x => x.Id == sheetId);
+
+            sheet.IsApproved = true;
+            sheet.AdminNote = note;
+            sheet.Total= total;
+            sheet.Bonus = bonus;
+
+            _db.TimeSheets.Update(sheet);
+            _db.SaveChanges();
         }
     }
 }

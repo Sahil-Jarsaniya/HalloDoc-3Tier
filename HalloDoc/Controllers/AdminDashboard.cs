@@ -1003,6 +1003,27 @@ namespace HalloDoc.Controllers
             }
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
+        public IActionResult PayRate(int id)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            var data = _adminRepo.payrateCategories(id);
+            return View(data);
+        }
+        [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.Provider)]
+        public IActionResult PayRate(int categoryId, int phyId, int PayRate)
+        {
+            _adminRepo.PayRate(phyId, categoryId, PayRate);
+            var data = _adminRepo.payrateCategories(phyId);
+            return View(data);
+        }
+
         #endregion
 
 

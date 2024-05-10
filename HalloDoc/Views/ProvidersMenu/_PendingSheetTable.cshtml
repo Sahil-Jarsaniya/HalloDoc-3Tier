@@ -17,7 +17,7 @@
             <td>@Model.EndDate</td>
             <td>@Model.Status</td>
             <td>
-                <button class="btn btn-outline-primary">Approve</button>
+                <a asp-action="BiWeeklySheet" asp-route-id="@Model.Id" class="btn btn-outline-primary">Approve</a>
             </td>
         </tr>
     </tbody>

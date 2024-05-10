@@ -159,9 +159,10 @@
                         </div>
                     </div>
                 </fieldset>
-                <button type="reset" id="editBtn1" class="btn btn-primary float-end m-1">Edit</button>
+                <button type="button" id="editBtn1" class="btn btn-primary float-end me-1">Edit</button>
                 <button type="reset" id="cancelBtn1" class="btn btn-outline-danger float-end me-1 d-none">Cancel</button>
-                <button type="submit" id="saveBtn1" class="btn btn-outline-primary float-end me-1 d-none">Save</button><br />
+                <button type="submit" id="saveBtn1" class="btn btn-outline-primary float-end me-1 d-none">Save</button>
+                <a asp-action ="PayRate" asp-route-id="@Model.Physicianid" id="" class="btn btn-primary float-end me-1">Enter Payrate</a><br />
             </form>
 
             <form method="post" asp-action="EditProvider" asp-route-formid="3" asp-controller="AdminDashboard" class="viewCaseForm form-floating  patient-request-form p-3">

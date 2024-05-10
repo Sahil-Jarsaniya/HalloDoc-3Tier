@@ -50,6 +50,10 @@ switch (controller) {
                 removeAllActive();
                 setActiveLink(ul[3].children[0]);
                 break;
+            case "PayRate":
+                removeAllActive();
+                setActiveLink(ul[3].children[0]);
+                break;
             default:
                 removeAllActive();
                 setActiveLink(ul[0].children[0]);

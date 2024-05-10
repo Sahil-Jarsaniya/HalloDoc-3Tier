@@ -1,38 +1,26 @@
 ﻿@model BiWeeklyRecieptVM;
 @{
-    var uid = new Guid();
+    var uid = Guid.NewGuid();
 }
 <tr>
     <form asp-action="BiWeeklyReciept" enctype="multipart/form-data">
     <td>
-        <input asp-for="Date" value="@Model.Date" hidden />
+        <input asp-for="Date" id="Date-@uid" value="@Model.Date" hidden />
             @Model.Date
     </td>
     <td><input asp-for="item" class="form-control" /></td>
     <td><input asp-for="amount" class="form-control" /></td>
     <td style="max-width: 200px">
-            <p class="@(!Model.isUploaded ? "d-none" : "") overflow-auto">@Model.billName</p>
-        <input asp-for="bill" name="bill" type="file" class="form-control @(Model.isUploaded ? "d-none" : "")" />
+            <p id="billName-@uid" class="@(!Model.isUploaded ? "d-none" : "") overflow-auto">@Model.billName</p>
+        <input asp-for="bill" id="bill-@uid" name="bill" type="file" class="form-control @(Model.isUploaded ? "d-none" : "")" />
     </td>
     <td>
-        <button type="button" id="editReceiptBtn_@uid" class="btn btn-outline-primary @(!Model.isUploaded ? "d-none" : "")">Edit</button>
-        <button type="submit" id="deleteReceiptBtn-@uid" class="btn btn-outline-primary @(!Model.isUploaded ? "d-none" : "")">Delete</button>
-        <a type="button" id="viewReceiptBtn-@uid" class="btn btn-outline-primary @(!Model.isUploaded ? "d-none" : "")" target="_blank" href="/uploadedFiles/ProviderData/@Model.PhysicianId/@Model.billName">View</a>
+        <button type="button" id="editReceiptBtn-@uid" data-id="@uid" class="btn editBtn btn-outline-primary @(!Model.isUploaded ? "d-none" : "")">Edit</button>
+        <button type="button" id="deleteReceiptBtn-@uid" data-id="@uid" class="btn deleteBtn btn-outline-primary @(!Model.isUploaded ? "d-none" : "")">Delete</button>
+        <a id="viewReceiptBtn-@uid" class="btn btn-outline-primary @(!Model.isUploaded ? "d-none" : "")" target="_blank" href="/uploadedFiles/ProviderData/@Model.PhysicianId/@Model.billName">View</a>
         <button type="submit" id="submitBtn-@uid" class="btn btn-outline-primary  @(Model.isUploaded ? "d-none" : "")">Save</button>
         <button type="reset" id="cancleBtn-@uid" class="btn btn-outline-danger  @(Model.isUploaded ? "d-none" : "")">Cancel</button>
     </td>
     </form>
 </tr>
 
-@section AdminScript{
-    <script>
-        $("#editReceiptBtn_@uid").click(function () {
-            console.log("ff")
-            //$(this).addClass("d-none");
-            //$("#submitBtn-@uid").removeClass("d-none");
-            //$("#cancleBtn-@uid").removeClass("d-none");
-            //$("#deleteBtn-@uid").addClass("d-none");
-            //$("#viewBtn-@uid").addClass("d-none");
-        })
-    </script>
-}

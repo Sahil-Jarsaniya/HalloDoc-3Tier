@@ -17,6 +17,7 @@ using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using HalloDoc.DataAccess.ViewModel.PhysicianDashboard;
 
 namespace HalloDoc.Controllers
 {
@@ -24,12 +25,14 @@ namespace HalloDoc.Controllers
     public class ProvidersMenu : Controller
     {
         private readonly IProviderMenuRepository _ProviderMenu;
+        private readonly IPhysicianSiteRepository _phyRepo;
         private readonly INotyfService _noty;
 
-        public ProvidersMenu(IProviderMenuRepository providerMenuRepo, INotyfService noty)
+        public ProvidersMenu(IProviderMenuRepository providerMenuRepo, INotyfService noty, IPhysicianSiteRepository phyRepo)
         {
             _ProviderMenu = providerMenuRepo;
             _noty = noty;
+            _phyRepo = phyRepo;
         }
         public string GetAdminName()
         {
@@ -272,8 +275,10 @@ namespace HalloDoc.Controllers
             return View(data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Invoicing)]
         public IActionResult Invoicing()
         {
+            ViewBag.AdminName = GetAdminName();
             var data = new InvoicingVM()
             {
                 physicians = _ProviderMenu.GetPhysicians()
@@ -281,16 +286,60 @@ namespace HalloDoc.Controllers
             return View(data);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.Invoicing)]
         public IActionResult PendingTimeSheet(string date, int phyId)
         {
             var data = _ProviderMenu.PendingTimeSheet(date, phyId);
-
             if (data == null)
             {
                 return Ok(new { success = false });
             }
+            if(data.IsApproved == true)
+            {
+                return Ok(new { success = true });
+            }
 
             return PartialView("_PendingSheetTable", data);
         }
+        [RoleAuth((int)enumsFile.adminRoles.Invoicing)]
+        public IActionResult SheetData(string date)
+        {
+            return PartialView("_SheetData");
+        }
+        [RoleAuth((int)enumsFile.adminRoles.Invoicing)]
+        public async Task<IActionResult> ReceiptData(string date, int pageNumber, int phyId)
+        {
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            var pageSize = 1;
+            var data = _phyRepo.ReceiptData(date, phyId);
+            return PartialView("_ReceiptData", await PaginatedList<BiWeeklyRecieptVM>.CreateAsync(data, pageNumber, pageSize));
+        }
+
+        [RoleAuth((int)enumsFile.adminRoles.Invoicing)]
+        public IActionResult BiWeeklySheet(int id)
+        {
+            var data = _ProviderMenu.BiweeklySheet(id);
+            return View(data);
+        }
+        [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.Invoicing)]
+        public IActionResult BiWeeklySheet(DateVM obj)
+        {
+            obj.isFinal = true;
+            _phyRepo.biweeklySheetVMs(obj, obj.physicianId);
+            return RedirectToAction("Invoicing");
+        }
+
+        [HttpPost]
+        [RoleAuth((int)enumsFile.adminRoles.Invoicing)]
+        public IActionResult ApproveTimeSheet(int sheetId, int bonus, string note, int total)
+        {
+            _ProviderMenu.ApproveTimeSheet(sheetId, bonus, note, total);    
+            return RedirectToAction("Invoicing");
+        }
+
     }
 }

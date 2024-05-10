@@ -866,7 +866,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return data;
         }
         public int ViewUploadFile(string file, int reqId, int adminId)
-            {
+        {
             var reqClientRow = _db.Requestclients.Where(x => x.Requestid == reqId).FirstOrDefault();
             Requestwisefile requestwisefile = new Requestwisefile
             {
@@ -1315,7 +1315,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                         join t2 in _db.Shifts on t1.Shiftid equals t2.Shiftid
                         join t3 in _db.Physicians on t2.Physicianid equals t3.Physicianid
                         where t1.Starttime <= current && t1.Endtime >= current && t1.Shiftdate == date && t1.Isdeleted != true
-                        select t2.Physicianid;  
+                        select t2.Physicianid;
 
             var data = (from t1 in _db.Physicians
                         join t2 in _db.Physiciannotifications on t1.Physicianid equals t2.Physicianid
@@ -2086,6 +2086,41 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                     _db.Adminregions.Add(region);
                     _db.SaveChanges();
                 }
+            }
+        }
+
+        public IEnumerable<PayRateVM> payrateCategories(int phyId)
+        {
+            var data = from t1 in _db.PayrateCategories
+                       select new PayRateVM
+                       {
+                           categoryId = t1.Id,
+                           category = t1.Category,
+                           physicianId = phyId,
+                           payrate = _db.PayRates.Where(x => x.CategoryId == t1.Id && x.PhysicianId == phyId).FirstOrDefault() != null ? _db.PayRates.Where(x => x.CategoryId == t1.Id && x.PhysicianId == phyId).FirstOrDefault().PayRate1 : 0
+                       };
+                       
+            return data;
+        }
+        public void PayRate(int phyId, int categoryId, int payrate)
+        {
+            var pay = _db.PayRates.FirstOrDefault(x => x.CategoryId == categoryId && x.PhysicianId == phyId);
+            if(pay != null)
+            {
+                pay.PayRate1 = payrate;
+                _db.PayRates.Update(pay);
+                _db.SaveChanges();
+            }
+            else
+            {
+                var newpay = new PayRate()
+                {
+                    CategoryId = categoryId,
+                    PhysicianId = phyId,
+                    PayRate1 = payrate
+                };
+                _db.PayRates.Add(newpay);
+                _db.SaveChanges();
             }
         }
 

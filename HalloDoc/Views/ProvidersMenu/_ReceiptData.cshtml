@@ -1,0 +1,60 @@
+﻿@model PaginatedList<BiWeeklyRecieptVM>;
+@if (Model.Items.Count == 0)
+{
+    <p>No Data Found</p>
+}
+else
+{
+
+    <table class="table table-responsive">
+        <thead>
+            <tr class="table-secondary">
+                <td>Date</td>
+                <td>Item</td>
+                <td>Amount</td>
+                <td>Bill</td>
+                <td>Action</td>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    <td>@item.item</td>
+                    <td>@item.amount</td>
+                    <td>@item.billName</td>
+                    <td>
+                        <a class="btn btn-outline-primary" target="_blank" href="/uploadedFiles/ProviderData/@item.PhysicianId/@item.billName">View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <partial name="_PaginationPart" />
+}
+
+<script>
+
+    $(".pageBtn").click(function () {
+        var pageNumber = $(this).data('page');
+        var date = $("#selectedDate").val();
+        $("#pagenumber").val(pageNumber);
+        var phyId = $("#selectedPhysician").val();
+
+        $.ajax({
+            url: '/ProvidersMenu/ReceiptData',
+            type: 'POST',
+            data: { pageNumber: pageNumber, date: date, phyId: phyId },
+            success: function (result) {
+                $('#pendingSheetDiv').html(result);
+            },
+            error: function (error) {
+                console.log(error);
+                alert('error fetching details')
+            },
+        })
+    })
+</script>

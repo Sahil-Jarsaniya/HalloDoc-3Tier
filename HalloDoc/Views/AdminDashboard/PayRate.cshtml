@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PayRateVM>;
+@{
+    ViewData["Title"] = "Edit Provider";
+    Layout = "_adminLayout";
+}
+<div>
+    <div class="container d-flex justify-content-between mt-4" style="max-width:1000px">
+        <h4>
+            PayRate
+        </h4>
+        <a href="@Url.Action("Provider","AdminDashboard")" class="btn btn-outline-primary m-2 text-decoration-none float-end"
+           id="back-btn">
+            <img src="~/images/arrow_back_ios_FILL0_wght400_GRAD0_opsz24.svg" class="img-fluid" alt="">
+            Back
+        </a>
+    </div>
+    <div class="container shadow d-flex justify-content-between mt-4" id="PayRateDiv" style="max-width:1000px">
+        <table class="table table-responsive">
+            <thead>
+                <tr>
+                    <td>Category</td>
+                    <td>Payrate</td>
+                    <td>Action</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                    var uid = Guid.NewGuid();
+                    <form class="form-control" asp-action="PayRate" method="post">
+
+                    <tr>
+                        <td>
+                                @item.category
+                            <input value="@item.categoryId" name="categoryId" hidden />
+                            <input value="@item.physicianId" name="phyId" hidden />
+                        </td>
+                        <td><input class="form-control" type="number" name="PayRate" placeholder="PayRate" value="@item.payrate" /></td>
+                        <td>
+                            <button type="button" id="editBtn-@uid" data-id="@uid" class="btn editBtn btn-primary @(item.payrate == 0 ? "d-none" : "")">Edit</button>
+                            <button type="submit" id="saveBtn-@uid" class="btn saveBtn btn-primary @(item.payrate != 0 ? "d-none" : "")">Save</button>
+                        </td>
+                    </tr>
+                    </form>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section  AdminScript{
+    <script>
+        $(".editBtn").click(function(){
+            var uid = $(this).data('id');
+            $("#editBtn-"+uid).addClass('d-none');
+            $("#saveBtn-"+uid).removeClass('d-none');
+        })
+    </script>
+}

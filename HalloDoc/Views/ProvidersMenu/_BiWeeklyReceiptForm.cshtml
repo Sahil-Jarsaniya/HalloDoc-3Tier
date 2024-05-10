@@ -1,0 +1,23 @@
+﻿@model BiWeeklyRecieptVM;
+<tr>
+    <td>
+        <input asp-for="Date" value="@Model.Date" hidden />
+        @Model.Date
+    </td>
+    <td><input asp-for="item" class="form-control" disabled /></td>
+    <td><input asp-for="amount" class="form-control" disabled /></td>
+    <td style="max-width: 200px">
+        @if (Model.billName != null)
+        {
+            <p class="overflow-auto">@Model.billName</p>
+        }
+        else
+        {
+            <input class="form-control" disabled />
+        }
+    </td>
+    <td>
+        <a class="btn btn-outline-primary @(Model.billName == null ? "d-none" : "")" target="_blank" href="/uploadedFiles/ProviderData/@Model.PhysicianId/@Model.billName">View</a>
+    </td>
+</tr>
+

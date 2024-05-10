@@ -776,5 +776,13 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 _db.SaveChanges();
             }
         }
+        public void DeleteBill(string date, int phyId)
+        {
+            var startDate = DateOnly.ParseExact(date, "M/d/yyyy");
+            var data = _db.BiWeeklyReceipts.FirstOrDefault(x => x.Date == startDate && x.Physicianid == phyId);
+
+            _db.BiWeeklyReceipts.Remove(data); 
+            _db.SaveChanges();
+        }
     }
 }

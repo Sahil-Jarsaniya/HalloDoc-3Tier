@@ -1,7 +1,7 @@
 ﻿@model InvoicingVM;
 @{
     ViewData["Title"] = "Invoicing";
-    Layout = "_PhysicianLayout";
+    Layout = "_AdminLayout";
 }
 <div>
 
@@ -59,11 +59,15 @@
 
             </div>
         </form>
+        <div id="SheetDiv" class="p-1">
+
+        </div>
     </div>
     <div class="container shadow pt-4 mt-2" style="max-width: 1000px" id="pendingSheetDiv">
         <h4>
             Pending Bi-Weekly timesheet
         </h4>
+        <p>No data found</p>
     </div>
 
 </div>
@@ -72,37 +76,106 @@
         $("#selectedPhysician").change(function () {
             var phyId = $(this).val();
             var date = $("#selectedDate").val();
-            $.ajax({
-                url: '/ProvidersMenu/PendingTimeSheet',
-                type: 'POST',
-                data: {
-                    date: date, phyId: phyId
-                },
-                success: function (res) {
-                    console.log(res);
-                    $("#pendingSheetDiv").html(res);
-                }
-            })
+            if (phyId == 0) {
+                $("#pendingSheetDiv").html("<h5 class='text-danger'>Select Physician</h5>");
+            } else if (date == '0') {
+                $("#pendingSheetDiv").html("<h5 class='text-danger'>Select Date</h5>");
+            } else {
 
+                $.ajax({
+                    url: '/ProvidersMenu/PendingTimeSheet',
+                    type: 'POST',
+                    data: {
+                        date: date, phyId: phyId
+                    },
+                    success: function (res) {
+                        if (res.success == false) {
+                            $("#pendingSheetDiv").html("<h5 class='text-danger'>Time Sheet is not FInalized</h5>");
+                            $("#SheetDiv").html("");
+                        }else if(res.success == true){
+                            $.ajax({
+                                url: '/ProvidersMenu/SheetData',
+                                type: 'GET',
+                                data: {
+                                    date: date, phyId: phyId
+                                },
+                                success: function (res) {
+                                    $("#SheetDiv").html(res);
+                                }
+
+                            })
+
+                            $.ajax({
+                                url: '/ProvidersMenu/ReceiptData',
+                                type: 'GET',
+                                data: {
+                                    date: date, phyId: phyId
+                                },
+                                success: function (res) {
+                                    $("#pendingSheetDiv").html(res);
+                                }
+                            })
+                        } 
+                        else {
+                            $("#pendingSheetDiv").html(res);
+                              $("#SheetDiv").html("");
+                        }
+                    }
+                })
+
+            }
         })
         $("#selectedDate").change(function () {
             var phyId = $("#selectedPhysician").val();
             var date = $(this).val();
-            $.ajax({
-                url: '/ProvidersMenu/PendingTimeSheet',
-                type: 'POST',
-                data: {
-                    date: date, phyId: phyId
-                },
-                success: function (res) {
-                    if (res.success == false) {
-                        $("#pendingSheetDiv").html("<h5>Time Sheet is not FInalized</h5>");
-                    } else {
-                        $("#pendingSheetDiv").html(res);
-                    }
-                }
-            })
 
+            if (phyId == 0) {
+                $("#pendingSheetDiv").html("<h5 class='text-danger'>Select Physician</h5>");
+                $("#SheetDiv").html("");
+            } else if (date == '0') {
+                $("#pendingSheetDiv").html("<h5 class='text-danger'>Select Date</h5>");
+            } else {
+
+                $.ajax({
+                    url: '/ProvidersMenu/PendingTimeSheet',
+                    type: 'POST',
+                    data: {
+                        date: date, phyId: phyId
+                    },
+                    success: function (res) {
+                        if (res.success == false) {
+                            $("#pendingSheetDiv").html("<h5 class='text-danger'>Time Sheet is not FInalized</h5>");
+                            $("#SheetDiv").html("");
+                        } else if (res.success == true) {
+                            $.ajax({
+                                url: '/ProvidersMenu/SheetData',
+                                type: 'GET',
+                                data: {
+                                    date: date, phyId: phyId
+                                },
+                                success: function (res) {
+                                    $("#SheetDiv").html(res);
+                                }
+
+                            })
+
+                            $.ajax({
+                                url: '/ProvidersMenu/ReceiptData',
+                                type: 'GET',
+                                data: {
+                                    date: date, phyId: phyId
+                                },
+                                success: function (res) {
+                                    $("#pendingSheetDiv").html(res);
+                                }
+                            })
+                        } else {
+                            $("#pendingSheetDiv").html(res);
+                              $("#SheetDiv").html("");
+                        }
+                    }
+                })
+            }
         })
     </script>
 }

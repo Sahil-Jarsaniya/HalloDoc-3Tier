@@ -13,13 +13,19 @@ public partial class TimeSheet
 
     public bool IsSheetCreated { get; set; }
 
-    public bool IsReceiptCreated { get; set; }
+    public bool IsApproved { get; set; }
 
     public int? PhysicianId { get; set; }
 
     public bool? IsFinal { get; set; }
 
     public string? Status { get; set; }
+
+    public int? Bonus { get; set; }
+
+    public int? Total { get; set; }
+
+    public string? AdminNote { get; set; }
 
     public virtual Physician? Physician { get; set; }
 }
