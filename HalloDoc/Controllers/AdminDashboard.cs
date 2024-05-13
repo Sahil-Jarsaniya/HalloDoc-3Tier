@@ -663,6 +663,18 @@ namespace HalloDoc.Controllers
             return View(obj);
         }
 
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
+        public IActionResult ChatWithProvider()
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            return View();
+        }
+
         #endregion
 
 

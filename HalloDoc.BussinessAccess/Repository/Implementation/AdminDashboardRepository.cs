@@ -1908,7 +1908,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             roleRow.Modifieddate = DateTime.Now;
 
             _db.Roles.Update(roleRow);
-
+            _db.SaveChanges();
             foreach (var item in PageList)
             {
                 var data = _db.Rolemenus.Where(x => x.Roleid == obj.Roleid && x.Menuid == item.Id).FirstOrDefault();
@@ -2099,13 +2099,13 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                            physicianId = phyId,
                            payrate = _db.PayRates.Where(x => x.CategoryId == t1.Id && x.PhysicianId == phyId).FirstOrDefault() != null ? _db.PayRates.Where(x => x.CategoryId == t1.Id && x.PhysicianId == phyId).FirstOrDefault().PayRate1 : 0
                        };
-                       
+
             return data;
         }
         public void PayRate(int phyId, int categoryId, int payrate)
         {
             var pay = _db.PayRates.FirstOrDefault(x => x.CategoryId == categoryId && x.PhysicianId == phyId);
-            if(pay != null)
+            if (pay != null)
             {
                 pay.PayRate1 = payrate;
                 _db.PayRates.Update(pay);
@@ -2176,37 +2176,39 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             else
             {
-                data = (from t1 in _db.Physicians
-                        join t2 in _db.Roles on t1.Roleid equals t2.Roleid
-                        join t3 in _db.AccountTypes on t2.Accounttype equals t3.Id
-                        join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId into s
-                        from T4 in s.DefaultIfEmpty()
-                        select new UserAccessTable
-                        {
-                            userId = t1.Physicianid,
-                            UserName = t1.Firstname + " " + t1.Lastname,
-                            AccountType = t3.Name,
-                            AccountTypeId = t3.Id,
-                            Phone = t1.Mobile,
-                            status = T4.StatusName,
-                            openReq = _db.Requests.Where(x => x.Physicianid == t1.Physicianid).Count()
+                var physicianData = from t1 in _db.Physicians
+                                    join t2 in _db.Roles on t1.Roleid equals t2.Roleid
+                                    join t3 in _db.AccountTypes on t2.Accounttype equals t3.Id
+                                    join t4 in _db.PhysicianStatuses on t1.Status equals t4.StatusId into s
+                                    from T4 in s.DefaultIfEmpty()
+                                    select new UserAccessTable
+                                    {
+                                        userId = t1.Physicianid,
+                                        UserName = t1.Firstname + " " + t1.Lastname,
+                                        AccountType = t3.Name,
+                                        AccountTypeId = t3.Id,
+                                        Phone = /*t1.Mobile != null ? t1.Mobile :*/ "-",
+                                        status = T4.StatusName ?? "",
+                                        openReq = (int)_db.Requests.Where(x => x.Physicianid == t1.Physicianid).Count()
+                                    };
 
-                        }).Union(from t2 in _db.Admins
-                                 join t3 in _db.Roles on t2.Roleid equals t3.Roleid
-                                 join t4 in _db.AccountTypes on t3.Accounttype equals t4.Id
-                                 join t5 in _db.PhysicianStatuses on t2.Status equals t5.StatusId into s
-                                 from T5 in s.DefaultIfEmpty()
-                                 select new UserAccessTable
-                                 {
-                                     userId = t2.Adminid,
-                                     UserName = t2.Firstname + " " + t2.Lastname,
-                                     AccountType = t4.Name,
-                                     AccountTypeId = t4.Id,
-                                     Phone = t2.Mobile,
-                                     status = T5.StatusName,
-                                     openReq = _db.Requestclients.Count()
-                                 }
-                                          );
+                var adminData = from t2 in _db.Admins
+                                join t3 in _db.Roles on t2.Roleid equals t3.Roleid
+                                join t4 in _db.AccountTypes on t3.Accounttype equals t4.Id
+                                join t5 in _db.PhysicianStatuses on t2.Status equals t5.StatusId into s
+                                from T5 in s.DefaultIfEmpty()
+                                select new UserAccessTable
+                                {
+                                    userId = t2.Adminid,
+                                    UserName = t2.Firstname + " " + t2.Lastname,
+                                    AccountType = t4.Name,
+                                    AccountTypeId = t4.Id,
+                                    Phone = /*t2.Mobile != null ? t2.Mobile :*/ "-",
+                                    status = T5.StatusName,
+                                    openReq = (int)_db.Requestclients.Count()
+                                };
+
+                data = physicianData.Union(adminData);
             }
             return (IQueryable<UserAccessTable>)data;
         }

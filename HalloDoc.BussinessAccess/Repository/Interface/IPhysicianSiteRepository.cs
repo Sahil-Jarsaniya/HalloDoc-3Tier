@@ -52,7 +52,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void biweeklySheetVMs(DateVM obj, int phyId);
 
         public void BiWeeklyReciept(BiWeeklyRecieptVM obj, int phyId);
-
+          
         public void DeleteBill(string date, int phyId);
     }
 }

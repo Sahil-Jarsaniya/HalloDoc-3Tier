@@ -10,6 +10,7 @@
             <td>Phone</td>
             <td>Address</td>
             <td>Notes</td>
+            <td>Chat with</td>
             <td>Actions</td>
         </tr>
     </thead>
@@ -131,6 +132,9 @@
                 </td>
                 <td style="background-color: @bg;">
                     @item.Notes
+                </td>
+                <td style="background-color: @bg;">
+                    <a class="btn border rounded" asp-action="ChatWithProvider">Provider</a>
                 </td>
                 <td style="background-color: @bg;">
                     <a class="btn border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

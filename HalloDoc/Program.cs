@@ -3,7 +3,7 @@ using AspNetCoreHero.ToastNotification.Extensions;
 using HalloDoc.BussinessAccess.Repository.Implementation;
 using HalloDoc.BussinessAccess.Repository.Interface;
 using HalloDoc.DataAccess.Data;
-using HalloDoc.DataAccess.ViewModel;
+using HalloDoc.Hubs;
 using Microsoft.EntityFrameworkCore;
 using Rotativa.AspNetCore;
 
@@ -37,6 +37,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         );
 });
 builder.Services.AddNotyf(config => { config.DurationInSeconds = 2; config.IsDismissable = true; config.Position = NotyfPosition.TopRight; });
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -49,11 +50,11 @@ if (!app.Environment.IsDevelopment())
 app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 app.UseRotativa();
 app.UseAuthorization();
 app.UseNotyf();
+app.MapHub<ChatHub>("/chatHub");
 app.MapControllerRoute(
     name: "default",
 pattern: "{controller=Home}/{action=Index}/{id?}");

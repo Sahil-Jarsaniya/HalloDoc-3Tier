@@ -73,6 +73,7 @@
                     accountType: AccountType, RoleId: RoleId
                 },
                 success:function(res){
+                    console.log(res);
                     $("#UserAccessTable").empty();
                     $("#UserAccessTable").html(res);
                 }

@@ -225,6 +225,10 @@
       "PackagePath": "staticwebassets\\js\\bussinessphone.js"
     },
     {
+      "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\js\\chat.js",
+      "PackagePath": "staticwebassets\\js\\chat.js"
+    },
+    {
       "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\js\\password.js",
       "PackagePath": "staticwebassets\\js\\password.js"
     },
@@ -949,6 +953,14 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
+      "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\lib\\microsoft-signalr\\signalr.js",
+      "PackagePath": "staticwebassets\\lib\\microsoft-signalr\\signalr.js"
+    },
+    {
+      "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\lib\\microsoft-signalr\\signalr.min.js",
+      "PackagePath": "staticwebassets\\lib\\microsoft-signalr\\signalr.min.js"
+    },
+    {
       "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\10\\Screenshot (3).png",
       "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\10\\Screenshot (3).png"
     },
@@ -1033,6 +1045,14 @@
       "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\24\\list.svg"
     },
     {
+      "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\25\\LoginController.cs",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\25\\LoginController.cs"
+    },
+    {
+      "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\25\\SCHEMA.ods",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\25\\SCHEMA.ods"
+    },
+    {
       "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\25\\box-arrow-right (1).svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\25\\box-arrow-right (1).svg"
     },
@@ -1047,6 +1067,10 @@
     {
       "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\25\\cloud_upload (2).svg",
       "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\25\\cloud_upload (2).svg"
+    },
+    {
+      "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\25\\xyz.html",
+      "PackagePath": "staticwebassets\\uploadedFiles\\ProviderData\\25\\xyz.html"
     },
     {
       "Id": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\26\\box-arrow-right (1).svg",
