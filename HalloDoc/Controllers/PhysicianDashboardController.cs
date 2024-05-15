@@ -409,7 +409,17 @@ namespace HalloDoc.Controllers
             _loginRepo.uploadFile(obj.fileName, "RequestData\\" + obj.ReqClientId, obj.fileName.FileName.ToString());
             return RedirectToAction("Dashboard");
         }
-
+        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
+        public IActionResult ChatWithAdmin(int reqclientid)
+        {
+            ViewBag.AdminName = GetName();
+            var data = _phyRepo.ChatWithAdmin(reqclientid, _phyRepo.GetPhysicianId(GetAspID()));    
+            return PartialView( "_ChatView" ,data);
+        }
+        public void StoreChat(int reqClientId, int senderId, string message)
+        {
+            _phyRepo.StoreChat(reqClientId, senderId, message);
+        }
         #endregion
 
         #region Scheduling
@@ -552,18 +562,19 @@ namespace HalloDoc.Controllers
 
         public IActionResult Invoicing()
         {
-            ViewBag.AdminName = GetName();  
+            ViewBag.AdminName = GetName();
             return View();
         }
 
         public IActionResult SheetData(string date)
         {
-            return PartialView("SheetData");
+            var data = _phyRepo.sheetData(date, _phyRepo.GetPhysicianId(GetAspID()));
+            return PartialView("SheetData", data);
         }
 
         public async Task<IActionResult> ReceiptData(string date, int pageNumber)
         {
-            if(pageNumber < 1)
+            if (pageNumber < 1)
             {
                 pageNumber = 1;
             }
@@ -607,7 +618,7 @@ namespace HalloDoc.Controllers
             _phyRepo.BiWeeklyReciept(obj, _phyRepo.GetPhysicianId(GetAspID()));
             _loginRepo.uploadFile(obj.bill, "ProviderData\\" + _phyRepo.GetPhysicianId(GetAspID()), obj.bill.FileName.ToString());
             var day = 0;
-            if(obj.Date.Day <= 14)
+            if (obj.Date.Day <= 14)
             {
                 day = 1;
             }
@@ -617,7 +628,7 @@ namespace HalloDoc.Controllers
             }
 
             var date = day + "/" + obj.Date.Month + "/" + obj.Date.Year;
-            return RedirectToAction("BiWeeklySheet", "PhysicianDashboard", new { selectedDate =  date });
+            return RedirectToAction("BiWeeklySheet", "PhysicianDashboard", new { selectedDate = date });
 
         }
 
@@ -625,7 +636,7 @@ namespace HalloDoc.Controllers
         public IActionResult DeleteBill(string date)
         {
             _phyRepo.DeleteBill(date, _phyRepo.GetPhysicianId(GetAspID()));
-            return Ok(new {success = true});
+            return Ok(new { success = true });
         }
 
         #endregion

@@ -44,7 +44,7 @@
                 <td style="background-color: @bg;">
                     @item.Firstname @item.Lastname <br />
                     @if (item.Status == (int)enumsFile.requestStatus.Assigned)
-                        {
+                    {
                         <button class="btn btn-danger" disabled>Assigned</button>
                     }
                 </td>
@@ -134,7 +134,11 @@
                     @item.Notes
                 </td>
                 <td style="background-color: @bg;">
-                    <a class="btn border rounded" asp-action="ChatWithProvider">Provider</a>
+                    @if (item.Status == (int)enumsFile.requestStatus.Assigned)
+                    {
+                        <a class="btn border rounded ProviderChatBtn" data-id="@item.reqClientId">Provider</a>
+                    }
+                    <a class="btn border rounded" onclick="openChatBox()">Patient</a>
                 </td>
                 <td style="background-color: @bg;">
                     <a class="btn border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -261,6 +265,21 @@
     $(".AssignCaseBtn").click(function () {
         $("#AssignreqClientId").val($(this).data('id'));
         $("#AssignModel").modal('show');
+    })
+
+    $(".ProviderChatBtn").click(function () {
+        var reqclientid = $(this).data('id');
+        $.ajax({
+            url: '/AdminDashboard/ChatWithProvider',
+            type: 'GET',
+            data: {
+                reqclientid : reqclientid
+            },
+            success: function(res){
+                $("#myChatBox").html(res);
+                openChatBox();
+            }
+        })
     })
 
 

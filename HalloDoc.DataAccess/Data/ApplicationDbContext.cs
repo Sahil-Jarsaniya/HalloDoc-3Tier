@@ -20,6 +20,8 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Admin> Admins { get; set; }
 
+    public virtual DbSet<AdminChat> AdminChats { get; set; }
+
     public virtual DbSet<Adminregion> Adminregions { get; set; }
 
     public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
@@ -50,11 +52,15 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Orderdetail> Orderdetails { get; set; }
 
+    public virtual DbSet<PatientChat> PatientChats { get; set; }
+
     public virtual DbSet<PayRate> PayRates { get; set; }
 
     public virtual DbSet<PayrateCategory> PayrateCategories { get; set; }
 
     public virtual DbSet<Physician> Physicians { get; set; }
+
+    public virtual DbSet<PhysicianChat> PhysicianChats { get; set; }
 
     public virtual DbSet<PhysicianStatus> PhysicianStatuses { get; set; }
 
@@ -189,6 +195,18 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.ModifiedbyNavigation).WithMany(p => p.AdminModifiedbyNavigations)
                 .HasForeignKey(d => d.Modifiedby)
                 .HasConstraintName("MODIFIED BY");
+        });
+
+        modelBuilder.Entity<AdminChat>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("AdminChat_pkey");
+
+            entity.ToTable("AdminChat");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreateTime).HasColumnName("createTime");
+            entity.Property(e => e.Message).HasColumnType("character varying");
+            entity.Property(e => e.ReqClientId).HasColumnName("reqClientId");
         });
 
         modelBuilder.Entity<Adminregion>(entity =>
@@ -709,6 +727,19 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Vendorid).HasColumnName("vendorid");
         });
 
+        modelBuilder.Entity<PatientChat>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PatientChat_pkey");
+
+            entity.ToTable("PatientChat");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreateTime).HasColumnName("createTime");
+            entity.Property(e => e.Message).HasColumnType("character varying");
+            entity.Property(e => e.ReqClientId).HasColumnName("reqClientId");
+            entity.Property(e => e.SenderAccountType).HasColumnName("senderAccountType");
+        });
+
         modelBuilder.Entity<PayRate>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PayRate_pkey");
@@ -840,6 +871,18 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.ModifiedbyNavigation).WithMany(p => p.PhysicianModifiedbyNavigations)
                 .HasForeignKey(d => d.Modifiedby)
                 .HasConstraintName("MODIFIED BY");
+        });
+
+        modelBuilder.Entity<PhysicianChat>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PhysicianChat_pkey");
+
+            entity.ToTable("PhysicianChat");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.CreateTime).HasColumnName("createTime");
+            entity.Property(e => e.Message).HasColumnType("character varying");
+            entity.Property(e => e.ReqClientId).HasColumnName("reqClientId");
         });
 
         modelBuilder.Entity<PhysicianStatus>(entity =>

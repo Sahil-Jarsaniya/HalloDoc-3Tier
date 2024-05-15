@@ -1,4 +1,5 @@
-﻿<table class="table table-responsive">
+﻿@model List<sheetData>;
+<table class="table table-responsive">
     <thead>
         <tr class="table-secondary">
             <td>Shiftdate</td>
@@ -12,15 +13,18 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-            <td>0</td>
-        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Date</td>
+                <td>@item.shift</td>
+                <td>@item.NightshiftWeekend</td>
+                <td>@item.HouseCall</td>
+                <td>@item.HousecallNightsWeekend</td>
+                <td>@item.phoneConsult</td>
+                <td>@item.phoneConsultNightsWeekend</td>
+                <td>@item.BatchTesting</td>
+            </tr>
+        }
     </tbody>
 </table>

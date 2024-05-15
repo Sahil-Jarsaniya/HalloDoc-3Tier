@@ -664,7 +664,7 @@ namespace HalloDoc.Controllers
         }
 
         [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
-        public IActionResult ChatWithProvider()
+        public IActionResult ChatWithProvider(int reqclientid)
         {
             var token = Request.Cookies["jwt"];
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
@@ -672,7 +672,25 @@ namespace HalloDoc.Controllers
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
-            return View();
+            var data = _adminRepo.ChatWithProvider(reqclientid, _adminRepo.GetAdminId(AspId));
+            return PartialView("_ChatView" ,data);
+        }
+
+        [RoleAuth((int)enumsFile.adminRoles.AdminDashboard)]
+        public IActionResult ChatWithPatient(int reqclientid)
+        {
+            var token = Request.Cookies["jwt"];
+            var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            string fname = jwt.Claims.First(c => c.Type == "firstName").Value;
+            string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
+            string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
+            ViewBag.AdminName = fname + "_" + lname;
+            var data = _adminRepo.ChatWithProvider(reqclientid, _adminRepo.GetAdminId(AspId));
+            return PartialView("_ChatView", data);
+        }
+        public void StoreChat(int reqClientId, int senderId, string message)
+        {
+            _adminRepo.StoreChat(reqClientId, senderId, message);   
         }
 
         #endregion

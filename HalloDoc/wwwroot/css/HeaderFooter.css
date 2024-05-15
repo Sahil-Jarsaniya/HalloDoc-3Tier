@@ -104,14 +104,12 @@ header {
 }
 
 
-
-
 .sidebar {
     height: 100%;
     width: 0;
     position: fixed;
     z-index: 3;
-    background-color: lightgray;
+    background-color: #f7f7f7;
     top: 0;
     left: 0;
     overflow-x: hidden;
@@ -181,9 +179,60 @@ header {
     padding: 16px;
 }
 
+/*ChatBox*/
 
+.sidebarChat {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 3;
+    background-color: #f7f7f7;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    max-height: 100vh;
+    z-index: 9999999999;
+}
+
+[data-bs-theme="dark"] .sidebarChat {
+    background-color: #2b3035;
+    color: white;
+
+}
+
+    [data-bs-theme="dark"] .sidebarChat .msgSpan {
+        color: #2b3035;
+    }
+
+.sidebarChat .nameOfuser {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    font-size: 20px;
+    margin-right: 50px;
+    color: #01bce9;
+}
+.sidebarChat .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin: 0px;
+    margin-left: 50px;
+    color: #01bce9;
+}
+
+.sidebarChat .msgContainer {
+    height: 78vh;
+    overflow-y: scroll;
+}
+
+.sidebarChat .msgSpan {
+    background-color: lightblue;
+}
 /*loader*/
-
 .loader {
     position: absolute;
     top: 45%;
@@ -210,12 +259,15 @@ header {
         border-radius: 50%;
         transform: translate(-50%, -50%);
     }
+
 [data-bs-theme="light"] .loader::after {
     border-color: transparent rgba(0,0,0,0.15);
 }
-[data-bs-theme="dark"].loader::after{
+
+[data-bs-theme="dark"].loader::after {
     border-color: transparent rgba(255,255,255,0.15);
 }
+
 @keyframes rotation {
     0% {
         transform: rotate(0deg);
@@ -224,8 +276,8 @@ header {
     100% {
         transform: rotate(360deg);
     }
-} 
-  
+}
+
 @media screen and (max-height: 450px) {
     .sidebar {
         padding-top: 15px;

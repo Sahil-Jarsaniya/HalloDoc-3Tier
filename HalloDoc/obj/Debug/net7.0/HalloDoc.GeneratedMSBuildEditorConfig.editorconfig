@@ -20,10 +20,6 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcQWNjZXNzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/h3/HalloDoc-3Tier/HalloDoc/Views/AdminDashboard/ChatWithProvider.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcQ2hhdFdpdGhQcm92aWRlci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/AdminDashboard/CloseCase.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5EYXNoYm9hcmRcQ2xvc2VDYXNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -198,6 +194,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/BiWeeklySheet.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXEJpV2Vla2x5U2hlZXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/ChatWithAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGh5c2ljaWFuRGFzaGJvYXJkXENoYXRXaXRoQWRtaW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/PhysicianDashboard/ConcludeCare.cshtml]
@@ -434,6 +434,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/Shared/_adminLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9hZG1pbkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[G:/h3/HalloDoc-3Tier/HalloDoc/Views/Shared/_ChatView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DaGF0Vmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [G:/h3/HalloDoc-3Tier/HalloDoc/Views/Shared/_login.cshtml]

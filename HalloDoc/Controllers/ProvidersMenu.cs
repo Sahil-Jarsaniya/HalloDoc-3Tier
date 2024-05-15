@@ -302,9 +302,10 @@ namespace HalloDoc.Controllers
             return PartialView("_PendingSheetTable", data);
         }
         [RoleAuth((int)enumsFile.adminRoles.Invoicing)]
-        public IActionResult SheetData(string date)
+        public IActionResult SheetData(string date, int phyId)
         {
-            return PartialView("_SheetData");
+            var data = _phyRepo.sheetData(date, phyId);
+            return PartialView("_SheetData", data);
         }
         [RoleAuth((int)enumsFile.adminRoles.Invoicing)]
         public async Task<IActionResult> ReceiptData(string date, int pageNumber, int phyId)

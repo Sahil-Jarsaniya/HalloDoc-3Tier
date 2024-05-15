@@ -1,6 +1,7 @@
 ﻿using HalloDoc.DataAccess.Models;
 using HalloDoc.DataAccess.ViewModel;
 using HalloDoc.DataAccess.ViewModel.AdminViewModel;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 
 namespace HalloDoc.BussinessAccess.Repository.Interface
 {
@@ -128,6 +129,10 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public UserAccessVM UserAccess();
 
         public IQueryable<UserAccessTable> UserAccessTables(int accountType, int RoleId);
+
+        public Chat ChatWithProvider(int reqCLientId, int adminId);
+
+        public void StoreChat(int reqClientId, int phyId, string message);
 
     }
 }

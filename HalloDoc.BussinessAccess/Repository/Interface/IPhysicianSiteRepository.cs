@@ -43,6 +43,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         
         public void viewUplodPost(string file, int reqId,  int phyId);
 
+        public List<sheetData> sheetData(string date, int phyId);
+
         public IQueryable<BiWeeklyRecieptVM> ReceiptData(string date, int phyId);
 
         public bool isFinalizedSheet(string date, int phyId);
@@ -54,5 +56,9 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void BiWeeklyReciept(BiWeeklyRecieptVM obj, int phyId);
           
         public void DeleteBill(string date, int phyId);
+
+        public Chat ChatWithAdmin(int reqClientId, int phyId);
+
+        public void StoreChat(int reqClientId, int phyId, string message);
     }
 }

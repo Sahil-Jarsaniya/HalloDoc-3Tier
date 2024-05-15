@@ -2212,5 +2212,58 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             return (IQueryable<UserAccessTable>)data;
         }
+
+        public Chat ChatWithProvider(int reqCLientId, int adminId)
+        {
+            var history =( from t1 in _db.AdminChats
+                       join t2 in _db.Admins on t1.AdminId equals t2.Adminid
+                       where t1.ReqClientId == reqCLientId 
+                       select new ChatHistory()
+                       {
+                           Message = t1.Message,
+                           CreatedAt = TimeOnly.FromDateTime(t1.CreateTime),
+                           CreatedOn = DateOnly.FromDateTime(t1.CreateTime),
+                           Sender = t2.Firstname+ " "+t2.Lastname,
+                           isMyMsg = true
+                       });
+            var reqId = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == reqCLientId).Requestid;
+            var phyId = _db.Requests.FirstOrDefault(x => x.Requestid == reqId);
+            var phyHistory = (from t1 in _db.PhysicianChats
+                              join t2 in _db.Physicians on t1.PhysicianId equals t2.Physicianid
+                              where t1.ReqClientId == reqCLientId && t1.PhysicianId == phyId.Physicianid
+                              select new ChatHistory()
+                              {
+                                  Message = t1.Message,
+                                  CreatedAt = TimeOnly.FromDateTime(t1.CreateTime),
+                                  CreatedOn = DateOnly.FromDateTime(t1.CreateTime),
+                                  Sender = t2.Firstname + " " + t2.Lastname,
+                                  isMyMsg= false
+                              });
+            var list = history.Union(phyHistory);
+            list = list.OrderBy(x => x.CreatedOn).OrderBy(x => x.CreatedAt);
+            var data = new Chat()
+            {
+                SenderId = adminId,
+                reqClientId = reqCLientId,
+                chatHistories = list.ToList(),
+                Receiver = phyId.Firstname + " " + phyId.Lastname,
+                AccountTypeOfSender = (int)enumsFile.AccountType.Admin
+            };
+            return data;
+        }
+
+        public void StoreChat(int reqClientId, int adminId, string message)
+        {
+            var chat = new AdminChat()
+            {
+                AdminId = adminId,
+                ReqClientId = reqClientId,
+                CreateTime = DateTime.UtcNow,
+                Message = message,
+                SenderAccountType = 2,
+            };
+            _db.AdminChats.Add(chat);
+            _db.SaveChanges();
+        }
     }
 }

@@ -511,6 +511,38 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             _db.SaveChanges();
         }
 
+        public List<sheetData> sheetData(string date, int phyId)
+        {
+            var startDate = DateOnly.ParseExact(date, "d/M/yyyy");
+            var day = startDate.Day;
+            var month = startDate.Month;
+            var year = startDate.Year;
+            var startDay = 0;
+            var endDay = 0;
+            if (day <= 14)
+            {
+                startDay = 1;
+                endDay = 14;
+            }
+            else
+            {
+                startDay = 15;
+                endDay = DateTime.DaysInMonth(year, month);
+            }
+            var endDate = startDate.AddDays(endDay - startDay);
+
+            var data = (from t1 in _db.BiWeeklySheets
+                        where t1.Date >= startDate && t1.Date <= endDate && t1.Physicianid == phyId
+                        select new sheetData()
+                        {
+                            HouseCall = t1.NumberOfHousecall ?? 0,
+                            shift = t1.Totalhour.Value.Hours,
+                            Date = t1.Date,
+                            phoneConsult = t1.NumberOfPhoneConsult ?? 0
+                        }).ToList();
+
+            return data;
+        }
 
         public IQueryable<BiWeeklyRecieptVM> ReceiptData(string date, int phyId)
         {
@@ -565,7 +597,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             }
             var endDate = startDate.AddDays(endDay - startDay);
 
-            var sheet = _db.TimeSheets.FirstOrDefault(x => x.StartDate == startDate && x.EndDate == endDate&& x.PhysicianId == phyId);
+            var sheet = _db.TimeSheets.FirstOrDefault(x => x.StartDate == startDate && x.EndDate == endDate && x.PhysicianId == phyId);
 
             return sheet.IsFinal ?? false;
         }
@@ -781,7 +813,57 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var startDate = DateOnly.ParseExact(date, "M/d/yyyy");
             var data = _db.BiWeeklyReceipts.FirstOrDefault(x => x.Date == startDate && x.Physicianid == phyId);
 
-            _db.BiWeeklyReceipts.Remove(data); 
+            _db.BiWeeklyReceipts.Remove(data);
+            _db.SaveChanges();
+        }
+
+        public Chat ChatWithAdmin(int reqClientId, int phyId)
+        {
+            var history = (from t1 in _db.PhysicianChats
+                           join t2 in _db.Physicians on t1.PhysicianId equals t2.Physicianid
+                           where t1.ReqClientId == reqClientId && t1.PhysicianId == phyId
+                           select new ChatHistory()
+                           {
+                               Message = t1.Message,
+                               CreatedAt = TimeOnly.FromDateTime(t1.CreateTime),
+                               CreatedOn = DateOnly.FromDateTime(t1.CreateTime),
+                               Sender = t2.Firstname + " " + t2.Lastname,
+                               isMyMsg = true
+                           });
+            var adminHistory = (from t1 in _db.AdminChats
+                                join t2 in _db.Admins on t1.AdminId equals t2.Adminid
+                                where t1.ReqClientId == reqClientId
+                                select new ChatHistory()
+                                {
+                                    Message = t1.Message,
+                                    CreatedAt = TimeOnly.FromDateTime(t1.CreateTime),
+                                    CreatedOn = DateOnly.FromDateTime(t1.CreateTime),
+                                    Sender = t2.Firstname + " " + t2.Lastname,
+                                    isMyMsg = false
+                                });
+            var list = history.Union(adminHistory);
+            list = list.OrderBy(x => x.CreatedOn).OrderBy(x => x.CreatedAt);
+            var data = new Chat()
+            {
+                SenderId = phyId,
+                reqClientId = reqClientId,
+                chatHistories = list.ToList(),
+                AccountTypeOfSender = (int)enumsFile.AccountType.Physician
+            };
+            return data;
+        }
+
+        public void StoreChat(int reqClientId, int phyId, string message)
+        {
+            var chat = new PhysicianChat()
+            {
+                PhysicianId = phyId,
+                ReqClientId = reqClientId,
+                CreateTime = DateTime.UtcNow,
+                Message = message,
+                SenderAccountType = 2,
+            };
+            _db.PhysicianChats.Add(chat);
             _db.SaveChanges();
         }
     }

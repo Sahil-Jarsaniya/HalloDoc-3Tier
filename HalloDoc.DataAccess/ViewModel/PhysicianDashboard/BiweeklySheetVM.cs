@@ -62,4 +62,22 @@ namespace HalloDoc.DataAccess.ViewModel.PhysicianDashboard
 
         public int PhysicianId { get; set; }
     }
+
+    public class sheetData
+    {
+        public DateOnly Date { get; set; }
+
+        public int shift { get; set; }
+
+        public int NightshiftWeekend { get; set; }
+
+        public int HouseCall { get; set; }
+
+        public int HousecallNightsWeekend { get; set; }
+
+        public int phoneConsult { get; set; }
+
+        public int phoneConsultNightsWeekend { get; set; }
+        public int BatchTesting { get; set; }
+    }
 }

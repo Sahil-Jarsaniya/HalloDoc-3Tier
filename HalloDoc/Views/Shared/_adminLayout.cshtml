@@ -153,6 +153,9 @@
                 </li>
             </ul>
         </div>
+
+        <div id="myChatBox" class="sidebarChat">
+        </div>
         @RenderBody()
     </div>
 
@@ -190,11 +193,22 @@
 
             document.getElementById("mySidebar").style.width = "0px";
         }
+
+        function openChatBox() {
+            document.getElementById("myChatBox").style.width = "45vw";
+        }
+        function closeChatBox() {
+            document.getElementById("myChatBox").style.width = "0px";
+            document.getElementById("myChatBox").innerHTML = "";
+        }
     </script>
+    <script src="~/lib/microsoft-signalr/signalr.js" defer></script>
     <script src="~/js/admin.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+
 
     @RenderSection("AdminScript", required: false)
     @await Component.InvokeAsync("Notyf")
