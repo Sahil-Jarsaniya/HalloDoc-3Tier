@@ -15,17 +15,17 @@
 }
 <div class="modal  fade" id="newReqModal" tabindex="-1" aria-labelledby="newReqModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content"> 
+        <div class="modal-content">
             <div class="modal-header" style="background-color: #01bce9; color:white;">
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Create New Request</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>
-                Here, I want to create  new request for...
+                    Here, I want to create  new request for...
                 </p>
                 <div class="d-flex justify-content-center">
-                    <input type="radio" class="btn-check me-1"  name="options" id="me" autocomplete="off" checked>
+                    <input type="radio" class="btn-check me-1" name="options" id="me" autocomplete="off" checked>
                     <label class="btn btn-outline-primary me-1" for="me">Me</label>
 
                     <input type="radio" class="btn-check me-1" name="options" id="someoneelse" autocomplete="off">
@@ -34,7 +34,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" onclick="choseMeOrELse()" class="btn" style="background-color: #01bce9; color:white;" >Continue</button>
+                <button type="button" onclick="choseMeOrELse()" class="btn" style="background-color: #01bce9; color:white;">Continue</button>
                 <button type="button" class="btn" style="color: #01bce9; border: #01bce9 1px solid;" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -65,7 +65,7 @@
                         </p>
                         <div class="collapse" id="@item.RequestId">
                             <div class="card card-body">
-                                Provider: 
+                                Provider:
                                 <div>
                                     <img src="~/images/check-circle.svg">
                                     CurrentStatus: @item.Status
@@ -85,6 +85,7 @@
                         <tr>
                             <th>Created Date</th>
                             <th>Current Status</th>
+                            <th>Chat with</th>
                             <th>Document</th>
                         </tr>
                     </thead>
@@ -94,6 +95,13 @@
                             <tr>
                                 <td>@item.Createddate</td>
                                 <td>@item.Status</td>
+                                <td>
+                                    <button class="btn btn-outline-primary AdminChatBtn" data-id="@item.RequestId" >Admin</button>
+                                    @if (item.phyId != 0)
+                                    {
+                                        <button class="btn btn-outline-primary PhysicianChatBtn" data-id="@item.RequestId" >Physician</button>
+                                    }
+                                </td>
                                 <td>
                                     @if (item.fileCount != 0)
                                     {
@@ -127,12 +135,43 @@
             });
     </script>
     <script>
-        function choseMeOrELse(){
+        function choseMeOrELse() {
             if (document.getElementById('me').checked == true) {
                 window.location.href = "CreateRequest";
             } else {
                 window.location.href = "CreateRequestForElse";
             }
         }
+    </script>
+    <script>
+        $(".PhysicianChatBtn").click(function () {
+            var requestid = $(this).data('id');
+            $.ajax({
+                url: '/Patient/ChatWithPhysician',
+                type: 'GET',
+                data: {
+                    requestid: requestid
+                },
+                success: function (res) {
+                    $("#myChatBox").html(res);
+                    openChatBox();
+                }
+            })
+        })
+
+        $(".AdminChatBtn").click(function () {
+            var requestid = $(this).data('id');
+            $.ajax({
+                url: '/Patient/ChatWithAdmin',
+                type: 'GET',
+                data: {
+                    requestid: requestid
+                },
+                success: function (res) {
+                    $("#myChatBox").html(res);
+                    openChatBox();
+                }
+            })
+        })
     </script>
 }

@@ -1,4 +1,5 @@
 ﻿using HalloDoc.DataAccess.ViewModel;
+using HalloDoc.DataAccess.ViewModel.AdminViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,8 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void Agree(int reqClientId);
         public void DisAgree(AgreementViewModel obj);
 
- 
-
+        public Chat ChatWithPhysician(int requestid);
+        public Chat ChatWithAdmin(int requestid);
+        public void StoreChat(int reqClientId, int PatientUserId, string message);
     }
 }

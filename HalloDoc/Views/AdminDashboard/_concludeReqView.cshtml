@@ -9,6 +9,7 @@
             <td>Date of Service</td>
             <td>Phone</td>
             <td>Address</td>
+            <td>Chat with</td>
             <td>Actions</td>
         </tr>
     </thead>
@@ -92,6 +93,10 @@
                 </td>
                 <td style="background-color: @bg;">
                     @item.Street, @item.City, @item.State, @item.Zipcode
+                </td>
+                <td style="background-color: @bg;">
+                        <a class="btn border rounded ProviderChatBtn" data-id="@item.reqClientId">Provider</a>
+                    <a class="btn border rounded PatientChatBtn" data-id="@item.reqClientId">Patient</a>
                 </td>
                 <td style="background-color: @bg;">
                     <a class="btn border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -195,6 +200,15 @@
                     </a>
                 </div>
             </div>
+            <div class="row ">
+                <div class="col-12 d-flex justify-content-end ">
+                    <span class="my-auto me-2">
+                        Chat with:
+                    </span>
+                        <a class="btn border rounded ProviderChatBtn" data-id="@item.reqClientId">Provider</a>
+                    <a class="btn border rounded PatientChatBtn" data-id="@item.reqClientId">Patient</a>
+                </div>
+            </div>
         </div>
     }
 </div>
@@ -203,7 +217,35 @@
 <partial name="_PaginationPart" />
 
 <script>
+    $(".ProviderChatBtn").click(function () {
+        var reqclientid = $(this).data('id');
+        $.ajax({
+            url: '/AdminDashboard/ChatWithProvider',
+            type: 'GET',
+            data: {
+                reqclientid: reqclientid
+            },
+            success: function (res) {
+                $("#myChatBox").html(res);
+                openChatBox();
+            }
+        })
+    })
 
+    $(".PatientChatBtn").click(function () {
+        var reqclientid = $(this).data('id');
+        $.ajax({
+            url: '/AdminDashboard/ChatWithPatient',
+            type: 'GET',
+            data: {
+                reqclientid: reqclientid
+            },
+            success: function (res) {
+                $("#myChatBox").html(res);
+                openChatBox();
+            }
+        })
+    })
     $(".pageBtn").click(function () {
         var reqType = $("#filterReqType").val()
         var pageNumber = $(this).data('page');

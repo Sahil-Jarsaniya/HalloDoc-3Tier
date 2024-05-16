@@ -9,11 +9,15 @@ namespace HalloDoc.DataAccess.ViewModel.AdminViewModel
     public class Chat
     {
         public int AccountTypeOfSender { get; set; }
+        public int AccountTypeOfReceiver { get; set; }
         public int reqClientId { get; set; }
         public int SenderId { get; set; }
+        public int ReceiverId { get; set; }
+
+        public string? Sender { get; set; } 
         public string? Receiver { get; set; }
 
-        public List<ChatHistory> chatHistories { get; set; }
+        public List<ChatHistory>? chatHistories { get; set; }
     }
 
     public class ChatHistory

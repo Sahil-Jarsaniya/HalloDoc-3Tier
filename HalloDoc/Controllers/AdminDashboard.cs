@@ -685,7 +685,7 @@ namespace HalloDoc.Controllers
             string lname = jwt.Claims.First(c => c.Type == "lastName").Value;
             string AspId = jwt.Claims.First(c => c.Type == "AspId").Value;
             ViewBag.AdminName = fname + "_" + lname;
-            var data = _adminRepo.ChatWithProvider(reqclientid, _adminRepo.GetAdminId(AspId));
+            var data = _adminRepo.ChatWithPatient(reqclientid, _adminRepo.GetAdminId(AspId));
             return PartialView("_ChatView", data);
         }
         public void StoreChat(int reqClientId, int senderId, string message)
@@ -1101,7 +1101,6 @@ namespace HalloDoc.Controllers
         }
 
         [HttpPost]
-
         [RoleAuth((int)enumsFile.adminRoles.Accounts)]
         public IActionResult CreateRole(string selectedPage, CreateRole obj, int AccountType)
         {

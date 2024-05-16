@@ -6,6 +6,7 @@
             <td></td>
             <td>Phone</td>
             <td>Address</td>
+            <td>Chat with</td>
             <td>Actions</td>
         </tr>
     </thead>
@@ -50,6 +51,10 @@
                 </td>
                 <td style="background-color: @bg;">
                     @item.Street, @item.City, @item.State, @item.Zipcode
+                </td>
+                <td style="background-color: @bg;">
+                    <a class="btn rounded border AdminChatBtn" data-id="@item.reqClientId">Admin</a>
+                    <a class="btn rounded border PatientChatBtn" data-id="@item.reqClientId">Patient</a>
                 </td>
                 <td style="background-color: @bg;">
                     <a class="btn border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -115,6 +120,15 @@
                     </a>
                 </div>
             </div>
+            <div class="row ">
+                <div class="col-12 d-flex justify-content-end ">
+                    <span class="my-auto me-2">
+                        Chat with:
+                    </span>
+                    <a class="btn btn-outline-primary rounded border AdminChatBtn me-1" data-id="@item.reqClientId">Admin</a>
+                    <a class="btn btn-outline-primary rounded border PatientChatBtn me-1" data-id="@item.reqClientId">Patient</a>
+                </div>
+            </div>
         </div>
     }
 </div>
@@ -145,6 +159,38 @@
                     $("#EncounterId").val(id);
                 $("#FinalizedPopUp").modal('show');
                 }
+            }
+        })
+    })
+
+    $(".AdminChatBtn").click(function () {
+        var reqclientid = $(this).data('id');
+        debugger;
+        $.ajax({
+            url: '/PhysicianDashboard/ChatWithAdmin',
+            type: 'GET',
+            data: {
+                reqclientid: reqclientid
+            },
+            success: function (res) {
+                $("#myChatBox").html(res);
+                openChatBox();
+            }
+        })
+    })
+
+    $(".PatientChatBtn").click(function () {
+        var reqclientid = $(this).data('id');
+        debugger;
+        $.ajax({
+            url: '/PhysicianDashboard/ChatWithPatient',
+            type: 'GET',
+            data: {
+                reqclientid: reqclientid
+            },
+            success: function (res) {
+                $("#myChatBox").html(res);
+                openChatBox();
             }
         })
     })

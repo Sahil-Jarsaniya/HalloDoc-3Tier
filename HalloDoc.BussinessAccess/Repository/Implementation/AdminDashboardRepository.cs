@@ -2240,14 +2240,61 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                                   isMyMsg= false
                               });
             var list = history.Union(phyHistory);
-            list = list.OrderBy(x => x.CreatedOn).OrderBy(x => x.CreatedAt);
+            list = list.OrderBy(x => x.CreatedOn).ThenBy(X => X.CreatedAt);
+            var adminRow = _db.Admins.FirstOrDefault(x => x.Adminid == adminId);
             var data = new Chat()
             {
+                Sender = adminRow.Firstname + " " + adminRow.Lastname,
                 SenderId = adminId,
+                ReceiverId = phyId.Physicianid ?? 0,
                 reqClientId = reqCLientId,
                 chatHistories = list.ToList(),
                 Receiver = phyId.Firstname + " " + phyId.Lastname,
-                AccountTypeOfSender = (int)enumsFile.AccountType.Admin
+                AccountTypeOfSender = (int)enumsFile.AccountType.Admin,
+                AccountTypeOfReceiver = (int)enumsFile.AccountType.Physician
+            };
+            return data;
+        }
+
+        public Chat ChatWithPatient(int reqCLientId, int adminId)
+        {
+            var history = (from t1 in _db.AdminChats
+                           join t2 in _db.Admins on t1.AdminId equals t2.Adminid
+                           where t1.ReqClientId == reqCLientId
+                           select new ChatHistory()
+                           {
+                               Message = t1.Message,
+                               CreatedAt = TimeOnly.FromDateTime(t1.CreateTime),
+                               CreatedOn = DateOnly.FromDateTime(t1.CreateTime),
+                               Sender = t2.Firstname + " " + t2.Lastname,
+                               isMyMsg = true
+                           });
+            var reqClientRow = _db.Requestclients.FirstOrDefault(x => x.Requestclientid == reqCLientId);
+            var reqRow = _db.Requests.FirstOrDefault(x => x.Requestid == reqClientRow.Requestid);
+            var patientHistory = from t1 in _db.PatientChats
+                                 join t2 in _db.Requestclients on t1.ReqClientId equals t2.Requestclientid
+                                 where t1.ReqClientId == reqCLientId
+                                 select new ChatHistory()
+                                 {
+                                     Message = t1.Message,
+                                     CreatedAt = TimeOnly.FromDateTime(t1.CreateTime),
+                                     CreatedOn = DateOnly.FromDateTime(t1.CreateTime),
+                                     Sender = t2.Firstname + " " + t2.Lastname,
+                                     isMyMsg = false
+                                 };
+            var list = history.Union(patientHistory);
+            list = list.OrderBy(x => x.CreatedOn).ThenBy(X => X.CreatedAt);
+            var adminRow = _db.Admins.FirstOrDefault(x => x.Adminid == adminId);
+            var data = new Chat()
+            {
+                Sender = adminRow.Firstname + " " + adminRow.Lastname,
+                SenderId = adminId,
+                ReceiverId = reqRow.Userid ?? 0,
+                reqClientId = reqCLientId,
+                chatHistories = list.ToList(),
+                Receiver = reqClientRow.Firstname + " " + reqClientRow.Lastname,
+                AccountTypeOfSender = (int)enumsFile.AccountType.Admin,
+                AccountTypeOfReceiver = (int)enumsFile.AccountType.Patient
             };
             return data;
         }

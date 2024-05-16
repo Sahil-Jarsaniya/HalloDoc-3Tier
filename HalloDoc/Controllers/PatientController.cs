@@ -173,6 +173,21 @@ namespace HalloDoc.Controllers
             return View();
         }
 
+        public IActionResult ChatWithPhysician(int requestid)
+        {
+            var data = _patientrepo.ChatWithPhysician(requestid);
+            return PartialView("_ChatView", data);
+        }
+        public IActionResult ChatWithAdmin(int requestid)
+        {
+            var data = _patientrepo.ChatWithAdmin(requestid);
+            return PartialView("_ChatView", data);
+        }
+
+        public void StoreChat(int reqClientId, int senderId, string message)
+        {
+            _patientrepo.StoreChat(reqClientId, senderId, message);
+        }
 
         //public async Task<IActionResult> DownloadAllFiles(int requestId)
         //{

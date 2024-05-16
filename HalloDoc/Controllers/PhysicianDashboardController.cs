@@ -416,6 +416,16 @@ namespace HalloDoc.Controllers
             var data = _phyRepo.ChatWithAdmin(reqclientid, _phyRepo.GetPhysicianId(GetAspID()));    
             return PartialView( "_ChatView" ,data);
         }
+
+        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
+        public IActionResult ChatWithPatient(int reqclientid)
+        {
+            ViewBag.AdminName = GetName();
+            var data = _phyRepo.ChatWithPatient(reqclientid, _phyRepo.GetPhysicianId(GetAspID()));
+            return PartialView("_ChatView", data);
+        }
+
+        [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
         public void StoreChat(int reqClientId, int senderId, string message)
         {
             _phyRepo.StoreChat(reqClientId, senderId, message);

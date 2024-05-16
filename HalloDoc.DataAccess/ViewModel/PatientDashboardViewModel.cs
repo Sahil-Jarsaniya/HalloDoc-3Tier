@@ -8,5 +8,7 @@
 
         public int fileCount { get; set; }
         public int RequestId { get; set; }
+
+        public int phyId { get; set; }  
     }
 }

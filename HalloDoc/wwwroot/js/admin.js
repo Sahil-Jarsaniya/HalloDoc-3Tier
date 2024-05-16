@@ -1,4 +1,3 @@
-
 var navLinks = document.querySelectorAll('#adminNav .nav-link');
 function removeAllActive() {
     navLinks.forEach(function (link) {

@@ -58,6 +58,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public void DeleteBill(string date, int phyId);
 
         public Chat ChatWithAdmin(int reqClientId, int phyId);
+        public Chat ChatWithPatient(int reqClientId, int phyId);
 
         public void StoreChat(int reqClientId, int phyId, string message);
     }

@@ -131,6 +131,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public IQueryable<UserAccessTable> UserAccessTables(int accountType, int RoleId);
 
         public Chat ChatWithProvider(int reqCLientId, int adminId);
+        public Chat ChatWithPatient(int reqCLientId, int adminId);
 
         public void StoreChat(int reqClientId, int phyId, string message);
 

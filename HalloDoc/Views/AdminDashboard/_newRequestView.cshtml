@@ -138,7 +138,7 @@
                     {
                         <a class="btn border rounded ProviderChatBtn" data-id="@item.reqClientId">Provider</a>
                     }
-                    <a class="btn border rounded" onclick="openChatBox()">Patient</a>
+                    <a class="btn border rounded PatientChatBtn" data-id="@item.reqClientId">Patient</a>
                 </td>
                 <td style="background-color: @bg;">
                     <a class="btn border rounded dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -241,6 +241,18 @@
                     </a>
                 </div>
             </div>
+            <div class="row ">
+                <div class="col-12 d-flex justify-content-end ">
+                    <span class="my-auto me-2">
+                        Chat with:
+                    </span>
+                    @if (item.Status == (int)enumsFile.requestStatus.Assigned)
+                    {
+                        <a class="btn border rounded ProviderChatBtn" data-id="@item.reqClientId">Provider</a>
+                    }
+                    <a class="btn border rounded PatientChatBtn" data-id="@item.reqClientId">Patient</a>
+                </div>
+            </div>
         </div>
     }
 </div>
@@ -281,8 +293,21 @@
             }
         })
     })
-
-
+    
+    $(".PatientChatBtn").click(function () {
+        var reqclientid = $(this).data('id');
+        $.ajax({
+            url: '/AdminDashboard/ChatWithPatient',
+            type: 'GET',
+            data: {
+                reqclientid: reqclientid
+            },
+            success: function (res) {
+                $("#myChatBox").html(res);
+                openChatBox();
+            }
+        })
+    })
     $(".pageBtn").click(function () {
         var reqType = $("#filterReqType").val()
         var pageNumber = $(this).data('page');
