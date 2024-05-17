@@ -4,6 +4,7 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveMessage", function (user, message, AccountTypeOfSender, AccountTypeOfReceiver, reqClientId) {
+    debugger;
     var reqClientId1 = document.getElementById("reqClientId").value;
     var AccountTypeOfReceiver2 = document.getElementById("AccountTypeOfReceiver").value;
     var AccountType = document.getElementById("AccountTypeOfSender").value;
@@ -33,7 +34,6 @@ connection.on("ReceiveMessage", function (user, message, AccountTypeOfSender, Ac
                 '</div>' +
                 '<span style="font-size: 10px;" class="timeSpan mx-1 d-flex justify-content-end">' + hour + ":" + minutes + " " + ampm + '</span>';
         }
-
         var b = document.getElementById("msgContainer");
         b.scrollTop = b.scrollHeight;
     }
@@ -89,3 +89,8 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
 });
 
+function closeChatBox() {
+    document.getElementById("myChatBox").style.width = "0px";
+    document.getElementById("myChatBox").innerHTML = "";
+    connection.off("ReceiveMessage");
+}

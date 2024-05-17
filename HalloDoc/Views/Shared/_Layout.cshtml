@@ -101,10 +101,7 @@
         function openChatBox() {
             document.getElementById("myChatBox").style.width = "45vw";
         }
-        function closeChatBox() {
-            document.getElementById("myChatBox").style.width = "0px";
-            document.getElementById("myChatBox").innerHTML = "";
-        }
+
     </script>
     @RenderSection("Script", required: false)
     @await RenderSectionAsync("Scripts", required: false)
