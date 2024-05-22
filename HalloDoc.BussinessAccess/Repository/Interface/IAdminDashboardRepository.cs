@@ -133,7 +133,7 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public Chat ChatWithProvider(int reqCLientId, int adminId);
         public Chat ChatWithPatient(int reqCLientId, int adminId);
 
-        public void StoreChat(int reqClientId, int phyId, string message);
+        public void StoreChat(int reqClientId, int phyId, string message, int AccountTypeOfReceiver);
 
     }
 }

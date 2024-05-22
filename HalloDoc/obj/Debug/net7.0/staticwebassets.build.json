@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wf6+PYDTS0fR4/RTi3y/1Hn5mnTLA3l2kdotFOa1UXM=",
+  "Hash": "uTOJ7b7mcdHdTYwRLDjsXh3q5yYEFKqJVTekX0Aik8Q=",
   "Source": "HalloDoc",
   "BasePath": "_content/HalloDoc",
   "Mode": "Default",
@@ -4503,6 +4503,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploadedFiles\\ProviderData\\2\\Dashboard_mobile_to-close_2.png"
+    },
+    {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\2\\database SCHEMA.ods",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/ProviderData/2/database SCHEMA.ods",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\ProviderData\\2\\database SCHEMA.ods"
+    },
+    {
+      "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\2\\GITCOMMAND.txt",
+      "SourceId": "HalloDoc",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\",
+      "BasePath": "_content/HalloDoc",
+      "RelativePath": "uploadedFiles/ProviderData/2/GITCOMMAND.txt",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploadedFiles\\ProviderData\\2\\GITCOMMAND.txt"
     },
     {
       "Identity": "G:\\h3\\HalloDoc-3Tier\\HalloDoc\\wwwroot\\uploadedFiles\\ProviderData\\2\\Physician_Dashboard_Active_2.png",

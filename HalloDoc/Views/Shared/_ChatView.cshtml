@@ -1,16 +1,16 @@
 ﻿@model Chat;
-<b class="nameOfuser">@Model.Receiver</b>
-<a class="closebtn" onclick="closeChatBox()">×</a>
-<div class="container border mt-4" style="">
+<div class="container chatNav d-flex justify-content-between">
+    <p class="nameOfuser my-auto ">@Model.Receiver</p>
+    <a class="closebtn" onclick="closeChatBox()">×</a>
+
+</div>
+<div class="container mt-4" style="">
     <input asp-for="reqClientId" value="@Model.reqClientId" id="reqClientId" type="number" hidden />
     <input asp-for="SenderId" value="@Model.SenderId" id="SenderId" type="number" hidden />
     <input asp-for="SenderId" value="@Model.ReceiverId" id="ReceiverId" type="number" hidden />
     <input asp-for="AccountTypeOfSender" value="@Model.AccountTypeOfSender" id="AccountTypeOfSender" type="number" hidden />
     <input asp-for="AccountTypeOfReceiver" value="@Model.AccountTypeOfReceiver" id="AccountTypeOfReceiver" type="number" hidden />
-    <div class="row p-1">
-        <div class="col-2">Sender</div>
-        <div class="col-10"><input type="text" class="form-control" id="userInput" value="@Model.Sender" disabled /></div>
-    </div>
+    <input asp-for="Sender" type="text" class="form-control" id="userInput" value="@Model.Sender" hidden />
     <div class="row p-1 msgContainer" id="msgContainer">
         <div class="col-12">
             <ul id="messagesList" class="list-unstyled d-flex flex-column">
@@ -18,23 +18,38 @@
                 {
                     @foreach (var item in Model.chatHistories)
                     {
+
                         <li class="p-1 w-100">
-                            <div class="d-flex @(item.isMyMsg ? "" : "justify-content-end")">
-                                <span class="border rounded m-1 p-1  w-auto msgSpan"><b>@item.Sender:</b>    @item.Message </span>
+                            <div class="@(item.isMyMsg ? "rightMsg" : "leftMsg")">
+                                @if (!item.isMyMsg)
+                                {
+                                    <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="leftSvg">
+                                        <polygon points="16,0 16,16 0,0" class="border" />
+                                    </svg>
+                                }
+                                <span class="border m-1 p-2 px-3 w-auto msgSpan">@*<b>@item.Sender:</b> *@   @item.Message </span>
+                                @if (item.isMyMsg)
+                                {
+                                    <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="rightSvg">
+                                        <polygon points="0,0 16,0 0,16" class="border"/>
+                                    </svg>
+                                }
                             </div>
-                            <span style="font-size: 10px;" class="timeSpan mx-1 d-flex @(item.isMyMsg ? "" : "justify-content-end")">@item.CreatedAt</span>
+                            <span style="font-size: 10px;" class="timeSpan mx-1 d-flex @(item.isMyMsg ? "justify-content-end" : "")">@item.CreatedAt</span>
                         </li>
+
                     }
                 }
             </ul>
         </div>
     </div>
-
 </div>
 <div class="row p-1 w-100" id="MessageBox">
-    <div class="col-11"><input type="text" class="w-100 form-control" id="messageInput" /></div>
+    <div class="col-11 ">
+        <input type="text" class="w-100 ms-1 form-control border" id="messageInput" placeholder="Type a message" />
+    </div>
     <div class="col-1 text-end">
-        <button class="btn btn-outline-primary" id="sendButton" type="button">
+        <button class="btn btn-primary" id="sendButton" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
                 <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576zm6.787-8.201L1.591 6.602l4.339 2.76z" />
             </svg>
@@ -46,6 +61,4 @@
     $(document).ready(function () {
         $("#msgContainer").scrollTop(1000000);
     })
-
-  
 </script>

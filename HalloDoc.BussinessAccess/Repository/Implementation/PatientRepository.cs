@@ -301,7 +301,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var phyRow = _db.Physicians.FirstOrDefault(x => x.Physicianid == reqRow.Physicianid);
             var history = from t1 in _db.PatientChats
                           join t2 in _db.Requestclients on t1.ReqClientId equals t2.Requestclientid
-                          where t1.PatientUserId == reqRow.Userid && t1.ReqClientId == reqClientRow.Requestclientid
+                          where t1.PatientUserId == reqRow.Userid && t1.ReqClientId == reqClientRow.Requestclientid && t1.SenderAccountType == (int)enumsFile.AccountType.Physician
                           select new ChatHistory()
                           {
                               Message = t1.Message,
@@ -312,7 +312,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                           };
             var phyHistory = (from t1 in _db.PhysicianChats
                               join t2 in _db.Physicians on t1.PhysicianId equals t2.Physicianid
-                              where t1.ReqClientId == reqClientRow.Requestclientid && t1.PhysicianId == phyRow.Physicianid
+                              where t1.ReqClientId == reqClientRow.Requestclientid && t1.PhysicianId == phyRow.Physicianid && t1.SenderAccountType == (int)enumsFile.AccountType.Patient
                               select new ChatHistory()
                               {
                                   Message = t1.Message,
@@ -343,7 +343,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             var reqRow = _db.Requests.FirstOrDefault(x => x.Requestid == requestid);
             var history = from t1 in _db.PatientChats
                           join t2 in _db.Requestclients on t1.ReqClientId equals t2.Requestclientid
-                          where t1.PatientUserId == reqRow.Userid && t1.ReqClientId == reqClientRow.Requestclientid
+                          where t1.PatientUserId == reqRow.Userid && t1.ReqClientId == reqClientRow.Requestclientid && t1.SenderAccountType == (int)enumsFile.AccountType.Admin
                           select new ChatHistory()
                           {
                               Message = t1.Message,
@@ -354,7 +354,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                           };
             var adminHistory = (from t1 in _db.AdminChats
                                 join t2 in _db.Admins on t1.AdminId equals t2.Adminid
-                                where t1.ReqClientId == reqClientRow.Requestclientid
+                                where t1.ReqClientId == reqClientRow.Requestclientid && t1.SenderAccountType == (int)enumsFile.AccountType.Patient
                                 select new ChatHistory()
                                 {
                                     Message = t1.Message,
@@ -378,7 +378,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
             return data;
         }
 
-        public void StoreChat(int reqClientId, int PatientUserId, string message)
+        public void StoreChat(int reqClientId, int PatientUserId, string message, int AccountTypeOfReceiver)
         {
             var chat = new PatientChat()
             {
@@ -386,7 +386,7 @@ namespace HalloDoc.BussinessAccess.Repository.Implementation
                 ReqClientId = reqClientId,
                 CreateTime = DateTime.UtcNow,
                 Message = message,
-                SenderAccountType = 3,
+                SenderAccountType = AccountTypeOfReceiver,
             };
             _db.PatientChats.Add(chat);
             _db.SaveChanges();

@@ -191,7 +191,6 @@ header {
     right: 0;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
     max-height: 100vh;
     z-index: 9999999999;
 }
@@ -199,7 +198,6 @@ header {
 [data-bs-theme="dark"] .sidebarChat {
     background-color: #2b3035;
     color: white;
-
 }
 
     [data-bs-theme="dark"] .sidebarChat .msgSpan {
@@ -207,31 +205,64 @@ header {
     }
 
 .sidebarChat .nameOfuser {
-    position: absolute;
-    top: 15px;
-    left: 10px;
     font-size: 20px;
     margin-right: 50px;
-    color: #01bce9;
+    color: white;
 }
+
 .sidebarChat .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
     font-size: 36px;
     margin: 0px;
     margin-left: 50px;
-    color: #01bce9;
+    color: white;
+}
+
+.sidebarChat .chatNav {
+    background-color: #01bce9;
 }
 
 .sidebarChat .msgContainer {
-    height: 78vh;
+    height: 85vh;
     overflow-y: scroll;
 }
 
-.sidebarChat .msgSpan {
-    background-color: lightblue;
+.sidebarChat .rightMsg {
+    display: flex;
+    justify-content: end;
 }
+
+.sidebarChat .leftMsg {
+    display: flex;
+}
+
+    .sidebarChat .leftMsg .msgSpan {
+        border-radius: 0.375rem;
+        border-top-left-radius: 0%;
+        background-color: #fbfbfb;
+    }
+
+.sidebarChat .rightMsg .msgSpan {
+    border-radius: 0.375rem;
+    border-top-right-radius: 0%;
+    background-color: #ebfafd;
+}
+
+.sidebarChat .leftMsg .leftSvg {
+    position: relative;
+    top: 5px;
+    right: -15px;
+    stroke: #dee2e6;
+    fill: #fbfbfb;
+}
+
+.sidebarChat .rightMsg .rightSvg {
+    position: relative;
+    top: 5px;
+    left: -15px;
+    stroke: #dee2e6;
+    fill: #ebfafd;
+}
+
 /*loader*/
 .loader {
     position: absolute;
@@ -267,6 +298,27 @@ header {
 [data-bs-theme="dark"].loader::after {
     border-color: transparent rgba(255,255,255,0.15);
 }
+
+/*Scrollbar*/
+/* width */
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: WHITE;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #10bce9;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
 
 @keyframes rotation {
     0% {

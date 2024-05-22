@@ -184,9 +184,9 @@ namespace HalloDoc.Controllers
             return PartialView("_ChatView", data);
         }
 
-        public void StoreChat(int reqClientId, int senderId, string message)
+        public void StoreChat(int reqClientId, int senderId, string message, int AccountTypeOfReceiver)
         {
-            _patientrepo.StoreChat(reqClientId, senderId, message);
+            _patientrepo.StoreChat(reqClientId, senderId, message, AccountTypeOfReceiver);
         }
 
         //public async Task<IActionResult> DownloadAllFiles(int requestId)

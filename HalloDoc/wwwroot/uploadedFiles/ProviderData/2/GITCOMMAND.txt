@@ -1,0 +1,36 @@
+git init
+
+git remote add origin "LINK"
+
+git pull origin 'BRANCH_NAME'
+
+git status
+
+git add NAME_oF_FILE
+
+git commit -m "COMMIT MESSAGE"
+
+git add -A
+
+git commit -a -m "COMMIT MESSAGE"
+
+git log
+
+git branch BRANCH_NAME
+
+git checkout BRANCH_NAME
+
+git merge BRANCH_NAME  //must be checkout in destination branch
+
+git rebase BRANCH_NAME
+
+git push origin BRANCH_NAME
+
+git checkout 8digitHEXACODE FILENAME'
+
+cat FILE_NAME
+
+ls
+
+clear
+

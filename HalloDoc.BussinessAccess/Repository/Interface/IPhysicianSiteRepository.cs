@@ -60,6 +60,6 @@ namespace HalloDoc.BussinessAccess.Repository.Interface
         public Chat ChatWithAdmin(int reqClientId, int phyId);
         public Chat ChatWithPatient(int reqClientId, int phyId);
 
-        public void StoreChat(int reqClientId, int phyId, string message);
+        public void StoreChat(int reqClientId, int phyId, string message, int AccountTypeOfReceiver);
     }
 }

@@ -426,9 +426,9 @@ namespace HalloDoc.Controllers
         }
 
         [RoleAuth((int)enumsFile.physicianRoles.Dashboard)]
-        public void StoreChat(int reqClientId, int senderId, string message)
+        public void StoreChat(int reqClientId, int senderId, string message, int AccountTypeOfReceiver)
         {
-            _phyRepo.StoreChat(reqClientId, senderId, message);
+            _phyRepo.StoreChat(reqClientId, senderId, message, AccountTypeOfReceiver);
         }
         #endregion
 

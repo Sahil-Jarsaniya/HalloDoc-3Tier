@@ -688,9 +688,9 @@ namespace HalloDoc.Controllers
             var data = _adminRepo.ChatWithPatient(reqclientid, _adminRepo.GetAdminId(AspId));
             return PartialView("_ChatView", data);
         }
-        public void StoreChat(int reqClientId, int senderId, string message)
+        public void StoreChat(int reqClientId, int senderId, string message, int AccountTypeOfReceiver)
         {
-            _adminRepo.StoreChat(reqClientId, senderId, message);   
+            _adminRepo.StoreChat(reqClientId, senderId, message, AccountTypeOfReceiver);   
         }
 
         #endregion

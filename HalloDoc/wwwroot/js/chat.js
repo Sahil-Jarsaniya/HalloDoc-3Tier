@@ -4,7 +4,6 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 //Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveMessage", function (user, message, AccountTypeOfSender, AccountTypeOfReceiver, reqClientId) {
-    debugger;
     var reqClientId1 = document.getElementById("reqClientId").value;
     var AccountTypeOfReceiver2 = document.getElementById("AccountTypeOfReceiver").value;
     var AccountType = document.getElementById("AccountTypeOfSender").value;
@@ -23,19 +22,39 @@ connection.on("ReceiveMessage", function (user, message, AccountTypeOfSender, Ac
         var minutes = time.getMinutes();
         var ActiveUser = document.getElementById("userInput").value;
         if (ActiveUser == user) {
-            li.innerHTML = '<div class="d-flex">' +
-                '<span class="border rounded m-1 p-1 w-auto msgSpan"><b>' + user + ':</b>' + message + '</span>' +
-                '</div>' +
-                '<span style="font-size: 10px;" class="timeSpan mx-1 d-flex">' + hour + ":" + minutes + " " + ampm + '</span>';
+            li.innerHTML = '<div class="d-flex rightMsg">' +
+                '<span class="border  m-1 p-2 px-3 w-auto msgSpan">' + message + '</span>' +
+                '<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="rightSvg">' +
+                '<polygon points="0,0 16,0 0,16" class="border"/>' +
+                '</svg>'
+            '</div>' +
+                '<span style="font-size: 10px;" class="timeSpan mx-1 d-flex justify-content-end">' + hour + ":" + minutes + " " + ampm + '</span>';
 
         } else {
-            li.innerHTML = '<div class="d-flex justify-content-end">' +
-                '<span class="border rounded m-1 p-1 w-auto msgSpan"><b>' + user + ':</b>' + message + '</span>' +
+            li.innerHTML = '<div class="d-flex leftMsg">' +
+                '  <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="leftSvg"> ' +
+                '< polygon points = "16,0 16,16 0,0" class="border" />' +
+                '</svg >'+
+                '<span class="border  m-1 p-2 px-3 w-auto msgSpan">' + message + '</span>' +
                 '</div>' +
-                '<span style="font-size: 10px;" class="timeSpan mx-1 d-flex justify-content-end">' + hour + ":" + minutes + " " + ampm + '</span>';
+                '<span style="font-size: 10px;" class="timeSpan mx-1">' + hour + ":" + minutes + " " + ampm + '</span>';
         }
         var b = document.getElementById("msgContainer");
         b.scrollTop = b.scrollHeight;
+    }
+
+    if ((parseInt(AccountType) == AccountTypeOfReceiver) || (parseInt(AccountTypeOfReceiver2) == AccountTypeOfSender)) {
+        Notification.requestPermission().then(perm => {
+            if (perm === 'granted') {
+                new Notification("HaloDoc", {
+                    body: user + " says " + message,
+                    image: "~/wwwroot/images/logo"
+                })
+            }
+            else {
+                console.log("aasa")
+            }
+        })
     }
 });
 
@@ -59,12 +78,11 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 
 
     if (AccountType == 1) {
-
         $.ajax({
             url: '/AdminDashboard/StoreChat',
             type: 'POST',
             data: {
-                reqClientId: reqClientId, senderId: senderId, message: message
+                reqClientId: reqClientId, senderId: senderId, message: message, AccountTypeOfReceiver: parseInt(AccountTypeOfReceiver)
             }
         })
     } else if (AccountType == 2) {
@@ -72,7 +90,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
             url: '/PhysicianDashboard/StoreChat',
             type: 'POST',
             data: {
-                reqClientId: reqClientId, senderId: senderId, message: message
+                reqClientId: reqClientId, senderId: senderId, message: message, AccountTypeOfReceiver: parseInt(AccountTypeOfReceiver)
             }
         })
     } else if (AccountType == 3) {
@@ -80,7 +98,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
             url: '/Patient/StoreChat',
             type: 'POST',
             data: {
-                reqClientId: reqClientId, senderId: senderId, message: message
+                reqClientId: reqClientId, senderId: senderId, message: message, AccountTypeOfReceiver: parseInt(AccountTypeOfReceiver)
             }
         })
     }
