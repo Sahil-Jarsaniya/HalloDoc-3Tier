@@ -16,28 +16,33 @@
             <ul id="messagesList" class="list-unstyled d-flex flex-column">
                 @if (Model.chatHistories != null)
                 {
+                    var date = DateOnly.MinValue;
                     @foreach (var item in Model.chatHistories)
                     {
-
                         <li class="p-1 w-100">
+                            @if (date == DateOnly.MinValue)
+                            {
+                                date = item.CreatedOn;
+                                <div class="d-flex justify-content-center dateDiv">
+                                    <span>
+                                        @date.Day/@date.Month/@date.Year
+                                    </span>
+                                </div>
+                            }
+                            @if (date != item.CreatedOn)
+                            {
+                                date = item.CreatedOn;
+                                <div class="d-flex justify-content-center dateDiv">
+                                   <span>
+                                        @date.Day/@date.Month/@date.Year
+                                   </span> 
+                                </div>
+                            }
                             <div class="@(item.isMyMsg ? "rightMsg" : "leftMsg")">
-                                @if (!item.isMyMsg)
-                                {
-                                    <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="leftSvg">
-                                        <polygon points="16,0 16,16 0,0" class="border" />
-                                    </svg>
-                                }
-                                <span class="border m-1 p-2 px-3 w-auto msgSpan">@*<b>@item.Sender:</b> *@   @item.Message </span>
-                                @if (item.isMyMsg)
-                                {
-                                    <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="rightSvg">
-                                        <polygon points="0,0 16,0 0,16" class="border"/>
-                                    </svg>
-                                }
+                                <span class="border m-1 p-2 px-3 w-auto msgSpan" >@*<b>@item.Sender:</b> *@   @item.Message </span>
                             </div>
                             <span style="font-size: 10px;" class="timeSpan mx-1 d-flex @(item.isMyMsg ? "justify-content-end" : "")">@item.CreatedAt</span>
                         </li>
-
                     }
                 }
             </ul>
@@ -46,7 +51,7 @@
 </div>
 <div class="row p-1 w-100" id="MessageBox">
     <div class="col-11 ">
-        <input type="text" class="w-100 ms-1 form-control border" id="messageInput" placeholder="Type a message" />
+        <input type="text" class="w-100 ms-1 form-control" id="messageInput" placeholder="Type a message" />
     </div>
     <div class="col-1 text-end">
         <button class="btn btn-primary" id="sendButton" type="button">
